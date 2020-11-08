@@ -2,12 +2,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Website of Jane Doe</title>
-    <link>https://russellgao.github.io/tags/</link>
+    <link>http://russellgao.github.io/blogs/tags/</link>
     <description>Recent content in Tags on Website of Jane Doe</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     
-	<atom:link href="https://russellgao.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://russellgao.github.io/blogs/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
   </channel>
