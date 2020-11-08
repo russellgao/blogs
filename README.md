@@ -3,4 +3,9 @@
 
 
 ## 发表文章步骤
-hugo --theme=anatole --baseUrl="https://russellgao.github.io/"
+hugo -d docs
+
+## 参考
+- https://gohugo.io/getting-started/quick-start/
+- https://www.gohugo.org/doc/overview/quickstart/
+- https://github.com/lxndrblz/anatole.git

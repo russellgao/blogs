@@ -1,7 +1,7 @@
 baseURL = "http://russellgao.github.io/blogs"
 languageCode = "en"
 DefaultContentLanguage = "en"
-title = "Website of Jane Doe"
+title = "大大很二的博客"
 theme = "anatole"
 summarylength = 10
 enableEmoji = true
@@ -14,12 +14,12 @@ enableRobotsTXT = true
 #googleAnalytics = "UA-123-45"
 
 [params]
-title = "I'm Jane Doe"
-author = "Jane Doe"
-description = "Call me Jane"
-profilePicture = "images/profile.jpg"
+title = "大大很二的博客"
+author = "russell"
+description = "用技术改变世界"
+profilePicture = "https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png"
 keywords = ""
-favicon = "favicons/"
+favicon = "https://gitee.com/russellgao/blogs-image/raw/master/images/"
 customCss = []
 customJs = []
 mainSections = ["post"]
@@ -42,12 +42,12 @@ url = "https://de.linkedin.com/"
 [[params.socialIcons]]
 icon = "fab fa-github"
 title = "GitHub"
-url = "https://github.com/lxndrblz/anatole/"
+url = "https://github.com/russellgao/"
 
 [[params.socialIcons]]
 icon = "fas fa-envelope"
 title = "e-mail"
-url = "mailto:mail@alexbilz.com"
+url = "mailto:1060745366@qq.com"
 
 ## Menu items
 
@@ -60,7 +60,7 @@ weight = 100
 url = "/"
 
 [[menu.main]]
-name = "Posts"
+name = "Go"
 weight = 200
 identifier = "posts"
 url = "/post/"
