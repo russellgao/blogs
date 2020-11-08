@@ -45,11 +45,6 @@ title = "GitHub"
 url = "https://github.com/lxndrblz/anatole/"
 
 [[params.socialIcons]]
-icon = "fab fa-instagram"
-title = "instagram"
-url = "https://www.instagram.com/"
-
-[[params.socialIcons]]
 icon = "fas fa-envelope"
 title = "e-mail"
 url = "mailto:mail@alexbilz.com"
@@ -59,7 +54,7 @@ url = "mailto:mail@alexbilz.com"
 [menu]
 
 [[menu.main]]
-name = "Home"
+name = "首页"
 identifier = "home"
 weight = 100
 url = "/"
@@ -70,8 +65,8 @@ weight = 200
 identifier = "posts"
 url = "/post/"
 
-#[[menu.main]]
-#name = "About"
-#weight = 300
-#identifier = "about"
-#url = "/about/"
+[[menu.main]]
+name = "关于"
+weight = 300
+identifier = "about"
+url = "/about/"
