@@ -6,28 +6,28 @@
     <description>Recent content on 大大很二的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 26 Mar 2019 08:47:11 +0100</lastBuildDate>
+    <lastBuildDate>Sun, 08 Nov 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://russellgao.github.io/blogs/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>My First Post</title>
-      <link>http://russellgao.github.io/blogs/post/abc/</link>
-      <pubDate>Tue, 26 Mar 2019 08:47:11 +0100</pubDate>
+      <title>关于我</title>
+      <link>http://russellgao.github.io/blogs/about/</link>
+      <pubDate>Sun, 08 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>http://russellgao.github.io/blogs/post/abc/</guid>
-      <description>abc avdfddf
-DDf </description>
+      <guid>http://russellgao.github.io/blogs/about/</guid>
+      <description>作者简介 云原生爱好者，专注于devops，ops，kubernetes，云原生，算法等领域，可以关注作者个人公众号，不定期有干货分享哦！</description>
     </item>
     
     <item>
-      <title></title>
-      <link>http://russellgao.github.io/blogs/about/me/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <title>细谈 Golang 中那些设计优美的细节-defer</title>
+      <link>http://russellgao.github.io/blogs/golang/defer/</link>
+      <pubDate>Sun, 08 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>http://russellgao.github.io/blogs/about/me/</guid>
-      <description>me vdfdadf </description>
+      <guid>http://russellgao.github.io/blogs/golang/defer/</guid>
+      <description>背景 在学习和使用 Go 的过程中发现，Go 在语言层面的设计有很多有趣的地方，所以准备用一个系列来细数这些有趣的地方。写这个系列一是为了加深自己的理解，二是愿意分享，分享 Go 中有趣的设计细节。每篇都会通过一个例子讲述一个细节，感兴趣的话可以关注一下哟！
+Go 介绍 Go（又称 Golang）是 Google 的 Robert Griesemer，Rob Pike 及 Ken Thompson 开发的一种静态强类型、编译型语言。Go 语言语法与 C 相近，但功能上有：内存安全，GC（垃圾回收），结构形态及 CSP-style 并发计算。</description>
     </item>
     
   </channel>

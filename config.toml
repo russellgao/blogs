@@ -60,10 +60,34 @@ weight = 100
 url = "/"
 
 [[menu.main]]
-name = "Go"
+name = "Kubernetes"
 weight = 200
-identifier = "posts"
-url = "/post/"
+identifier = "kubernetes"
+url = "/kubernetes/"
+
+[[menu.main]]
+name = "Python"
+weight = 200
+identifier = "python"
+url = "/python/"
+
+[[menu.main]]
+name = "Golang"
+weight = 200
+identifier = "golang"
+url = "/golang/"
+
+[[menu.main]]
+name = "Devops"
+weight = 200
+identifier = "devops"
+url = "/devops/"
+
+[[menu.main]]
+name = "算法"
+weight = 200
+identifier = "argorithm"
+url = "/argorithm/"
 
 [[menu.main]]
 name = "关于"
