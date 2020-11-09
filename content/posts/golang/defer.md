@@ -1,6 +1,6 @@
 +++
 title = "细谈 Golang 中那些设计优美的细节-defer"
-description = "Hugo, the world's fastest framework for building websites"
+description = "Golang 细节欣赏"
 date = "2020-11-08"
 aliases = ["about-me"]
 author = "russellgao"

@@ -546,6 +546,12 @@ identifier = "argorithm"
 url = "/argorithm/"
 
 [[menu.main]]
+name = "开源项目"
+weight = 201
+identifier = "opensrouce"
+url = "/opensrouce/"
+
+[[menu.main]]
 name = "关于"
 weight = 300
 identifier = "about"
