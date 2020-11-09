@@ -11,8 +11,6 @@ hugo -d docs
 - https://github.com/lxndrblz/anatole.git
 - https://hugo.aiaide.com/
 - https://www.jianshu.com/p/d8f0c924bc3a
+- https://hugoloveit.com/zh-cn/theme-documentation-basics/
 
 
-git submodule add https://github.com/lxndrblz/anatole.git themes/anatole 
-
-git submodule add https://github.com/dillonzq/LoveIt.git themes/anatole 

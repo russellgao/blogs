@@ -42,14 +42,15 @@ Go 是由这3位大佬从2007年9月开始设计Go，2009年正式推出，到�
 - 当调用一个函数，希望在函数返回时修改它的值，该如何解决?
 
 先看看defer 的官方定义 ：
-```
-A "defer" statement invokes a function whose execution is deferred to the moment the surrounding function returns, either because the surrounding function executed a return statement, reached the end of its function body, or because the corresponding goroutine is panicking.
-```
+
+
+> A "defer" statement invokes a function whose execution is deferred to the moment the surrounding function returns, either because the surrounding function executed a return statement, reached the end of its function body, or because the corresponding goroutine is panicking.
 
 意思是说，当包裹defer 的函数返回时或者包裹defer的函数执行到末尾时或者所在的goroutine发生panic时才会执行。
 
 换句话说就是当函数执行完之后或者发生异常时再执行defer语句，就是说在被调函数返回之后，赋值给调用函数之前，还有机会执行其他指令，是不是很神奇。先看一段python 代码 :
-```python
+
+```
 def f(x,y) :
     z = x / y
     z += 1
@@ -58,6 +59,7 @@ def f(x,y) :
 if __name__ == "__main__" :
     result = f(4 /2)
 ```
+
 当调用函数f，f返回给z并且赋值给result，在这时间，是没有任何机会执行其他的函数代码的。再看一段go代码:
 ```
 package main
@@ -99,7 +101,7 @@ goroutine的控制结构中，有一张表记录defer，调用runtime.deferproc�
 defer 在使用过程中也存在一些坑，看几个例子: 
 
 例1:
-```go
+```
 func f() (result int) {
   defer func() {
     result++
@@ -108,7 +110,7 @@ func f() (result int) {
 }
 ```
 例2:
-```go
+```
 func f() (result int) {
   t := 10
   defer func() {
@@ -118,7 +120,7 @@ func f() (result int) {
 }
 ```
 例3:
-```go
+```
 func f() (result int) {
   defer func(result int) {
     result = result + 1
@@ -138,7 +140,7 @@ defer表达式可能会在设置函数返回值之后，在返回到调用函数
 ```
 
 例1 会被改写成:
-```go
+```
 func f() (result int) {
   result = 10 // return语句不是一条原子调用，return xxx其实是赋值＋ret指令
   defer func() {
@@ -150,7 +152,7 @@ func f() (result int) {
 所以返回值是11
 
 例2 会被改写成:
-```go
+```
 func f() (result int) {
   t := 10
   result = t // 赋值指令
