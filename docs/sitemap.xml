@@ -1,60 +1,22 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-  xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
-  <url>
-    <loc>http://russellgao.github.io/blogs/</loc>
-    <lastmod>2020-11-08T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://russellgao.github.io/blogs/tags/defer/</loc>
-    <lastmod>2020-11-08T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://russellgao.github.io/blogs/tags/golang/</loc>
-    <lastmod>2020-11-08T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://russellgao.github.io/blogs/golang/</loc>
-    <lastmod>2020-11-08T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://russellgao.github.io/blogs/tags/</loc>
-    <lastmod>2020-11-08T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://russellgao.github.io/blogs/about/</loc>
-    <lastmod>2020-11-08T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://russellgao.github.io/blogs/golang/defer/</loc>
-    <lastmod>2020-11-08T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://russellgao.github.io/blogs/argorithm/</loc>
-  </url>
-  
-  <url>
-    <loc>http://russellgao.github.io/blogs/devops/</loc>
-  </url>
-  
-  <url>
-    <loc>http://russellgao.github.io/blogs/kubernetes/</loc>
-  </url>
-  
-  <url>
-    <loc>http://russellgao.github.io/blogs/python/</loc>
-  </url>
-  
-  <url>
-    <loc>http://russellgao.github.io/blogs/categories/</loc>
-  </url>
-  
-</urlset>
+<urlset
+    xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    ><url>
+            <loc>http://russellgao.github.io/</loc><lastmod>2020-11-08T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://russellgao.github.io/tags/defer/</loc><lastmod>2020-11-08T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://russellgao.github.io/tags/golang/</loc><lastmod>2020-11-08T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://russellgao.github.io/golang/</loc><lastmod>2020-11-08T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://russellgao.github.io/posts/</loc><lastmod>2020-11-08T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://russellgao.github.io/tags/</loc><lastmod>2020-11-08T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://russellgao.github.io/about/</loc><lastmod>2020-11-08T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://russellgao.github.io/golang/defer/</loc><lastmod>2020-11-08T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://russellgao.github.io/posts/golang/defer/</loc><lastmod>2020-11-08T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://russellgao.github.io/argorithm/</loc></url><url>
+            <loc>http://russellgao.github.io/devops/</loc></url><url>
+            <loc>http://russellgao.github.io/kubernetes/</loc></url><url>
+            <loc>http://russellgao.github.io/posts/argorithm/</loc></url><url>
+            <loc>http://russellgao.github.io/posts/devops/</loc></url><url>
+            <loc>http://russellgao.github.io/posts/kubernetes/</loc></url><url>
+            <loc>http://russellgao.github.io/posts/python/</loc></url><url>
+            <loc>http://russellgao.github.io/python/</loc></url><url>
+            <loc>http://russellgao.github.io/categories/</loc></url></urlset>

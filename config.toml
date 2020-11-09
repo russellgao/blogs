@@ -1,8 +1,8 @@
-baseURL = "http://russellgao.github.io/blogs"
+baseURL = "http://russellgao.github.io"
 languageCode = "en"
 DefaultContentLanguage = "en"
 title = "大大很二的博客"
-theme = "anatole"
+theme = "LoveIt"
 summarylength = 10
 enableEmoji = true
 enableRobotsTXT = true
@@ -17,13 +17,14 @@ enableRobotsTXT = true
 title = "大大很二的博客"
 author = "russell"
 description = "用技术改变世界"
+version = "0.2.X"
 profilePicture = "https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png"
 keywords = ""
 favicon = "https://gitee.com/russellgao/blogs-image/raw/master/images/"
 customCss = []
 customJs = []
 mainSections = ["post"]
-images = ["images/site-feature-image.png"]
+images = ["images/site-feature-imagea.png"]
 # Google Site Verification
 #googleSiteVerify = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
