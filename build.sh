@@ -1,1 +1,1 @@
-hugo -d docs
+hugo -d blog
