@@ -3,5 +3,6 @@
         <title>All Posts - 大大很二的博客</title>
         <link>http://russellgao.github.io/posts/argorithm/</link>
         <description>All Posts | 大大很二的博客</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><atom:link href="http://russellgao.github.io/posts/argorithm/" rel="self" type="application/rss+xml" /></channel>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (russellgao)</managingEditor>
+            <webMaster>1060745366@qq.com (russellgao)</webMaster><atom:link href="http://russellgao.github.io/posts/argorithm/" rel="self" type="application/rss+xml" /></channel>
 </rss>

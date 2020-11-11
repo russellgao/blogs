@@ -2,21 +2,28 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>http://russellgao.github.io/</loc><lastmod>2020-11-08T00:00:00&#43;00:00</lastmod></url><url>
-            <loc>http://russellgao.github.io/tags/defer/</loc><lastmod>2020-11-08T00:00:00&#43;00:00</lastmod></url><url>
-            <loc>http://russellgao.github.io/tags/golang/</loc><lastmod>2020-11-08T00:00:00&#43;00:00</lastmod></url><url>
-            <loc>http://russellgao.github.io/golang/</loc><lastmod>2020-11-08T00:00:00&#43;00:00</lastmod></url><url>
-            <loc>http://russellgao.github.io/posts/</loc><lastmod>2020-11-08T00:00:00&#43;00:00</lastmod></url><url>
-            <loc>http://russellgao.github.io/tags/</loc><lastmod>2020-11-08T00:00:00&#43;00:00</lastmod></url><url>
-            <loc>http://russellgao.github.io/about/</loc><lastmod>2020-11-08T00:00:00&#43;00:00</lastmod></url><url>
-            <loc>http://russellgao.github.io/golang/defer/</loc><lastmod>2020-11-08T00:00:00&#43;00:00</lastmod></url><url>
-            <loc>http://russellgao.github.io/posts/golang/defer/</loc><lastmod>2020-11-08T00:00:00&#43;00:00</lastmod></url><url>
-            <loc>http://russellgao.github.io/argorithm/</loc></url><url>
-            <loc>http://russellgao.github.io/devops/</loc></url><url>
-            <loc>http://russellgao.github.io/kubernetes/</loc></url><url>
-            <loc>http://russellgao.github.io/posts/argorithm/</loc></url><url>
-            <loc>http://russellgao.github.io/posts/devops/</loc></url><url>
-            <loc>http://russellgao.github.io/posts/kubernetes/</loc></url><url>
-            <loc>http://russellgao.github.io/posts/python/</loc></url><url>
-            <loc>http://russellgao.github.io/python/</loc></url><url>
-            <loc>http://russellgao.github.io/categories/</loc></url></urlset>
+            <loc>http://russellgao.github.io/</loc><lastmod>2020-11-10T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://russellgao.github.io/tags/istio/</loc><lastmod>2020-11-10T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://russellgao.github.io/opensrouce/elk/</loc><lastmod>2020-11-10T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://russellgao.github.io/elk/</loc><lastmod>2020-11-10T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://russellgao.github.io/tags/kubernetes/</loc><lastmod>2020-11-10T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://russellgao.github.io/opensrouce/</loc><lastmod>2020-11-10T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://russellgao.github.io/posts/</loc><lastmod>2020-11-10T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://russellgao.github.io/tags/</loc><lastmod>2020-11-10T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://russellgao.github.io/tags/defer/</loc><lastmod>2020-11-08T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://russellgao.github.io/tags/golang/</loc><lastmod>2020-11-08T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://russellgao.github.io/golang/</loc><lastmod>2020-11-08T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://russellgao.github.io/tags/toolkit/</loc><lastmod>2020-11-08T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://russellgao.github.io/about/</loc><lastmod>2020-11-08T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://russellgao.github.io/golang/defer/</loc><lastmod>2020-11-08T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://russellgao.github.io/defer/</loc><lastmod>2020-11-08T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://russellgao.github.io/opensrouce/myself/</loc><lastmod>2020-11-08T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://russellgao.github.io/argorithm/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>http://russellgao.github.io/devops/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>http://russellgao.github.io/kubernetes/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>http://russellgao.github.io/posts/argorithm/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>http://russellgao.github.io/posts/devops/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>http://russellgao.github.io/posts/kubernetes/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>http://russellgao.github.io/posts/python/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>http://russellgao.github.io/python/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>http://russellgao.github.io/categories/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url></urlset>
