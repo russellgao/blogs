@@ -1,7 +1,7 @@
 +++
 title = "ELK stack on kubernetes"
 description = "在k8s 中运行EKL"
-date = "2020-01-10"
+date = "2020-01-04"
 aliases = ["elk on k8s"]
 author = "russellgao"
 draft = false
