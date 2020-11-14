@@ -1,2 +1,4 @@
 .idea/*
 .publish.sh
+main.go
+themes
