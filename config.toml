@@ -159,7 +159,7 @@ enable = true
 # Gravatar 邮箱，用于优先在主页显示的头像
 gravatarEmail = "1060745366@qq.com"
 # 主页显示头像的 URL
-avatarURL = "https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png"
+avatarURL = "/images/favicon-32x32.png"
 # LoveIt 更改 | 0.2.7 主页显示的网站标题 (支持 HTML 格式)
 title = "好记性不好烂笔头"
 # 主页显示的网站副标题
