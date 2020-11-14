@@ -2,14 +2,14 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>大大很二的博客</title>
-    <link>https://russellgao.cn/argorithm/</link>
+    <link>https://russellgao.cn/servicemesh/</link>
     <description>Recent content on 大大很二的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <managingEditor>1060745366@qq.com (russellgao)</managingEditor>
     <webMaster>1060745366@qq.com (russellgao)</webMaster>
     
-	<atom:link href="https://russellgao.cn/argorithm/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://russellgao.cn/servicemesh/index.xml" rel="self" type="application/rss+xml" />
     
     
   </channel>

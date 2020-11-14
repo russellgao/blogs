@@ -1,20 +1,20 @@
-baseURL = "http://russellgao.github.io"
+baseURL = "https://russellgao.cn"
 languageCode = "en"
 DefaultContentLanguage = "en"
 title = "大大很二的博客"
 theme = "LoveIt"
 #theme = "anatole"
 summarylength = 10
-enableEmoji = true
-enableRobotsTXT = true
 
 # ===================LoveIt=====================
 keywords = ["Golang", "Kubernetes", "Istio", "云原生", "Python", "Devops","Aipos", "Prometheus"]
 description = "用技术改变世界"
 gitRepo = "https://github.com/russellgao/blogs"
-dateFormat = "2006-01-02"
+dateFormat = "2006-01-02 15:04:05"
+enableGitInfo = true
+enableEmoji = true
+enableRobotsTXT = true
 
-#
 # ===================LoveIt=====================
 
 # Enable Disqus
@@ -126,7 +126,7 @@ copyright = true
 # LoveIt 新增 | 0.2.0 是否显示作者
 author = true
 # 网站创立年份
-since = 2019
+since = 2020
 # ICP 备案信息，仅在中国使用 (支持 HTML 格式)
 icp = ""
 # 许可协议信息 (支持 HTML 格式)
@@ -159,11 +159,11 @@ enable = true
 # Gravatar 邮箱，用于优先在主页显示的头像
 gravatarEmail = "1060745366@qq.com"
 # 主页显示头像的 URL
-avatarURL = "/images/avatar.png"
+avatarURL = "https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png"
 # LoveIt 更改 | 0.2.7 主页显示的网站标题 (支持 HTML 格式)
-title = ""
+title = "好记性不好烂笔头"
 # 主页显示的网站副标题
-subtitle = "欢迎来到russellgao的博客"
+subtitle = "不积跬步 无以至千里 不积小流 无以成江海"
 # 是否为副标题显示打字机动画
 typeit = true
 # 是否显示社交账号
@@ -516,43 +516,49 @@ weight = 100
 url = "/"
 
 [[menu.main]]
-name = "Kubernetes"
-weight = 200
-identifier = "kubernetes"
-url = "/kubernetes/"
-
-[[menu.main]]
-name = "Python"
-weight = 200
-identifier = "python"
-url = "/python/"
-
-[[menu.main]]
 name = "Golang"
-weight = 200
+weight = 110
 identifier = "golang"
 url = "/golang/"
 
 [[menu.main]]
+name = "Kubernetes"
+weight = 120
+identifier = "kubernetes"
+url = "/kubernetes/"
+
+[[menu.main]]
+name = "ServiceMesh"
+weight = 130
+identifier = "servicemesh"
+url = "/servicemesh/"
+
+[[menu.main]]
+name = "Python"
+weight = 140
+identifier = "python"
+url = "/python/"
+
+[[menu.main]]
 name = "Devops"
-weight = 200
+weight = 150
 identifier = "devops"
 url = "/devops/"
 
 [[menu.main]]
 name = "算法"
-weight = 200
+weight = 160
 identifier = "argorithm"
 url = "/argorithm/"
 
 [[menu.main]]
 name = "开源项目"
-weight = 201
+weight = 170
 identifier = "opensrouce"
 url = "/opensrouce/"
 
 [[menu.main]]
 name = "关于"
-weight = 300
+weight = 180
 identifier = "about"
 url = "/about/"
