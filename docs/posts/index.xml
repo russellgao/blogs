@@ -3,8 +3,8 @@
         <title>All Posts - 大大很二的博客</title>
         <link>https://russellgao.cn/posts/</link>
         <description>All Posts | 大大很二的博客</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (russellgao)</managingEditor>
-            <webMaster>1060745366@qq.com (russellgao)</webMaster><lastBuildDate>Tue, 10 Nov 2020 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/posts/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Tue, 10 Nov 2020 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/posts/" rel="self" type="application/rss+xml" /><item>
     <title>istio中的ELK实践</title>
     <link>https://russellgao.cn/elk/</link>
     <pubDate>Tue, 10 Nov 2020 00:00:00 &#43;0000</pubDate>

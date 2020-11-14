@@ -3,8 +3,8 @@
         <title>大大很二的博客</title>
         <link>https://russellgao.cn/</link>
         <description>用技术改变世界</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (russellgao)</managingEditor>
-            <webMaster>1060745366@qq.com (russellgao)</webMaster>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster>
             <atom:link href="https://russellgao.cn/index.xml" rel="self" type="application/rss+xml" />
         <item>
     <title>istio中的ELK实践</title>
