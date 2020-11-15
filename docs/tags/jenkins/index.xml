@@ -1,0 +1,17 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>jenkins - Tag - 大大很二的博客</title>
+        <link>https://russellgao.cn/tags/jenkins/</link>
+        <description>jenkins - Tag - 大大很二的博客</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Sat, 08 Feb 2020 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/tags/jenkins/" rel="self" type="application/rss+xml" /><item>
+    <title>How to run jenkins on kubernetes</title>
+    <link>https://russellgao.cn/opensrouce/k8s_jenkins/</link>
+    <pubDate>Sat, 08 Feb 2020 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/opensrouce/k8s_jenkins/</guid>
+    <description><![CDATA[作用 如何在Kubernetes环境中运行jenkins
+项目地址 https://github.com/russellgao/k8s_jenkins
+参考  https://mp.weixin.qq.com/s/7YFlmcUH5iOB2XOBIZ2_rA  ]]></description>
+</item></channel>
+</rss>

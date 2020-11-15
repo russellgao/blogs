@@ -22,10 +22,10 @@ Go 介绍 Go（又称 Golang）是 Google 的 Robert Griesemer，Rob Pike 及 Ke
 Go 介绍 Go（又称 Golang）是 Google 的 Robert Griesemer，Rob Pike 及 Ken Thompson 开发的一种静态强类型、编译型语言。Go 语言语法与 C 相近，但功能上有：内存安全，GC（垃圾回收），结构形态及 CSP-style 并发计算。]]></description>
 </item><item>
     <title>自己开源的项目 - toolkit</title>
-    <link>https://russellgao.cn/opensrouce/myself/</link>
+    <link>https://russellgao.cn/opensrouce/toolkit/</link>
     <pubDate>Sun, 08 Nov 2020 00:00:00 &#43;0000</pubDate>
     <author>Author</author>
-    <guid>https://russellgao.cn/opensrouce/myself/</guid>
+    <guid>https://russellgao.cn/opensrouce/toolkit/</guid>
     <description><![CDATA[toolkit 作用 用于提供工作效率的工具箱，里面有各种工具，就比如真实工具箱中里面有扳手，各种大小的起子，钳子等 某些场景下确实可以达到事半功倍的效果
 安装 源码安装 有 go 语言环境的可以直接用源码进行编译运行
 1 2 3  git clone https://github.]]></description>
