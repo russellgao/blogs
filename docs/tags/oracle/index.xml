@@ -1,0 +1,22 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>oracle - Tag - 大大很二的博客</title>
+        <link>https://russellgao.cn/tags/oracle/</link>
+        <description>oracle - Tag - 大大很二的博客</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Thu, 09 Jul 2020 18:32:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/tags/oracle/" rel="self" type="application/rss+xml" /><item>
+    <title>如何利用 python 操纵 oracle</title>
+    <link>https://russellgao.cn/oracle/</link>
+    <pubDate>Thu, 09 Jul 2020 18:32:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/oracle/</guid>
+    <description><![CDATA[安装库 1 2  pip3 install sqlalchemy pip3 install cx_Oracle   安装客户端 oracle 客户端下载页面: https://www.]]></description>
+</item><item>
+    <title>如何利用 python 操纵 oracle</title>
+    <link>https://russellgao.cn/python/oracle/</link>
+    <pubDate>Thu, 09 Jul 2020 18:32:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/python/oracle/</guid>
+    <description><![CDATA[安装库 1 2  pip3 install sqlalchemy pip3 install cx_Oracle   安装客户端 oracle 客户端下载页面: https://www.]]></description>
+</item></channel>
+</rss>

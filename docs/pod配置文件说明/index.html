@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>pod 配置文件说明 - 大大很二的博客</title><meta name="Description" content="pod 配置文件说明"><meta property="og:title" content="pod 配置文件说明" />
+<meta property="og:description" content="pod 配置文件说明" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://russellgao.cn/pod%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E/" />
+<meta property="og:image" content="https://russellgao.cn/images/site-feature-imagea.png"/>
+<meta property="article:published_time" content="2020-06-18T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-06-18T00:00:00+00:00" /><meta property="og:site_name" content="大大很二的博客" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://russellgao.cn/images/site-feature-imagea.png"/>
+
+<meta name="twitter:title" content="pod 配置文件说明"/>
+<meta name="twitter:description" content="pod 配置文件说明"/>
+<meta name="application-name" content="russellgao">
+<meta name="apple-mobile-web-app-title" content="russellgao"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://russellgao.cn/pod%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "pod 配置文件说明",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/russellgao.cn\/pod%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E\/"
+        },"genre": "posts","keywords": "kubernetes, pod","wordcount":  365 ,
+        "url": "https:\/\/russellgao.cn\/pod%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E\/","datePublished": "2020-06-18T00:00:00+00:00","dateModified": "2020-06-18T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "russellgao"
+            },"description": "pod 配置文件说明"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="大大很二的博客"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png"
+        data-srcset="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png, https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png 1.5x, https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png"
+        title="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png" />大大很二</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/"> 首页 </a><a class="menu-item" href="/golang/"> Golang </a><a class="menu-item" href="/kubernetes/"> Kubernetes </a><a class="menu-item" href="/servicemesh/"> ServiceMesh </a><a class="menu-item" href="/python/"> Python </a><a class="menu-item" href="/devops/"> Devops </a><a class="menu-item" href="/argorithm/"> 算法 </a><a class="menu-item" href="/opensrouce/"> 开源项目 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="大大很二的博客"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png"
+        data-srcset="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png, https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png 1.5x, https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png"
+        title="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png" />大大很二</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/" title="">首页</a><a class="menu-item" href="/golang/" title="">Golang</a><a class="menu-item" href="/kubernetes/" title="">Kubernetes</a><a class="menu-item" href="/servicemesh/" title="">ServiceMesh</a><a class="menu-item" href="/python/" title="">Python</a><a class="menu-item" href="/devops/" title="">Devops</a><a class="menu-item" href="/argorithm/" title="">算法</a><a class="menu-item" href="/opensrouce/" title="">开源项目</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">pod 配置文件说明</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-06-18">2020-06-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;365 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;2 minutes&nbsp;<span id="/pod%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E/" class="leancloud_visitors" data-flag-title="pod 配置文件说明">
+                        <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;views
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#pod的定义文件">Pod的定义文件</a></li>
+    <li><a href="#pod-具体的样例">pod 具体的样例</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="pod的定义文件">Pod的定义文件</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>v1<span class="w">
+</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>Pod<span class="w">
+</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>string<span class="w">
+</span><span class="w">  </span><span class="k">namaspace</span><span class="p">:</span><span class="w"> </span>string<span class="w">
+</span><span class="w">  </span><span class="k">labels</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>string<span class="w">
+</span><span class="w">  </span><span class="k">annotations</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>string<span class="w">
+</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">containers</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>string<span class="w">
+</span><span class="w">    </span><span class="c"># 使用的镜像</span><span class="w">
+</span><span class="w">    </span><span class="k">image</span><span class="p">:</span><span class="w"> </span>string<span class="w">
+</span><span class="w">    </span><span class="k">imagePullPolicy</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>Always<span class="w"> </span>|<span class="w"> </span>Never<span class="w"> </span>|<span class="w"> </span>IfNotPresent<span class="p">]</span><span class="w">
+</span><span class="w">    </span><span class="k">command</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>string<span class="p">]</span><span class="w">
+</span><span class="w">    </span><span class="k">args</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>string<span class="p">]</span><span class="w">
+</span><span class="w">    </span><span class="c"># 工作目录</span><span class="w">
+</span><span class="w">    </span><span class="k">workingDir</span><span class="p">:</span><span class="w"> </span>string<span class="w">
+</span><span class="w">    </span><span class="k">volumeMounts</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>string<span class="w">
+</span><span class="w">      </span><span class="k">mountPath</span><span class="p">:</span><span class="w"> </span>string<span class="w">
+</span><span class="w">      </span><span class="k">readOnly</span><span class="p">:</span><span class="w"> </span>boolean<span class="w">
+</span><span class="w">    </span><span class="k">ports</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>string<span class="w">
+</span><span class="w">      </span><span class="k">containerPort</span><span class="p">:</span><span class="w"> </span>int<span class="w">
+</span><span class="w">      </span><span class="k">hostPort</span><span class="p">:</span><span class="w"> </span>int<span class="w">
+</span><span class="w">      </span><span class="k">protocol</span><span class="p">:</span><span class="w"> </span>string<span class="w">
+</span><span class="w">    </span><span class="k">env</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>string<span class="w">
+</span><span class="w">      </span><span class="k">value</span><span class="p">:</span><span class="w"> </span>string<span class="w">
+</span><span class="w">    </span><span class="k">resources</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">limits</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="k">cpu</span><span class="p">:</span><span class="w"> </span>string<span class="w">
+</span><span class="w">        </span><span class="k">memory</span><span class="p">:</span><span class="w"> </span>string<span class="w">
+</span><span class="w">      </span><span class="k">requests</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="k">cpu</span><span class="p">:</span><span class="w"> </span>string<span class="w">
+</span><span class="w">        </span><span class="k">memory</span><span class="p">:</span><span class="w"> </span>string<span class="w">
+</span><span class="w">    </span><span class="k">livenessProbe</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">exec</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="k">command</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>string<span class="p">]</span><span class="w">
+</span><span class="w">      </span><span class="k">httpGet</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="k">path</span><span class="p">:</span><span class="w"> </span>string<span class="w">
+</span><span class="w">        </span><span class="k">port</span><span class="p">:</span><span class="w"> </span>int<span class="w">
+</span><span class="w">        </span><span class="k">host</span><span class="p">:</span><span class="w"> </span>string<span class="w">
+</span><span class="w">        </span><span class="k">scheme</span><span class="p">:</span><span class="w"> </span>string<span class="w">
+</span><span class="w">        </span><span class="k">httpHeaders</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>string<span class="w">
+</span><span class="w">          </span><span class="k">value</span><span class="p">:</span><span class="w"> </span>string<span class="w">
+</span><span class="w">      </span><span class="k">tcpSocket</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="k">port</span><span class="p">:</span><span class="w"> </span>int<span class="w">
+</span><span class="w">      </span><span class="c"># 多久之后去检查</span><span class="w">
+</span><span class="w">      </span><span class="k">initialDelaySeconds</span><span class="p">:</span><span class="w"> </span>number<span class="w">
+</span><span class="w">      </span><span class="c"># 健康检查超时时间</span><span class="w">
+</span><span class="w">      </span><span class="k">timeoutSeconds</span><span class="p">:</span><span class="w"> </span>number<span class="w">
+</span><span class="w">      </span><span class="c"># 多长时间检查一次</span><span class="w">
+</span><span class="w">      </span><span class="k">periodSeconds</span><span class="p">:</span><span class="w"> </span>number<span class="w">
+</span><span class="w">      </span><span class="c"># 成功的阀值，检查几次成功才算成功</span><span class="w">
+</span><span class="w">      </span><span class="k">successThreshold</span><span class="p">:</span><span class="w"> </span><span class="m">0</span><span class="w">
+</span><span class="w">      </span><span class="c"># 失败的阀值，检查几次失败才算失败</span><span class="w">
+</span><span class="w">      </span><span class="k">failureThreshold</span><span class="p">:</span><span class="w"> </span><span class="m">0</span><span class="w">
+</span><span class="w">    </span><span class="k">securityContext</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="c"># 详细参见 pod_SecurityContext 章节</span><span class="w">
+</span><span class="w">    </span><span class="c"># securityContext 可以配置pod 或者container 级别</span><span class="w">
+</span><span class="w">      </span><span class="k">runAsUser</span><span class="p">:</span><span class="w"> </span><span class="m">1000</span><span class="w">
+</span><span class="w">    </span><span class="c"># 运行的用户</span><span class="w">
+</span><span class="w">      </span><span class="k">runAsGroup</span><span class="p">:</span><span class="w"> </span><span class="m">3000</span><span class="w">
+</span><span class="w">    </span><span class="c"># 运行的用户组</span><span class="w">
+</span><span class="w">      </span><span class="k">fsGroup</span><span class="p">:</span><span class="w"> </span><span class="m">2000</span><span class="w">
+</span><span class="w">      </span><span class="k">privileged</span><span class="p">:</span><span class="w"> </span>bool<span class="w">
+</span><span class="w">    </span><span class="c"># 是否以privileged 权限运行，即这是这个进程拥有特权</span><span class="w">
+</span><span class="w">      </span><span class="k">allowPrivilegeEscalation</span><span class="p">:</span><span class="w"> </span>bool<span class="w">
+</span><span class="w">    </span><span class="c"># 控制一个进程是否能比其父进程获取更多的权限，如果一个容器以privileged权限运行或具有CAP_SYS_ADMIN权限，则AllowPrivilegeEscalation的值将总是true</span><span class="w">
+</span><span class="w">      </span><span class="k">capabilities</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="k">add</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&#34;NET_ADMIN&#34;</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;SYS_TIME&#34;</span><span class="p">,</span><span class="s2">&#34;...&#34;</span><span class="p">]</span><span class="w">
+</span><span class="w">    </span><span class="c"># 给某个特定的进程privileged权限，而不用给root用户所有的privileged权限</span><span class="w">
+</span><span class="w">    </span><span class="k">terminationMessagePath</span><span class="p">:</span><span class="w"> </span>/dev/termination-log<span class="w">
+</span><span class="w">    </span><span class="c"># 容器终止的日志文件</span><span class="w">
+</span><span class="w">    </span><span class="k">terminationMessagePolicy</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>File<span class="w"> </span>|<span class="w"> </span>FallbackToLogsOnError<span class="p">]</span><span class="w">
+</span><span class="w">    </span><span class="c"># 默认为File, 容器终止消息输出到文件</span><span class="w">
+</span><span class="w">  </span><span class="k">restartPolicy</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>Always<span class="w"> </span>|<span class="w"> </span>Never<span class="w"> </span>|<span class="w"> </span>OnFailure<span class="p">]</span><span class="w">
+</span><span class="w"></span><span class="c"># 重启策略，默认为 Always</span><span class="w">
+</span><span class="w">  </span><span class="k">nodeSelector</span><span class="p">:</span><span class="w"> </span>object<span class="w">
+</span><span class="w"></span><span class="c"># 通过label 选取node</span><span class="w">
+</span><span class="w">  </span><span class="k">dnsPolicy</span><span class="p">:</span><span class="w"> </span>ClusterFirst<span class="w">
+</span><span class="w"></span><span class="c"># pod 的 dns 策略 ,可以配置如下值</span><span class="w">
+</span><span class="w"></span><span class="c"># Default : 和宿主机的DNS完全一致</span><span class="w">
+</span><span class="w"></span><span class="c"># ClusterFirst: 把集群的DNS写入到Pod的DNS配置，但是如果设置了HostNetwork=true，就会强制设置为Default</span><span class="w">
+</span><span class="w"></span><span class="c"># ClusterFirstWithHostNet: 把集群的DNS写入到Pod的DNS配置，不管是否设置HostNetwork</span><span class="w">
+</span><span class="w"></span><span class="c"># None: 忽略所有的DNS配置，一般来说，设置了None之后会自己手动再设置dnsConfig</span><span class="w">
+</span><span class="w">  </span><span class="k">enableServiceLinks</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w"></span><span class="c"># Kubernetes支持两种查找服务的主要模式: 环境变量和DNS, 如果不需要服务环境变量, 将 `enableServiceLinks` 标志设置为 `false` 来禁用此模式</span><span class="w">
+</span><span class="w">  </span><span class="k">terminationGracePeriodSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">10</span><span class="w">
+</span><span class="w"></span><span class="c"># 发出删除pod指令后多久之后真正的删除pod</span><span class="w">
+</span><span class="w">  </span><span class="k">serviceAccountName</span><span class="p">:</span><span class="w"> </span>jenkins<span class="w">
+</span><span class="w"></span><span class="c"># pod 绑定的serviceAccount</span><span class="w">
+</span><span class="w">  </span><span class="k">priorityClassName</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="c"># 给pod 设置优先级，参考 : https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/</span><span class="w">
+</span><span class="w">  </span><span class="k">schedulerName</span><span class="p">:</span><span class="w"> </span>default-scheduler<span class="w">
+</span><span class="w"></span><span class="c"># 如果不配置则使用kubernetes 默认的default-scheduler，如果这个不满足要求则可以自定义一个scheduler</span><span class="w">
+</span><span class="w"></span><span class="c"># https://kubernetes.io/zh/docs/tasks/administer-cluster/configure-multiple-schedulers/</span><span class="w">
+</span><span class="w">  </span><span class="k">affinity</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="c"># 亲和性设置</span><span class="w">
+</span><span class="w">  </span><span class="k">tolerations</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="k">effect</span><span class="p">:</span><span class="w"> </span>NoExecute<span class="w">
+</span><span class="w">    </span><span class="k">key</span><span class="p">:</span><span class="w"> </span>node.kubernetes.io/not-ready<span class="w">
+</span><span class="w">    </span><span class="k">operator</span><span class="p">:</span><span class="w"> </span>Exists<span class="w">
+</span><span class="w">    </span><span class="k">tolerationSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">300</span><span class="w">
+</span><span class="w">  </span>- <span class="k">effect</span><span class="p">:</span><span class="w"> </span>NoExecute<span class="w">
+</span><span class="w">    </span><span class="k">key</span><span class="p">:</span><span class="w"> </span>node.kubernetes.io/unreachable<span class="w">
+</span><span class="w">    </span><span class="k">operator</span><span class="p">:</span><span class="w"> </span>Exists<span class="w">
+</span><span class="w">    </span><span class="k">tolerationSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">300</span><span class="w">
+</span><span class="w"></span><span class="c"># 容忍设置</span><span class="w">
+</span><span class="w">  </span><span class="k">imagePullSecrets</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>string<span class="w">
+</span><span class="w"></span><span class="c"># 镜像拉取策略</span><span class="w">
+</span><span class="w">  </span><span class="k">hostNetwork</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span><span class="w"></span><span class="c"># 是否使用主机网络，默认为false，如果为true，pod直接用主机网络，在pod中可以看到主机的网络接口</span><span class="w">
+</span><span class="w">  </span><span class="k">volumes</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>string<span class="w">
+</span><span class="w">    </span><span class="k">emptyDir</span><span class="p">:</span><span class="w"> </span>{}<span class="w">
+</span><span class="w">    </span><span class="k">hostPath</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">path</span><span class="p">:</span><span class="w"> </span>string<span class="w">
+</span><span class="w">    </span><span class="k">secret</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">secretName</span><span class="p">:</span><span class="w"> </span>string<span class="w">
+</span><span class="w">      </span><span class="k">items</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="k">key</span><span class="p">:</span><span class="w"> </span>string<span class="w">
+</span><span class="w">        </span><span class="k">path</span><span class="p">:</span><span class="w"> </span>string<span class="w">
+</span><span class="w">    </span><span class="k">configMap</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>string<span class="w">
+</span><span class="w">      </span><span class="k">items</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="k">key</span><span class="p">:</span><span class="w"> </span>string<span class="w">
+</span><span class="w">        </span><span class="k">path</span><span class="p">:</span><span class="w"> </span>string<span class="w">
+</span><span class="w"></span><span class="c"># 目录挂载</span><span class="w">
+</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><h2 id="pod-具体的样例">pod 具体的样例</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>v1<span class="w">
+</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>Pod<span class="w">
+</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">labels</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">app</span><span class="p">:</span><span class="w"> </span>elastic-cluster<span class="w">
+</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>enode<span class="m">-0</span><span class="w">
+</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">containers</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="k">env</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>ES_JAVA_OPTS<span class="w">
+</span><span class="w">      </span><span class="k">valueFrom</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="k">configMapKeyRef</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="k">key</span><span class="p">:</span><span class="w"> </span>ES_JAVA_OPTS<span class="w">
+</span><span class="w">          </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>es-config<span class="w">
+</span><span class="w">    </span><span class="k">image</span><span class="p">:</span><span class="w"> </span>elasticsearch<span class="p">:</span><span class="m">6.7.2</span><span class="w">
+</span><span class="w">    </span><span class="k">imagePullPolicy</span><span class="p">:</span><span class="w"> </span>IfNotPresent<span class="w">
+</span><span class="w">    </span><span class="k">livenessProbe</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">failureThreshold</span><span class="p">:</span><span class="w"> </span><span class="m">3</span><span class="w">
+</span><span class="w">      </span><span class="k">httpGet</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="k">path</span><span class="p">:</span><span class="w"> </span>/_cluster/health<span class="p">?</span>local=<span class="kc">true</span><span class="w">
+</span><span class="w">        </span><span class="k">port</span><span class="p">:</span><span class="w"> </span><span class="m">9200</span><span class="w">
+</span><span class="w">        </span><span class="k">scheme</span><span class="p">:</span><span class="w"> </span>HTTP<span class="w">
+</span><span class="w">      </span><span class="k">periodSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">600</span><span class="w">
+</span><span class="w">      </span><span class="k">successThreshold</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">      </span><span class="k">timeoutSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">    </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>elasticsearch<span class="w">
+</span><span class="w">    </span><span class="k">ports</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="k">containerPort</span><span class="p">:</span><span class="w"> </span><span class="m">9200</span><span class="w">
+</span><span class="w">      </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>es-http<span class="w">
+</span><span class="w">      </span><span class="k">protocol</span><span class="p">:</span><span class="w"> </span>TCP<span class="w">
+</span><span class="w">    </span>- <span class="k">containerPort</span><span class="p">:</span><span class="w"> </span><span class="m">9300</span><span class="w">
+</span><span class="w">      </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>es-transport<span class="w">
+</span><span class="w">      </span><span class="k">protocol</span><span class="p">:</span><span class="w"> </span>TCP<span class="w">
+</span><span class="w">    </span><span class="k">readinessProbe</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">failureThreshold</span><span class="p">:</span><span class="w"> </span><span class="m">3</span><span class="w">
+</span><span class="w">      </span><span class="k">httpGet</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="k">path</span><span class="p">:</span><span class="w"> </span>/_cluster/health<span class="p">?</span>local=<span class="kc">true</span><span class="w">
+</span><span class="w">        </span><span class="k">port</span><span class="p">:</span><span class="w"> </span><span class="m">9200</span><span class="w">
+</span><span class="w">        </span><span class="k">scheme</span><span class="p">:</span><span class="w"> </span>HTTP<span class="w">
+</span><span class="w">      </span><span class="k">initialDelaySeconds</span><span class="p">:</span><span class="w"> </span><span class="m">30</span><span class="w">
+</span><span class="w">      </span><span class="k">periodSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">20</span><span class="w">
+</span><span class="w">      </span><span class="k">successThreshold</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">      </span><span class="k">timeoutSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">    </span><span class="k">resources</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">limits</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="k">cpu</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;2&#34;</span><span class="w">
+</span><span class="w">        </span><span class="k">memory</span><span class="p">:</span><span class="w"> </span>10Gi<span class="w">
+</span><span class="w">      </span><span class="k">requests</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="k">cpu</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;1&#34;</span><span class="w">
+</span><span class="w">        </span><span class="k">memory</span><span class="p">:</span><span class="w"> </span>8Gi<span class="w">
+</span><span class="w">    </span><span class="k">securityContext</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">capabilities</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="k">add</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span>- IPC_LOCK<span class="w">
+</span><span class="w">        </span>- SYS_RESOURCE<span class="w">
+</span><span class="w">      </span><span class="k">privileged</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">      </span><span class="k">runAsUser</span><span class="p">:</span><span class="w"> </span><span class="m">1000</span><span class="w">
+</span><span class="w">    </span><span class="k">terminationMessagePath</span><span class="p">:</span><span class="w"> </span>/dev/termination-log<span class="w">
+</span><span class="w">    </span><span class="k">terminationMessagePolicy</span><span class="p">:</span><span class="w"> </span>File<span class="w">
+</span><span class="w">    </span><span class="k">volumeMounts</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="k">mountPath</span><span class="p">:</span><span class="w"> </span>/usr/share/elasticsearch/data<span class="w">
+</span><span class="w">      </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>es-data<span class="w">
+</span><span class="w">    </span>- <span class="k">mountPath</span><span class="p">:</span><span class="w"> </span>/usr/share/elasticsearch/logs<span class="w">
+</span><span class="w">      </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>es-logs<span class="w">
+</span><span class="w">    </span>- <span class="k">mountPath</span><span class="p">:</span><span class="w"> </span>/usr/share/elasticsearch/config/elasticsearch.yml<span class="w">
+</span><span class="w">      </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>elasticsearch-config<span class="w">
+</span><span class="w">      </span><span class="k">subPath</span><span class="p">:</span><span class="w"> </span>elasticsearch.yml<span class="w">
+</span><span class="w">    </span>- <span class="k">mountPath</span><span class="p">:</span><span class="w"> </span>/var/run/secrets/kubernetes.io/serviceaccount<span class="w">
+</span><span class="w">      </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>default-token-k4r6f<span class="w">
+</span><span class="w">      </span><span class="k">readOnly</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">  </span><span class="k">dnsPolicy</span><span class="p">:</span><span class="w"> </span>ClusterFirst<span class="w">
+</span><span class="w">  </span><span class="k">enableServiceLinks</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">  </span><span class="k">hostname</span><span class="p">:</span><span class="w"> </span>enode<span class="m">-0</span><span class="w">
+</span><span class="w">  </span><span class="k">initContainers</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="k">command</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- sysctl<span class="w">
+</span><span class="w">    </span>- -w<span class="w">
+</span><span class="w">    </span>- vm.max_map_count=<span class="m">262144</span><span class="w">
+</span><span class="w">    </span><span class="k">image</span><span class="p">:</span><span class="w"> </span>busybox<span class="w">
+</span><span class="w">    </span><span class="k">imagePullPolicy</span><span class="p">:</span><span class="w"> </span>IfNotPresent<span class="w">
+</span><span class="w">    </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>init-sysctl<span class="w">
+</span><span class="w">    </span><span class="k">resources</span><span class="p">:</span><span class="w"> </span>{}<span class="w">
+</span><span class="w">    </span><span class="k">securityContext</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">privileged</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">    </span><span class="k">terminationMessagePath</span><span class="p">:</span><span class="w"> </span>/dev/termination-log<span class="w">
+</span><span class="w">    </span><span class="k">terminationMessagePolicy</span><span class="p">:</span><span class="w"> </span>File<span class="w">
+</span><span class="w">    </span><span class="k">volumeMounts</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="k">mountPath</span><span class="p">:</span><span class="w"> </span>/var/run/secrets/kubernetes.io/serviceaccount<span class="w">
+</span><span class="w">      </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>default-token-k4r6f<span class="w">
+</span><span class="w">      </span><span class="k">readOnly</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">  </span><span class="k">priority</span><span class="p">:</span><span class="w"> </span><span class="m">0</span><span class="w">
+</span><span class="w">  </span><span class="k">restartPolicy</span><span class="p">:</span><span class="w"> </span>Always<span class="w">
+</span><span class="w">  </span><span class="k">schedulerName</span><span class="p">:</span><span class="w"> </span>default-scheduler<span class="w">
+</span><span class="w">  </span><span class="k">securityContext</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">fsGroup</span><span class="p">:</span><span class="w"> </span><span class="m">1000</span><span class="w">
+</span><span class="w">  </span><span class="k">serviceAccount</span><span class="p">:</span><span class="w"> </span>default<span class="w">
+</span><span class="w">  </span><span class="k">serviceAccountName</span><span class="p">:</span><span class="w"> </span>default<span class="w">
+</span><span class="w">  </span><span class="k">subdomain</span><span class="p">:</span><span class="w"> </span>elasticsearch-cluster<span class="w">
+</span><span class="w">  </span><span class="k">terminationGracePeriodSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">30</span><span class="w">
+</span><span class="w">  </span><span class="k">tolerations</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="k">effect</span><span class="p">:</span><span class="w"> </span>NoExecute<span class="w">
+</span><span class="w">    </span><span class="k">key</span><span class="p">:</span><span class="w"> </span>node.kubernetes.io/not-ready<span class="w">
+</span><span class="w">    </span><span class="k">operator</span><span class="p">:</span><span class="w"> </span>Exists<span class="w">
+</span><span class="w">    </span><span class="k">tolerationSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">300</span><span class="w">
+</span><span class="w">  </span>- <span class="k">effect</span><span class="p">:</span><span class="w"> </span>NoExecute<span class="w">
+</span><span class="w">    </span><span class="k">key</span><span class="p">:</span><span class="w"> </span>node.kubernetes.io/unreachable<span class="w">
+</span><span class="w">    </span><span class="k">operator</span><span class="p">:</span><span class="w"> </span>Exists<span class="w">
+</span><span class="w">    </span><span class="k">tolerationSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">300</span><span class="w">
+</span><span class="w">  </span><span class="k">volumes</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>es-data<span class="w">
+</span><span class="w">    </span><span class="k">persistentVolumeClaim</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">claimName</span><span class="p">:</span><span class="w"> </span>es-data-enode<span class="m">-0</span><span class="w">
+</span><span class="w">  </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>es-logs<span class="w">
+</span><span class="w">    </span><span class="k">persistentVolumeClaim</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">claimName</span><span class="p">:</span><span class="w"> </span>es-logs-enode<span class="m">-0</span><span class="w">
+</span><span class="w">  </span>- <span class="k">configMap</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">defaultMode</span><span class="p">:</span><span class="w"> </span><span class="m">420</span><span class="w">
+</span><span class="w">      </span><span class="k">items</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="k">key</span><span class="p">:</span><span class="w"> </span>elasticsearch.yml<span class="w">
+</span><span class="w">        </span><span class="k">path</span><span class="p">:</span><span class="w"> </span>elasticsearch.yml<span class="w">
+</span><span class="w">      </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>es-config<span class="w">
+</span><span class="w">    </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>elasticsearch-config<span class="w">
+</span><span class="w">  </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>default-token-k4r6f<span class="w">
+</span><span class="w">    </span><span class="k">secret</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">defaultMode</span><span class="p">:</span><span class="w"> </span><span class="m">420</span><span class="w">
+</span><span class="w">      </span><span class="k">secretName</span><span class="p">:</span><span class="w"> </span>default-token-k4r6f<span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2020-06-18</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/pod%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://russellgao.cn/pod%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E/" data-title="pod 配置文件说明" data-hashtags="kubernetes,pod"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://russellgao.cn/pod%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E/" data-hashtag="kubernetes"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="Share on WhatsApp" data-sharer="whatsapp" data-url="https://russellgao.cn/pod%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E/" data-title="pod 配置文件说明" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://russellgao.cn/pod%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E/" data-title="pod 配置文件说明"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://russellgao.cn/pod%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E/" data-title="pod 配置文件说明"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="Share on Myspace" data-sharer="myspace" data-url="https://russellgao.cn/pod%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E/" data-title="pod 配置文件说明" data-description="pod 配置文件说明"><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="Share on Blogger" data-sharer="blogger" data-url="https://russellgao.cn/pod%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E/" data-title="pod 配置文件说明" data-description="pod 配置文件说明"><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="Share on Evernote" data-sharer="evernote" data-url="https://russellgao.cn/pod%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E/" data-title="pod 配置文件说明"><i class="fab fa-evernote fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/kubernetes/">kubernetes</a>,&nbsp;<a href="/tags/pod/">pod</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/russellgao" target="_blank">高维宗(russellgao)</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><script type="text/javascript" src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.fill%2CArray.prototype.find%2CArray.from%2CIntersectionObserver%2CMath.sign%2CObject.assign%2CPromise%2CObject.entries%2CElement.prototype.closest%2CrequestAnimationFrame%2CCustomEvent%2Chtml5shiv%2CObject.values%2Cfetch%2CElement.prototype.after"></script><script type="text/javascript" src="/lib/object-fit-images/ofi.min.js"></script><script type="text/javascript" src="/lib/valine/Valine.min.js"></script><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/twemoji/twemoji.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10},"comment":{"valine":{"appId":"UPHfC2syBI9Pu5vyncYfvYX5-9Nh9j0Va","appKey":"MBiG6UopXrWQR41mzt7jtq8o","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"en","pageSize":10,"placeholder":"Your comment ...","recordIP":true,"serverURLs":"https://uphfc2sy.lc-cn-e1-shared.com","visitor":true}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"},"twemoji":true};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

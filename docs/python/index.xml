@@ -12,5 +12,14 @@
 	<atom:link href="https://russellgao.cn/python/index.xml" rel="self" type="application/rss+xml" />
     
     
+    <item>
+      <title>如何利用 python 操纵 oracle</title>
+      <link>https://russellgao.cn/python/oracle/</link>
+      <pubDate>Thu, 09 Jul 2020 18:32:00 +0000</pubDate>
+      <author>1060745366@qq.com (高维宗(russellgao))</author>
+      <guid>https://russellgao.cn/python/oracle/</guid>
+      <description>安装库 1 2  pip3 install sqlalchemy pip3 install cx_Oracle   安装客户端 oracle 客户端下载页面: https://www.</description>
+    </item>
+    
   </channel>
 </rss>
