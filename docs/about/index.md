@@ -5,7 +5,7 @@
 高维宗（russellgao），现就职于上海海鼎信息工程股份有限公司，担任运维开发经理。
 
 ## 关注领域
-专注于devops，aiops，golong，python，kubernetes，云原生，算法等领域，热衷于参与开源软件和开源社区。
+专注于devops，aiops，golong，python，kubernetes，servicemesh，云原生，算法等领域，热衷于参与开源软件和开源社区。
 
 ## 个人公众号
 ![](https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.jpg)
