@@ -6,14 +6,6 @@
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
             <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Tue, 10 Nov 2020 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/tags/kubernetes/" rel="self" type="application/rss+xml" /><item>
     <title>istio中的ELK实践</title>
-    <link>https://russellgao.cn/opensrouce/elk/</link>
-    <pubDate>Tue, 10 Nov 2020 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://russellgao.cn/opensrouce/elk/</guid>
-    <description><![CDATA[ELK  这篇文档是由我投稿的云原生社区的文章，节选自 istio-handbook，如果有兴趣可以参考这本书。
- ELK 指的是由 Elasticsearch + Logstash + Kibana 组成的日志采集、存储、展示为一体的日志解决方案，简称 &ldquo;ELK Stack&rdquo;。ELK Stack 还包含 Beats（如Filebeat、Metricbeat、Heartbeat等）、Kafka等成员，是目前主流的一种日志解决方案。]]></description>
-</item><item>
-    <title>istio中的ELK实践</title>
     <link>https://russellgao.cn/elk/</link>
     <pubDate>Tue, 10 Nov 2020 00:00:00 &#43;0000</pubDate>
     <author>Author</author>
