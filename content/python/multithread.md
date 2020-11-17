@@ -160,3 +160,4 @@ p.join()
 
 ## 参考
 - https://docs.python.org/2/library/sys.html#sys.setcheckinterval
+- https://mp.weixin.qq.com/s/nrT8iIe73POFTBpCdfXupA
