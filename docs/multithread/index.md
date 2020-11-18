@@ -115,7 +115,7 @@ def runnner(hostip) :
     os.system("ssh {hostip} {cmd}".format(hostip=hostip,cmd=cmd))
 ​
 ​
-hosts = ["10.0.0.1", "10.0.0.2", "10.0.0.3" , "10.0.0.4", "10.0.0.5","10.0.0.6", "10.0.0.7", "10.0.0.8" , "10.0.0.9", "10.0.0.10"]
+hosts = ["10.0.0.{}".format(i) for i in range(10)]
 ​
 ​
 for hostip in hosts :
@@ -137,7 +137,7 @@ def runnner(hostip) :
     os.system("ssh {hostip} {cmd}".format(hostip=hostip,cmd=cmd))
 ​
 ​
-hosts = ["10.0.0.1", "10.0.0.2", "10.0.0.3" , "10.0.0.4", "10.0.0.5","10.0.0.6", "10.0.0.7", "10.0.0.8" , "10.0.0.9", "10.0.0.10"]
+hosts = ["10.0.0.{}".format(i) for i in range(10)]
 ​
 p = Pool(4)
 ​
