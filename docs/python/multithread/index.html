@@ -5,37 +5,37 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>python中的多线程与多进程 - 大大很二的博客</title><meta name="Description" content="python中的多线程与多进程"><meta property="og:title" content="python中的多线程与多进程" />
-<meta property="og:description" content="python中的多线程与多进程" />
+        <title>python中的多线程与多进程（一） - 大大很二的博客</title><meta name="Description" content="python中的多线程与多进程（一）"><meta property="og:title" content="python中的多线程与多进程（一）" />
+<meta property="og:description" content="python中的多线程与多进程（一）" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://russellgao.cn/python/multithread/" />
 <meta property="og:image" content="https://russellgao.cn/images/profile.jpg"/>
 <meta property="article:published_time" content="2020-11-16T22:32:00+00:00" />
-<meta property="article:modified_time" content="2020-11-18T11:58:42+08:00" /><meta property="og:site_name" content="大大很二的博客" />
+<meta property="article:modified_time" content="2020-11-19T23:26:28+08:00" /><meta property="og:site_name" content="大大很二的博客" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://russellgao.cn/images/profile.jpg"/>
 
-<meta name="twitter:title" content="python中的多线程与多进程"/>
-<meta name="twitter:description" content="python中的多线程与多进程"/>
+<meta name="twitter:title" content="python中的多线程与多进程（一）"/>
+<meta name="twitter:description" content="python中的多线程与多进程（一）"/>
 <meta name="application-name" content="russellgao">
 <meta name="apple-mobile-web-app-title" content="russellgao"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://russellgao.cn/python/multithread/" /><link rel="prev" href="https://russellgao.cn/python/oracle/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://russellgao.cn/python/multithread/" /><link rel="prev" href="https://russellgao.cn/python/oracle/" /><link rel="next" href="https://russellgao.cn/python/concurrent/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "python中的多线程与多进程",
+        "headline": "python中的多线程与多进程（一）",
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/russellgao.cn\/python\/multithread\/"
         },"genre": "python","keywords": "python, 多线程, 多进程","wordcount":  386 ,
-        "url": "https:\/\/russellgao.cn\/python\/multithread\/","datePublished": "2020-11-16T22:32:00+00:00","dateModified": "2020-11-18T11:58:42+08:00","publisher": {
+        "url": "https:\/\/russellgao.cn\/python\/multithread\/","datePublished": "2020-11-16T22:32:00+00:00","dateModified": "2020-11-19T23:26:28+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
                 "name": "russellgao"
-            },"description": "python中的多线程与多进程"
+            },"description": "python中的多线程与多进程（一）"
     }
     </script></head>
     <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
@@ -115,7 +115,7 @@
     <div id="search-dropdown-mobile"></div>
 </div>
 <main class="main">
-                <div class="container"><div class="page single special"><h1 class="single-title animated pulse faster">python中的多线程与多进程</h1><div class="content" id="content"><h2 id="导读">导读</h2>
+                <div class="container"><div class="page single special"><h1 class="single-title animated pulse faster">python中的多线程与多进程（一）</h1><div class="content" id="content"><h2 id="导读">导读</h2>
 <p>在编码的过程，多线程、多进程、并发、并行这些概念肯定不止一次的出现在我们面前。概念理解是一回事，但是能真正用好又是另一回事。不同的编程语言，并发编程难易程度相差还是很大的，正好这几天梳理了他们之间的关系与区别，分享给大家。（基于自己的理解谈谈，如果不对欢迎指出）</p>
 <blockquote>
 <p>灵魂拷问：什么是线程？什么是进程？</p>

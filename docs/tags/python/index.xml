@@ -4,8 +4,16 @@
         <link>https://russellgao.cn/tags/python/</link>
         <description>python - Tag - 大大很二的博客</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
-            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Mon, 16 Nov 2020 22:32:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/tags/python/" rel="self" type="application/rss+xml" /><item>
-    <title>python中的多线程与多进程</title>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Wed, 18 Nov 2020 22:32:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/tags/python/" rel="self" type="application/rss+xml" /><item>
+    <title>python中的多线程与多进程（二）</title>
+    <link>https://russellgao.cn/python/concurrent/</link>
+    <pubDate>Wed, 18 Nov 2020 22:32:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/python/concurrent/</guid>
+    <description><![CDATA[导读  在上一篇&ldquo;python中的多线程与多进程(一)中介绍了进程、线程的概念、基本用法和在 python 中使用遇到的一些坑， 这在一篇中会介绍一些高级的用法，当然更多的是遇到的坑，换言之这是一片避坑指南。
+ concurrent.futures 我们都知道在 python 中，多线程的标准库是使用 threading , 如 ：]]></description>
+</item><item>
+    <title>python中的多线程与多进程（一）</title>
     <link>https://russellgao.cn/multithread/</link>
     <pubDate>Mon, 16 Nov 2020 22:32:00 &#43;0000</pubDate>
     <author>Author</author>
@@ -15,7 +23,7 @@
  进程 进程是资源分配的最小单位。
 线程 线程是 cpu 调度的最小调度。线程又分为内核线程，用户线程。]]></description>
 </item><item>
-    <title>python中的多线程与多进程</title>
+    <title>python中的多线程与多进程（一）</title>
     <link>https://russellgao.cn/python/multithread/</link>
     <pubDate>Mon, 16 Nov 2020 22:32:00 &#43;0000</pubDate>
     <author>Author</author>

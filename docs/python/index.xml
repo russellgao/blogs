@@ -13,7 +13,17 @@
     
     
     <item>
-      <title>python中的多线程与多进程</title>
+      <title>python中的多线程与多进程（二）</title>
+      <link>https://russellgao.cn/python/concurrent/</link>
+      <pubDate>Wed, 18 Nov 2020 22:32:00 +0000</pubDate>
+      <author>1060745366@qq.com (高维宗(russellgao))</author>
+      <guid>https://russellgao.cn/python/concurrent/</guid>
+      <description>导读  在上一篇&amp;ldquo;python中的多线程与多进程(一)中介绍了进程、线程的概念、基本用法和在 python 中使用遇到的一些坑， 这在一篇中会介绍一些高级的用法，当然更多的是遇到的坑，换言之这是一片避坑指南。
+ concurrent.futures 我们都知道在 python 中，多线程的标准库是使用 threading , 如 ：</description>
+    </item>
+    
+    <item>
+      <title>python中的多线程与多进程（一）</title>
       <link>https://russellgao.cn/python/multithread/</link>
       <pubDate>Mon, 16 Nov 2020 22:32:00 +0000</pubDate>
       <author>1060745366@qq.com (高维宗(russellgao))</author>
