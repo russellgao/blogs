@@ -54,8 +54,8 @@ for index,value in enumerate(["python", "java", "golang", "php"]) :
     process.start()
 ```
 
-以上两个库已经 python2 已经支持，可以很少的实现我们多进程与多线程的需求。 python3.2 提供了 `concurrent.futures` 库，并且已经回溯到python2，这个库在 `threading` 
-与 `multiprocessing` 的基础上提供了一层封装，使得使用多线程和多进程的行为上保持了一直，为什么这么说呢且看下面分析，请先看两段代码：
+以上两个库已经 python2 已经支持，可以很好的实现我们多进程与多线程的需求。 python3.2 提供了 `concurrent.futures` 库，并且已经回溯到python2，这个库在 `threading` 
+与 `multiprocessing` 的基础上提供了一层封装，使得多线程和多进程在使用行为上保持了一致，为什么这么说呢，且看下面分析，请先看两段代码：
 
 **多线程**
 ```python
@@ -387,3 +387,6 @@ setup(
 `ps -ef` 查看进程，确实创建了多个进程，但这些进程都被阻塞，没有执行 `runner 函数里面的内容`，程序会被卡死。当时百思不解其中的原因，尝试过很多方法，包括使用原生的 `multiprocessing`
 自己实现进程管理也是同样的效果，最后是同样的代码，换到python3.8，两种方法都可以得到正确结果。python2.7 为啥会卡死，多个进程创建出来没有执行 runner 任务至今还没有找到原因，后续有进展再更新，
 欢迎知道原因的小伙伴留言告知！！！
+
+## 总结
+在python2.7的环境下面，如果通过 `setuptools` 打包安装，安装后多进程使用会有问题，现象是会创建多个子进程出来，但是主进程和子进程都会被阻塞而无法真正执行`runner`任务，一个行之有效的方法是切换到python3（python3.8亲测没有问题，其他的没测过）。
