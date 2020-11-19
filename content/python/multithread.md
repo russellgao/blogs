@@ -1,6 +1,6 @@
 +++
-title = "python中的多线程与多进程"
-description = "python中的多线程与多进程"
+title = "python中的多线程与多进程（一）"
+description = "python中的多线程与多进程（一）"
 date = "2020-11-16 22:32:00"
 aliases = ["python 多线程"]
 author = "russellgao"
