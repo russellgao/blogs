@@ -1,5 +1,16 @@
-# python中的多线程与多进程（二）
-
++++
+title = "python中的多线程与多进程（二）"
+description = "python中的多线程与多进程（二）"
+date = "2020-11-18 22:32:00"
+aliases = ["python 多线程"]
+author = "russellgao"
+draft = false
+tags = [
+    "python",
+    "多线程",
+    "多进程"
+,]
++++
 
 ## 导读
 > 在上一篇["python中的多线程与多进程(一)](https://russellgao.cn/multithread/)中介绍了进程、线程的概念、基本用法和在 python 中使用遇到的一些坑，
@@ -379,4 +390,3 @@ setup(
 
 ## 总结
 在python2.7的环境下面，如果通过 `setuptools` 打包安装，安装后多进程使用会有问题，现象是会创建多个子进程出来，但是主进程和子进程都会被阻塞而无法真正执行`runner`任务，一个行之有效的方法是切换到python3（python3.8亲测没有问题，其他的没测过）。
-

@@ -8,10 +8,10 @@
         <title>python中的多线程与多进程（二） - 大大很二的博客</title><meta name="Description" content="python中的多线程与多进程（二）"><meta property="og:title" content="python中的多线程与多进程（二）" />
 <meta property="og:description" content="python中的多线程与多进程（二）" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://russellgao.cn/python/concurrent/" />
+<meta property="og:url" content="https://russellgao.cn/concurrent/" />
 <meta property="og:image" content="https://russellgao.cn/images/profile.jpg"/>
 <meta property="article:published_time" content="2020-11-18T22:32:00+00:00" />
-<meta property="article:modified_time" content="2020-11-19T23:37:59+08:00" /><meta property="og:site_name" content="大大很二的博客" />
+<meta property="article:modified_time" content="2020-11-18T22:32:00+00:00" /><meta property="og:site_name" content="大大很二的博客" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://russellgao.cn/images/profile.jpg"/>
 
@@ -20,7 +20,7 @@
 <meta name="application-name" content="russellgao">
 <meta name="apple-mobile-web-app-title" content="russellgao"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://russellgao.cn/python/concurrent/" /><link rel="prev" href="https://russellgao.cn/python/multithread/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://russellgao.cn/concurrent/" /><link rel="prev" href="https://russellgao.cn/multithread/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -28,9 +28,9 @@
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/russellgao.cn\/python\/concurrent\/"
-        },"genre": "python","keywords": "python, 多线程, 多进程","wordcount":  1376 ,
-        "url": "https:\/\/russellgao.cn\/python\/concurrent\/","datePublished": "2020-11-18T22:32:00+00:00","dateModified": "2020-11-19T23:37:59+08:00","publisher": {
+            "@id": "https:\/\/russellgao.cn\/concurrent\/"
+        },"genre": "posts","keywords": "python, 多线程, 多进程","wordcount":  1376 ,
+        "url": "https:\/\/russellgao.cn\/concurrent\/","datePublished": "2020-11-18T22:32:00+00:00","dateModified": "2020-11-18T22:32:00+00:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -115,7 +115,29 @@
     <div id="search-dropdown-mobile"></div>
 </div>
 <main class="main">
-                <div class="container"><div class="page single special"><h1 class="single-title animated pulse faster">python中的多线程与多进程（二）</h1><div class="content" id="content"><h2 id="导读">导读</h2>
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">python中的多线程与多进程（二）</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-18">2020-11-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1376 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;7 minutes&nbsp;<span id="/concurrent/" class="leancloud_visitors" data-flag-title="python中的多线程与多进程（二）">
+                        <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;views
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#导读">导读</a></li>
+    <li><a href="#concurrentfutures">concurrent.futures</a></li>
+    <li><a href="#concurrent-使用过程中遇到的坑">concurrent 使用过程中遇到的坑</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="导读">导读</h2>
 <blockquote>
 <p>在上一篇<a href="https://russellgao.cn/multithread/" target="_blank" rel="noopener noreffer">&ldquo;python中的多线程与多进程(一)</a>中介绍了进程、线程的概念、基本用法和在 python 中使用遇到的一些坑，
 这在一篇中会介绍一些高级的用法，当然更多的是遇到的坑，换言之这是一片避坑指南。</p>
@@ -820,9 +842,36 @@
 </blockquote>
 <h2 id="总结">总结</h2>
 <p>在python2.7的环境下面，如果通过 <code>setuptools</code> 打包安装，安装后多进程使用会有问题，现象是会创建多个子进程出来，但是主进程和子进程都会被阻塞而无法真正执行<code>runner</code>任务，一个行之有效的方法是切换到python3（python3.8亲测没有问题，其他的没测过）。</p>
-</div><div id="comments"><div id="valine" class="comment"></div><noscript>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2020-11-18</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/concurrent/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://russellgao.cn/concurrent/" data-title="python中的多线程与多进程（二）" data-hashtags="python,多线程,多进程"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://russellgao.cn/concurrent/" data-hashtag="python"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="Share on WhatsApp" data-sharer="whatsapp" data-url="https://russellgao.cn/concurrent/" data-title="python中的多线程与多进程（二）" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://russellgao.cn/concurrent/" data-title="python中的多线程与多进程（二）"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://russellgao.cn/concurrent/" data-title="python中的多线程与多进程（二）"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="Share on Myspace" data-sharer="myspace" data-url="https://russellgao.cn/concurrent/" data-title="python中的多线程与多进程（二）" data-description="python中的多线程与多进程（二）"><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="Share on Blogger" data-sharer="blogger" data-url="https://russellgao.cn/concurrent/" data-title="python中的多线程与多进程（二）" data-description="python中的多线程与多进程（二）"><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="Share on Evernote" data-sharer="evernote" data-url="https://russellgao.cn/concurrent/" data-title="python中的多线程与多进程（二）"><i class="fab fa-evernote fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/python/">python</a>,&nbsp;<a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a>,&nbsp;<a href="/tags/%E5%A4%9A%E8%BF%9B%E7%A8%8B/">多进程</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/multithread/" class="prev" rel="prev" title="python中的多线程与多进程（一）"><i class="fas fa-angle-left fa-fw"></i>python中的多线程与多进程（一）</a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
-            </noscript></div></div></div>
+            </noscript></div></article></div>
             </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
                 </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/russellgao" target="_blank">高维宗(russellgao)</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
