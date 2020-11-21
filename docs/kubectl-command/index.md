@@ -1,15 +1,5 @@
-+++
-title = "kubectl 常用命令"
-description = "kubectl 常用命令指南"
-date = "2020-11-20"
-aliases = ["kubectl 常用命令指南"]
-author = "russellgao"
-draft = false
-tags = [
-    "kubernetes",
-    "kubectl"
-]
-+++
+# kubectl 常用命令
+
 
 ## 导读
 > kubectl 应该是每个接触 kubernetes 的人都会接触的一个组件，它带给我们强大的命令行体验，本篇文章就是介绍 kubectl 
@@ -106,9 +96,9 @@ pod 场景下，可能会有如下需求:
 # 先查看有哪些namespace
 kubectl get namespace
 # 查看 pod
-kubectl -n xxx get po 
+kubectl -n $namespace get po 
 # 或者
-kubectl get po -n xxx
+kubectl get po -n $namespace
 ```
 上面查看两种写法在达到的效果上是一样的，但是有一个细节可以注意一下，如果环境有命令自动补全的话，资源对象又比较多
 的情况下，第一种写法将会有极大的优势，可以思考这么个一个场景，如：要查看 monitoring namespace 下的某个pod 详情,
@@ -116,7 +106,7 @@ kubectl get po -n xxx
 
 centos 下命令自动补全需要安装 `bash-completion` ，方法为 `yum install -y bash-completion`
 
-如果不加 `-n xxx` ，则默认是 default namespace 
+如果不加 `-n $namespace` ，则默认是 default namespace 
 
 ### 查看所有namespace 的pod
 ```shell script
@@ -127,17 +117,141 @@ kubectl get po -A
 
 ### 查看某个具体的 pod 信息 ，以 wide、json、yaml 的格式输出
 ```shell script
-kubectl -n xxx get po xxx -o wide/json/yaml
+kubectl -n $namespace get po xxx -o wide/json/yaml
 # 如 查看 monitoring 下的 prometheus-0 pod 信息，并以yaml 形式输出。
 kubectl -n monitoring get po prometheus-0 -o yaml
 ```
 
 ### 查看某个 pod 的某个字段信息
+如果我们只想知道 pod 的 hostIP 或者其他的 一些字段， 可以通过 `-o jsonpath` or `-o template` or `-o go-template`
 
+- 其中template 语法遵循 golang template
+- 需要对 pod 的对象模型有一定的了解，如果不了解，可以 `-o yaml` or `-o json` 直接查看。
+
+查看 hostIP 的方法如下: 
+```shell script
+# -o jsonpath
+kubectl -n monitoring get po prometheus-k8s-0 -o jsonpath="{.status.hostIP}" 
+# -o template
+kubectl -n monitoring get po prometheus-k8s-0 -o template --template="{{.status.hostIP}}"
+# -o go-template
+kubectl -n monitoring get po prometheus-k8s-0 -o go-template="{{.status.hostIP}}" 
+```
+
+如果需要查看其他的字段照猫画虎即可。
 
 ### 通过标签选择查看 pod
+通过 `-l key1=value1,key2=value2` 进行选择，如
+```shell script
+kubectl -n monitoring get po -l app=prometheus
+kubectl -n monitoring get po -l app=prometheus,prometheus=k8s
+```
 
 ### 查看某个node 上部署的所有 pod
+```shell script
+#先获取集群内所有的node
+kubectl get node -o wide
+# 假设其中一个 node 的名称为 node-0001
+kubectl  get po -A  -o wide | grep node-0001
+```
+
+通过 `kubectl  get po -A  -o wide | grep` 可以做很多事情，具体可以根据情况而定，比如查看所有状态异常的 pod （非 Running）
+```shell script
+kubectl  get po -A  -o wide | grep -v Running 
+```
+
+### 查看 pod 的详细信息
+```shell script
+kubectl -n monitoring describe po prometheus-k8s-0 
+```
+这个命令在查看 pod 的基本信息和问题定位时特别有用，当 pod 异常，可以查看 Events 或许就能发现问题所在。
+
+### 查看 pod log
+```shell script
+kubectl -n $namespace  logs -f $podName $containerName
+# 其中 $namespace，$podName，$containerName 替换成真实值即可，当 pod 中只有一个 容器时可省略 $containerName，如：
+kubectl -n monitoring  logs -f prometheus-k8s-0 prometheus
+```
+
+### 进入容器
+```shell script
+kubectl -n $namespace exec -it $podName -c $containerName sh
+# 其中 $namespace，$podName，$containerName 替换成真实值即可，当 pod 中只有一个 容器时可省略 -c $containerName，如：
+kubectl -n monitoring exec -it prometheus-k8s-0 -c prometheus sh
+```
+
+### 查看 pod 的资源使用情况
+```shell script
+kubectl -n $namespace top pod
+# 其中 $namespace 替换成真实值即可，如：
+kubectl -n monitoring top pod
+```
+
+### 删除 pod
+```shell script
+kubectl -n $namespace delete po $podName 
+kubectl -n monitoring delete po prometheus-k8s-0
+# 在某些异常情况下删除 pod 会卡住，删不掉，需要强制才能删除 ，强制删除需要增加 --grace-period=0 --force ，
+kubectl -n monitoring delete po prometheus-k8s-0 --grace-period=0 --force 
+```
+
+>原理如下， 默认执行 `delete po` 时，kubectl 会增加--grace-period=30 参数，表示预留30秒的时间给 pod 处理当前的请求，
+但同时也不接收新的请求了，以一种相对优雅的方式停止容器，注意这个参数在创建 pod 时可以指定，默认是30秒。强制删除时需要把--grace-period
+设置为0，表示不等待马上删除，否则强制删除就会失效。
+
+
+### pod 标签管理
+pod 的大多数的情况都会 `deployment` or `statefulset` 来管理，所以标签也会通过它们管理，实际情况下很少会通过
+kubectl 对 pod label 做增删改，如有需要可参考 下面 node 的用法，只需要把资源对象换成 pod 即可。
+## node
+在 pod 一节 已经了解了 `kubectl get` ,`kubectl describe` , 等相关的用法，node 的操作很 pod 类似，只是后面接的资源对象不同。
+
+### 查看有哪些node已经基本信息
+```shell script
+kubectl get node -o wide
+```
+
+### 查看 node 上的详细情况
+
+```shell script
+# 查看所有 node 的详细信息
+kubectl describe node 
+# 也可以查看某个 node 的信息
+kubectl describe node xxx ...
+```
+
+这个命令在定位 node 的问题很有用，会输出如下信息: 
+
+- Labels
+- Annotations
+- Non-terminated Pods (正在运行的 pod)
+- Allocated resources (已经分配的资源)
+- ...
+
+### 查看 node 的资源使用情况
+```shell script
+kubectl top node
+```
+
+### node 的标签管理
+1. 增加标签
+```shell script
+kubectl label node $nodename  key1=value1 key2=value2
+# 如
+kubectl label node node-0001  a1=bbb a2=ccc
+```
+2. 更新标签
+```shell script
+# 在 增加标签的基础 加 --overwrite 参数
+kubectl label node node-0001  a1=bbb --overwrite
+# 当标签不存在也可以 加 --overwrite 参数
+kubectl label node node-0001  a10=bbb --overwrite
+```
+3.
+```shell script
+kubectl label node $nodename key1- key2-
+kubectl label node node-0001 a10- a3-
+```
 
 ## 参考
 - https://kubernetes.io/zh/docs/reference/kubectl/cheatsheet/

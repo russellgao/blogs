@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>kubectl 常用命令 - 大大很二</title><meta name="Description" content="kubectl 常用命令指南"><meta property="og:title" content="kubectl 常用命令" />
+<meta property="og:description" content="kubectl 常用命令指南" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://russellgao.cn/kubernetes/kubectl-command/" />
+<meta property="og:image" content="https://russellgao.cn/images/profile.jpg"/>
+<meta property="article:published_time" content="2020-11-20T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-11-20T00:00:00+00:00" /><meta property="og:site_name" content="大大很二" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://russellgao.cn/images/profile.jpg"/>
+
+<meta name="twitter:title" content="kubectl 常用命令"/>
+<meta name="twitter:description" content="kubectl 常用命令指南"/>
+<meta name="application-name" content="russellgao">
+<meta name="apple-mobile-web-app-title" content="russellgao"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://gitee.com/russellgao/blogs-image/raw/master/images/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://russellgao.cn/kubernetes/kubectl-command/" /><link rel="prev" href="https://russellgao.cn/kubernetes/pod%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "kubectl 常用命令",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/russellgao.cn\/kubernetes\/kubectl-command\/"
+        },"genre": "kubernetes","keywords": "kubernetes, kubectl","wordcount":  995 ,
+        "url": "https:\/\/russellgao.cn\/kubernetes\/kubectl-command\/","datePublished": "2020-11-20T00:00:00+00:00","dateModified": "2020-11-20T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "russellgao"
+            },"description": "kubectl 常用命令指南"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="大大很二"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png"
+        data-srcset="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png, https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png 1.5x, https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png"
+        title="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png" />大大很二</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/"> 首页 </a><a class="menu-item" href="/golang/"> Golang </a><a class="menu-item" href="/kubernetes/"> Kubernetes </a><a class="menu-item" href="/servicemesh/"> ServiceMesh </a><a class="menu-item" href="/python/"> Python </a><a class="menu-item" href="/devops/"> Devops </a><a class="menu-item" href="/argorithm/"> 算法 </a><a class="menu-item" href="/opensrouce/"> 开源项目 </a><a class="menu-item" href="/ai/"> 人工智能 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="大大很二"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png"
+        data-srcset="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png, https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png 1.5x, https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png"
+        title="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png" />大大很二</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/" title="">首页</a><a class="menu-item" href="/golang/" title="">Golang</a><a class="menu-item" href="/kubernetes/" title="">Kubernetes</a><a class="menu-item" href="/servicemesh/" title="">ServiceMesh</a><a class="menu-item" href="/python/" title="">Python</a><a class="menu-item" href="/devops/" title="">Devops</a><a class="menu-item" href="/argorithm/" title="">算法</a><a class="menu-item" href="/opensrouce/" title="">开源项目</a><a class="menu-item" href="/ai/" title="">人工智能</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="page single special"><h1 class="single-title animated pulse faster">kubectl 常用命令</h1><div class="content" id="content"><h2 id="导读">导读</h2>
+<blockquote>
+<p>kubectl 应该是每个接触 kubernetes 的人都会接触的一个组件，它带给我们强大的命令行体验，本篇文章就是介绍 kubectl
+中的一些常用命令，在结合一些具体的使用场景说说如何利用 kubectl 实现。好记性不如烂笔头，在这里尽可能全的罗列，方便后续
+用的时候查找。如果能帮到您就收藏起来吧(😄)。</p>
+<p>本次实验环境是 kubernetes-1.16.9，本篇文档的写作思路是按照平时
+的使用场景进行写作，不会详细介绍 kubectl 的命令，kubectl 详细的帮助文档参考 <code>kubectl --help </code> or <code>kubectl command --help</code> 。</p>
+</blockquote>
+<h2 id="kubectl-支持的命令">kubectl 支持的命令</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kubectl --help
+kubectl controls the Kubernetes cluster manager.
+
+ Find more information at: https://kubernetes.io/docs/reference/kubectl/overview/
+
+Basic Commands <span class="o">(</span>Beginner<span class="o">)</span>:
+  create         Create a resource from a file or from stdin.
+  expose         使用 replication controller, service, deployment 或者 pod 并暴露它作为一个 新的
+Kubernetes Service
+  run            在集群中运行一个指定的镜像
+  <span class="nb">set</span>            为 objects 设置一个指定的特征
+
+Basic Commands <span class="o">(</span>Intermediate<span class="o">)</span>:
+  explain        查看资源的文档
+  get            显示一个或更多 resources
+  edit           在服务器上编辑一个资源
+  delete         Delete resources by filenames, stdin, resources and names, or by resources and label selector
+
+Deploy Commands:
+  rollout        Manage the rollout of a resource
+  scale          为 Deployment, ReplicaSet, Replication Controller 或者 Job 设置一个新的副本数量
+  autoscale      自动调整一个 Deployment, ReplicaSet, 或者 ReplicationController 的副本数量
+
+Cluster Management Commands:
+  certificate    修改 certificate 资源.
+  cluster-info   显示集群信息
+  top            Display Resource <span class="o">(</span>CPU/Memory/Storage<span class="o">)</span> usage.
+  cordon         标记 node 为 unschedulable
+  uncordon       标记 node 为 schedulable
+  drain          Drain node in preparation <span class="k">for</span> maintenance
+  taint          更新一个或者多个 node 上的 taints
+
+Troubleshooting and Debugging Commands:
+  describe       显示一个指定 resource 或者 group 的 resources 详情
+  logs           输出容器在 pod 中的日志
+  attach         Attach 到一个运行中的 container
+  <span class="nb">exec</span>           在一个 container 中执行一个命令
+  port-forward   Forward one or more <span class="nb">local</span> ports to a pod
+  proxy          运行一个 proxy 到 Kubernetes API server
+  cp             复制 files 和 directories 到 containers 和从容器中复制 files 和 directories.
+  auth           Inspect authorization
+
+Advanced Commands:
+  diff           Diff live version against would-be applied version
+  apply          通过文件名或标准输入流<span class="o">(</span>stdin<span class="o">)</span>对资源进行配置
+  patch          使用 strategic merge patch 更新一个资源的 field<span class="o">(</span>s<span class="o">)</span>
+  replace        通过 filename 或者 stdin替换一个资源
+  <span class="nb">wait</span>           Experimental: Wait <span class="k">for</span> a specific condition on one or many resources.
+  convert        在不同的 API versions 转换配置文件
+  kustomize      Build a kustomization target from a directory or a remote url.
+
+Settings Commands:
+  label          更新在这个资源上的 labels
+  annotate       更新一个资源的注解
+  completion     Output shell completion code <span class="k">for</span> the specified shell <span class="o">(</span>bash or zsh<span class="o">)</span>
+
+Other Commands:
+  api-resources  Print the supported API resources on the server
+  api-versions   Print the supported API versions on the server, in the form of <span class="s2">&#34;group/version&#34;</span>
+  config         修改 kubeconfig 文件
+  plugin         Provides utilities <span class="k">for</span> interacting with plugins.
+  version        输出 client 和 server 的版本信息
+
+Usage:
+  kubectl <span class="o">[</span>flags<span class="o">]</span> <span class="o">[</span>options<span class="o">]</span>
+
+Use <span class="s2">&#34;kubectl &lt;command&gt; --help&#34;</span> <span class="k">for</span> more information about a given command.
+Use <span class="s2">&#34;kubectl options&#34;</span> <span class="k">for</span> a list of global command-line options <span class="o">(</span>applies to all commands<span class="o">)</span>.
+</code></pre></td></tr></table>
+</div>
+</div><p>从上面的帮助文档可以看出， kubectl 基本格式为 <code>kubectl verb resource options</code> , kubectl 后跟谓语动词，
+再跟要操作的资源，可以加 options ，如：</p>
+<p>要看 monitoring namespace 下面有哪些pod :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"> kubectl -n monitoring get po 
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="pod">pod</h2>
+<p>pod 场景下，可能会有如下需求:</p>
+<h3 id="查看某个-namespace-下所有的pod">查看某个 namespace 下，所有的pod</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 先查看有哪些namespace</span>
+kubectl get namespace
+<span class="c1"># 查看 pod</span>
+kubectl -n <span class="nv">$namespace</span> get po 
+<span class="c1"># 或者</span>
+kubectl get po -n <span class="nv">$namespace</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>上面查看两种写法在达到的效果上是一样的，但是有一个细节可以注意一下，如果环境有命令自动补全的话，资源对象又比较多
+的情况下，第一种写法将会有极大的优势，可以思考这么个一个场景，如：要查看 monitoring namespace 下的某个pod 详情,
+就可以通过: <code>kubectl -n monitoring get po </code> 加 tab 健，列出这个namespace 下的所有 pod 供筛选。</p>
+<p>centos 下命令自动补全需要安装 <code>bash-completion</code> ，方法为 <code>yum install -y bash-completion</code></p>
+<p>如果不加 <code>-n $namespace</code> ，则默认是 default namespace</p>
+<h3 id="查看所有namespace-的pod">查看所有namespace 的pod</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kubectl get po --all-namespaces 
+<span class="c1"># or</span>
+kubectl get po -A
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="查看某个具体的-pod-信息-以-widejsonyaml-的格式输出">查看某个具体的 pod 信息 ，以 wide、json、yaml 的格式输出</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kubectl -n <span class="nv">$namespace</span> get po xxx -o wide/json/yaml
+<span class="c1"># 如 查看 monitoring 下的 prometheus-0 pod 信息，并以yaml 形式输出。</span>
+kubectl -n monitoring get po prometheus-0 -o yaml
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="查看某个-pod-的某个字段信息">查看某个 pod 的某个字段信息</h3>
+<p>如果我们只想知道 pod 的 hostIP 或者其他的 一些字段， 可以通过 <code>-o jsonpath</code> or <code>-o template</code> or <code>-o go-template</code></p>
+<ul>
+<li>其中template 语法遵循 golang template</li>
+<li>需要对 pod 的对象模型有一定的了解，如果不了解，可以 <code>-o yaml</code> or <code>-o json</code> 直接查看。</li>
+</ul>
+<p>查看 hostIP 的方法如下:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># -o jsonpath</span>
+kubectl -n monitoring get po prometheus-k8s-0 -o <span class="nv">jsonpath</span><span class="o">=</span><span class="s2">&#34;{.status.hostIP}&#34;</span> 
+<span class="c1"># -o template</span>
+kubectl -n monitoring get po prometheus-k8s-0 -o template --template<span class="o">=</span><span class="s2">&#34;{{.status.hostIP}}&#34;</span>
+<span class="c1"># -o go-template</span>
+kubectl -n monitoring get po prometheus-k8s-0 -o go-template<span class="o">=</span><span class="s2">&#34;{{.status.hostIP}}&#34;</span> 
+</code></pre></td></tr></table>
+</div>
+</div><p>如果需要查看其他的字段照猫画虎即可。</p>
+<h3 id="通过标签选择查看-pod">通过标签选择查看 pod</h3>
+<p>通过 <code>-l key1=value1,key2=value2</code> 进行选择，如</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kubectl -n monitoring get po -l <span class="nv">app</span><span class="o">=</span>prometheus
+kubectl -n monitoring get po -l <span class="nv">app</span><span class="o">=</span>prometheus,prometheus<span class="o">=</span>k8s
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="查看某个node-上部署的所有-pod">查看某个node 上部署的所有 pod</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#先获取集群内所有的node</span>
+kubectl get node -o wide
+<span class="c1"># 假设其中一个 node 的名称为 node-0001</span>
+kubectl  get po -A  -o wide <span class="p">|</span> grep node-0001
+</code></pre></td></tr></table>
+</div>
+</div><p>通过 <code>kubectl  get po -A  -o wide | grep</code> 可以做很多事情，具体可以根据情况而定，比如查看所有状态异常的 pod （非 Running）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kubectl  get po -A  -o wide <span class="p">|</span> grep -v Running 
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="查看-pod-的详细信息">查看 pod 的详细信息</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kubectl -n monitoring describe po prometheus-k8s-0 
+</code></pre></td></tr></table>
+</div>
+</div><p>这个命令在查看 pod 的基本信息和问题定位时特别有用，当 pod 异常，可以查看 Events 或许就能发现问题所在。</p>
+<h3 id="查看-pod-log">查看 pod log</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kubectl -n <span class="nv">$namespace</span>  logs -f <span class="nv">$podName</span> <span class="nv">$containerName</span>
+<span class="c1"># 其中 $namespace，$podName，$containerName 替换成真实值即可，当 pod 中只有一个 容器时可省略 $containerName，如：</span>
+kubectl -n monitoring  logs -f prometheus-k8s-0 prometheus
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="进入容器">进入容器</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kubectl -n <span class="nv">$namespace</span> <span class="nb">exec</span> -it <span class="nv">$podName</span> -c <span class="nv">$containerName</span> sh
+<span class="c1"># 其中 $namespace，$podName，$containerName 替换成真实值即可，当 pod 中只有一个 容器时可省略 -c $containerName，如：</span>
+kubectl -n monitoring <span class="nb">exec</span> -it prometheus-k8s-0 -c prometheus sh
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="查看-pod-的资源使用情况">查看 pod 的资源使用情况</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kubectl -n <span class="nv">$namespace</span> top pod
+<span class="c1"># 其中 $namespace 替换成真实值即可，如：</span>
+kubectl -n monitoring top pod
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="删除-pod">删除 pod</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kubectl -n <span class="nv">$namespace</span> delete po <span class="nv">$podName</span> 
+kubectl -n monitoring delete po prometheus-k8s-0
+<span class="c1"># 在某些异常情况下删除 pod 会卡住，删不掉，需要强制才能删除 ，强制删除需要增加 --grace-period=0 --force ，</span>
+kubectl -n monitoring delete po prometheus-k8s-0 --grace-period<span class="o">=</span><span class="m">0</span> --force 
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>原理如下， 默认执行 <code>delete po</code> 时，kubectl 会增加&ndash;grace-period=30 参数，表示预留30秒的时间给 pod 处理当前的请求，
+但同时也不接收新的请求了，以一种相对优雅的方式停止容器，注意这个参数在创建 pod 时可以指定，默认是30秒。强制删除时需要把&ndash;grace-period
+设置为0，表示不等待马上删除，否则强制删除就会失效。</p>
+</blockquote>
+<h3 id="pod-标签管理">pod 标签管理</h3>
+<p>pod 的大多数的情况都会 <code>deployment</code> or <code>statefulset</code> 来管理，所以标签也会通过它们管理，实际情况下很少会通过
+kubectl 对 pod label 做增删改，如有需要可参考 下面 node 的用法，只需要把资源对象换成 pod 即可。</p>
+<h2 id="node">node</h2>
+<p>在 pod 一节 已经了解了 <code>kubectl get</code> ,<code>kubectl describe</code> , 等相关的用法，node 的操作很 pod 类似，只是后面接的资源对象不同。</p>
+<h3 id="查看有哪些node已经基本信息">查看有哪些node已经基本信息</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kubectl get node -o wide
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="查看-node-上的详细情况">查看 node 上的详细情况</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 查看所有 node 的详细信息</span>
+kubectl describe node 
+<span class="c1"># 也可以查看某个 node 的信息</span>
+kubectl describe node xxx ...
+</code></pre></td></tr></table>
+</div>
+</div><p>这个命令在定位 node 的问题很有用，会输出如下信息:</p>
+<ul>
+<li>Labels</li>
+<li>Annotations</li>
+<li>Non-terminated Pods (正在运行的 pod)</li>
+<li>Allocated resources (已经分配的资源)</li>
+<li>&hellip;</li>
+</ul>
+<h3 id="查看-node-的资源使用情况">查看 node 的资源使用情况</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kubectl top node
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="node-的标签管理">node 的标签管理</h3>
+<ol>
+<li>增加标签</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kubectl label node <span class="nv">$nodename</span>  <span class="nv">key1</span><span class="o">=</span>value1 <span class="nv">key2</span><span class="o">=</span>value2
+<span class="c1"># 如</span>
+kubectl label node node-0001  <span class="nv">a1</span><span class="o">=</span>bbb <span class="nv">a2</span><span class="o">=</span>ccc
+</code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>更新标签</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 在 增加标签的基础 加 --overwrite 参数</span>
+kubectl label node node-0001  <span class="nv">a1</span><span class="o">=</span>bbb --overwrite
+<span class="c1"># 当标签不存在也可以 加 --overwrite 参数</span>
+kubectl label node node-0001  <span class="nv">a10</span><span class="o">=</span>bbb --overwrite
+</code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li></li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kubectl label node <span class="nv">$nodename</span> key1- key2-
+kubectl label node node-0001 a10- a3-
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://kubernetes.io/zh/docs/reference/kubectl/cheatsheet/">https://kubernetes.io/zh/docs/reference/kubectl/cheatsheet/</a></li>
+</ul>
+</div><div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></div></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/russellgao" target="_blank">高维宗(russellgao)</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href="http://beian.miit.gov.cn/" target="_blank">沪ICP备2020034038号</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><script type="text/javascript" src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.fill%2CArray.prototype.find%2CArray.from%2CIntersectionObserver%2CMath.sign%2CObject.assign%2CPromise%2CObject.entries%2CElement.prototype.closest%2CrequestAnimationFrame%2CCustomEvent%2Chtml5shiv%2CObject.values%2Cfetch%2CElement.prototype.after"></script><script type="text/javascript" src="/lib/object-fit-images/ofi.min.js"></script><script type="text/javascript" src="/lib/valine/Valine.min.js"></script><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/twemoji/twemoji.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10},"comment":{"valine":{"appId":"UPHfC2syBI9Pu5vyncYfvYX5-9Nh9j0Va","appKey":"MBiG6UopXrWQR41mzt7jtq8o","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"en","pageSize":10,"placeholder":"Your comment ...","recordIP":true,"serverURLs":"https://uphfc2sy.lc-cn-e1-shared.com","visitor":true}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"},"twemoji":true};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
