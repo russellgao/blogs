@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>markdown - Tag - 大大很二</title>
+        <link>https://russellgao.cn/tags/markdown/</link>
+        <description>markdown - Tag - 大大很二</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Thu, 19 Nov 2020 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/tags/markdown/" rel="self" type="application/rss+xml" /><item>
+    <title>markdown中插入表情的方法</title>
+    <link>https://russellgao.cn/markdownemoji/</link>
+    <pubDate>Thu, 19 Nov 2020 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/markdownemoji/</guid>
+    <description><![CDATA[导读  markdown 中也是可以插入表情，但并不是所有的markdown 解析器都支持，我本地用的 Goland、MacDown 不支持，但是 hugo 是支持的， 写作的过程可以适当加入一些表情，可以表达当时写作的一个心情。]]></description>
+</item></channel>
+</rss>
