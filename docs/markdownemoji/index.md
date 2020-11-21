@@ -82,6 +82,8 @@ emoji 的表情大全参考 : [https://www.webfx.com/tools/emoji-cheat-sheet/](h
 ...
 ```
 
+:/play secret:
+
 ## 参考
 - https://www.webfx.com/tools/emoji-cheat-sheet/
 

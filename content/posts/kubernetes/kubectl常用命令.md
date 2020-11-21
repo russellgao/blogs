@@ -1,5 +1,15 @@
-# kubectl 常用命令
-
++++
+title = "kubectl 常用命令"
+description = "kubectl 常用命令指南"
+date = "2020-11-20"
+aliases = ["kubectl 常用命令指南"]
+author = "russellgao"
+draft = false
+tags = [
+    "kubernetes",
+    "kubectl"
+]
++++
 
 ## 导读
 > kubectl 应该是每个接触 kubernetes 的人都会接触的一个组件，它带给我们强大的命令行体验，本篇文章就是介绍 kubectl 

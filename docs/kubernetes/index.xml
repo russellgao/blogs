@@ -18,7 +18,7 @@
       <pubDate>Fri, 20 Nov 2020 00:00:00 +0000</pubDate>
       <author>1060745366@qq.com (高维宗(russellgao))</author>
       <guid>https://russellgao.cn/kubernetes/kubectl%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</guid>
-      <description>导读  kubectl 应该是每个接触 kubernetes 的人都会接触的一个组件，它带给我们强大的命令行体验，这篇文章就是介绍 kubectl 中的一些常用命令，在结合一些具体的使用场景说说如何利用 kubectl 实现。好记性不如烂笔头，在这里尽可能全的罗列，方便后续 用的时候查找。如果能帮到你们就收藏起来吧(😄)。</description>
+      <description>导读  kubectl 应该是每个接触 kubernetes 的人都会接触的一个组件，它带给我们强大的命令行体验，本篇文章就是介绍 kubectl 中的一些常用命令，在结合一些具体的使用场景说说如何利用 kubectl 实现。好记性不如烂笔头，在这里尽可能全的罗列，方便后续 用的时候查找。如果能帮到您就收藏起来吧(😄)。</description>
     </item>
     
     <item>

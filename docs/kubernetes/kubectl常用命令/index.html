@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/russellgao.cn\/kubernetes\/kubectl%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4\/"
-        },"genre": "kubernetes","keywords": "kubernetes, kubectl","wordcount":  13 ,
+        },"genre": "kubernetes","keywords": "kubernetes, kubectl","wordcount":  568 ,
         "url": "https:\/\/russellgao.cn\/kubernetes\/kubectl%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4\/","datePublished": "2020-11-20T00:00:00+00:00","dateModified": "2020-11-20T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -115,11 +115,221 @@
 <main class="main">
                 <div class="container"><div class="page single special"><h1 class="single-title animated pulse faster">kubectl 常用命令</h1><div class="content" id="content"><h2 id="导读">导读</h2>
 <blockquote>
-<p>kubectl 应该是每个接触 kubernetes 的人都会接触的一个组件，它带给我们强大的命令行体验，这篇文章就是介绍 kubectl
+<p>kubectl 应该是每个接触 kubernetes 的人都会接触的一个组件，它带给我们强大的命令行体验，本篇文章就是介绍 kubectl
 中的一些常用命令，在结合一些具体的使用场景说说如何利用 kubectl 实现。好记性不如烂笔头，在这里尽可能全的罗列，方便后续
-用的时候查找。如果能帮到你们就收藏起来吧(😄)。</p>
+用的时候查找。如果能帮到您就收藏起来吧(😄)。</p>
+<p>本次实验环境是 kubernetes-1.16.9，本篇文档的写作思路是按照平时
+的使用场景进行写作，不会详细介绍 kubectl 的命令，kubectl 详细的帮助文档参考 <code>kubectl --help </code> or <code>kubectl command --help</code> 。</p>
 </blockquote>
-<h2 id="pod">pod</h2>
+<h2 id="kubectl-支持的命令">kubectl 支持的命令</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kubectl --help
+kubectl controls the Kubernetes cluster manager.
+
+ Find more information at: https://kubernetes.io/docs/reference/kubectl/overview/
+
+Basic Commands <span class="o">(</span>Beginner<span class="o">)</span>:
+  create         Create a resource from a file or from stdin.
+  expose         使用 replication controller, service, deployment 或者 pod 并暴露它作为一个 新的
+Kubernetes Service
+  run            在集群中运行一个指定的镜像
+  <span class="nb">set</span>            为 objects 设置一个指定的特征
+
+Basic Commands <span class="o">(</span>Intermediate<span class="o">)</span>:
+  explain        查看资源的文档
+  get            显示一个或更多 resources
+  edit           在服务器上编辑一个资源
+  delete         Delete resources by filenames, stdin, resources and names, or by resources and label selector
+
+Deploy Commands:
+  rollout        Manage the rollout of a resource
+  scale          为 Deployment, ReplicaSet, Replication Controller 或者 Job 设置一个新的副本数量
+  autoscale      自动调整一个 Deployment, ReplicaSet, 或者 ReplicationController 的副本数量
+
+Cluster Management Commands:
+  certificate    修改 certificate 资源.
+  cluster-info   显示集群信息
+  top            Display Resource <span class="o">(</span>CPU/Memory/Storage<span class="o">)</span> usage.
+  cordon         标记 node 为 unschedulable
+  uncordon       标记 node 为 schedulable
+  drain          Drain node in preparation <span class="k">for</span> maintenance
+  taint          更新一个或者多个 node 上的 taints
+
+Troubleshooting and Debugging Commands:
+  describe       显示一个指定 resource 或者 group 的 resources 详情
+  logs           输出容器在 pod 中的日志
+  attach         Attach 到一个运行中的 container
+  <span class="nb">exec</span>           在一个 container 中执行一个命令
+  port-forward   Forward one or more <span class="nb">local</span> ports to a pod
+  proxy          运行一个 proxy 到 Kubernetes API server
+  cp             复制 files 和 directories 到 containers 和从容器中复制 files 和 directories.
+  auth           Inspect authorization
+
+Advanced Commands:
+  diff           Diff live version against would-be applied version
+  apply          通过文件名或标准输入流<span class="o">(</span>stdin<span class="o">)</span>对资源进行配置
+  patch          使用 strategic merge patch 更新一个资源的 field<span class="o">(</span>s<span class="o">)</span>
+  replace        通过 filename 或者 stdin替换一个资源
+  <span class="nb">wait</span>           Experimental: Wait <span class="k">for</span> a specific condition on one or many resources.
+  convert        在不同的 API versions 转换配置文件
+  kustomize      Build a kustomization target from a directory or a remote url.
+
+Settings Commands:
+  label          更新在这个资源上的 labels
+  annotate       更新一个资源的注解
+  completion     Output shell completion code <span class="k">for</span> the specified shell <span class="o">(</span>bash or zsh<span class="o">)</span>
+
+Other Commands:
+  api-resources  Print the supported API resources on the server
+  api-versions   Print the supported API versions on the server, in the form of <span class="s2">&#34;group/version&#34;</span>
+  config         修改 kubeconfig 文件
+  plugin         Provides utilities <span class="k">for</span> interacting with plugins.
+  version        输出 client 和 server 的版本信息
+
+Usage:
+  kubectl <span class="o">[</span>flags<span class="o">]</span> <span class="o">[</span>options<span class="o">]</span>
+
+Use <span class="s2">&#34;kubectl &lt;command&gt; --help&#34;</span> <span class="k">for</span> more information about a given command.
+Use <span class="s2">&#34;kubectl options&#34;</span> <span class="k">for</span> a list of global command-line options <span class="o">(</span>applies to all commands<span class="o">)</span>.
+</code></pre></td></tr></table>
+</div>
+</div><p>从上面的帮助文档可以看出， kubectl 基本格式为 <code>kubectl verb resource options</code> , kubectl 后跟谓语动词，
+再跟要操作的资源，可以加 options ，如：</p>
+<p>要看 monitoring namespace 下面有哪些pod :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"> kubectl -n monitoring get po 
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="pod">pod</h2>
+<p>pod 场景下，可能会有如下需求:</p>
+<h3 id="查看某个-namespace-下所有的pod">查看某个 namespace 下，所有的pod</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 先查看有哪些namespace</span>
+kubectl get namespace
+<span class="c1"># 查看 pod</span>
+kubectl -n xxx get po 
+<span class="c1"># 或者</span>
+kubectl get po -n xxx
+</code></pre></td></tr></table>
+</div>
+</div><p>上面查看两种写法在达到的效果上是一样的，但是有一个细节可以注意一下，如果环境有命令自动补全的话，资源对象又比较多
+的情况下，第一种写法将会有极大的优势，可以思考这么个一个场景，如：要查看 monitoring namespace 下的某个pod 详情,
+就可以通过: <code>kubectl -n monitoring get po </code> 加 tab 健，列出这个namespace 下的所有 pod 供筛选。</p>
+<p>centos 下命令自动补全需要安装 <code>bash-completion</code> ，方法为 <code>yum install -y bash-completion</code></p>
+<p>如果不加 <code>-n xxx</code> ，则默认是 default namespace</p>
+<h3 id="查看所有namespace-的pod">查看所有namespace 的pod</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kubectl get po --all-namespaces 
+<span class="c1"># or</span>
+kubectl get po -A
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="查看某个具体的-pod-信息-以-widejsonyaml-的格式输出">查看某个具体的 pod 信息 ，以 wide、json、yaml 的格式输出</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kubectl -n xxx get po xxx -o wide/json/yaml
+<span class="c1"># 如 查看 monitoring 下的 prometheus-0 pod 信息，并以yaml 形式输出。</span>
+kubectl -n monitoring get po prometheus-0 -o yaml
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="查看某个-pod-的某个字段信息">查看某个 pod 的某个字段信息</h3>
+<h3 id="通过标签选择查看-pod">通过标签选择查看 pod</h3>
+<h3 id="查看某个node-上部署的所有-pod">查看某个node 上部署的所有 pod</h3>
 <h2 id="参考">参考</h2>
 <ul>
 <li><a href="https://kubernetes.io/zh/docs/reference/kubectl/cheatsheet/">https://kubernetes.io/zh/docs/reference/kubectl/cheatsheet/</a></li>
