@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/russellgao.cn\/kubectl%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4\/"
-        },"genre": "posts","keywords": "kubernetes, kubectl","wordcount":  568 ,
+        },"genre": "posts","keywords": "kubernetes, kubectl","wordcount":  995 ,
         "url": "https:\/\/russellgao.cn\/kubectl%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4\/","datePublished": "2020-11-20T00:00:00+00:00","dateModified": "2020-11-20T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -118,8 +118,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">kubectl 常用命令</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-20">2020-11-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;568 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;3 minutes&nbsp;<span id="/kubectl%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="leancloud_visitors" data-flag-title="kubectl 常用命令">
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-20">2020-11-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;995 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;5 minutes&nbsp;<span id="/kubectl%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="leancloud_visitors" data-flag-title="kubectl 常用命令">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;views
                     </span>&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="true">
@@ -139,6 +139,20 @@
         <li><a href="#查看某个-pod-的某个字段信息">查看某个 pod 的某个字段信息</a></li>
         <li><a href="#通过标签选择查看-pod">通过标签选择查看 pod</a></li>
         <li><a href="#查看某个node-上部署的所有-pod">查看某个node 上部署的所有 pod</a></li>
+        <li><a href="#查看-pod-的详细信息">查看 pod 的详细信息</a></li>
+        <li><a href="#查看-pod-log">查看 pod log</a></li>
+        <li><a href="#进入容器">进入容器</a></li>
+        <li><a href="#查看-pod-的资源使用情况">查看 pod 的资源使用情况</a></li>
+        <li><a href="#删除-pod">删除 pod</a></li>
+        <li><a href="#pod-标签管理">pod 标签管理</a></li>
+      </ul>
+    </li>
+    <li><a href="#node">node</a>
+      <ul>
+        <li><a href="#查看有哪些node已经基本信息">查看有哪些node已经基本信息</a></li>
+        <li><a href="#查看-node-上的详细情况">查看 node 上的详细情况</a></li>
+        <li><a href="#查看-node-的资源使用情况">查看 node 的资源使用情况</a></li>
+        <li><a href="#node-的标签管理">node 的标签管理</a></li>
       </ul>
     </li>
     <li><a href="#参考">参考</a></li>
@@ -322,16 +336,16 @@ Use <span class="s2">&#34;kubectl options&#34;</span> <span class="k">for</span>
 <pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 先查看有哪些namespace</span>
 kubectl get namespace
 <span class="c1"># 查看 pod</span>
-kubectl -n xxx get po 
+kubectl -n <span class="nv">$namespace</span> get po 
 <span class="c1"># 或者</span>
-kubectl get po -n xxx
+kubectl get po -n <span class="nv">$namespace</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>上面查看两种写法在达到的效果上是一样的，但是有一个细节可以注意一下，如果环境有命令自动补全的话，资源对象又比较多
 的情况下，第一种写法将会有极大的优势，可以思考这么个一个场景，如：要查看 monitoring namespace 下的某个pod 详情,
 就可以通过: <code>kubectl -n monitoring get po </code> 加 tab 健，列出这个namespace 下的所有 pod 供筛选。</p>
 <p>centos 下命令自动补全需要安装 <code>bash-completion</code> ，方法为 <code>yum install -y bash-completion</code></p>
-<p>如果不加 <code>-n xxx</code> ，则默认是 default namespace</p>
+<p>如果不加 <code>-n $namespace</code> ，则默认是 default namespace</p>
 <h3 id="查看所有namespace-的pod">查看所有namespace 的pod</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -353,15 +367,235 @@ kubectl get po -A
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">kubectl -n xxx get po xxx -o wide/json/yaml
+<pre class="chroma"><code class="language-shell" data-lang="shell">kubectl -n <span class="nv">$namespace</span> get po xxx -o wide/json/yaml
 <span class="c1"># 如 查看 monitoring 下的 prometheus-0 pod 信息，并以yaml 形式输出。</span>
 kubectl -n monitoring get po prometheus-0 -o yaml
 </code></pre></td></tr></table>
 </div>
 </div><h3 id="查看某个-pod-的某个字段信息">查看某个 pod 的某个字段信息</h3>
+<p>如果我们只想知道 pod 的 hostIP 或者其他的 一些字段， 可以通过 <code>-o jsonpath</code> or <code>-o template</code> or <code>-o go-template</code></p>
+<ul>
+<li>其中template 语法遵循 golang template</li>
+<li>需要对 pod 的对象模型有一定的了解，如果不了解，可以 <code>-o yaml</code> or <code>-o json</code> 直接查看。</li>
+</ul>
+<p>查看 hostIP 的方法如下:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># -o jsonpath</span>
+kubectl -n monitoring get po prometheus-k8s-0 -o <span class="nv">jsonpath</span><span class="o">=</span><span class="s2">&#34;{.status.hostIP}&#34;</span> 
+<span class="c1"># -o template</span>
+kubectl -n monitoring get po prometheus-k8s-0 -o template --template<span class="o">=</span><span class="s2">&#34;{{.status.hostIP}}&#34;</span>
+<span class="c1"># -o go-template</span>
+kubectl -n monitoring get po prometheus-k8s-0 -o go-template<span class="o">=</span><span class="s2">&#34;{{.status.hostIP}}&#34;</span> 
+</code></pre></td></tr></table>
+</div>
+</div><p>如果需要查看其他的字段照猫画虎即可。</p>
 <h3 id="通过标签选择查看-pod">通过标签选择查看 pod</h3>
-<h3 id="查看某个node-上部署的所有-pod">查看某个node 上部署的所有 pod</h3>
-<h2 id="参考">参考</h2>
+<p>通过 <code>-l key1=value1,key2=value2</code> 进行选择，如</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kubectl -n monitoring get po -l <span class="nv">app</span><span class="o">=</span>prometheus
+kubectl -n monitoring get po -l <span class="nv">app</span><span class="o">=</span>prometheus,prometheus<span class="o">=</span>k8s
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="查看某个node-上部署的所有-pod">查看某个node 上部署的所有 pod</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">#先获取集群内所有的node</span>
+kubectl get node -o wide
+<span class="c1"># 假设其中一个 node 的名称为 node-0001</span>
+kubectl  get po -A  -o wide <span class="p">|</span> grep node-0001
+</code></pre></td></tr></table>
+</div>
+</div><p>通过 <code>kubectl  get po -A  -o wide | grep</code> 可以做很多事情，具体可以根据情况而定，比如查看所有状态异常的 pod （非 Running）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kubectl  get po -A  -o wide <span class="p">|</span> grep -v Running 
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="查看-pod-的详细信息">查看 pod 的详细信息</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kubectl -n monitoring describe po prometheus-k8s-0 
+</code></pre></td></tr></table>
+</div>
+</div><p>这个命令在查看 pod 的基本信息和问题定位时特别有用，当 pod 异常，可以查看 Events 或许就能发现问题所在。</p>
+<h3 id="查看-pod-log">查看 pod log</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kubectl -n <span class="nv">$namespace</span>  logs -f <span class="nv">$podName</span> <span class="nv">$containerName</span>
+<span class="c1"># 其中 $namespace，$podName，$containerName 替换成真实值即可，当 pod 中只有一个 容器时可省略 $containerName，如：</span>
+kubectl -n monitoring  logs -f prometheus-k8s-0 prometheus
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="进入容器">进入容器</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kubectl -n <span class="nv">$namespace</span> <span class="nb">exec</span> -it <span class="nv">$podName</span> -c <span class="nv">$containerName</span> sh
+<span class="c1"># 其中 $namespace，$podName，$containerName 替换成真实值即可，当 pod 中只有一个 容器时可省略 -c $containerName，如：</span>
+kubectl -n monitoring <span class="nb">exec</span> -it prometheus-k8s-0 -c prometheus sh
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="查看-pod-的资源使用情况">查看 pod 的资源使用情况</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kubectl -n <span class="nv">$namespace</span> top pod
+<span class="c1"># 其中 $namespace 替换成真实值即可，如：</span>
+kubectl -n monitoring top pod
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="删除-pod">删除 pod</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kubectl -n <span class="nv">$namespace</span> delete po <span class="nv">$podName</span> 
+kubectl -n monitoring delete po prometheus-k8s-0
+<span class="c1"># 在某些异常情况下删除 pod 会卡住，删不掉，需要强制才能删除 ，强制删除需要增加 --grace-period=0 --force ，</span>
+kubectl -n monitoring delete po prometheus-k8s-0 --grace-period<span class="o">=</span><span class="m">0</span> --force 
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>原理如下， 默认执行 <code>delete po</code> 时，kubectl 会增加&ndash;grace-period=30 参数，表示预留30秒的时间给 pod 处理当前的请求，
+但同时也不接收新的请求了，以一种相对优雅的方式停止容器，注意这个参数在创建 pod 时可以指定，默认是30秒。强制删除时需要把&ndash;grace-period
+设置为0，表示不等待马上删除，否则强制删除就会失效。</p>
+</blockquote>
+<h3 id="pod-标签管理">pod 标签管理</h3>
+<p>pod 的大多数的情况都会 <code>deployment</code> or <code>statefulset</code> 来管理，所以标签也会通过它们管理，实际情况下很少会通过
+kubectl 对 pod label 做增删改，如有需要可参考 下面 node 的用法，只需要把资源对象换成 pod 即可。</p>
+<h2 id="node">node</h2>
+<p>在 pod 一节 已经了解了 <code>kubectl get</code> ,<code>kubectl describe</code> , 等相关的用法，node 的操作很 pod 类似，只是后面接的资源对象不同。</p>
+<h3 id="查看有哪些node已经基本信息">查看有哪些node已经基本信息</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kubectl get node -o wide
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="查看-node-上的详细情况">查看 node 上的详细情况</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 查看所有 node 的详细信息</span>
+kubectl describe node 
+<span class="c1"># 也可以查看某个 node 的信息</span>
+kubectl describe node xxx ...
+</code></pre></td></tr></table>
+</div>
+</div><p>这个命令在定位 node 的问题很有用，会输出如下信息:</p>
+<ul>
+<li>Labels</li>
+<li>Annotations</li>
+<li>Non-terminated Pods (正在运行的 pod)</li>
+<li>Allocated resources (已经分配的资源)</li>
+<li>&hellip;</li>
+</ul>
+<h3 id="查看-node-的资源使用情况">查看 node 的资源使用情况</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kubectl top node
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="node-的标签管理">node 的标签管理</h3>
+<ol>
+<li>增加标签</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kubectl label node <span class="nv">$nodename</span>  <span class="nv">key1</span><span class="o">=</span>value1 <span class="nv">key2</span><span class="o">=</span>value2
+<span class="c1"># 如</span>
+kubectl label node node-0001  <span class="nv">a1</span><span class="o">=</span>bbb <span class="nv">a2</span><span class="o">=</span>ccc
+</code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>更新标签</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 在 增加标签的基础 加 --overwrite 参数</span>
+kubectl label node node-0001  <span class="nv">a1</span><span class="o">=</span>bbb --overwrite
+<span class="c1"># 当标签不存在也可以 加 --overwrite 参数</span>
+kubectl label node node-0001  <span class="nv">a10</span><span class="o">=</span>bbb --overwrite
+</code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li></li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kubectl label node <span class="nv">$nodename</span> key1- key2-
+kubectl label node node-0001 a10- a3-
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="参考">参考</h2>
 <ul>
 <li><a href="https://kubernetes.io/zh/docs/reference/kubectl/cheatsheet/">https://kubernetes.io/zh/docs/reference/kubectl/cheatsheet/</a></li>
 </ul>
