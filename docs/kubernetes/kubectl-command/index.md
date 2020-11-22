@@ -102,7 +102,7 @@ kubectl get po -n $namespace
 ```
 上面两种写法在达到的效果上是一样的，但是有一个细节可以注意一下，如果 kubectl 环境有命令自动补全的话，资源对象又比较多
 的情况下，第一种写法将会有极大的优势，可以思考这么个场景，如：要查看 monitoring namespace 下的某个pod 详情,
-就可以通过: `kubectl -n monitoring get po ` 加 tab 健，列出这个namespace 下的所有 pod 供筛选。
+就可以通过: `kubectl -n monitoring get po ` 加 tab 键，列出这个namespace 下的所有 pod 供筛选。
 
 centos 下命令自动补全需要安装 `bash-completion` ，方法为 `yum install -y bash-completion`
 

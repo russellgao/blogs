@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://russellgao.cn/kubectl-command/" />
 <meta property="og:image" content="https://russellgao.cn/images/profile.jpg"/>
 <meta property="article:published_time" content="2020-11-20T00:00:00+00:00" />
-<meta property="article:modified_time" content="2020-11-22T12:03:41+08:00" /><meta property="og:site_name" content="大大很二" />
+<meta property="article:modified_time" content="2020-11-22T12:25:08+08:00" /><meta property="og:site_name" content="大大很二" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://russellgao.cn/images/profile.jpg"/>
 
@@ -28,7 +28,7 @@
             "@type": "WebPage",
             "@id": "https:\/\/russellgao.cn\/kubectl-command\/"
         },"genre": "posts","keywords": "kubernetes, kubectl","wordcount":  1337 ,
-        "url": "https:\/\/russellgao.cn\/kubectl-command\/","datePublished": "2020-11-20T00:00:00+00:00","dateModified": "2020-11-22T12:03:41+08:00","publisher": {
+        "url": "https:\/\/russellgao.cn\/kubectl-command\/","datePublished": "2020-11-20T00:00:00+00:00","dateModified": "2020-11-22T12:25:08+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -355,7 +355,7 @@ kubectl get po -n <span class="nv">$namespace</span>
 </div>
 </div><p>上面两种写法在达到的效果上是一样的，但是有一个细节可以注意一下，如果 kubectl 环境有命令自动补全的话，资源对象又比较多
 的情况下，第一种写法将会有极大的优势，可以思考这么个场景，如：要查看 monitoring namespace 下的某个pod 详情,
-就可以通过: <code>kubectl -n monitoring get po </code> 加 tab 健，列出这个namespace 下的所有 pod 供筛选。</p>
+就可以通过: <code>kubectl -n monitoring get po </code> 加 tab 键，列出这个namespace 下的所有 pod 供筛选。</p>
 <p>centos 下命令自动补全需要安装 <code>bash-completion</code> ，方法为 <code>yum install -y bash-completion</code></p>
 <p>如果不加 <code>-n $namespace</code> ，则默认是 default namespace</p>
 <h3 id="查看所有namespace-的pod">查看所有namespace 的pod</h3>
