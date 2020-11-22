@@ -100,8 +100,8 @@ kubectl -n $namespace get po
 # 或者
 kubectl get po -n $namespace
 ```
-上面查看两种写法在达到的效果上是一样的，但是有一个细节可以注意一下，如果环境有命令自动补全的话，资源对象又比较多
-的情况下，第一种写法将会有极大的优势，可以思考这么个一个场景，如：要查看 monitoring namespace 下的某个pod 详情,
+上面两种写法在达到的效果上是一样的，但是有一个细节可以注意一下，如果 kubectl 环境有命令自动补全的话，资源对象又比较多
+的情况下，第一种写法将会有极大的优势，可以思考这么个场景，如：要查看 monitoring namespace 下的某个pod 详情,
 就可以通过: `kubectl -n monitoring get po ` 加 tab 健，列出这个namespace 下的所有 pod 供筛选。
 
 centos 下命令自动补全需要安装 `bash-completion` ，方法为 `yum install -y bash-completion`
@@ -201,12 +201,29 @@ kubectl -n monitoring delete po prometheus-k8s-0 --grace-period=0 --force
 
 
 ### pod 标签管理
-pod 的大多数的情况都会 `deployment` or `statefulset` 来管理，所以标签也会通过它们管理，实际情况下很少会通过
+pod 的大多数的情况都会由 `deployment` or `statefulset` 来管理，所以标签也会通过它们管理，实际情况下很少会通过
 kubectl 对 pod label 做增删改，如有需要可参考 下面 node 的用法，只需要把资源对象换成 pod 即可。
-## node
-在 pod 一节 已经了解了 `kubectl get` ,`kubectl describe` , 等相关的用法，node 的操作很 pod 类似，只是后面接的资源对象不同。
 
-### 查看有哪些node已经基本信息
+### 文件 copy
+从 pod 中 copy 文件或者 copy 到 pod 中去。
+> **容器中需要有 tar 命令，否则会失败**
+
+```shell script
+# 从本地 copy  到 pod
+kubectl cp /tmp/foo_dir <some-pod>:/tmp/bar_dir
+kubectl -n monitoring cp abc.txt prometheus-k8s-0:/tmp/abc.txt
+# 如果 pod 中有多个 container 可以用 -c 指定 container
+kubectl cp /tmp/foo <some-pod>:/tmp/bar -c <specific-container>
+kubectl -n monitoring cp abc.txt prometheus-k8s-0:/tmp/abc.txt -c prometheus
+# 从 pod copy 到 本地
+kubectl cp <some-pod>:/tmp/foo /tmp/bar
+kubectl -n monitoring cp prometheus-k8s-0:/tmp/abc.txt /tmp/abd.txt
+```
+
+## node
+在 pod 一节 已经了解了 `kubectl get` ,`kubectl describe` , 等相关的用法，node 的操作和 pod 类似，只是后面接的资源对象不同。
+
+### 查看有哪些node以及其基本信息
 ```shell script
 kubectl get node -o wide
 ```
@@ -217,7 +234,7 @@ kubectl get node -o wide
 # 查看所有 node 的详细信息
 kubectl describe node 
 # 也可以查看某个 node 的信息
-kubectl describe node xxx ...
+kubectl describe node node-0001 ...
 ```
 
 这个命令在定位 node 的问题很有用，会输出如下信息: 
@@ -247,11 +264,80 @@ kubectl label node node-0001  a1=bbb --overwrite
 # 当标签不存在也可以 加 --overwrite 参数
 kubectl label node node-0001  a10=bbb --overwrite
 ```
-3.
+3. 删除标签
 ```shell script
 kubectl label node $nodename key1- key2-
 kubectl label node node-0001 a10- a3-
 ```
+
+### 将一个 node 标记为不可调度/可调度
+在调试过程中或者当其中的某些 node 出现问题时，需要将 node 标记为不可调度，等恢复回来再标记回来。
+```shell script
+# 将一个 node 可以 标记为不可调度(unschedulable) ，如果只是看看效果，而不是真正标记可加 --dry-run 参数
+kubectl cordon $nodeName
+kubectl cordon node-0001
+kubectl cordon node-0001 --dry-run
+# 将一个 node 可以 标记为可调度(schedulable) ，如果只是看看效果，而不是真正标记可加 --dry-run 参数
+kubectl uncordon $nodeName
+kubectl uncordon node-0001
+kubectl uncordon node-0001 --dry-run
+```
+
+### 排空 node 上的 pod
+```shell script
+# 排空node 上的所有 pod ，即使没有被 rc 管理，但是不会排空 被 daemonset 管理的 pod， 因为排空之后又会马上创建出来
+kubectl drain foo --force
+```
+
+### node 上的污点（taint）管理
+污点需要配合 pod 的亲和性使用，否则污点没有什么意义
+```shell script
+# 增加/更新  taint
+kubectl taint nodes node-0001 dedicated=special-user:NoSchedule --overwrite
+# 删除 taint
+kubectl taint nodes foo dedicated:NoSchedule-
+kubectl taint nodes foo dedicated-
+```
+整体用法和 label 类似
+
+### node 的  annotate 管理
+和 label 是类似的，只是把 verb 换成 `annotate` 即可
+
+## 其他场景
+> 上面通过 pod 和 node 的例子，穿插的介绍了大部分的 verb（如 get 、describe、top ... ），这个小节再介绍其他的一些常用场景
+
+### apply 
+在准备好一个资源对象的 `yaml` 文件时可以用 `kubectl apply -f xxx.ymal` 使之生效，kubernetes 的api 中并没有 apply，api 中有的是
+create 、update、patch 等，apply 是kubectl 自己封装实现的，先执行 get ，再判断是 create 还是 patch，所以用kubectl 创建或者更新资源时
+都可以用 apply 命令。
+
+```shell script
+# 创建资源
+kubectl apply -f xxx.ymal
+kubectl create -f xxx.ymal
+# 更新资源
+kubectl apply -f xxx.ymal
+kubectl update -f xxx.ymal
+kubectl patch -f xxx.ymal
+```
+
+### 滚动更新
+想象这么一个场景，如果使用 configmap 或者 secret 当作 pod 的环境变量，那么当 configmap 或者 secret 更新了应该如何更新 对应的pod 呢？
+pod 应该都会通过 deployment 或者 statefulset 来环境， 换言之该如何更新 deployment 或者 statefulset 呢？默认情况下
+configmap 或者 secret 的更新是不会触发 deployment 或者 statefulset 的更新，一种可行的方法为:
+
+更新 annotations 中一个无关的字段:
+```shell script
+kubectl -n $namespace patch deployment $deploymentName -p \
+  "{\"spec\":{\"template\":{\"metadata\":{\"annotations\":{\"test_date\":\"`date +'%s'`\"}}}}}"
+
+kubectl -n monitor patch deployment prometheus -p \
+  "{\"spec\":{\"template\":{\"metadata\":{\"annotations\":{\"test_date\":\"`date +'%s'`\"}}}}}"
+```
+
+## 总结
+这篇文章介绍了 kubectl 的基本用法，常见场景中的一些操作，如果有其他场景可以通过 `kubectl --help` 和 `kubectl command --help` 查看帮助文档。
+如有不正确之处欢迎指正。
 
 ## 参考
 - https://kubernetes.io/zh/docs/reference/kubectl/cheatsheet/

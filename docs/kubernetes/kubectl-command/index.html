@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://russellgao.cn/kubernetes/kubectl-command/" />
 <meta property="og:image" content="https://russellgao.cn/images/profile.jpg"/>
 <meta property="article:published_time" content="2020-11-20T00:00:00+00:00" />
-<meta property="article:modified_time" content="2020-11-20T00:00:00+00:00" /><meta property="og:site_name" content="大大很二" />
+<meta property="article:modified_time" content="2020-11-22T12:03:41+08:00" /><meta property="og:site_name" content="大大很二" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://russellgao.cn/images/profile.jpg"/>
 
@@ -27,8 +27,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/russellgao.cn\/kubernetes\/kubectl-command\/"
-        },"genre": "kubernetes","keywords": "kubernetes, kubectl","wordcount":  995 ,
-        "url": "https:\/\/russellgao.cn\/kubernetes\/kubectl-command\/","datePublished": "2020-11-20T00:00:00+00:00","dateModified": "2020-11-20T00:00:00+00:00","publisher": {
+        },"genre": "kubernetes","keywords": "kubernetes, kubectl","wordcount":  1337 ,
+        "url": "https:\/\/russellgao.cn\/kubernetes\/kubectl-command\/","datePublished": "2020-11-20T00:00:00+00:00","dateModified": "2020-11-22T12:03:41+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -296,8 +296,8 @@ kubectl -n <span class="nv">$namespace</span> get po
 kubectl get po -n <span class="nv">$namespace</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>上面查看两种写法在达到的效果上是一样的，但是有一个细节可以注意一下，如果环境有命令自动补全的话，资源对象又比较多
-的情况下，第一种写法将会有极大的优势，可以思考这么个一个场景，如：要查看 monitoring namespace 下的某个pod 详情,
+</div><p>上面两种写法在达到的效果上是一样的，但是有一个细节可以注意一下，如果 kubectl 环境有命令自动补全的话，资源对象又比较多
+的情况下，第一种写法将会有极大的优势，可以思考这么个场景，如：要查看 monitoring namespace 下的某个pod 详情,
 就可以通过: <code>kubectl -n monitoring get po </code> 加 tab 健，列出这个namespace 下的所有 pod 供筛选。</p>
 <p>centos 下命令自动补全需要安装 <code>bash-completion</code> ，方法为 <code>yum install -y bash-completion</code></p>
 <p>如果不加 <code>-n $namespace</code> ，则默认是 default namespace</p>
@@ -459,11 +459,40 @@ kubectl -n monitoring delete po prometheus-k8s-0 --grace-period<span class="o">=
 设置为0，表示不等待马上删除，否则强制删除就会失效。</p>
 </blockquote>
 <h3 id="pod-标签管理">pod 标签管理</h3>
-<p>pod 的大多数的情况都会 <code>deployment</code> or <code>statefulset</code> 来管理，所以标签也会通过它们管理，实际情况下很少会通过
+<p>pod 的大多数的情况都会由 <code>deployment</code> or <code>statefulset</code> 来管理，所以标签也会通过它们管理，实际情况下很少会通过
 kubectl 对 pod label 做增删改，如有需要可参考 下面 node 的用法，只需要把资源对象换成 pod 即可。</p>
-<h2 id="node">node</h2>
-<p>在 pod 一节 已经了解了 <code>kubectl get</code> ,<code>kubectl describe</code> , 等相关的用法，node 的操作很 pod 类似，只是后面接的资源对象不同。</p>
-<h3 id="查看有哪些node已经基本信息">查看有哪些node已经基本信息</h3>
+<h3 id="文件-copy">文件 copy</h3>
+<p>从 pod 中 copy 文件或者 copy 到 pod 中去。</p>
+<blockquote>
+<p><strong>容器中需要有 tar 命令，否则会失败</strong></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 从本地 copy  到 pod</span>
+kubectl cp /tmp/foo_dir &lt;some-pod&gt;:/tmp/bar_dir
+kubectl -n monitoring cp abc.txt prometheus-k8s-0:/tmp/abc.txt
+<span class="c1"># 如果 pod 中有多个 container 可以用 -c 指定 container</span>
+kubectl cp /tmp/foo &lt;some-pod&gt;:/tmp/bar -c &lt;specific-container&gt;
+kubectl -n monitoring cp abc.txt prometheus-k8s-0:/tmp/abc.txt -c prometheus
+<span class="c1"># 从 pod copy 到 本地</span>
+kubectl cp &lt;some-pod&gt;:/tmp/foo /tmp/bar
+kubectl -n monitoring cp prometheus-k8s-0:/tmp/abc.txt /tmp/abd.txt
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="node">node</h2>
+<p>在 pod 一节 已经了解了 <code>kubectl get</code> ,<code>kubectl describe</code> , 等相关的用法，node 的操作和 pod 类似，只是后面接的资源对象不同。</p>
+<h3 id="查看有哪些node以及其基本信息">查看有哪些node以及其基本信息</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -484,7 +513,7 @@ kubectl 对 pod label 做增删改，如有需要可参考 下面 node 的用法
 <pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 查看所有 node 的详细信息</span>
 kubectl describe node 
 <span class="c1"># 也可以查看某个 node 的信息</span>
-kubectl describe node xxx ...
+kubectl describe node node-0001 ...
 </code></pre></td></tr></table>
 </div>
 </div><p>这个命令在定位 node 的问题很有用，会输出如下信息:</p>
@@ -538,7 +567,7 @@ kubectl label node node-0001  <span class="nv">a10</span><span class="o">=</span
 </code></pre></td></tr></table>
 </div>
 </div><ol start="3">
-<li></li>
+<li>删除标签</li>
 </ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -550,7 +579,115 @@ kubectl label node node-0001  <span class="nv">a10</span><span class="o">=</span
 kubectl label node node-0001 a10- a3-
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="参考">参考</h2>
+</div><h3 id="将一个-node-标记为不可调度可调度">将一个 node 标记为不可调度/可调度</h3>
+<p>在调试过程中或者当其中的某些 node 出现问题时，需要将 node 标记为不可调度，等恢复回来再标记回来。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 将一个 node 可以 标记为不可调度(unschedulable) ，如果只是看看效果，而不是真正标记可加 --dry-run 参数</span>
+kubectl cordon <span class="nv">$nodeName</span>
+kubectl cordon node-0001
+kubectl cordon node-0001 --dry-run
+<span class="c1"># 将一个 node 可以 标记为可调度(schedulable) ，如果只是看看效果，而不是真正标记可加 --dry-run 参数</span>
+kubectl uncordon <span class="nv">$nodeName</span>
+kubectl uncordon node-0001
+kubectl uncordon node-0001 --dry-run
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="排空-node-上的-pod">排空 node 上的 pod</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 排空node 上的所有 pod ，即使没有被 rc 管理，但是不会排空 被 daemonset 管理的 pod， 因为排空之后又会马上创建出来</span>
+kubectl drain foo --force
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="node-上的污点taint管理">node 上的污点（taint）管理</h3>
+<p>污点需要配合 pod 的亲和性使用，否则污点没有什么意义</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 增加/更新  taint</span>
+kubectl taint nodes node-0001 <span class="nv">dedicated</span><span class="o">=</span>special-user:NoSchedule --overwrite
+<span class="c1"># 删除 taint</span>
+kubectl taint nodes foo dedicated:NoSchedule-
+kubectl taint nodes foo dedicated-
+</code></pre></td></tr></table>
+</div>
+</div><p>整体用法和 label 类似</p>
+<h3 id="node-的--annotate-管理">node 的  annotate 管理</h3>
+<p>和 label 是类似的，只是把 verb 换成 <code>annotate</code> 即可</p>
+<h2 id="其他场景">其他场景</h2>
+<blockquote>
+<p>上面通过 pod 和 node 的例子，穿插的介绍了大部分的 verb（如 get 、describe、top &hellip; ），这个小节再介绍其他的一些常用场景</p>
+</blockquote>
+<h3 id="apply">apply</h3>
+<p>在准备好一个资源对象的 <code>yaml</code> 文件时可以用 <code>kubectl apply -f xxx.ymal</code> 使之生效，kubernetes 的api 中并没有 apply，api 中有的是
+create 、update、patch 等，apply 是kubectl 自己封装实现的，先执行 get ，再判断是 create 还是 patch，所以用kubectl 创建或者更新资源时
+都可以用 apply 命令。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 创建资源</span>
+kubectl apply -f xxx.ymal
+kubectl create -f xxx.ymal
+<span class="c1"># 更新资源</span>
+kubectl apply -f xxx.ymal
+kubectl update -f xxx.ymal
+kubectl patch -f xxx.ymal
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="滚动更新">滚动更新</h3>
+<p>想象这么一个场景，如果使用 configmap 或者 secret 当作 pod 的环境变量，那么当 configmap 或者 secret 更新了应该如何更新 对应的pod 呢？
+pod 应该都会通过 deployment 或者 statefulset 来环境， 换言之该如何更新 deployment 或者 statefulset 呢？默认情况下
+configmap 或者 secret 的更新是不会触发 deployment 或者 statefulset 的更新，一种可行的方法为:</p>
+<p>更新 annotations 中一个无关的字段:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kubectl -n <span class="nv">$namespace</span> patch deployment <span class="nv">$deploymentName</span> -p <span class="se">\
+</span><span class="se"></span>  <span class="s2">&#34;{\&#34;spec\&#34;:{\&#34;template\&#34;:{\&#34;metadata\&#34;:{\&#34;annotations\&#34;:{\&#34;test_date\&#34;:\&#34;`date +&#39;%s&#39;`\&#34;}}}}}&#34;</span>
+
+kubectl -n monitor patch deployment prometheus -p <span class="se">\
+</span><span class="se"></span>  <span class="s2">&#34;{\&#34;spec\&#34;:{\&#34;template\&#34;:{\&#34;metadata\&#34;:{\&#34;annotations\&#34;:{\&#34;test_date\&#34;:\&#34;`date +&#39;%s&#39;`\&#34;}}}}}&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="总结">总结</h2>
+<p>这篇文章介绍了 kubectl 的基本用法，常见场景中的一些操作，如果有其他场景可以通过 <code>kubectl --help</code> 和 <code>kubectl command --help</code> 查看帮助文档。
+如有不正确之处欢迎指正。</p>
+<h2 id="参考">参考</h2>
 <ul>
 <li><a href="https://kubernetes.io/zh/docs/reference/kubectl/cheatsheet/">https://kubernetes.io/zh/docs/reference/kubectl/cheatsheet/</a></li>
 </ul>
