@@ -351,3 +351,4 @@ kubectl -n monitor patch deployment prometheus -p \
 
 ## 参考
 - https://kubernetes.io/zh/docs/reference/kubectl/cheatsheet/
+- https://mp.weixin.qq.com/s/OxYbLmTKXn5jrgStIQ6ohQ
