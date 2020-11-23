@@ -193,6 +193,9 @@ http {
 }
 ```
 
+## 接下来
+这是 openresty 配置文件系列篇，这篇介绍了 nginx.conf (全局配置) ，接下来还有 server 、 upstream、location 等介绍。
+每天掌握一个知识点，积少成多，一周玩转 openresty 。
 
 ## 参考
 - https://juejin.cn/post/6844903741678698510
