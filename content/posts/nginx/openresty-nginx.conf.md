@@ -1,18 +1,19 @@
 +++
-title = "nginx 配置文件 （一）"
-description = "nginx 配置文件 （一）"
+title = "openresty 配置文件 （一）"
+description = "openresty 配置文件 （一）"
 date = "2020-11-22"
-aliases = ["markdown中插入表情的方法"]
+aliases = ["openresty 配置文件 （一）"]
 author = "russellgao"
 draft = false
 tags = [
-    "markdown",
-    "emoji"
+    "nginx",
+    "openresty",
+    "nginx.conf"
 ]
 +++
 
 ## 导读
-nginx 在日常工作中用的应该比较多，要想真正了解清楚其原理并不容易。我尝试着从配置的角度去分析 nginx 的基本原理。这篇主要介绍
+openresty（nginx plus） 在日常工作中用的应该比较多，要想真正了解清楚其原理并不容易。我尝试着从配置的角度去分析 nginx 的基本原理。这篇主要介绍
 nginx.conf 这个配置文件，后续再介绍其他的配置文件。
 
 nginx.conf 中主要配置全局配置，配置好之后一般很少改动。
@@ -119,8 +120,10 @@ http {
 
     #开启目录列表访问，合适下载服务器，默认关闭。
     autoindex on;
-
-
+    
+    # 限流
+    limit_req_zone $server_name zone=xiaozhi_log:50m rate=40r/s;
+    limit_req_zone $server_name zone=tico_log:50m rate=40r/s;
     
     # 日志格式定义，这里可以根据自己的日志规范进行自定义
     #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
@@ -170,17 +173,11 @@ http {
 }
 ```
 
+这里面的很多参数可能并不会用到，大部分使用默认的即可。
+
 ## nginx.conf 样例
 ```shell script
-#user  nobody;
 worker_processes  2;
-
-#error_log  logs/error.log;
-#error_log  logs/error.log  notice;
-#error_log  logs/error.log  info;
-
-#pid        logs/nginx.pid;
-
 
 events {
     worker_connections  65535;
@@ -190,12 +187,6 @@ events {
 http {
     include       mime.types;
     default_type  application/octet-stream;
-
-    #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
-    #                  '$status $body_bytes_sent "$http_referer" '
-    #                  '"$http_user_agent" "$http_x_forwarded_for"';
-
-    #access_log  logs/access.log  main;
     log_format  custom     '[$time_local] $remote_addr $remote_user $request '
                             '$status $upstream_response_time $request_time $body_bytes_sent $http_referer '
                             '$http_user_agent $http_x_forwarded_for ' ;
@@ -207,15 +198,15 @@ http {
     scgi_temp_path        /var/run/openresty/nginx-scgi;
 
     sendfile        on;
-    #tcp_nopush     on;
-
-    #keepalive_timeout  0;
-    keepalive_timeout  65;
+    keepalive_timeout  90;
 
     include /etc/nginx/conf.d/*.conf;
 }
 ```
 
+## 接下来
+这是 openresty 配置文件系列篇，这篇介绍了 nginx.conf (全局配置) ，接下来还有 server 、 upstream、location 等介绍。
+每天掌握一个知识点，积少成多，一周玩转 openresty 。
 
 ## 参考
 - https://juejin.cn/post/6844903741678698510
