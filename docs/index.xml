@@ -7,6 +7,14 @@
             <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster>
             <atom:link href="https://russellgao.cn/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>openresty 配置文件 （一）</title>
+    <link>https://russellgao.cn/openresty-nginx.conf/</link>
+    <pubDate>Sun, 22 Nov 2020 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/openresty-nginx.conf/</guid>
+    <description><![CDATA[导读 openresty（nginx plus） 在日常工作中用的应该比较多，要想真正了解清楚其原理并不容易。我尝试着从配置的角度去分析 nginx 的基本原理。这篇主要介绍 nginx.conf 这个配置文件，后续再介绍其他的配置文件。
+nginx.conf 中主要配置全局配置，配置好之后一般很少改动。]]></description>
+</item><item>
     <title>kubernetes 中patch与update比较</title>
     <link>https://russellgao.cn/patch-update/</link>
     <pubDate>Sat, 21 Nov 2020 00:00:00 &#43;0000</pubDate>
@@ -75,13 +83,5 @@ Go 介绍 Go（又称 Golang）是 Google 的 Robert Griesemer，Rob Pike 及 Ke
     <author>Author</author>
     <guid>https://russellgao.cn/pod%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E/</guid>
     <description><![CDATA[Pod的定义文件 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130 131 132 133 134 135  apiVersion:v1kind:Podmetadata:name:stringnamaspace:stringlabels:- name:stringannotations:- name:stringspec:containers:- name:string# 使用的镜像image:stringimagePullPolicy:[Always|Never|IfNotPresent]command:[string]args:[string]# 工作目录workingDir:stringvolumeMounts:- name:stringmountPath:stringreadOnly:booleanports:- name:stringcontainerPort:inthostPort:intprotocol:stringenv:- name:stringvalue:stringresources:limits:cpu:stringmemory:stringrequests:cpu:stringmemory:stringlivenessProbe:exec:command:[string]httpGet:path:stringport:inthost:stringscheme:stringhttpHeaders:- name:stringvalue:stringtcpSocket:port:int# 多久之后去检查initialDelaySeconds:number# 健康检查超时时间timeoutSeconds:number# 多长时间检查一次periodSeconds:number# 成功的阀值，检查几次成功才算成功successThreshold:0# 失败的阀值，检查几次失败才算失败failureThreshold:0securityContext:# 详细参见 pod_SecurityContext 章节# securityContext 可以配置pod 或者container 级别runAsUser:1000# 运行的用户runAsGroup:3000# 运行的用户组fsGroup:2000privileged:bool# 是否以privileged 权限运行，即这是这个进程拥有特权allowPrivilegeEscalation:bool# 控制一个进程是否能比其父进程获取更多的权限，如果一个容器以privileged权限运行或具有CAP_SYS_ADMIN权限，则AllowPrivilegeEscalation的值将总是truecapabilities:add:[&#34;NET_ADMIN&#34;,&#34;SYS_TIME&#34;,&#34;.]]></description>
-</item><item>
-    <title>位运算</title>
-    <link>https://russellgao.cn/bit/</link>
-    <pubDate>Sat, 30 May 2020 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://russellgao.cn/bit/</guid>
-    <description><![CDATA[位运算 计算机中的数在内存中都是以二进制形式进行存储的，用位运算就是直接对整数在内存中的二进制位进行操作，因此其执行效率非常高，在程序中尽量使用位运算进行操作，这会大大提高程序的性能。
-位操作符 &amp; 与运算 &amp; 与运算 两个位都是 1 时，结果才为 1，否则为 0，如]]></description>
 </item></channel>
 </rss>
