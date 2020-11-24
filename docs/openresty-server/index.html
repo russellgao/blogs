@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://russellgao.cn/openresty-server/" />
 <meta property="og:image" content="https://russellgao.cn/images/profile.jpg"/>
 <meta property="article:published_time" content="2020-11-23T00:00:00+00:00" />
-<meta property="article:modified_time" content="2020-11-24T21:27:54+08:00" /><meta property="og:site_name" content="大大很二" />
+<meta property="article:modified_time" content="2020-11-24T23:48:00+08:00" /><meta property="og:site_name" content="大大很二" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://russellgao.cn/images/profile.jpg"/>
 
@@ -27,8 +27,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/russellgao.cn\/openresty-server\/"
-        },"genre": "posts","keywords": "nginx, openresty, server, location","wordcount":  310 ,
-        "url": "https:\/\/russellgao.cn\/openresty-server\/","datePublished": "2020-11-23T00:00:00+00:00","dateModified": "2020-11-24T21:27:54+08:00","publisher": {
+        },"genre": "posts","keywords": "nginx, openresty, server, location","wordcount":  460 ,
+        "url": "https:\/\/russellgao.cn\/openresty-server\/","datePublished": "2020-11-23T00:00:00+00:00","dateModified": "2020-11-24T23:48:00+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -118,8 +118,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">openresty 配置文件 （二）</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-23">2020-11-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;310 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;2 minutes&nbsp;<span id="/openresty-server/" class="leancloud_visitors" data-flag-title="openresty 配置文件 （二）">
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-23">2020-11-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;460 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;3 minutes&nbsp;<span id="/openresty-server/" class="leancloud_visitors" data-flag-title="openresty 配置文件 （二）">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;views
                     </span>&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="true">
@@ -136,8 +136,8 @@
         <li><a href="#server_name">server_name</a></li>
       </ul>
     </li>
-    <li><a href="#upstream">upstream</a></li>
     <li><a href="#location">location</a></li>
+    <li><a href="#upstream">upstream</a></li>
     <li><a href="#参考">参考</a></li>
   </ul>
 </nav></div>
@@ -212,12 +212,14 @@ openresty server 配置，server 的配置一般单独放在 <code>conf.d</code>
 </span><span class="lnt">37
 </span><span class="lnt">38
 </span><span class="lnt">39
+</span><span class="lnt">40
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-shell" data-lang="shell">server <span class="o">{</span>
     <span class="c1">#配置监听端口</span>
     <span class="c1"># listen 详细配置参考 listen 一节</span>
     listen       80<span class="p">;</span>
+
     <span class="c1">#配置访问域名，可以只有一个名称，也可以由多个名称并列，之间用空格隔开。每个名字就是一个域名，由两段或者三段组成，之间由点号“.”隔开</span>
     <span class="c1"># 第一个名称作为此虚拟主机的主要名称</span>
     <span class="c1"># server_name 更加详细的用法参考下面 server_name 一节</span>
@@ -336,8 +338,153 @@ Context:	server
 <li>正则表达式匹配server_name成功</li>
 </ol>
 <p>b. 在以上四种匹配方式中，如果server_name被处于同一优先级的匹配方式多次匹配成功，则首次匹配成功的虚拟主机处理请求。</p>
-<h2 id="upstream">upstream</h2>
 <h2 id="location">location</h2>
+<h2 id="upstream">upstream</h2>
+<p>upstream 是后端服务器组，也称为虚拟服务器组，作用是负载均衡。配置样例参考</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">upstream blog_server <span class="o">{</span>
+    <span class="c1">#upstream的负载均衡，weight是权重，可以根据机器配置定义权重。weigth参数表示权值，权值越高被分配到的几率越大。</span>
+    server 172.19.208.76:80 <span class="nv">weight</span><span class="o">=</span>10<span class="p">;</span>
+    server 172.19.208.77:80 <span class="nv">weight</span><span class="o">=</span>50<span class="p">;</span>
+    server 172.19.208.78:80 <span class="nv">weight</span><span class="o">=</span>40<span class="p">;</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>nginx的upstream目前支持 5 种方式的分配:</p>
+<ul>
+<li>轮询（默认）：每个请求按时间顺序逐一分配到不同的后端服务。如:
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">upstream server <span class="o">{</span>
+    server 172.19.208.76:80<span class="p">;</span>
+    server 172.19.208.77:80<span class="p">;</span>
+    server 172.19.208.78:80<span class="p">;</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>权重 ：指定轮询几率，weight和访问比率成正比，用于后端服务器性能不均的情况。
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">upstream server <span class="o">{</span>
+    server 172.19.208.76:80 <span class="nv">weight</span><span class="o">=</span>10<span class="p">;</span>
+    server 172.19.208.77:80 <span class="nv">weight</span><span class="o">=</span>50<span class="p">;</span>
+    server 172.19.208.78:80 <span class="nv">weight</span><span class="o">=</span>40<span class="p">;</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>ip_hash：每个请求按访问ip的hash结果分配，这样每个访客固定访问一个后端服务器，可以解决session的问题。
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">upstream server <span class="o">{</span>
+    ip_hash<span class="p">;</span>
+    server 172.19.208.76:80<span class="p">;</span>
+    server 172.19.208.77:80<span class="p">;</span>
+    server 172.19.208.78:80<span class="p">;</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>fair：按后端服务器的响应时间来分配请求，响应时间短的优先分配。
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">upstream server <span class="o">{</span>
+    fair<span class="p">;</span>
+    server 172.19.208.76:80<span class="p">;</span>
+    server 172.19.208.77:80<span class="p">;</span>
+    server 172.19.208.78:80<span class="p">;</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>url_hash：按访问url的hash结果来分配请求，使每个url定向到同一个后端服务器，后端服务器为缓存时比较有效。在upstream中加入hash语句，server语句中不能写入weight等其他的参数，hash_method是使用的hash算法。如:
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">upstream server <span class="o">{</span>
+    <span class="nb">hash</span> <span class="nv">$request_uri</span><span class="p">;</span>
+    hash_method crc32<span class="p">;</span>
+    server 172.19.208.76:80<span class="p">;</span>
+    server 172.19.208.77:80<span class="p">;</span>
+    server 172.19.208.78:80<span class="p">;</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<p>在 upstream 中可以给 server 设置状态，如:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">upstream server <span class="o">{</span>
+    server 172.19.208.76:80 down<span class="p">;</span>
+    server 172.19.208.77:80 <span class="nv">weight</span><span class="o">=</span>10<span class="p">;</span>
+    server 172.19.208.78:80 backup<span class="p">;</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>支持的状态有:</p>
+<ol>
+<li>down表示单前的server暂时不参与负载</li>
+<li>weight为weight越大，负载的权重就越大。</li>
+<li>max_fails：允许请求失败的次数默认为1.当超过最大次数时，返回proxy_next_upstream模块定义的错误</li>
+<li>fail_timeout:max_fails次失败后，暂停的时间。</li>
+<li>backup： 其它所有的非backup机器down或者忙的时候，请求backup机器。所以这台机器压力会最轻。</li>
+</ol>
 <h2 id="参考">参考</h2>
 <ul>
 <li><a href="https://www.cnblogs.com/54chensongxia/p/12938929.html">https://www.cnblogs.com/54chensongxia/p/12938929.html</a></li>

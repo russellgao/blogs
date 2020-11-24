@@ -114,6 +114,9 @@ http {
     limit_req_zone $server_name zone=xiaozhi_log:50m rate=40r/s;
     limit_req_zone $server_name zone=tico_log:50m rate=40r/s;
     
+    #开启限制IP连接数的时候需要使用
+    #limit_zone crawler $binary_remote_addr 10m;
+
     # 日志格式定义，这里可以根据自己的日志规范进行自定义
     #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
     #                  '$status $body_bytes_sent "$http_referer" '
