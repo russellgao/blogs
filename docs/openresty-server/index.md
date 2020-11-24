@@ -21,6 +21,7 @@ server 模块是位于 http 模块下面，进行端口监听，并把请求转�
 ```shell script
 server {
     #配置监听端口
+    # listen 详细配置参考 listen 一节
     listen       80;
     #配置访问域名，可以只有一个名称，也可以由多个名称并列，之间用空格隔开。每个名字就是一个域名，由两段或者三段组成，之间由点号“.”隔开
     # 第一个名称作为此虚拟主机的主要名称
@@ -28,11 +29,23 @@ server {
     server_name  russellgao.cn russellgao.com localhost 127.0.0.1;
     
     # log 在全局变量中已经配置，但是每个监听中也可以配置，这样做的好处，在分析日志时比较方便，通过日志就可以知道请求从哪个监听中进来的
+    # 也可以放在具体的 location 中。
     access_log  /usr/local/openresty/nginx/logs/access.log  custom;
     error_log  /usr/local/openresty/nginx/logs/error.log;
     
+    # ssl 配置
+    ssl                  on;
+    ssl_certificate      /usr/local/openresty/nginx/ssl/4753767.pem;
+    ssl_certificate_key  /usr/local/openresty/nginx/ssl/4753767.key;
+    ssl_session_timeout  5m;
+    ssl_protocols  SSLv2 SSLv3 TLSv1 TLSv1.2 TLSv1.1;
+    ssl_ciphers  HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers   on;
+
+    # location 配置，location 介绍参考下面详细介绍
     location / {
-        rewrite ^/(.*) https://russellgao.cn/$1 permanent;
+        root   /usr/local/openresty/nginx/docs;
+        index  index.html index.htm;
     }
 
     error_page   500 502 503 504  /50x.html;
@@ -44,10 +57,33 @@ server {
     location = /404.html {
         root   /usr/local/openresty/nginx/docs;
     }
-
 }
 ```
 一个 server 只能监听一个端口。
+### listen 
+listen 有三种配置语法。这个指令默认的配置值是：listen *:80 | *:8000；只能在server块种配置这个指令。
+```
+//第一种
+listen address[:port] [default_server] [ssl] [http2 | spdy] [proxy_protocol] [setfib=number] [fastopen=number] [backlog=number] [rcvbuf=size] [sndbuf=size] [accept_filter=filter] [deferred] [bind] [ipv6only=on|off] [reuseport] [so_keepalive=on|off|[keepidle]:[keepintvl]:[keepcnt]];
+
+//第二种
+listen port [default_server] [ssl] [http2 | spdy] [proxy_protocol] [setfib=number] [fastopen=number] [backlog=number] [rcvbuf=size] [sndbuf=size] [accept_filter=filter] [deferred] [bind] [ipv6only=on|off] [reuseport] [so_keepalive=on|off|[keepidle]:[keepintvl]:[keepcnt]];
+
+//第三种（可以不用重点关注）
+listen unix:path [default_server] [ssl] [http2 | spdy] [proxy_protocol] [backlog=number] [rcvbuf=size] [sndbuf=size] [accept_filter=filter] [deferred] [bind] [so_keepalive=on|off|[keepidle]:[keepintvl]:[keepcnt]];
+```
+listen指令的配置非常灵活，可以单独制定ip，单独指定端口或者同时指定ip和端口。
+
+关于上面的一些重要参数做如下说明：
+
+- address：监听的IP地址（请求来源的IP地址），如果是IPv6的地址，需要使用中括号“[]”括起来，比如[fe80::1]等。
+- port：端口号，如果只定义了IP地址没有定义端口号，就使用80端口。这边需要做个说明：要是你压根没配置listen指令，那么那么如果nginx以超级用户权限运行，则使用*:80，否则使用*:8000。多个虚拟主机可以同时监听同一个端口,但是server_name需要设置成不一样；
+- default_server：假如通过Host没匹配到对应的虚拟主机，则通过这台虚拟主机处理。
+- backlog=number：设置监听函数listen()最多允许多少网络连接同时处于挂起状态，在FreeBSD中默认为-1，其他平台默认为511。
+- accept_filter=filter，设置监听端口对请求的过滤，被过滤的内容不能被接收和处理。本指令只在FreeBSD和NetBSD 5.0+平台下有效。filter可以设置为dataready或httpready，感兴趣的读者可以参阅Nginx的官方文档。
+- bind：标识符，使用独立的bind()处理此address:port；一般情况下，对于端口相同而IP地址不同的多个连接，Nginx服务器将只使用一个监听命令，并使用bind()处理端口相同的所有连接。
+- ssl：标识符，设置会话连接使用SSL模式进行，此标识符和Nginx服务器提供的HTTPS服务有关。
+
 
 ### server_name
 用于配置虚拟主机的名称。语法是：

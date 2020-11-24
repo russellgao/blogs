@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/russellgao.cn\/openresty-server\/"
-        },"genre": "posts","keywords": "nginx, openresty, server, location","wordcount":  183 ,
+        },"genre": "posts","keywords": "nginx, openresty, server, location","wordcount":  310 ,
         "url": "https:\/\/russellgao.cn\/openresty-server\/","datePublished": "2020-11-23T00:00:00+00:00","dateModified": "2020-11-24T21:27:54+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -118,8 +118,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">openresty 配置文件 （二）</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-23">2020-11-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;183 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;One minute&nbsp;<span id="/openresty-server/" class="leancloud_visitors" data-flag-title="openresty 配置文件 （二）">
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-23">2020-11-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;310 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;2 minutes&nbsp;<span id="/openresty-server/" class="leancloud_visitors" data-flag-title="openresty 配置文件 （二）">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;views
                     </span>&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="true">
@@ -132,6 +132,7 @@
     <li><a href="#导读">导读</a></li>
     <li><a href="#server">server</a>
       <ul>
+        <li><a href="#listen">listen</a></li>
         <li><a href="#server_name">server_name</a></li>
       </ul>
     </li>
@@ -199,10 +200,23 @@ openresty server 配置，server 的配置一般单独放在 <code>conf.d</code>
 </span><span class="lnt">25
 </span><span class="lnt">26
 </span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-shell" data-lang="shell">server <span class="o">{</span>
     <span class="c1">#配置监听端口</span>
+    <span class="c1"># listen 详细配置参考 listen 一节</span>
     listen       80<span class="p">;</span>
     <span class="c1">#配置访问域名，可以只有一个名称，也可以由多个名称并列，之间用空格隔开。每个名字就是一个域名，由两段或者三段组成，之间由点号“.”隔开</span>
     <span class="c1"># 第一个名称作为此虚拟主机的主要名称</span>
@@ -210,11 +224,23 @@ openresty server 配置，server 的配置一般单独放在 <code>conf.d</code>
     server_name  russellgao.cn russellgao.com localhost 127.0.0.1<span class="p">;</span>
     
     <span class="c1"># log 在全局变量中已经配置，但是每个监听中也可以配置，这样做的好处，在分析日志时比较方便，通过日志就可以知道请求从哪个监听中进来的</span>
+    <span class="c1"># 也可以放在具体的 location 中。</span>
     access_log  /usr/local/openresty/nginx/logs/access.log  custom<span class="p">;</span>
     error_log  /usr/local/openresty/nginx/logs/error.log<span class="p">;</span>
     
+    <span class="c1"># ssl 配置</span>
+    ssl                  on<span class="p">;</span>
+    ssl_certificate      /usr/local/openresty/nginx/ssl/4753767.pem<span class="p">;</span>
+    ssl_certificate_key  /usr/local/openresty/nginx/ssl/4753767.key<span class="p">;</span>
+    ssl_session_timeout  5m<span class="p">;</span>
+    ssl_protocols  SSLv2 SSLv3 TLSv1 TLSv1.2 TLSv1.1<span class="p">;</span>
+    ssl_ciphers  HIGH:!aNULL:!MD5<span class="p">;</span>
+    ssl_prefer_server_ciphers   on<span class="p">;</span>
+
+    <span class="c1"># location 配置，location 介绍参考下面详细介绍</span>
     location / <span class="o">{</span>
-        rewrite ^/<span class="o">(</span>.*<span class="o">)</span> https://russellgao.cn/<span class="nv">$1</span> permanent<span class="p">;</span>
+        root   /usr/local/openresty/nginx/docs<span class="p">;</span>
+        index  index.html index.htm<span class="p">;</span>
     <span class="o">}</span>
 
     error_page   <span class="m">500</span> <span class="m">502</span> <span class="m">503</span> <span class="m">504</span>  /50x.html<span class="p">;</span>
@@ -226,11 +252,45 @@ openresty server 配置，server 的配置一般单独放在 <code>conf.d</code>
     <span class="nv">location</span> <span class="o">=</span> /404.html <span class="o">{</span>
         root   /usr/local/openresty/nginx/docs<span class="p">;</span>
     <span class="o">}</span>
-
 <span class="o">}</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>一个 server 只能监听一个端口。</p>
+<h3 id="listen">listen</h3>
+<p>listen 有三种配置语法。这个指令默认的配置值是：listen *:80 | *:8000；只能在server块种配置这个指令。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">//第一种
+listen address[:port] [default_server] [ssl] [http2 | spdy] [proxy_protocol] [setfib=number] [fastopen=number] [backlog=number] [rcvbuf=size] [sndbuf=size] [accept_filter=filter] [deferred] [bind] [ipv6only=on|off] [reuseport] [so_keepalive=on|off|[keepidle]:[keepintvl]:[keepcnt]];
+
+//第二种
+listen port [default_server] [ssl] [http2 | spdy] [proxy_protocol] [setfib=number] [fastopen=number] [backlog=number] [rcvbuf=size] [sndbuf=size] [accept_filter=filter] [deferred] [bind] [ipv6only=on|off] [reuseport] [so_keepalive=on|off|[keepidle]:[keepintvl]:[keepcnt]];
+
+//第三种（可以不用重点关注）
+listen unix:path [default_server] [ssl] [http2 | spdy] [proxy_protocol] [backlog=number] [rcvbuf=size] [sndbuf=size] [accept_filter=filter] [deferred] [bind] [so_keepalive=on|off|[keepidle]:[keepintvl]:[keepcnt]];
+</code></pre></td></tr></table>
+</div>
+</div><p>listen指令的配置非常灵活，可以单独制定ip，单独指定端口或者同时指定ip和端口。</p>
+<p>关于上面的一些重要参数做如下说明：</p>
+<ul>
+<li>address：监听的IP地址（请求来源的IP地址），如果是IPv6的地址，需要使用中括号“[]”括起来，比如[fe80::1]等。</li>
+<li>port：端口号，如果只定义了IP地址没有定义端口号，就使用80端口。这边需要做个说明：要是你压根没配置listen指令，那么那么如果nginx以超级用户权限运行，则使用*:80，否则使用*:8000。多个虚拟主机可以同时监听同一个端口,但是server_name需要设置成不一样；</li>
+<li>default_server：假如通过Host没匹配到对应的虚拟主机，则通过这台虚拟主机处理。</li>
+<li>backlog=number：设置监听函数listen()最多允许多少网络连接同时处于挂起状态，在FreeBSD中默认为-1，其他平台默认为511。</li>
+<li>accept_filter=filter，设置监听端口对请求的过滤，被过滤的内容不能被接收和处理。本指令只在FreeBSD和NetBSD 5.0+平台下有效。filter可以设置为dataready或httpready，感兴趣的读者可以参阅Nginx的官方文档。</li>
+<li>bind：标识符，使用独立的bind()处理此address:port；一般情况下，对于端口相同而IP地址不同的多个连接，Nginx服务器将只使用一个监听命令，并使用bind()处理端口相同的所有连接。</li>
+<li>ssl：标识符，设置会话连接使用SSL模式进行，此标识符和Nginx服务器提供的HTTPS服务有关。</li>
+</ul>
 <h3 id="server_name">server_name</h3>
 <p>用于配置虚拟主机的名称。语法是：</p>
 <div class="highlight"><div class="chroma">
