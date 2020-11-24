@@ -4,12 +4,12 @@
         <link>https://russellgao.cn/tags/server/</link>
         <description>server - Tag - 大大很二</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
-            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Sun, 22 Nov 2020 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/tags/server/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Mon, 23 Nov 2020 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/tags/server/" rel="self" type="application/rss+xml" /><item>
     <title>openresty 配置文件 （二）</title>
     <link>https://russellgao.cn/openresty-server/</link>
-    <pubDate>Sun, 22 Nov 2020 00:00:00 &#43;0000</pubDate>
+    <pubDate>Mon, 23 Nov 2020 00:00:00 &#43;0000</pubDate>
     <author>Author</author>
     <guid>https://russellgao.cn/openresty-server/</guid>
-    <description><![CDATA[导读 ]]></description>
+    <description><![CDATA[导读  这篇是继上一篇 openresty 配置文件 （一） 介绍了 openresty 全局配置之后，介绍 openresty server 配置，server 的配置一般单独放在 conf.]]></description>
 </item></channel>
 </rss>
