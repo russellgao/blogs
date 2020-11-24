@@ -10,7 +10,14 @@
     <pubDate>Sun, 22 Nov 2020 00:00:00 &#43;0000</pubDate>
     <author>Author</author>
     <guid>https://russellgao.cn/openresty-nginx.conf/</guid>
-    <description><![CDATA[导读 openresty（nginx plus） 在日常工作中用的应该比较多，要想真正了解清楚其原理并不容易。我尝试着从配置的角度去分析 nginx 的基本原理。这篇主要介绍 nginx.conf 这个配置文件，后续再介绍其他的配置文件。
+    <description><![CDATA[导读  openresty（nginx plus） 在日常工作中用的应该比较多，要想真正了解清楚其原理并不容易。我尝试着从配置的角度去分析 nginx 的基本原理。这篇主要介绍 nginx.conf 这个配置文件，后续再介绍其他的配置文件。
 nginx.conf 中主要配置全局配置，配置好之后一般很少改动。]]></description>
+</item><item>
+    <title>openresty 配置文件 （二）</title>
+    <link>https://russellgao.cn/openresty-server/</link>
+    <pubDate>Sun, 22 Nov 2020 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/openresty-server/</guid>
+    <description><![CDATA[导读 ]]></description>
 </item></channel>
 </rss>

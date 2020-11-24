@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>location - Tag - 大大很二</title>
+        <link>https://russellgao.cn/tags/location/</link>
+        <description>location - Tag - 大大很二</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Sun, 22 Nov 2020 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/tags/location/" rel="self" type="application/rss+xml" /><item>
+    <title>openresty 配置文件 （二）</title>
+    <link>https://russellgao.cn/openresty-server/</link>
+    <pubDate>Sun, 22 Nov 2020 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/openresty-server/</guid>
+    <description><![CDATA[导读 ]]></description>
+</item></channel>
+</rss>

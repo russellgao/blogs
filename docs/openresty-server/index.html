@@ -5,35 +5,35 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>markdown中插入表情的方法 - 大大很二</title><meta name="Description" content="markdown中插入表情的方法"><meta property="og:title" content="markdown中插入表情的方法" />
-<meta property="og:description" content="markdown中插入表情的方法" />
+        <title>openresty 配置文件 （二） - 大大很二</title><meta name="Description" content="openresty 配置文件 （二）"><meta property="og:title" content="openresty 配置文件 （二）" />
+<meta property="og:description" content="openresty 配置文件 （二）" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://russellgao.cn/markdownemoji/" />
+<meta property="og:url" content="https://russellgao.cn/openresty-server/" />
 <meta property="og:image" content="https://russellgao.cn/images/profile.jpg"/>
-<meta property="article:published_time" content="2020-11-19T00:00:00+00:00" />
-<meta property="article:modified_time" content="2020-11-21T16:28:10+08:00" /><meta property="og:site_name" content="大大很二" />
+<meta property="article:published_time" content="2020-11-22T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-11-22T00:00:00+00:00" /><meta property="og:site_name" content="大大很二" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://russellgao.cn/images/profile.jpg"/>
 
-<meta name="twitter:title" content="markdown中插入表情的方法"/>
-<meta name="twitter:description" content="markdown中插入表情的方法"/>
+<meta name="twitter:title" content="openresty 配置文件 （二）"/>
+<meta name="twitter:description" content="openresty 配置文件 （二）"/>
 <meta name="application-name" content="russellgao">
-<meta name="apple-mobile-web-app-title" content="russellgao"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://gitee.com/russellgao/blogs-image/raw/master/images/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://russellgao.cn/markdownemoji/" /><link rel="prev" href="https://russellgao.cn/elk/" /><link rel="next" href="https://russellgao.cn/openresty-server/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+<meta name="apple-mobile-web-app-title" content="russellgao"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://gitee.com/russellgao/blogs-image/raw/master/images/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://russellgao.cn/openresty-server/" /><link rel="prev" href="https://russellgao.cn/markdownemoji/" /><link rel="next" href="https://russellgao.cn/openresty-nginx.conf/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "markdown中插入表情的方法",
+        "headline": "openresty 配置文件 （二）",
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/russellgao.cn\/markdownemoji\/"
-        },"genre": "posts","keywords": "markdown, emoji","wordcount":  121 ,
-        "url": "https:\/\/russellgao.cn\/markdownemoji\/","datePublished": "2020-11-19T00:00:00+00:00","dateModified": "2020-11-21T16:28:10+08:00","publisher": {
+            "@id": "https:\/\/russellgao.cn\/openresty-server\/"
+        },"genre": "posts","keywords": "nginx, openresty, server, location","wordcount":  1 ,
+        "url": "https:\/\/russellgao.cn\/openresty-server\/","datePublished": "2020-11-22T00:00:00+00:00","dateModified": "2020-11-22T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
                 "name": "russellgao"
-            },"description": "markdown中插入表情的方法"
+            },"description": "openresty 配置文件 （二）"
     }
     </script></head>
     <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
@@ -116,10 +116,10 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">Contents</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animated flipInX">markdown中插入表情的方法</h1><div class="post-meta">
+        </div><article class="page single"><h1 class="single-title animated flipInX">openresty 配置文件 （二）</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-19">2020-11-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;121 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;One minute&nbsp;<span id="/markdownemoji/" class="leancloud_visitors" data-flag-title="markdown中插入表情的方法">
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-22">2020-11-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;One word&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;One minute&nbsp;<span id="/openresty-server/" class="leancloud_visitors" data-flag-title="openresty 配置文件 （二）">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;views
                     </span>&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="true">
@@ -130,131 +130,36 @@
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
     <li><a href="#导读">导读</a></li>
-    <li><a href="#使用场景">使用场景</a></li>
-    <li><a href="#用法">用法</a></li>
-    <li><a href="#参考">参考</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="导读">导读</h2>
-<blockquote>
-<p>markdown 中也是可以插入表情，但并不是所有的markdown 解析器都支持，我本地用的 Goland、MacDown 不支持，但是 hugo 是支持的，
-写作的过程可以适当加入一些表情，可以表达当时写作的一个心情。</p>
-</blockquote>
-<h2 id="使用场景">使用场景</h2>
-<p>markdown 中支持 emoji 的地方有 :</p>
-<ul>
-<li>Campfire</li>
-<li>GitHub</li>
-<li>Basecamp</li>
-<li>Redbooth</li>
-<li>Trac</li>
-<li>Flowdock</li>
-<li>Sprint.ly</li>
-<li>Kandan</li>
-<li>Textbox.io</li>
-<li>Kippt</li>
-<li>Redmine</li>
-<li>JabbR</li>
-<li>Trello</li>
-<li>Hall</li>
-<li>Qiita</li>
-<li>Zendesk</li>
-<li>Ruby China</li>
-<li>Grove</li>
-<li>Idobata</li>
-<li>NodeBB Forums</li>
-<li>Slack</li>
-<li>Streamup</li>
-<li>OrganisedMinds</li>
-<li>Hackpad</li>
-<li>Cryptbin</li>
-<li>Kato</li>
-<li>Reportedly</li>
-<li>Cheerful Ghost</li>
-<li>IRCCloud</li>
-<li>Dashcube</li>
-<li>MyVideoGameList</li>
-<li>Subrosa</li>
-<li>Sococo</li>
-<li>Quip</li>
-<li>And Bang</li>
-<li>Bonusly</li>
-<li>Discourse</li>
-<li>Ello</li>
-<li>Twemoji Awesome</li>
-<li>Got Chosen</li>
-<li>Flow</li>
-<li>ReadMe.io</li>
-<li>esa</li>
-<li>DBook</li>
-<li>Groups.io</li>
-<li>TeamworkChat</li>
-<li>Damn Bugs</li>
-<li>Let&rsquo;s Chat</li>
-<li>Buildkite</li>
-<li>ChatGrape</li>
-<li>Dokuwiki</li>
-<li>Usersnap</li>
-<li>Discord</li>
-<li>Status Hero</li>
-<li>Morfy</li>
-<li>Bitbucket</li>
-<li>Gitter</li>
-<li>Yellow</li>
-<li>YouTube</li>
-<li>Habitica and Mattermost</li>
-</ul>
-<h2 id="用法">用法</h2>
-<p>emoji 的表情大全参考 : <a href="https://www.webfx.com/tools/emoji-cheat-sheet/" target="_blank" rel="noopener noreffer">https://www.webfx.com/tools/emoji-cheat-sheet/</a></p>
-<p>如果想要在 markdown 中使用，只要在相应的地方插入 <code>:xxx:</code> 即可， 其中 xxx 就是表情的名字 ，例:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-markdown" data-lang="markdown"><span class="gu">## 插入表情示例
-</span><span class="gu"></span><span class="k">-</span> 笑： 😄
-<span class="k">-</span> 傻笑 😏
-<span class="k">-</span> 害羞 😊
-...
-</code></pre></td></tr></table>
-</div>
-</div><p>:/play secret:</p>
-<h2 id="参考">参考</h2>
-<ul>
-<li><a href="https://www.webfx.com/tools/emoji-cheat-sheet/">https://www.webfx.com/tools/emoji-cheat-sheet/</a></li>
-</ul>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2020-11-21</span>
+                <span>Updated on 2020-11-22</span>
             </div>
             <div class="post-info-license"></div>
         </div>
         <div class="post-info-line">
             <div class="post-info-md"><span>
-                            <a class="link-to-markdown" href="/markdownemoji/index.md" target="_blank">Read Markdown</a>
+                            <a class="link-to-markdown" href="/openresty-server/index.md" target="_blank">Read Markdown</a>
                         </span></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://russellgao.cn/markdownemoji/" data-title="markdown中插入表情的方法" data-hashtags="markdown,emoji"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://russellgao.cn/markdownemoji/" data-hashtag="markdown"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="Share on WhatsApp" data-sharer="whatsapp" data-url="https://russellgao.cn/markdownemoji/" data-title="markdown中插入表情的方法" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://russellgao.cn/markdownemoji/" data-title="markdown中插入表情的方法"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://russellgao.cn/markdownemoji/" data-title="markdown中插入表情的方法"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="Share on Myspace" data-sharer="myspace" data-url="https://russellgao.cn/markdownemoji/" data-title="markdown中插入表情的方法" data-description="markdown中插入表情的方法"><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="Share on Blogger" data-sharer="blogger" data-url="https://russellgao.cn/markdownemoji/" data-title="markdown中插入表情的方法" data-description="markdown中插入表情的方法"><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="Share on Evernote" data-sharer="evernote" data-url="https://russellgao.cn/markdownemoji/" data-title="markdown中插入表情的方法"><i class="fab fa-evernote fa-fw"></i></a></span>
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://russellgao.cn/openresty-server/" data-title="openresty 配置文件 （二）" data-hashtags="nginx,openresty,server,location"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://russellgao.cn/openresty-server/" data-hashtag="nginx"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="Share on WhatsApp" data-sharer="whatsapp" data-url="https://russellgao.cn/openresty-server/" data-title="openresty 配置文件 （二）" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://russellgao.cn/openresty-server/" data-title="openresty 配置文件 （二）"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://russellgao.cn/openresty-server/" data-title="openresty 配置文件 （二）"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="Share on Myspace" data-sharer="myspace" data-url="https://russellgao.cn/openresty-server/" data-title="openresty 配置文件 （二）" data-description="openresty 配置文件 （二）"><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="Share on Blogger" data-sharer="blogger" data-url="https://russellgao.cn/openresty-server/" data-title="openresty 配置文件 （二）" data-description="openresty 配置文件 （二）"><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="Share on Evernote" data-sharer="evernote" data-url="https://russellgao.cn/openresty-server/" data-title="openresty 配置文件 （二）"><i class="fab fa-evernote fa-fw"></i></a></span>
             </div>
         </div>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/markdown/">markdown</a>,&nbsp;<a href="/tags/emoji/">emoji</a></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/nginx/">nginx</a>,&nbsp;<a href="/tags/openresty/">openresty</a>,&nbsp;<a href="/tags/server/">server</a>,&nbsp;<a href="/tags/location/">location</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="/elk/" class="prev" rel="prev" title="istio中的ELK实践"><i class="fas fa-angle-left fa-fw"></i>istio中的ELK实践</a>
-            <a href="/openresty-server/" class="next" rel="next" title="openresty 配置文件 （二）">openresty 配置文件 （二）<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="/markdownemoji/" class="prev" rel="prev" title="markdown中插入表情的方法"><i class="fas fa-angle-left fa-fw"></i>markdown中插入表情的方法</a>
+            <a href="/openresty-nginx.conf/" class="next" rel="next" title="openresty 配置文件 （一）">openresty 配置文件 （一）<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div id="comments"><div id="valine" class="comment"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
