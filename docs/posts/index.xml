@@ -4,7 +4,14 @@
         <link>https://russellgao.cn/posts/</link>
         <description>All Posts | 大大很二</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
-            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Mon, 23 Nov 2020 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Wed, 25 Nov 2020 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>如何利用 golang 操纵 oracle</title>
+    <link>https://russellgao.cn/oracle-golang/</link>
+    <pubDate>Wed, 25 Nov 2020 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/oracle-golang/</guid>
+    <description><![CDATA[安装库 1 2  pip3 install sqlalchemy pip3 install cx_Oracle   安装客户端 oracle 客户端下载页面: https://www.]]></description>
+</item><item>
     <title>openresty 配置文件 （二）</title>
     <link>https://russellgao.cn/openresty-server/</link>
     <pubDate>Mon, 23 Nov 2020 00:00:00 &#43;0000</pubDate>
