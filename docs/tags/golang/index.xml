@@ -10,7 +10,7 @@
     <pubDate>Wed, 25 Nov 2020 00:00:00 &#43;0000</pubDate>
     <author>Author</author>
     <guid>https://russellgao.cn/oracle-golang/</guid>
-    <description><![CDATA[安装库 1 2  pip3 install sqlalchemy pip3 install cx_Oracle   安装客户端 oracle 客户端下载页面: https://www.]]></description>
+    <description><![CDATA[导读 这篇文章主要介绍如何利用 golang 操作 oracle 数据库，包括基本的增删改查，本地 oracle 环境搭建，以及如何在 docker 中运行。 oracle client 镜像构建并不容易，花了很长时间去踩坑，文中提供了已经构建好的基础镜像，可以直接使用，这里贡献给大家。]]></description>
 </item><item>
     <title>细谈 Golang 中那些设计优美的细节-defer</title>
     <link>https://russellgao.cn/golang/defer/</link>

@@ -2,12 +2,12 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://russellgao.cn/tags/golang/</loc><lastmod>2020-11-25T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://russellgao.cn/tags/oracle/</loc><lastmod>2020-11-25T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://russellgao.cn/posts/</loc><lastmod>2020-11-25T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://russellgao.cn/tags/</loc><lastmod>2020-11-25T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://russellgao.cn/oracle-golang/</loc><lastmod>2020-11-25T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://russellgao.cn/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</loc><lastmod>2020-11-25T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://russellgao.cn/tags/golang/</loc><lastmod>2020-11-27T20:02:37&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://russellgao.cn/tags/oracle/</loc><lastmod>2020-11-27T20:02:37&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://russellgao.cn/posts/</loc><lastmod>2020-11-27T20:02:37&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://russellgao.cn/tags/</loc><lastmod>2020-11-27T20:02:37&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://russellgao.cn/oracle-golang/</loc><lastmod>2020-11-27T20:02:37&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://russellgao.cn/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</loc><lastmod>2020-11-27T20:02:37&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://russellgao.cn/tags/location/</loc><lastmod>2020-11-24T23:48:00&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://russellgao.cn/tags/nginx/</loc><lastmod>2020-11-24T23:48:00&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://russellgao.cn/tags/openresty/</loc><lastmod>2020-11-24T23:48:00&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
@@ -27,13 +27,13 @@
             <loc>https://russellgao.cn/tags/emoji/</loc><lastmod>2020-11-21T16:28:10&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://russellgao.cn/tags/markdown/</loc><lastmod>2020-11-21T16:28:10&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://russellgao.cn/markdownemoji/</loc><lastmod>2020-11-21T16:28:10&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://russellgao.cn/tags/python/</loc><lastmod>2020-11-19T23:38:25&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://russellgao.cn/concurrent/</loc><lastmod>2020-11-19T23:38:25&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://russellgao.cn/python/concurrent/</loc><lastmod>2020-11-19T23:37:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://russellgao.cn/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/</loc><lastmod>2020-11-19T23:38:25&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://russellgao.cn/tags/%E5%A4%9A%E8%BF%9B%E7%A8%8B/</loc><lastmod>2020-11-19T23:38:25&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://russellgao.cn/multithread/</loc><lastmod>2020-11-19T23:26:28&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://russellgao.cn/python/multithread/</loc><lastmod>2020-11-19T23:26:28&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://russellgao.cn/tags/python/</loc><lastmod>2020-11-19T23:38:25&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
+            <loc>https://russellgao.cn/concurrent/</loc><lastmod>2020-11-19T23:38:25&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
+            <loc>https://russellgao.cn/python/concurrent/</loc><lastmod>2020-11-19T23:37:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
+            <loc>https://russellgao.cn/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/</loc><lastmod>2020-11-19T23:38:25&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
+            <loc>https://russellgao.cn/tags/%E5%A4%9A%E8%BF%9B%E7%A8%8B/</loc><lastmod>2020-11-19T23:38:25&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
+            <loc>https://russellgao.cn/multithread/</loc><lastmod>2020-11-19T23:26:28&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
+            <loc>https://russellgao.cn/python/multithread/</loc><lastmod>2020-11-19T23:26:28&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
             <loc>https://russellgao.cn/tags/istio/</loc><lastmod>2020-11-10T23:00:29&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url><url>
             <loc>https://russellgao.cn/elk/</loc><lastmod>2020-11-10T23:00:29&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url><url>
             <loc>https://russellgao.cn/tags/defer/</loc><lastmod>2020-11-14T17:42:10&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>

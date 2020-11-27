@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://russellgao.cn/oracle-golang/" />
 <meta property="og:image" content="https://russellgao.cn/images/profile.jpg"/>
 <meta property="article:published_time" content="2020-11-25T00:00:00+00:00" />
-<meta property="article:modified_time" content="2020-11-25T00:00:00+00:00" /><meta property="og:site_name" content="大大很二" />
+<meta property="article:modified_time" content="2020-11-27T20:02:37+08:00" /><meta property="og:site_name" content="大大很二" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://russellgao.cn/images/profile.jpg"/>
 
@@ -27,8 +27,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/russellgao.cn\/oracle-golang\/"
-        },"genre": "posts","keywords": "golang, oracle, 数据库","wordcount":  48 ,
-        "url": "https:\/\/russellgao.cn\/oracle-golang\/","datePublished": "2020-11-25T00:00:00+00:00","dateModified": "2020-11-25T00:00:00+00:00","publisher": {
+        },"genre": "posts","keywords": "golang, oracle, 数据库","wordcount":  494 ,
+        "url": "https:\/\/russellgao.cn\/oracle-golang\/","datePublished": "2020-11-25T00:00:00+00:00","dateModified": "2020-11-27T20:02:37+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -118,8 +118,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">如何利用 golang 操纵 oracle</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-25">2020-11-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;48 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;One minute&nbsp;<span id="/oracle-golang/" class="leancloud_visitors" data-flag-title="如何利用 golang 操纵 oracle">
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-25">2020-11-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;494 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;3 minutes&nbsp;<span id="/oracle-golang/" class="leancloud_visitors" data-flag-title="如何利用 golang 操纵 oracle">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;views
                     </span>&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="true">
@@ -129,31 +129,43 @@
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li><a href="#安装库">安装库</a></li>
-    <li><a href="#安装客户端">安装客户端</a>
+    <li><a href="#导读">导读</a></li>
+    <li><a href="#本地环境构建">本地环境构建</a>
       <ul>
-        <li><a href="#mac">mac</a></li>
-        <li><a href="#linux">linux</a></li>
-        <li><a href="#windows">windows</a></li>
+        <li><a href="#安装客户端">安装客户端</a>
+          <ul>
+            <li><a href="#mac">mac</a></li>
+            <li><a href="#linux">linux</a></li>
+            <li><a href="#windows">windows</a></li>
+          </ul>
+        </li>
       </ul>
     </li>
-    <li><a href="#使用">使用</a></li>
+    <li><a href="#用法">用法</a></li>
+    <li><a href="#常见报错">常见报错</a></li>
+    <li><a href="#docker-中运行">docker 中运行</a>
+      <ul>
+        <li><a href="#镜像说明">镜像说明</a>
+          <ul>
+            <li><a href="#镜像名称">镜像名称</a></li>
+            <li><a href="#操作系统">操作系统</a></li>
+            <li><a href="#oracle-client-版本">oracle client 版本</a></li>
+            <li><a href="#基于基础镜像优化的部分">基于基础镜像优化的部分</a></li>
+            <li><a href="#镜像用法">镜像用法</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a></li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><h2 id="安装库">安装库</h2>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">pip3 install sqlalchemy
-pip3 install cx_Oracle
-</code></pre></td></tr></table>
-</div>
-</div><h2 id="安装客户端">安装客户端</h2>
+            </div><div class="content" id="content"><h2 id="导读">导读</h2>
+<p>这篇文章主要介绍如何利用 golang 操作 oracle 数据库，包括基本的增删改查，本地 oracle 环境搭建，以及如何在 docker 中运行。
+oracle client 镜像构建并不容易，花了很长时间去踩坑，文中提供了已经构建好的基础镜像，可以直接使用，这里贡献给大家。</p>
+<h2 id="本地环境构建">本地环境构建</h2>
+<h3 id="安装客户端">安装客户端</h3>
 <p>oracle 客户端下载页面: <a href="https://www.oracle.com/database/technologies/instant-client/downloads.html">https://www.oracle.com/database/technologies/instant-client/downloads.html</a></p>
-<h3 id="mac">mac</h3>
+<h4 id="mac">mac</h4>
 <ul>
 <li><a href="https://www.oracle.com/database/technologies/instant-client/macos-intel-x86-downloads.html">https://www.oracle.com/database/technologies/instant-client/macos-intel-x86-downloads.html</a></li>
 </ul>
@@ -178,21 +190,273 @@ mkdir ~/lib
 ln -s ~/instantclient_19_3/libclntsh.dylib ~/lib/
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="linux">linux</h3>
+</div><p>我本地环境环境是 mac ，这个亲测有用。linux 和 windows 只给出了相关参考连接，没有实际操练过。</p>
+<h4 id="linux">linux</h4>
 <ul>
 <li><a href="https://www.oracle.com/database/technologies/instant-client/linux-x86-64-downloads.html">https://www.oracle.com/database/technologies/instant-client/linux-x86-64-downloads.html</a></li>
 </ul>
-<h3 id="windows">windows</h3>
+<h4 id="windows">windows</h4>
 <ul>
 <li><a href="https://www.oracle.com/database/technologies/instant-client/winx64-64-downloads.html">https://www.oracle.com/database/technologies/instant-client/winx64-64-downloads.html</a></li>
 </ul>
-<h2 id="使用">使用</h2>
-<p>在上面装好库和oracle client 就可以用python 操作 oracle 了</p>
+<h2 id="用法">用法</h2>
+<p>go 操作 oracle 可以使用 <a href="github.com/godror/godror" rel="">github.com/godror/godror</a> ，如</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+	<span class="s">&#34;database/sql&#34;</span>
+	<span class="s">&#34;fmt&#34;</span>
+	<span class="nx">_</span> <span class="s">&#34;github.com/godror/godror&#34;</span>
+	<span class="s">&#34;os&#34;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">connString</span> <span class="o">:=</span> <span class="s">&#34;oracle://hd40:xxx@121.196.127.xxx:1521/ylyx?charset=utf8&#34;</span>
+	<span class="nx">db</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">sql</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="s">&#34;godror&#34;</span><span class="p">,</span> <span class="nx">connString</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+		<span class="nx">os</span><span class="p">.</span><span class="nf">Exit</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="c1">// 注意不要 sql 语句不要使用 ; 号结尾，否则会报错
+</span><span class="c1"></span>	<span class="c1">// dpiStmt_execute: ORA-00911: invalid character
+</span><span class="c1"></span>	<span class="nx">sql</span> <span class="o">:=</span> <span class="s">&#34;select * from user_tables &#34;</span>
+	<span class="nx">rows</span><span class="p">,</span> <span class="nx">err1</span> <span class="o">:=</span> <span class="nx">db</span><span class="p">.</span><span class="nf">Query</span><span class="p">(</span><span class="nx">sql</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err1</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">err1</span><span class="p">)</span>
+		<span class="nx">os</span><span class="p">.</span><span class="nf">Exit</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="nx">result</span><span class="p">,</span> <span class="nx">err2</span> <span class="o">:=</span> <span class="nf">GetQueryResult</span><span class="p">(</span><span class="nx">rows</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err2</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">err2</span><span class="p">)</span>
+		<span class="nx">os</span><span class="p">.</span><span class="nf">Exit</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+	<span class="p">}</span>
+
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;end&#34;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">GetQueryResult</span><span class="p">(</span><span class="nx">query</span> <span class="o">*</span><span class="nx">sql</span><span class="p">.</span><span class="nx">Rows</span><span class="p">)</span> <span class="p">([]</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">column</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">query</span><span class="p">.</span><span class="nf">Columns</span><span class="p">()</span>              <span class="c1">//读出查询出的列字段名
+</span><span class="c1"></span>	<span class="nx">values</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([][]</span><span class="kt">byte</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nx">column</span><span class="p">))</span>     <span class="c1">//values是每个列的值，这里获取到byte里
+</span><span class="c1"></span>	<span class="nx">scans</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kd">interface</span><span class="p">{},</span> <span class="nb">len</span><span class="p">(</span><span class="nx">column</span><span class="p">))</span> <span class="c1">//因为每次查询出来的列是不定长的，用len(column)定住当次查询的长度
+</span><span class="c1"></span>	<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">values</span> <span class="p">{</span>                   <span class="c1">//让每一行数据都填充到[][]byte里面
+</span><span class="c1"></span>		<span class="nx">scans</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">values</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
+	<span class="p">}</span>
+	<span class="nx">results</span> <span class="o">:=</span> <span class="p">[]</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">{}</span>
+	<span class="k">for</span> <span class="nx">query</span><span class="p">.</span><span class="nf">Next</span><span class="p">()</span> <span class="p">{</span> <span class="c1">//循环，让游标往下移动
+</span><span class="c1"></span>		<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">query</span><span class="p">.</span><span class="nf">Scan</span><span class="p">(</span><span class="nx">scans</span><span class="o">...</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span> <span class="c1">//query.Scan查询出来的不定长值放到scans[i] = &amp;values[i],也就是每行都放在values里
+</span><span class="c1"></span>			<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+			<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">err</span>
+		<span class="p">}</span>
+		<span class="nx">row</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">)</span> <span class="c1">//每行数据
+</span><span class="c1"></span>		<span class="k">for</span> <span class="nx">k</span><span class="p">,</span> <span class="nx">v</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">values</span> <span class="p">{</span>     <span class="c1">//每行数据是放在values里面，现在把它挪到row里
+</span><span class="c1"></span>			<span class="nx">key</span> <span class="o">:=</span> <span class="nx">column</span><span class="p">[</span><span class="nx">k</span><span class="p">]</span>
+			<span class="nx">row</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="p">=</span> <span class="nb">string</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span>
+		<span class="p">}</span>
+		<span class="nx">results</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">results</span><span class="p">,</span> <span class="nx">row</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="nx">query</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
+	<span class="k">return</span> <span class="nx">results</span><span class="p">,</span> <span class="kc">nil</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>用法说明 :</p>
+<ul>
+<li><code>_ &quot;github.com/godror/godror&quot;</code> 这句是说明 sql 的 driver 是 oracle ，如果要操作 mysql ，换成 mysql 的 <code>driver (_ &quot;github.com/go-sql-driver/mysql&quot;)</code> 即可。</li>
+<li>crud 操作还是调用 <code>database/sql</code> 进行完成。</li>
+<li>暴露出来给用户的还是 <code>*sql.DB</code> 。查询可以调用 <code>*sql.DB</code> 的 <code>Query</code> 方法，执行其他 sql 则调用 <code>Exec</code> 方法。</li>
+</ul>
+<h2 id="常见报错">常见报错</h2>
+<p>如果报如下错误:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">(cx_Oracle.DatabaseError) DPI-1047: Cannot locate a 64-bit Oracle Client library: &#34;dlopen(libclntsh.dylib, 1): image not found&#34;. See https://cx-oracle.readthedocs.io/en/latest/user_guide/installation.html for help
+</code></pre></td></tr></table>
+</div>
+</div><p>说明oracle的 client 没有正确安装</p>
+<p>如果报错如下:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">(cx_Oracle.DatabaseError) ORA-01017: invalid username/password; logon denied
+</code></pre></td></tr></table>
+</div>
+</div><p>说明oracle 的用户密码不正确</p>
+<p>如果报错如下:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">dpiStmt_execute: ORA-00911: invalid character
+</code></pre></td></tr></table>
+</div>
+</div><p>说明 sql 中包含无效字符，请注意如果 sql 中包含 <code>;</code> 就会报错，需要把 sql 中的 <code>;</code> trim 掉。我写了个标准化 sql 的方法，可以参考:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// 去掉行首和行尾的空白字符
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">TrimBlankSpace</span><span class="p">(</span><span class="nx">s</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+	<span class="nx">_s</span> <span class="o">:=</span> <span class="nx">regexp</span><span class="p">.</span><span class="nf">MustCompile</span><span class="p">(</span><span class="s">&#34;^\\s+&#34;</span><span class="p">).</span><span class="nf">ReplaceAll</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">s</span><span class="p">),</span> <span class="p">[]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&#34;&#34;</span><span class="p">))</span>
+	<span class="nx">_s</span> <span class="p">=</span> <span class="nx">regexp</span><span class="p">.</span><span class="nf">MustCompile</span><span class="p">(</span><span class="s">&#34;\\s+$&#34;</span><span class="p">).</span><span class="nf">ReplaceAll</span><span class="p">(</span><span class="nx">_s</span><span class="p">,</span> <span class="p">[]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&#34;&#34;</span><span class="p">))</span>
+	<span class="k">return</span> <span class="nb">string</span><span class="p">(</span><span class="nx">_s</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">// 去掉 ; 并且全部转为大写字符
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">FormatSql</span><span class="p">(</span><span class="nx">sql</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+	<span class="nx">sql</span> <span class="p">=</span> <span class="nf">TrimBlankSpace</span><span class="p">(</span><span class="nx">sql</span><span class="p">)</span>
+	<span class="nx">sql</span> <span class="p">=</span> <span class="nx">strings</span><span class="p">.</span><span class="nf">TrimRight</span><span class="p">(</span><span class="nx">sql</span><span class="p">,</span> <span class="s">&#34;;&#34;</span><span class="p">)</span>
+	<span class="k">return</span> <span class="nx">strings</span><span class="p">.</span><span class="nf">ToUpper</span><span class="p">(</span><span class="nx">sql</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="docker-中运行">docker 中运行</h2>
+<blockquote>
+<p>我尝试过用 alpine 做基础镜像，然后进行安装 oracle client，把 oracle client 安装完成之后，运行编译完的 golang 程序，
+出现了各种缺少动态库的问题，查了很多资料，和 apline 的官方源都彻底没有解决，然后就准备在 dockerhub 找一个现成的拿过来参考，
+很遗憾没有找到一个可以直接用的，最后放弃了 alpine 这条路，选择 alpine 是因为 alpine 镜像比较小，这样做出来的镜像比较小。</p>
+</blockquote>
+<p>看了 oracle client 官方下载和安装说明，也都是 centos 的版本，所以就基于 centos 做了一个包含 oracle client 的基础镜像。
+已经上传到 dockerhub 了，参见: <a href="https://hub.docker.com/r/russellgao/oracle" target="_blank" rel="noopener noreffer">https://hub.docker.com/r/russellgao/oracle</a></p>
+<p>如果你刚好需要，而我刚好有，那不妨试用一下（如果能帮到您可以给个 star 哟）。</p>
+<p>dockerhub 可能访问比较慢，或者可能会出现无法访问的情况，这里贴一些关键信息。</p>
+<h3 id="镜像说明">镜像说明</h3>
+<h4 id="镜像名称">镜像名称</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">russellgao/oracle:centos7-client12.2
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="操作系统">操作系统</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">centos:centos7.9.2009
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="oracle-client-版本">oracle client 版本</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">oracle-instantclient12.2-basic-12.2.0.1.0-1.x86_64
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="基于基础镜像优化的部分">基于基础镜像优化的部分</h4>
+<ul>
+<li>调整时区为 CST 时区 （UTC +8）</li>
+</ul>
+<h4 id="镜像用法">镜像用法</h4>
+<p>这个一般用作基础镜像 或者:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">docker run -it --rm russellgao/oracle:centos7-client12.2 date 
+</code></pre></td></tr></table>
+</div>
+</div><p>or</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">docker run -d russellgao/oracle:centos7-client12.2 tail -f /dev/null 
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="总结">总结</h2>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2020-11-25</span>
+                <span>Updated on 2020-11-27</span>
             </div>
             <div class="post-info-license"></div>
         </div>
