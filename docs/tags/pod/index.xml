@@ -4,7 +4,14 @@
         <link>https://russellgao.cn/tags/pod/</link>
         <description>pod - Tag - 大大很二</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
-            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Thu, 18 Jun 2020 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/tags/pod/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Tue, 24 Nov 2020 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/tags/pod/" rel="self" type="application/rss+xml" /><item>
+    <title>kubernetes 中 pod 是如何启动的呢</title>
+    <link>https://russellgao.cn/pod-create/</link>
+    <pubDate>Tue, 24 Nov 2020 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/pod-create/</guid>
+    <description><![CDATA[导读  Pod 应该算是 kubernetes 的基本盘，Pod 是 kubernetes 的最小调度单位，我这里有个问题，说通过 kubectl apply -f  创建一个 Pod ，从执行到 Pod 正常运行 kubernetes 做了什么事情呢？都有哪些组件参与呢？这篇文档主要讲述 Pod 的创建过程。]]></description>
+</item><item>
     <title>pod 配置文件说明</title>
     <link>https://russellgao.cn/kubernetes/pod%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E/</link>
     <pubDate>Thu, 18 Jun 2020 00:00:00 &#43;0000</pubDate>
