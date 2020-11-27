@@ -27,6 +27,9 @@ tags = [
 >  0 directories, 4 files
 > ```
 > upstream 放在单独的 配置文件，当然如果比较多，可以按照 service/product 的维度再进行拆分。不同的监听放在单独的配置文件，相对来说比较好维护一点，也更容易自动化程序处理。
+>
+> 这篇文章比较长，可以通过目录直接跳转到自己感兴趣的部分。
+
 
 ## server 
 server 模块是位于 http 模块下面，进行端口监听，并把请求转发到 upstream 或者直接响应，先看它的配置是什么样子。
@@ -129,6 +132,280 @@ a. 对于匹配方式不同的，按照以下的优先级选择虚拟主机，�
 b. 在以上四种匹配方式中，如果server_name被处于同一优先级的匹配方式多次匹配成功，则首次匹配成功的虚拟主机处理请求。
 
 ## location
+### 基本语法
+```shell script
+location [=|~|~*|^~] /uri/ {
+ ...
+}
+```
+
+- = : 表示精确匹配后面的url
+- ~ : 表示正则匹配，但是区分大小写
+- ~* : 正则匹配，不区分大小写
+- ^~ : 如果把这个前缀用于一个常规字符串,那么告诉nginx 如果路径匹配那么不测试正则表达式
+
+#### 「=」 修饰符：要求路径完全匹配
+```shell script
+server {
+    server_name russellgao.cn;
+    location = /abcd {
+    […]
+    }
+}
+```
+
+- https://russellgao.cn/abcd匹配
+- https://russellgao.cn/ABCD可能会匹配 ，也可以不匹配，取决于操作系统的文件系统是否大小写敏感（case-sensitive）。
+- https://russellgao.cn/abcd?param1&param2匹配，忽略 querystring
+- https://russellgao.cn/abcd/不匹配，带有结尾的/
+- https://russellgao.cn/abcde不匹配
+
+#### 「~」修饰符：区分大小写的正则匹配
+```shell script
+server {
+    server_name russellgao.cn;
+    location ~ ^/abcd$ {
+    […]
+    }
+}
+```
+`^/abcd$` 这个正则表达式表示字符串必须以`/`开始，以`d`结束，中间必须是`abc`，换言之只能匹配 `/abcd`
+
+- https://russellgao.cn/abcd匹配（完全匹配）
+- https://russellgao.cn/ABCD不匹配，大小写敏感
+- https://russellgao.cn/abcd?param1&param2匹配
+- https://russellgao.cn/abcd/不匹配，不能匹配正则表达式
+- https://russellgao.cn/abcde不匹配，不能匹配正则表达式
+
+#### 「~*」不区分大小写的正则匹配
+```shell script
+server {
+    server_name russellgao.cn;
+    location ~* ^/abcd$ {
+    […]
+    }
+}
+```
+https://russellgao.cn/abcd匹配 (完全匹配)
+https://russellgao.cn/ABCD匹配 (大小写不敏感)
+https://russellgao.cn/abcd?param1&param2匹配
+https://russellgao.cn/abcd/ 不匹配，不能匹配正则表达式
+https://russellgao.cn/abcde 不匹配，不能匹配正则表达式
+
+#### 「^~」修饰符
+前缀匹配 如果该 location 是最佳的匹配，那么对于匹配这个 location 的字符串， 该修饰符不再进行正则表达式检测。注意，这不是一个正则表达式匹配，它的目的是优先于正则表达式的匹配。
+
+### 查找的顺序及优先级
+当有多条 location 规则时，nginx 有一套比较复杂的规则，优先级如下：
+
+- 精确匹配 =
+- 前缀匹配 ^~（立刻停止后续的正则搜索）
+- 按文件中顺序的正则匹配 ~或~*
+- 匹配不带任何修饰的前缀匹配。
+
+这个规则大体的思路是:
+```shell script
+先精确匹配，没有则查找带有 ^~的前缀匹配，没有则进行正则匹配，最后才返回前缀匹配的结果（如果有的话）
+```
+
+### alias 与 root 区别
+- root 实际访问文件路径会拼接URL中的路径
+- alias 实际访问文件路径不会拼接URL中的路径
+
+看一个例子 
+
+```shell script
+location ^~ /sta/ {  
+   alias /usr/local/nginx/html/static/;  
+}
+```
+
+>- 请求：https://russellgao.cn/sta/index.html
+>- 实际访问：/usr/local/nginx/html/static/index.html 文件
+
+```shell script
+location ^~ /static/ {  
+   root /usr/local/nginx/html/;  
+}
+```
+
+>- 请求：https://russellgao.cn/static/index.html
+>- 实际访问：/usr/local/nginx/html/static/index.html 文件
+
+### rewrite
+rewrite 模块主要用于重定向。
+
+指令语法：`rewrite regex replacement[flag];` ，默认值为 `none` 。
+看个简单例子 :
+
+```shell script
+location / {
+        rewrite ^/(.*) https://russellgao.cn/$1 permanent;
+    }
+```
+
+这是我 http 强转 https 的例子。
+
+### 常用正则表达式
+字符	 | 描述
+ :-: | :-:
+|\	|将后面接着的字符标记为一个特殊字符或者一个原义字符或一个向后引用
+|^	|匹配输入字符串的起始位置
+|$	|匹配输入字符串的结束位置
+|*	|匹配前面的字符零次或者多次
+|+	|匹配前面字符串一次或者多次
+|?	|匹配前面字符串的零次或者一次
+|.	|匹配除“\n”之外的所有单个字符
+|(pattern)	|匹配括号内的pattern
+
+### flag参数
+标记符号 |	说明
+ :-: | :-:
+last	|本条规则匹配完成后继续向下匹配新的location URI规则
+break	|本条规则匹配完成后终止，不在匹配任何规则
+redirect	|返回302临时重定向
+permanent	|返回301永久重定向
+
+#### last 和 break关键字的区别
+- last 匹配到了还会继续向下匹配
+- break 匹配到了不会继续向下匹配，会终止掉
+
+#### permanent 和 redirect关键字的区别
+- last 和 break 当出现在location 之外时，两者的作用是一致的没有任何差异
+- last 和 break 当出现在location 内部时：
+    - rewrite … permanent 永久性重定向，请求日志中的状态码为301
+    - rewrite … redirect 临时重定向，请求日志中的状态码为302
+
+### proxy_pass
+在nginx中配置proxy_pass代理转发时，如果在proxy_pass后面的url加/，表示绝对根路径；如果没有/，表示相对路径，把匹配的路径部分也给代理走。
+
+假设我们访问地址为 :
+```shell script
+https://russellgao.cn/proxypass/index.html
+```
+
+1. 当配置为
+```shell script
+location /proxypass/ {
+    proxy_pass https://russellgao.cn/;
+}
+```
+代理到: `https://russellgao.cn/index.html`
+
+2. 当配置为
+```shell script
+location /proxypass/ {
+    proxy_pass https://russellgao.cn;
+}
+```
+代理到: `https://russellgao.cn/proxypass/index.html`
+
+**请注意：proxy_pass 最后没有 `/`**
+
+3. 当配置为
+```shell script
+location /proxypass/ {
+    proxy_pass https://russellgao.cn/test/;
+}
+```
+代理到: `https://russellgao.cn/test/index.html`
+
+4. 当配置为
+```shell script
+location /proxypass/ {
+    proxy_pass https://russellgao.cn/test;
+}
+```
+代理到: `https://russellgao.cn/testindex.html`
+
+> nginx 的 ngx_http_proxy_module 和 ngx_stream_proxy_module 模块都有 proxy_pass ，下面看看两者之间的关系与区别。
+
+#### ngx_http_proxy_module
+语法: 
+```shell script
+proxy_pass URL
+```
+场景: 
+
+- location
+- if in location
+- limit_except
+
+> 设置后端代理服务器的协议(protocol)和地址(address),以及location中可以匹配的一个可选的URI。协议可以是"http"或"https"。地址可以是一个域名或ip地址和端口，或者一个 unix-domain socket 路径。 
+
+例:
+
+```shell script
+location ~* (/api/v1/blog-server) {
+    proxy_pass_header Server;
+    proxy_pass http://blog_server;
+}
+```
+#### ngx_stream_proxy_module
+语法: 
+```shell script
+proxy_pass address;
+```
+场景: 
+
+- server
+
+> 设置后端代理服务器的地址。这个地址(address)可以是一个域名或ip地址和端口，或者一个 unix-domain socket路径。
+
+例: 
+```shell script
+server {
+    listen 127.0.0.1:12345;
+    proxy_pass 127.0.0.1:8080;
+}
+```
+
+>在两个模块中，两个proxy_pass都是用来做后端代理的指令。
+ ngx_stream_proxy_module模块的proxy_pass指令只能在server段使用使用, 只需要提供域名或ip地址和端口。可以理解为端口转发，可以是tcp端口，也可以是udp端口。
+ ngx_http_proxy_module模块的proxy_pass指令需要在location段，location中的if段，limit_except段中使用，处理需要提供域名或ip地址和端口外，还需要提供协议，如"http"或"https"，还有一个可选的uri可以配置。
+
+
+### 常见 location 配置样例
+#### 静态网站
+```shell script
+server {
+    listen       80;
+    server_name  russellgao.cn;
+    access_log  /usr/local/openresty/nginx/logs/access.log  custom;
+    error_log  /usr/local/openresty/nginx/logs/error.log;
+    
+    location / {
+        rewrite ^/(.*) https://russellgao.cn/$1 permanent;
+    }
+
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /usr/local/openresty/nginx/html;
+    }
+
+    error_page   404  /404.html;
+    location = /404.html {
+        root   /usr/local/openresty/nginx/blog;
+    }
+}
+```
+
+#### 反向代理
+```shell script
+location ~* (/api/v1/blog-server) {
+    access_log  /var/nginx/logs/blog_access.log  custom;
+    error_log   /var/nginx/logs/blog_error.log  error;
+    proxy_pass_header Server;
+    proxy_set_header Host $http_host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Scheme $scheme;
+    # rewrite 只是举个例子，根据实际情况配置
+#    rewrite /api/v1/blog-server/(.*)$ /api/$1 break;
+    proxy_pass http://blog_server;
+}
+```
+- 可以在 location 级别设置日志格式以及目录，方便精细化管理
+- 通过proxy_pass 跳转到 `upstream`
 
 ## upstream
 upstream 是后端服务器组，也称为虚拟服务器组，作用是负载均衡。配置样例参考
@@ -207,4 +484,4 @@ upstream server {
 
 ## 参考
 - https://www.cnblogs.com/54chensongxia/p/12938929.html
-
+- https://juejin.cn/post/6844903849166110733
