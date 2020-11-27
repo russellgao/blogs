@@ -8,10 +8,19 @@
     <language>en</language>
     <managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
     <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster>
-    <lastBuildDate>Sun, 08 Nov 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 25 Nov 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://russellgao.cn/golang/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>如何利用 golang 操纵 oracle</title>
+      <link>https://russellgao.cn/golang/oracle-golang/</link>
+      <pubDate>Wed, 25 Nov 2020 00:00:00 +0000</pubDate>
+      <author>1060745366@qq.com (高维宗(russellgao))</author>
+      <guid>https://russellgao.cn/golang/oracle-golang/</guid>
+      <description>导读 这篇文章主要介绍如何利用 golang 操作 oracle 数据库，包括基本的增删改查，本地 oracle 环境搭建，以及如何在 docker 中运行。 oracle client 镜像构建并不容易，花了很长时间去踩坑，文中提供了已经构建好的基础镜像，可以直接使用，这里贡献给大家。</description>
+    </item>
     
     <item>
       <title>细谈 Golang 中那些设计优美的细节-defer</title>

@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/russellgao.cn\/openresty-server\/"
-        },"genre": "posts","keywords": "nginx, openresty, server, location","wordcount":  460 ,
+        },"genre": "posts","keywords": "nginx, openresty, server, location","wordcount":  631 ,
         "url": "https:\/\/russellgao.cn\/openresty-server\/","datePublished": "2020-11-23T00:00:00+00:00","dateModified": "2020-11-24T23:48:00+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -118,7 +118,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">openresty 配置文件 （二）</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-23">2020-11-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;460 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-23">2020-11-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;631 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;3 minutes&nbsp;<span id="/openresty-server/" class="leancloud_visitors" data-flag-title="openresty 配置文件 （二）">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;views
                     </span>&nbsp;</div>
@@ -136,7 +136,23 @@
         <li><a href="#server_name">server_name</a></li>
       </ul>
     </li>
-    <li><a href="#location">location</a></li>
+    <li><a href="#location">location</a>
+      <ul>
+        <li><a href="#基本语法">基本语法</a>
+          <ul>
+            <li><a href="#-修饰符要求路径完全匹配">「=」 修饰符：要求路径完全匹配</a></li>
+            <li><a href="#修饰符区分大小写的正则匹配">「~」修饰符：区分大小写的正则匹配</a></li>
+            <li><a href="#不区分大小写的正则匹配">「~*」不区分大小写的正则匹配</a></li>
+            <li><a href="#修饰符">「^~」修饰符</a></li>
+          </ul>
+        </li>
+        <li><a href="#查找的顺序及优先级">查找的顺序及优先级</a></li>
+        <li><a href="#alias-与-root-区别">alias 与 root 区别</a></li>
+        <li><a href="#rewrite">rewrite</a></li>
+        <li><a href="#permanent-和-redirect关键字的区别">permanent 和 redirect关键字的区别</a></li>
+        <li><a href="#proxy_pass">proxy_pass</a></li>
+      </ul>
+    </li>
     <li><a href="#upstream">upstream</a></li>
     <li><a href="#参考">参考</a></li>
   </ul>
@@ -168,6 +184,7 @@ openresty server 配置，server 的配置一般单独放在 <code>conf.d</code>
 </code></pre></td></tr></table>
 </div>
 </div><p>upstream 放在单独的 配置文件，当然如果比较多，可以按照 service/product 的维度再进行拆分。不同的监听放在单独的配置文件，相对来说比较好维护一点，也更容易自动化程序处理。</p>
+<p>这篇文章比较长，可以通过目录直接跳转到自己感兴趣的部分。</p>
 </blockquote>
 <h2 id="server">server</h2>
 <p>server 模块是位于 http 模块下面，进行端口监听，并把请求转发到 upstream 或者直接响应，先看它的配置是什么样子。</p>
@@ -339,6 +356,167 @@ Context:	server
 </ol>
 <p>b. 在以上四种匹配方式中，如果server_name被处于同一优先级的匹配方式多次匹配成功，则首次匹配成功的虚拟主机处理请求。</p>
 <h2 id="location">location</h2>
+<h3 id="基本语法">基本语法</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">location <span class="o">[=</span><span class="p">|</span>~<span class="p">|</span>~*<span class="p">|</span>^~<span class="o">]</span> /uri/ <span class="o">{</span>
+ ...
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>= : 表示精确匹配后面的url</li>
+<li>~ : 表示正则匹配，但是区分大小写</li>
+<li>~* : 正则匹配，不区分大小写</li>
+<li>^~ : 如果把这个前缀用于一个常规字符串,那么告诉nginx 如果路径匹配那么不测试正则表达式</li>
+</ul>
+<h4 id="-修饰符要求路径完全匹配">「=」 修饰符：要求路径完全匹配</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">server <span class="o">{</span>
+    server_name russellgao.cn<span class="p">;</span>
+    <span class="nv">location</span> <span class="o">=</span> /abcd <span class="o">{</span>
+    <span class="o">[</span>…<span class="o">]</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><a href="https://russellgao.cn/abcd">https://russellgao.cn/abcd</a>匹配</li>
+<li><a href="https://russellgao.cn/ABCD">https://russellgao.cn/ABCD</a>可能会匹配 ，也可以不匹配，取决于操作系统的文件系统是否大小写敏感（case-sensitive）。</li>
+<li><a href="https://russellgao.cn/abcd?param1&amp;param2">https://russellgao.cn/abcd?param1&amp;param2</a>匹配，忽略 querystring</li>
+<li><a href="https://russellgao.cn/abcd/">https://russellgao.cn/abcd/</a>不匹配，带有结尾的/</li>
+<li><a href="https://russellgao.cn/abcde">https://russellgao.cn/abcde</a>不匹配</li>
+</ul>
+<h4 id="修饰符区分大小写的正则匹配">「~」修饰符：区分大小写的正则匹配</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">server <span class="o">{</span>
+    server_name russellgao.cn<span class="p">;</span>
+    location ~ ^/abcd$ <span class="o">{</span>
+    <span class="o">[</span>…<span class="o">]</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>^/abcd$</code> 这个正则表达式表示字符串必须以<code>/</code>开始，以<code>d</code>结束，中间必须是<code>abc</code>，换言之只能匹配 <code>/abcd</code></p>
+<ul>
+<li><a href="https://russellgao.cn/abcd">https://russellgao.cn/abcd</a>匹配（完全匹配）</li>
+<li><a href="https://russellgao.cn/ABCD">https://russellgao.cn/ABCD</a>不匹配，大小写敏感</li>
+<li><a href="https://russellgao.cn/abcd?param1&amp;param2">https://russellgao.cn/abcd?param1&amp;param2</a>匹配</li>
+<li><a href="https://russellgao.cn/abcd/">https://russellgao.cn/abcd/</a>不匹配，不能匹配正则表达式</li>
+<li><a href="https://russellgao.cn/abcde">https://russellgao.cn/abcde</a>不匹配，不能匹配正则表达式</li>
+</ul>
+<h4 id="不区分大小写的正则匹配">「~*」不区分大小写的正则匹配</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">server <span class="o">{</span>
+    server_name russellgao.cn<span class="p">;</span>
+    location ~* ^/abcd$ <span class="o">{</span>
+    <span class="o">[</span>…<span class="o">]</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><a href="https://russellgao.cn/abcd">https://russellgao.cn/abcd</a>匹配 (完全匹配)
+<a href="https://russellgao.cn/ABCD">https://russellgao.cn/ABCD</a>匹配 (大小写不敏感)
+<a href="https://russellgao.cn/abcd?param1&amp;param2">https://russellgao.cn/abcd?param1&amp;param2</a>匹配
+<a href="https://russellgao.cn/abcd/">https://russellgao.cn/abcd/</a> 不匹配，不能匹配正则表达式
+<a href="https://russellgao.cn/abcde">https://russellgao.cn/abcde</a> 不匹配，不能匹配正则表达式</p>
+<h4 id="修饰符">「^~」修饰符</h4>
+<p>前缀匹配 如果该 location 是最佳的匹配，那么对于匹配这个 location 的字符串， 该修饰符不再进行正则表达式检测。注意，这不是一个正则表达式匹配，它的目的是优先于正则表达式的匹配。</p>
+<h3 id="查找的顺序及优先级">查找的顺序及优先级</h3>
+<p>当有多条 location 规则时，nginx 有一套比较复杂的规则，优先级如下：</p>
+<ul>
+<li>精确匹配 =</li>
+<li>前缀匹配 ^~（立刻停止后续的正则搜索）</li>
+<li>按文件中顺序的正则匹配 ~或~*</li>
+<li>匹配不带任何修饰的前缀匹配。</li>
+</ul>
+<p>这个规则大体的思路是:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">先精确匹配，没有则查找带有 ^~的前缀匹配，没有则进行正则匹配，最后才返回前缀匹配的结果（如果有的话）
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="alias-与-root-区别">alias 与 root 区别</h3>
+<ul>
+<li>root 实际访问文件路径会拼接URL中的路径</li>
+<li>alias 实际访问文件路径不会拼接URL中的路径</li>
+</ul>
+<p>看一个例子</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">location ^~ /sta/ <span class="o">{</span>  
+   <span class="nb">alias</span> /usr/local/nginx/html/static/<span class="p">;</span>  
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<ul>
+<li>请求：https://russellgao.cn/sta/index.html</li>
+<li>实际访问：/usr/local/nginx/html/static/index.html 文件</li>
+</ul>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">location ^~ /static/ <span class="o">{</span>  
+   root /usr/local/nginx/html/<span class="p">;</span>  
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<ul>
+<li>请求：https://russellgao.cn/static/index.html</li>
+<li>实际访问：/usr/local/nginx/html/static/index.html 文件</li>
+</ul>
+</blockquote>
+<h3 id="rewrite">rewrite</h3>
+<p>last 和 break关键字的区别</p>
+<h3 id="permanent-和-redirect关键字的区别">permanent 和 redirect关键字的区别</h3>
+<h3 id="proxy_pass">proxy_pass</h3>
 <h2 id="upstream">upstream</h2>
 <p>upstream 是后端服务器组，也称为虚拟服务器组，作用是负载均衡。配置样例参考</p>
 <div class="highlight"><div class="chroma">
@@ -488,6 +666,7 @@ Context:	server
 <h2 id="参考">参考</h2>
 <ul>
 <li><a href="https://www.cnblogs.com/54chensongxia/p/12938929.html">https://www.cnblogs.com/54chensongxia/p/12938929.html</a></li>
+<li><a href="https://juejin.cn/post/6844903849166110733">https://juejin.cn/post/6844903849166110733</a></li>
 </ul>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
