@@ -309,8 +309,49 @@ location /proxypass/ {
 > nginx 的 ngx_http_proxy_module 和 ngx_stream_proxy_module 模块都有 proxy_pass ，下面看看两者之间的关系与区别。
 
 #### ngx_http_proxy_module
+语法: 
+```shell script
+proxy_pass URL
+```
+场景: 
 
+- location
+- if in location
+- limit_except
+
+> 设置后端代理服务器的协议(protocol)和地址(address),以及location中可以匹配的一个可选的URI。协议可以是"http"或"https"。地址可以是一个域名或ip地址和端口，或者一个 unix-domain socket 路径。 
+
+例:
+
+```shell script
+location ~* (/api/v1/blog-server) {
+    proxy_pass_header Server;
+    proxy_pass http://blog_server;
+}
+```
 #### ngx_stream_proxy_module
+语法: 
+```shell script
+proxy_pass address;
+```
+场景: 
+
+- server
+
+> 设置后端代理服务器的地址。这个地址(address)可以是一个域名或ip地址和端口，或者一个 unix-domain socket路径。
+
+例: 
+```shell script
+server {
+    listen 127.0.0.1:12345;
+    proxy_pass 127.0.0.1:8080;
+}
+```
+
+>在两个模块中，两个proxy_pass都是用来做后端代理的指令。
+ ngx_stream_proxy_module模块的proxy_pass指令只能在server段使用使用, 只需要提供域名或ip地址和端口。可以理解为端口转发，可以是tcp端口，也可以是udp端口。
+ ngx_http_proxy_module模块的proxy_pass指令需要在location段，location中的if段，limit_except段中使用，处理需要提供域名或ip地址和端口外，还需要提供协议，如"http"或"https"，还有一个可选的uri可以配置。
+
 
 ### 常见 location 配置样例
 #### 静态网站

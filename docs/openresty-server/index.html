@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/russellgao.cn\/openresty-server\/"
-        },"genre": "posts","keywords": "nginx, openresty, server, location","wordcount":  893 ,
+        },"genre": "posts","keywords": "nginx, openresty, server, location","wordcount":  946 ,
         "url": "https:\/\/russellgao.cn\/openresty-server\/","datePublished": "2020-11-23T00:00:00+00:00","dateModified": "2020-11-24T23:48:00+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -118,7 +118,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">openresty 配置文件 （二）</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-23">2020-11-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;893 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-23">2020-11-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;946 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;5 minutes&nbsp;<span id="/openresty-server/" class="leancloud_visitors" data-flag-title="openresty 配置文件 （二）">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;views
                     </span>&nbsp;</div>
@@ -712,7 +712,76 @@ Context:	server
 <p>nginx 的 ngx_http_proxy_module 和 ngx_stream_proxy_module 模块都有 proxy_pass ，下面看看两者之间的关系与区别。</p>
 </blockquote>
 <h4 id="ngx_http_proxy_module">ngx_http_proxy_module</h4>
-<h4 id="ngx_stream_proxy_module">ngx_stream_proxy_module</h4>
+<p>语法:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">proxy_pass URL
+</code></pre></td></tr></table>
+</div>
+</div><p>场景:</p>
+<ul>
+<li>location</li>
+<li>if in location</li>
+<li>limit_except</li>
+</ul>
+<blockquote>
+<p>设置后端代理服务器的协议(protocol)和地址(address),以及location中可以匹配的一个可选的URI。协议可以是&quot;http&quot;或&quot;https&rdquo;。地址可以是一个域名或ip地址和端口，或者一个 unix-domain socket 路径。</p>
+</blockquote>
+<p>例:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">location ~* <span class="o">(</span>/api/v1/blog-server<span class="o">)</span> <span class="o">{</span>
+    proxy_pass_header Server<span class="p">;</span>
+    proxy_pass http://blog_server<span class="p">;</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="ngx_stream_proxy_module">ngx_stream_proxy_module</h4>
+<p>语法:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">proxy_pass address<span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>场景:</p>
+<ul>
+<li>server</li>
+</ul>
+<blockquote>
+<p>设置后端代理服务器的地址。这个地址(address)可以是一个域名或ip地址和端口，或者一个 unix-domain socket路径。</p>
+</blockquote>
+<p>例:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">server <span class="o">{</span>
+    listen 127.0.0.1:12345<span class="p">;</span>
+    proxy_pass 127.0.0.1:8080<span class="p">;</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>在两个模块中，两个proxy_pass都是用来做后端代理的指令。
+ngx_stream_proxy_module模块的proxy_pass指令只能在server段使用使用, 只需要提供域名或ip地址和端口。可以理解为端口转发，可以是tcp端口，也可以是udp端口。
+ngx_http_proxy_module模块的proxy_pass指令需要在location段，location中的if段，limit_except段中使用，处理需要提供域名或ip地址和端口外，还需要提供协议，如&quot;http&quot;或&quot;https&rdquo;，还有一个可选的uri可以配置。</p>
+</blockquote>
 <h3 id="常见-location-配置样例">常见 location 配置样例</h3>
 <h4 id="静态网站">静态网站</h4>
 <div class="highlight"><div class="chroma">
