@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/russellgao.cn\/openresty-server\/"
-        },"genre": "posts","keywords": "nginx, openresty, server, location","wordcount":  631 ,
+        },"genre": "posts","keywords": "nginx, openresty, server, location","wordcount":  893 ,
         "url": "https:\/\/russellgao.cn\/openresty-server\/","datePublished": "2020-11-23T00:00:00+00:00","dateModified": "2020-11-24T23:48:00+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -118,8 +118,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">openresty 配置文件 （二）</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-23">2020-11-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;631 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;3 minutes&nbsp;<span id="/openresty-server/" class="leancloud_visitors" data-flag-title="openresty 配置文件 （二）">
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-23">2020-11-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;893 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;5 minutes&nbsp;<span id="/openresty-server/" class="leancloud_visitors" data-flag-title="openresty 配置文件 （二）">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;views
                     </span>&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="true">
@@ -149,8 +149,25 @@
         <li><a href="#查找的顺序及优先级">查找的顺序及优先级</a></li>
         <li><a href="#alias-与-root-区别">alias 与 root 区别</a></li>
         <li><a href="#rewrite">rewrite</a></li>
-        <li><a href="#permanent-和-redirect关键字的区别">permanent 和 redirect关键字的区别</a></li>
-        <li><a href="#proxy_pass">proxy_pass</a></li>
+        <li><a href="#常用正则表达式">常用正则表达式</a></li>
+        <li><a href="#flag参数">flag参数</a>
+          <ul>
+            <li><a href="#last-和-break关键字的区别">last 和 break关键字的区别</a></li>
+            <li><a href="#permanent-和-redirect关键字的区别">permanent 和 redirect关键字的区别</a></li>
+          </ul>
+        </li>
+        <li><a href="#proxy_pass">proxy_pass</a>
+          <ul>
+            <li><a href="#ngx_http_proxy_module">ngx_http_proxy_module</a></li>
+            <li><a href="#ngx_stream_proxy_module">ngx_stream_proxy_module</a></li>
+          </ul>
+        </li>
+        <li><a href="#常见-location-配置样例">常见 location 配置样例</a>
+          <ul>
+            <li><a href="#静态网站">静态网站</a></li>
+            <li><a href="#反向代理">反向代理</a></li>
+          </ul>
+        </li>
       </ul>
     </li>
     <li><a href="#upstream">upstream</a></li>
@@ -514,9 +531,269 @@ Context:	server
 </ul>
 </blockquote>
 <h3 id="rewrite">rewrite</h3>
-<p>last 和 break关键字的区别</p>
-<h3 id="permanent-和-redirect关键字的区别">permanent 和 redirect关键字的区别</h3>
+<p>rewrite 模块主要用于重定向。</p>
+<p>指令语法：<code>rewrite regex replacement[flag];</code> ，默认值为 <code>none</code> 。
+看个简单例子 :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">location / <span class="o">{</span>
+        rewrite ^/<span class="o">(</span>.*<span class="o">)</span> https://russellgao.cn/<span class="nv">$1</span> permanent<span class="p">;</span>
+    <span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这是我 http 强转 https 的例子。</p>
+<h3 id="常用正则表达式">常用正则表达式</h3>
+<table>
+<thead>
+<tr>
+<th align="center">字符</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">\</td>
+<td align="center">将后面接着的字符标记为一个特殊字符或者一个原义字符或一个向后引用</td>
+</tr>
+<tr>
+<td align="center">^</td>
+<td align="center">匹配输入字符串的起始位置</td>
+</tr>
+<tr>
+<td align="center">$</td>
+<td align="center">匹配输入字符串的结束位置</td>
+</tr>
+<tr>
+<td align="center">*</td>
+<td align="center">匹配前面的字符零次或者多次</td>
+</tr>
+<tr>
+<td align="center">+</td>
+<td align="center">匹配前面字符串一次或者多次</td>
+</tr>
+<tr>
+<td align="center">?</td>
+<td align="center">匹配前面字符串的零次或者一次</td>
+</tr>
+<tr>
+<td align="center">.</td>
+<td align="center">匹配除“\n”之外的所有单个字符</td>
+</tr>
+<tr>
+<td align="center">(pattern)</td>
+<td align="center">匹配括号内的pattern</td>
+</tr>
+</tbody>
+</table>
+<h3 id="flag参数">flag参数</h3>
+<table>
+<thead>
+<tr>
+<th align="center">标记符号</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">last</td>
+<td align="center">本条规则匹配完成后继续向下匹配新的location URI规则</td>
+</tr>
+<tr>
+<td align="center">break</td>
+<td align="center">本条规则匹配完成后终止，不在匹配任何规则</td>
+</tr>
+<tr>
+<td align="center">redirect</td>
+<td align="center">返回302临时重定向</td>
+</tr>
+<tr>
+<td align="center">permanent</td>
+<td align="center">返回301永久重定向</td>
+</tr>
+</tbody>
+</table>
+<h4 id="last-和-break关键字的区别">last 和 break关键字的区别</h4>
+<ul>
+<li>last 匹配到了还会继续向下匹配</li>
+<li>break 匹配到了不会继续向下匹配，会终止掉</li>
+</ul>
+<h4 id="permanent-和-redirect关键字的区别">permanent 和 redirect关键字的区别</h4>
+<ul>
+<li>last 和 break 当出现在location 之外时，两者的作用是一致的没有任何差异</li>
+<li>last 和 break 当出现在location 内部时：
+<ul>
+<li>rewrite … permanent 永久性重定向，请求日志中的状态码为301</li>
+<li>rewrite … redirect 临时重定向，请求日志中的状态码为302</li>
+</ul>
+</li>
+</ul>
 <h3 id="proxy_pass">proxy_pass</h3>
+<p>在nginx中配置proxy_pass代理转发时，如果在proxy_pass后面的url加/，表示绝对根路径；如果没有/，表示相对路径，把匹配的路径部分也给代理走。</p>
+<p>假设我们访问地址为 :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">https://russellgao.cn/proxypass/index.html
+</code></pre></td></tr></table>
+</div>
+</div><ol>
+<li>当配置为</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">location /proxypass/ <span class="o">{</span>
+    proxy_pass https://russellgao.cn/<span class="p">;</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>代理到: <code>https://russellgao.cn/index.html</code></p>
+<ol start="2">
+<li>当配置为</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">location /proxypass/ <span class="o">{</span>
+    proxy_pass https://russellgao.cn<span class="p">;</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>代理到: <code>https://russellgao.cn/proxypass/index.html</code></p>
+<p><strong>请注意：proxy_pass 最后没有 <code>/</code></strong></p>
+<ol start="3">
+<li>当配置为</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">location /proxypass/ <span class="o">{</span>
+    proxy_pass https://russellgao.cn/test/<span class="p">;</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>代理到: <code>https://russellgao.cn/test/index.html</code></p>
+<ol start="4">
+<li>当配置为</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">location /proxypass/ <span class="o">{</span>
+    proxy_pass https://russellgao.cn/test<span class="p">;</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>代理到: <code>https://russellgao.cn/testindex.html</code></p>
+<blockquote>
+<p>nginx 的 ngx_http_proxy_module 和 ngx_stream_proxy_module 模块都有 proxy_pass ，下面看看两者之间的关系与区别。</p>
+</blockquote>
+<h4 id="ngx_http_proxy_module">ngx_http_proxy_module</h4>
+<h4 id="ngx_stream_proxy_module">ngx_stream_proxy_module</h4>
+<h3 id="常见-location-配置样例">常见 location 配置样例</h3>
+<h4 id="静态网站">静态网站</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">server <span class="o">{</span>
+    listen       80<span class="p">;</span>
+    server_name  russellgao.cn<span class="p">;</span>
+    access_log  /usr/local/openresty/nginx/logs/access.log  custom<span class="p">;</span>
+    error_log  /usr/local/openresty/nginx/logs/error.log<span class="p">;</span>
+    
+    location / <span class="o">{</span>
+        rewrite ^/<span class="o">(</span>.*<span class="o">)</span> https://russellgao.cn/<span class="nv">$1</span> permanent<span class="p">;</span>
+    <span class="o">}</span>
+
+    error_page   <span class="m">500</span> <span class="m">502</span> <span class="m">503</span> <span class="m">504</span>  /50x.html<span class="p">;</span>
+    <span class="nv">location</span> <span class="o">=</span> /50x.html <span class="o">{</span>
+        root   /usr/local/openresty/nginx/html<span class="p">;</span>
+    <span class="o">}</span>
+
+    error_page   <span class="m">404</span>  /404.html<span class="p">;</span>
+    <span class="nv">location</span> <span class="o">=</span> /404.html <span class="o">{</span>
+        root   /usr/local/openresty/nginx/blog<span class="p">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="反向代理">反向代理</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">location ~* <span class="o">(</span>/api/v1/blog-server<span class="o">)</span> <span class="o">{</span>
+    access_log  /var/nginx/logs/blog_access.log  custom<span class="p">;</span>
+    error_log   /var/nginx/logs/blog_error.log  error<span class="p">;</span>
+    proxy_pass_header Server<span class="p">;</span>
+    proxy_set_header Host <span class="nv">$http_host</span><span class="p">;</span>
+    proxy_set_header X-Real-IP <span class="nv">$remote_addr</span><span class="p">;</span>
+    proxy_set_header X-Scheme <span class="nv">$scheme</span><span class="p">;</span>
+    <span class="c1"># rewrite 只是举个例子，根据实际情况配置</span>
+<span class="c1">#    rewrite /api/v1/blog-server/(.*)$ /api/$1 break;</span>
+    proxy_pass http://blog_server<span class="p">;</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>可以在 location 级别设置日志格式以及目录，方便精细化管理</li>
+<li>通过proxy_pass 跳转到 <code>upstream</code></li>
+</ul>
 <h2 id="upstream">upstream</h2>
 <p>upstream 是后端服务器组，也称为虚拟服务器组，作用是负载均衡。配置样例参考</p>
 <div class="highlight"><div class="chroma">

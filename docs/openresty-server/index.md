@@ -221,15 +221,138 @@ location ^~ /static/ {
 >- 实际访问：/usr/local/nginx/html/static/index.html 文件
 
 ### rewrite
+rewrite 模块主要用于重定向。
 
+指令语法：`rewrite regex replacement[flag];` ，默认值为 `none` 。
+看个简单例子 :
 
-last 和 break关键字的区别
+```shell script
+location / {
+        rewrite ^/(.*) https://russellgao.cn/$1 permanent;
+    }
+```
 
+这是我 http 强转 https 的例子。
 
-### permanent 和 redirect关键字的区别
+### 常用正则表达式
+字符	 | 描述
+ :-: | :-:
+|\	|将后面接着的字符标记为一个特殊字符或者一个原义字符或一个向后引用
+|^	|匹配输入字符串的起始位置
+|$	|匹配输入字符串的结束位置
+|*	|匹配前面的字符零次或者多次
+|+	|匹配前面字符串一次或者多次
+|?	|匹配前面字符串的零次或者一次
+|.	|匹配除“\n”之外的所有单个字符
+|(pattern)	|匹配括号内的pattern
+
+### flag参数
+标记符号 |	说明
+ :-: | :-:
+last	|本条规则匹配完成后继续向下匹配新的location URI规则
+break	|本条规则匹配完成后终止，不在匹配任何规则
+redirect	|返回302临时重定向
+permanent	|返回301永久重定向
+
+#### last 和 break关键字的区别
+- last 匹配到了还会继续向下匹配
+- break 匹配到了不会继续向下匹配，会终止掉
+
+#### permanent 和 redirect关键字的区别
+- last 和 break 当出现在location 之外时，两者的作用是一致的没有任何差异
+- last 和 break 当出现在location 内部时：
+    - rewrite … permanent 永久性重定向，请求日志中的状态码为301
+    - rewrite … redirect 临时重定向，请求日志中的状态码为302
 
 ### proxy_pass
+在nginx中配置proxy_pass代理转发时，如果在proxy_pass后面的url加/，表示绝对根路径；如果没有/，表示相对路径，把匹配的路径部分也给代理走。
 
+假设我们访问地址为 :
+```shell script
+https://russellgao.cn/proxypass/index.html
+```
+
+1. 当配置为
+```shell script
+location /proxypass/ {
+    proxy_pass https://russellgao.cn/;
+}
+```
+代理到: `https://russellgao.cn/index.html`
+
+2. 当配置为
+```shell script
+location /proxypass/ {
+    proxy_pass https://russellgao.cn;
+}
+```
+代理到: `https://russellgao.cn/proxypass/index.html`
+
+**请注意：proxy_pass 最后没有 `/`**
+
+3. 当配置为
+```shell script
+location /proxypass/ {
+    proxy_pass https://russellgao.cn/test/;
+}
+```
+代理到: `https://russellgao.cn/test/index.html`
+
+4. 当配置为
+```shell script
+location /proxypass/ {
+    proxy_pass https://russellgao.cn/test;
+}
+```
+代理到: `https://russellgao.cn/testindex.html`
+
+> nginx 的 ngx_http_proxy_module 和 ngx_stream_proxy_module 模块都有 proxy_pass ，下面看看两者之间的关系与区别。
+
+#### ngx_http_proxy_module
+
+#### ngx_stream_proxy_module
+
+### 常见 location 配置样例
+#### 静态网站
+```shell script
+server {
+    listen       80;
+    server_name  russellgao.cn;
+    access_log  /usr/local/openresty/nginx/logs/access.log  custom;
+    error_log  /usr/local/openresty/nginx/logs/error.log;
+    
+    location / {
+        rewrite ^/(.*) https://russellgao.cn/$1 permanent;
+    }
+
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /usr/local/openresty/nginx/html;
+    }
+
+    error_page   404  /404.html;
+    location = /404.html {
+        root   /usr/local/openresty/nginx/blog;
+    }
+}
+```
+
+#### 反向代理
+```shell script
+location ~* (/api/v1/blog-server) {
+    access_log  /var/nginx/logs/blog_access.log  custom;
+    error_log   /var/nginx/logs/blog_error.log  error;
+    proxy_pass_header Server;
+    proxy_set_header Host $http_host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Scheme $scheme;
+    # rewrite 只是举个例子，根据实际情况配置
+#    rewrite /api/v1/blog-server/(.*)$ /api/$1 break;
+    proxy_pass http://blog_server;
+}
+```
+- 可以在 location 级别设置日志格式以及目录，方便精细化管理
+- 通过proxy_pass 跳转到 `upstream`
 
 ## upstream
 upstream 是后端服务器组，也称为虚拟服务器组，作用是负载均衡。配置样例参考
