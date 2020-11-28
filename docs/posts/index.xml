@@ -4,7 +4,14 @@
         <link>https://russellgao.cn/posts/</link>
         <description>All Posts | 大大很二</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
-            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Wed, 25 Nov 2020 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Fri, 27 Nov 2020 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>细谈 Golang 中那些设计优美的细节-GMP</title>
+    <link>https://russellgao.cn/golang-gmp/</link>
+    <pubDate>Fri, 27 Nov 2020 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/golang-gmp/</guid>
+    <description><![CDATA[导读  这是 Golang 系列第二篇，这篇主要谈谈 Golang 的调度模型-GMP，我们知道 Golang 在并发方面有绝对优势，现在就让我们来揭开 它神秘的面纱。]]></description>
+</item><item>
     <title>如何利用 golang 操纵 oracle</title>
     <link>https://russellgao.cn/oracle-golang/</link>
     <pubDate>Wed, 25 Nov 2020 00:00:00 &#43;0000</pubDate>
@@ -69,13 +76,6 @@ Go 介绍 Go（又称 Golang）是 Google 的 Robert Griesemer，Rob Pike 及 Ke
     <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
     <author>Author</author>
     <guid>https://russellgao.cn/posts/kubernetes/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title></title>
-    <link>https://russellgao.cn/posts/python/</link>
-    <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://russellgao.cn/posts/python/</guid>
     <description><![CDATA[]]></description>
 </item></channel>
 </rss>

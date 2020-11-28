@@ -18,7 +18,7 @@
 <meta name="twitter:title" content="如何利用 golang 操纵 oracle"/>
 <meta name="twitter:description" content="如何利用 golang 操纵 oracle"/>
 <meta name="application-name" content="russellgao">
-<meta name="apple-mobile-web-app-title" content="russellgao"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://gitee.com/russellgao/blogs-image/raw/master/images/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://russellgao.cn/oracle-golang/" /><link rel="prev" href="https://russellgao.cn/openresty-server/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+<meta name="apple-mobile-web-app-title" content="russellgao"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://gitee.com/russellgao/blogs-image/raw/master/images/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://russellgao.cn/oracle-golang/" /><link rel="prev" href="https://russellgao.cn/openresty-server/" /><link rel="next" href="https://russellgao.cn/golang-gmp/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -51,7 +51,7 @@
         title="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png" />大大很二</a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/"> 首页 </a><a class="menu-item" href="/golang/"> Golang </a><a class="menu-item" href="/kubernetes/"> Kubernetes </a><a class="menu-item" href="/servicemesh/"> ServiceMesh </a><a class="menu-item" href="/python/"> Python </a><a class="menu-item" href="/devops/"> Devops </a><a class="menu-item" href="/argorithm/"> 算法 </a><a class="menu-item" href="/opensrouce/"> 开源项目 </a><a class="menu-item" href="/ai/"> 人工智能 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+            <div class="menu-inner"><a class="menu-item" href="/"> 首页 </a><a class="menu-item" href="/golang/"> Golang </a><a class="menu-item" href="/kubernetes/"> Kubernetes </a><a class="menu-item" href="/servicemesh/"> ServiceMesh </a><a class="menu-item" href="/python/"> Python </a><a class="menu-item" href="/devops/"> Devops </a><a class="menu-item" href="/argorithm/"> 算法 </a><a class="menu-item" href="/opensrouce/"> 开源项目 </a><a class="menu-item" href="/ai/"> 人工智能 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
                         <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
                             <i class="fas fa-search fa-fw"></i>
@@ -101,7 +101,7 @@
                     <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
                         Cancel
                     </a>
-                </div><a class="menu-item" href="/" title="">首页</a><a class="menu-item" href="/golang/" title="">Golang</a><a class="menu-item" href="/kubernetes/" title="">Kubernetes</a><a class="menu-item" href="/servicemesh/" title="">ServiceMesh</a><a class="menu-item" href="/python/" title="">Python</a><a class="menu-item" href="/devops/" title="">Devops</a><a class="menu-item" href="/argorithm/" title="">算法</a><a class="menu-item" href="/opensrouce/" title="">开源项目</a><a class="menu-item" href="/ai/" title="">人工智能</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                </div><a class="menu-item" href="/" title="">首页</a><a class="menu-item" href="/golang/" title="">Golang</a><a class="menu-item" href="/kubernetes/" title="">Kubernetes</a><a class="menu-item" href="/servicemesh/" title="">ServiceMesh</a><a class="menu-item" href="/python/" title="">Python</a><a class="menu-item" href="/devops/" title="">Devops</a><a class="menu-item" href="/argorithm/" title="">算法</a><a class="menu-item" href="/opensrouce/" title="">开源项目</a><a class="menu-item" href="/ai/" title="">人工智能</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
                 <i class="fas fa-adjust fa-fw"></i>
             </a></div>
     </div>
@@ -475,7 +475,8 @@ ln -s ~/instantclient_19_3/libclntsh.dylib ~/lib/
         </section>
     </div>
 
-    <div class="post-nav"><a href="/openresty-server/" class="prev" rel="prev" title="openresty 配置文件 （二）"><i class="fas fa-angle-left fa-fw"></i>openresty 配置文件 （二）</a></div>
+    <div class="post-nav"><a href="/openresty-server/" class="prev" rel="prev" title="openresty 配置文件 （二）"><i class="fas fa-angle-left fa-fw"></i>openresty 配置文件 （二）</a>
+            <a href="/golang-gmp/" class="next" rel="next" title="细谈 Golang 中那些设计优美的细节-GMP">细谈 Golang 中那些设计优美的细节-GMP<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div id="comments"><div id="valine" class="comment"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
