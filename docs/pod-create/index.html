@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/russellgao.cn\/pod-create\/"
-        },"genre": "posts","keywords": "kubernetes, pod, kubectl, kubelet, schedule","wordcount":  22 ,
+        },"genre": "posts","keywords": "kubernetes, pod, kubectl, kubelet, schedule","wordcount":  696 ,
         "url": "https:\/\/russellgao.cn\/pod-create\/","datePublished": "2020-11-24T00:00:00+00:00","dateModified": "2020-11-27T23:52:19+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -118,8 +118,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">kubernetes 中 pod 是如何启动的呢</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-24">2020-11-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;22 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;One minute&nbsp;<span id="/pod-create/" class="leancloud_visitors" data-flag-title="kubernetes 中 pod 是如何启动的呢">
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-24">2020-11-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;696 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;4 minutes&nbsp;<span id="/pod-create/" class="leancloud_visitors" data-flag-title="kubernetes 中 pod 是如何启动的呢">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;views
                     </span>&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="true">
@@ -130,6 +130,11 @@
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
     <li><a href="#导读">导读</a></li>
+    <li><a href="#kubectl-阶段">kubectl 阶段</a></li>
+    <li><a href="#apiserver">apiserver</a></li>
+    <li><a href="#schedule">Schedule</a></li>
+    <li><a href="#kubelet">kubelet</a></li>
+    <li><a href="#总结">总结</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="导读">导读</h2>
@@ -138,6 +143,324 @@
 创建一个 Pod ，从执行到 Pod 正常运行 kubernetes 做了什么事情呢？都有哪些组件参与呢？这篇文档主要讲述从提交 Pod 的创建请求到
 Pod 的正常运行的这个过程追踪。</p>
 </blockquote>
+<h2 id="kubectl-阶段">kubectl 阶段</h2>
+<p><code>kubectl apply</code> 阶段其实分为两个过程 ，先调用 get 方法，查看资源是否存在，存在则调用 <code>patch</code>, 否则执行 <code>create</code> 方法。
+这个过程可以参考源码（文章中所有源码都截取了部分，详细可以在在给出的链接中查看）:</p>
+<p>vendor/k8s.io/kubectl/pkg/cmd/apply/apply.go</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// NewCmdApply creates the `apply` command
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">NewCmdApply</span><span class="p">(</span><span class="nx">baseName</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">f</span> <span class="nx">cmdutil</span><span class="p">.</span><span class="nx">Factory</span><span class="p">,</span> <span class="nx">ioStreams</span> <span class="nx">genericclioptions</span><span class="p">.</span><span class="nx">IOStreams</span><span class="p">)</span> <span class="o">*</span><span class="nx">cobra</span><span class="p">.</span><span class="nx">Command</span> <span class="p">{</span>
+	<span class="nx">o</span> <span class="o">:=</span> <span class="nf">NewApplyOptions</span><span class="p">(</span><span class="nx">ioStreams</span><span class="p">)</span>
+
+	<span class="nx">cmd</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">cobra</span><span class="p">.</span><span class="nx">Command</span><span class="p">{</span>
+		<span class="nx">Use</span><span class="p">:</span>                   <span class="s">&#34;apply (-f FILENAME | -k DIRECTORY)&#34;</span><span class="p">,</span>
+		<span class="nx">DisableFlagsInUseLine</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+		<span class="nx">Short</span><span class="p">:</span>                 <span class="nx">i18n</span><span class="p">.</span><span class="nf">T</span><span class="p">(</span><span class="s">&#34;Apply a configuration to a resource by filename or stdin&#34;</span><span class="p">),</span>
+		<span class="nx">Long</span><span class="p">:</span>                  <span class="nx">applyLong</span><span class="p">,</span>
+		<span class="nx">Example</span><span class="p">:</span>               <span class="nx">applyExample</span><span class="p">,</span>
+		<span class="nx">Run</span><span class="p">:</span> <span class="kd">func</span><span class="p">(</span><span class="nx">cmd</span> <span class="o">*</span><span class="nx">cobra</span><span class="p">.</span><span class="nx">Command</span><span class="p">,</span> <span class="nx">args</span> <span class="p">[]</span><span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+			<span class="nx">cmdutil</span><span class="p">.</span><span class="nf">CheckErr</span><span class="p">(</span><span class="nx">o</span><span class="p">.</span><span class="nf">Complete</span><span class="p">(</span><span class="nx">f</span><span class="p">,</span> <span class="nx">cmd</span><span class="p">))</span>
+			<span class="nx">cmdutil</span><span class="p">.</span><span class="nf">CheckErr</span><span class="p">(</span><span class="nf">validateArgs</span><span class="p">(</span><span class="nx">cmd</span><span class="p">,</span> <span class="nx">args</span><span class="p">))</span>
+			<span class="nx">cmdutil</span><span class="p">.</span><span class="nf">CheckErr</span><span class="p">(</span><span class="nf">validatePruneAll</span><span class="p">(</span><span class="nx">o</span><span class="p">.</span><span class="nx">Prune</span><span class="p">,</span> <span class="nx">o</span><span class="p">.</span><span class="nx">All</span><span class="p">,</span> <span class="nx">o</span><span class="p">.</span><span class="nx">Selector</span><span class="p">))</span>
+			<span class="nx">cmdutil</span><span class="p">.</span><span class="nf">CheckErr</span><span class="p">(</span><span class="nx">o</span><span class="p">.</span><span class="nf">Run</span><span class="p">())</span>
+		<span class="p">},</span>
+	<span class="p">}</span>
+
+	<span class="o">...</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Run executes the `apply` command.
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">o</span> <span class="o">*</span><span class="nx">ApplyOptions</span><span class="p">)</span> <span class="nf">Run</span><span class="p">()</span> <span class="kt">error</span> <span class="p">{</span>
+	<span class="o">...</span>
+	<span class="c1">// Iterate through all objects, applying each one.
+</span><span class="c1"></span>	<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">info</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">infos</span> <span class="p">{</span>
+		<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">o</span><span class="p">.</span><span class="nf">applyOneObject</span><span class="p">(</span><span class="nx">info</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+			<span class="nx">errs</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">errs</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="o">...</span>
+	<span class="k">return</span> <span class="kc">nil</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">o</span> <span class="o">*</span><span class="nx">ApplyOptions</span><span class="p">)</span> <span class="nf">applyOneObject</span><span class="p">(</span><span class="nx">info</span> <span class="o">*</span><span class="nx">resource</span><span class="p">.</span><span class="nx">Info</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+	<span class="o">...</span>
+	<span class="c1">// Get the modified configuration of the object. Embed the result
+</span><span class="c1"></span>	<span class="c1">// as an annotation in the modified configuration, so that it will appear
+</span><span class="c1"></span>	<span class="c1">// in the patch sent to the server.
+</span><span class="c1"></span>	<span class="nx">modified</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">util</span><span class="p">.</span><span class="nf">GetModifiedConfiguration</span><span class="p">(</span><span class="nx">info</span><span class="p">.</span><span class="nx">Object</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">unstructured</span><span class="p">.</span><span class="nx">UnstructuredJSONScheme</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nx">cmdutil</span><span class="p">.</span><span class="nf">AddSourceToErr</span><span class="p">(</span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;retrieving modified configuration from:\n%s\nfor:&#34;</span><span class="p">,</span> <span class="nx">info</span><span class="p">.</span><span class="nf">String</span><span class="p">()),</span> <span class="nx">info</span><span class="p">.</span><span class="nx">Source</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">info</span><span class="p">.</span><span class="nf">Get</span><span class="p">();</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">if</span> <span class="p">!</span><span class="nx">errors</span><span class="p">.</span><span class="nf">IsNotFound</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+			<span class="k">return</span> <span class="nx">cmdutil</span><span class="p">.</span><span class="nf">AddSourceToErr</span><span class="p">(</span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;retrieving current configuration of:\n%s\nfrom server for:&#34;</span><span class="p">,</span> <span class="nx">info</span><span class="p">.</span><span class="nf">String</span><span class="p">()),</span> <span class="nx">info</span><span class="p">.</span><span class="nx">Source</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+		<span class="p">}</span>
+
+		<span class="c1">// Create the resource if it doesn&#39;t exist
+</span><span class="c1"></span>		<span class="c1">// First, update the annotation used by kubectl apply
+</span><span class="c1"></span>		<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">util</span><span class="p">.</span><span class="nf">CreateApplyAnnotation</span><span class="p">(</span><span class="nx">info</span><span class="p">.</span><span class="nx">Object</span><span class="p">,</span> <span class="nx">unstructured</span><span class="p">.</span><span class="nx">UnstructuredJSONScheme</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+			<span class="k">return</span> <span class="nx">cmdutil</span><span class="p">.</span><span class="nf">AddSourceToErr</span><span class="p">(</span><span class="s">&#34;creating&#34;</span><span class="p">,</span> <span class="nx">info</span><span class="p">.</span><span class="nx">Source</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+		<span class="p">}</span>
+
+		<span class="k">if</span> <span class="nx">o</span><span class="p">.</span><span class="nx">DryRunStrategy</span> <span class="o">!=</span> <span class="nx">cmdutil</span><span class="p">.</span><span class="nx">DryRunClient</span> <span class="p">{</span>
+			<span class="c1">// Then create the resource and skip the three-way merge
+</span><span class="c1"></span>			<span class="nx">obj</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">helper</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="nx">info</span><span class="p">.</span><span class="nx">Namespace</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">info</span><span class="p">.</span><span class="nx">Object</span><span class="p">)</span>
+			<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+				<span class="k">return</span> <span class="nx">cmdutil</span><span class="p">.</span><span class="nf">AddSourceToErr</span><span class="p">(</span><span class="s">&#34;creating&#34;</span><span class="p">,</span> <span class="nx">info</span><span class="p">.</span><span class="nx">Source</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+			<span class="p">}</span>
+			<span class="nx">info</span><span class="p">.</span><span class="nf">Refresh</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span>
+		<span class="p">}</span>
+
+		<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">o</span><span class="p">.</span><span class="nf">MarkObjectVisited</span><span class="p">(</span><span class="nx">info</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+			<span class="k">return</span> <span class="nx">err</span>
+		<span class="p">}</span>
+
+		<span class="k">if</span> <span class="nx">o</span><span class="p">.</span><span class="nf">shouldPrintObject</span><span class="p">()</span> <span class="p">{</span>
+			<span class="k">return</span> <span class="kc">nil</span>
+		<span class="p">}</span>
+
+		<span class="nx">printer</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">o</span><span class="p">.</span><span class="nf">ToPrinter</span><span class="p">(</span><span class="s">&#34;created&#34;</span><span class="p">)</span>
+		<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+			<span class="k">return</span> <span class="nx">err</span>
+		<span class="p">}</span>
+		<span class="k">if</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">printer</span><span class="p">.</span><span class="nf">PrintObj</span><span class="p">(</span><span class="nx">info</span><span class="p">.</span><span class="nx">Object</span><span class="p">,</span> <span class="nx">o</span><span class="p">.</span><span class="nx">Out</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+			<span class="k">return</span> <span class="nx">err</span>
+		<span class="p">}</span>
+		<span class="k">return</span> <span class="kc">nil</span>
+	<span class="p">}</span>
+
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">o</span><span class="p">.</span><span class="nf">MarkObjectVisited</span><span class="p">(</span><span class="nx">info</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nx">err</span>
+	<span class="p">}</span>
+
+	<span class="k">if</span> <span class="nx">o</span><span class="p">.</span><span class="nx">DryRunStrategy</span> <span class="o">!=</span> <span class="nx">cmdutil</span><span class="p">.</span><span class="nx">DryRunClient</span> <span class="p">{</span>
+		<span class="nx">metadata</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">meta</span><span class="p">.</span><span class="nf">Accessor</span><span class="p">(</span><span class="nx">info</span><span class="p">.</span><span class="nx">Object</span><span class="p">)</span>
+		<span class="nx">annotationMap</span> <span class="o">:=</span> <span class="nx">metadata</span><span class="p">.</span><span class="nf">GetAnnotations</span><span class="p">()</span>
+		<span class="k">if</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">annotationMap</span><span class="p">[</span><span class="nx">corev1</span><span class="p">.</span><span class="nx">LastAppliedConfigAnnotation</span><span class="p">];</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
+			<span class="nx">fmt</span><span class="p">.</span><span class="nf">Fprintf</span><span class="p">(</span><span class="nx">o</span><span class="p">.</span><span class="nx">ErrOut</span><span class="p">,</span> <span class="nx">warningNoLastAppliedConfigAnnotation</span><span class="p">,</span> <span class="nx">o</span><span class="p">.</span><span class="nx">cmdBaseName</span><span class="p">)</span>
+		<span class="p">}</span>
+
+		<span class="nx">patcher</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nf">newPatcher</span><span class="p">(</span><span class="nx">o</span><span class="p">,</span> <span class="nx">info</span><span class="p">,</span> <span class="nx">helper</span><span class="p">)</span>
+		<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+			<span class="k">return</span> <span class="nx">err</span>
+		<span class="p">}</span>
+		<span class="nx">patchBytes</span><span class="p">,</span> <span class="nx">patchedObject</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">patcher</span><span class="p">.</span><span class="nf">Patch</span><span class="p">(</span><span class="nx">info</span><span class="p">.</span><span class="nx">Object</span><span class="p">,</span> <span class="nx">modified</span><span class="p">,</span> <span class="nx">info</span><span class="p">.</span><span class="nx">Source</span><span class="p">,</span> <span class="nx">info</span><span class="p">.</span><span class="nx">Namespace</span><span class="p">,</span> <span class="nx">info</span><span class="p">.</span><span class="nx">Name</span><span class="p">,</span> <span class="nx">o</span><span class="p">.</span><span class="nx">ErrOut</span><span class="p">)</span>
+		<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+			<span class="k">return</span> <span class="nx">cmdutil</span><span class="p">.</span><span class="nf">AddSourceToErr</span><span class="p">(</span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;applying patch:\n%s\nto:\n%v\nfor:&#34;</span><span class="p">,</span> <span class="nx">patchBytes</span><span class="p">,</span> <span class="nx">info</span><span class="p">),</span> <span class="nx">info</span><span class="p">.</span><span class="nx">Source</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+		<span class="p">}</span>
+
+		<span class="nx">info</span><span class="p">.</span><span class="nf">Refresh</span><span class="p">(</span><span class="nx">patchedObject</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span>
+
+		<span class="k">if</span> <span class="nb">string</span><span class="p">(</span><span class="nx">patchBytes</span><span class="p">)</span> <span class="o">==</span> <span class="s">&#34;{}&#34;</span> <span class="o">&amp;&amp;</span> <span class="p">!</span><span class="nx">o</span><span class="p">.</span><span class="nf">shouldPrintObject</span><span class="p">()</span> <span class="p">{</span>
+			<span class="nx">printer</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">o</span><span class="p">.</span><span class="nf">ToPrinter</span><span class="p">(</span><span class="s">&#34;unchanged&#34;</span><span class="p">)</span>
+			<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+				<span class="k">return</span> <span class="nx">err</span>
+			<span class="p">}</span>
+			<span class="k">if</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">printer</span><span class="p">.</span><span class="nf">PrintObj</span><span class="p">(</span><span class="nx">info</span><span class="p">.</span><span class="nx">Object</span><span class="p">,</span> <span class="nx">o</span><span class="p">.</span><span class="nx">Out</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+				<span class="k">return</span> <span class="nx">err</span>
+			<span class="p">}</span>
+			<span class="k">return</span> <span class="kc">nil</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="o">...</span>
+	<span class="k">return</span> <span class="kc">nil</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>apply 命令调用 <code>o.Run()</code> 执行 创建的动作</li>
+<li><code>applyOneObject</code> 方法是真正执行创建 Pod 的动作</li>
+<li>在 <code>applyOneObject</code> 方法中通过 <code>GetModifiedConfiguration</code> 函数执行 get 动作</li>
+<li>如果是 <code>IsNotFound</code> 异常则 执行 <code>Create</code> 动作</li>
+<li>否则执行 <code>Patch</code> 动作</li>
+</ul>
+<blockquote>
+<p>上述过程除了用 kubectl ，当然也可以自己调用 api 去创建或者更新 。</p>
+</blockquote>
+<h2 id="apiserver">apiserver</h2>
+<p>通过客户端把请求提交到 apiserver 之后，接下来就是 apiserver 表演的时候了。</p>
+<p>apiserver 会把 pod 数据存储到 etcd 中。</p>
+<h2 id="schedule">Schedule</h2>
+<p>Schedule通过和API Server的watch机制，查看到新的Pod（通过 pod.spec.Node == nil 判断是否为新的Pod），尝试为Pod绑定Node。Schedle 的过程为 :</p>
+<ul>
+<li>过滤主机：调度器用一组规则过滤掉不符合要求的主机，比如Pod指定了所需要的资源，那么就要过滤掉资源不够的主机</li>
+<li>主机打分：对第一步筛选出的符合要求的主机进行打分，在主机打分阶段，调度器会考虑一些整体优化策略，比如把一个Replication Controller的副本分布到不同的主机上，使用最低负载的主机等</li>
+<li>选择主机：选择打分最高的主机，进行binding操作</li>
+<li>把调度结果通过apiserver 存储到 etcd 中</li>
+</ul>
+<h2 id="kubelet">kubelet</h2>
+<ul>
+<li>kubelet从apiserver获取分配到其所在节点的Pod（watch 机制）</li>
+<li>kubelet调用Docker的 Api 创建容器，创建容器的过程为:
+<ul>
+<li>先按顺序启动 <code>initContainers</code> 按照 <code>yaml</code> 中申明的顺序</li>
+<li>并发启动 <code>containers</code></li>
+</ul>
+</li>
+<li>kubelet将Pod状态更新到apiserver</li>
+<li>apiserver将状态信息写到etcd中</li>
+</ul>
+<h2 id="总结">总结</h2>
+<blockquote>
+<p>上面每个步骤单拎出来都能有好多东西可以深入下去，这里从流程上简单的介绍了一个Pod 从发起创建请求到最终创建的一个文字版流程，仅供参考。</p>
+<p>后续再详细分析每个组件。</p>
+</blockquote>
+<p>Pod 的创建过程 :</p>
+<ul>
+<li>kubectl apply 执行过程:
+<ul>
+<li>先通过 get 查找资源对象，如果不存在则 <code>create pod</code> 否则 <code>patch pod</code></li>
+</ul>
+</li>
+<li>通过 apply 提交请求到 apiserver ，apiserver 把 pod 数据存储到 etcd 中</li>
+<li>Schedule通过和API Server的watch机制，查看到新的Pod（通过 pod.spec.Node == nil 判断是否为新的Pod），尝试为Pod绑定Node。Schedle 的过程为:
+<ul>
+<li>过滤主机：调度器用一组规则过滤掉不符合要求的主机，比如Pod指定了所需要的资源，那么就要过滤掉资源不够的主机</li>
+<li>主机打分：对第一步筛选出的符合要求的主机进行打分，在主机打分阶段，调度器会考虑一些整体优化策略，比如把一个Replication Controller的副本分布到不同的主机上，使用最低负载的主机等</li>
+<li>选择主机：选择打分最高的主机，进行binding操作</li>
+<li>把调度结果通过apiserver 存储到 etcd 中</li>
+</ul>
+</li>
+<li>kubelet从apiserver获取分配到其所在节点的Pod（watch 机制）</li>
+<li>kubelet调用Docker的 Api 创建容器，创建容器的过程为:
+<ul>
+<li>先按顺序启动 <code>initContainers</code> 按照 <code>yaml</code> 中申明的顺序</li>
+<li>并发启动 <code>containers</code></li>
+</ul>
+</li>
+<li>kubelet将Pod状态更新到apiserver</li>
+<li>apiserver将状态信息写到etcd中</li>
+</ul>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
