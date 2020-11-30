@@ -4,7 +4,16 @@
         <link>https://russellgao.cn/posts/</link>
         <description>All Posts | 大大很二</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
-            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Fri, 27 Nov 2020 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Sun, 29 Nov 2020 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>harbor gc 时遇到的坑</title>
+    <link>https://russellgao.cn/harbor-gc/</link>
+    <pubDate>Sun, 29 Nov 2020 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/harbor-gc/</guid>
+    <description><![CDATA[导读  Harbor 是为企业用户设计的容器镜像仓库开源项目，包括了权限管理(RBAC)、LDAP、审计、安全漏洞扫描、镜像验真、管理界面、自我注册、HA 等企业必需的功能，同时针对中国用户的特点，设计镜像复制和中文支持等功能。
+在使用的过程会有 GC 的需求，可以想象下这几种场景:
+ 在 CI 的过程，同一个版本（SNAPSHOT/latest）编译很多次，只有最后一次产生的才有 tag ，那么之前的产生 blob 去哪了，或者还有用吗 ？ 镜像的生命周期已经结束，需要从仓库中删除，应该怎么操作？要知道在 Harbor 界面上删除只是标记删除，并不会释放存储空间。  Harbor / Docker 官方已经提供比较完善的 GC 方案，可以解决 80% 的问题，但是 GC 的过程中还可能出现一些奇怪的现象，本文主要记录在 Harbor GC 过程中踩过的坑。]]></description>
+</item><item>
     <title>细谈 Golang 中那些设计优美的细节-GMP</title>
     <link>https://russellgao.cn/golang-gmp/</link>
     <pubDate>Fri, 27 Nov 2020 00:00:00 &#43;0000</pubDate>
@@ -69,13 +78,6 @@ Go 介绍 Go（又称 Golang）是 Google 的 Robert Griesemer，Rob Pike 及 Ke
     <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
     <author>Author</author>
     <guid>https://russellgao.cn/posts/devops/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title></title>
-    <link>https://russellgao.cn/posts/kubernetes/</link>
-    <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://russellgao.cn/posts/kubernetes/</guid>
     <description><![CDATA[]]></description>
 </item></channel>
 </rss>
