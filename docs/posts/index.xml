@@ -4,7 +4,15 @@
         <link>https://russellgao.cn/posts/</link>
         <description>All Posts | 大大很二</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
-            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Sun, 29 Nov 2020 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Mon, 30 Nov 2020 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>OSCHINA 搬迁申明</title>
+    <link>https://russellgao.cn/oschina-blog/</link>
+    <pubDate>Mon, 30 Nov 2020 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/oschina-blog/</guid>
+    <description><![CDATA[导读  我的博客即将同步至 OSCHINA 社区，这是我的 OSCHINA ID：russellgao，邀请大家一同入驻：https://www.oschina.net/sharing-plan/apply
+ ]]></description>
+</item><item>
     <title>harbor gc 时遇到的坑</title>
     <link>https://russellgao.cn/harbor-gc/</link>
     <pubDate>Sun, 29 Nov 2020 00:00:00 &#43;0000</pubDate>
@@ -71,13 +79,6 @@ Go 介绍 Go（又称 Golang）是 Google 的 Robert Griesemer，Rob Pike 及 Ke
     <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
     <author>Author</author>
     <guid>https://russellgao.cn/posts/argorithm/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title></title>
-    <link>https://russellgao.cn/posts/devops/</link>
-    <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://russellgao.cn/posts/devops/</guid>
     <description><![CDATA[]]></description>
 </item></channel>
 </rss>

@@ -5,35 +5,35 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>harbor gc 时遇到的坑 - 大大很二</title><meta name="Description" content="harbor gc 时遇到的坑"><meta property="og:title" content="harbor gc 时遇到的坑" />
-<meta property="og:description" content="harbor gc 时遇到的坑" />
+        <title>OSCHINA 搬迁申明 - 大大很二</title><meta name="Description" content="OSCHINA 搬迁申明"><meta property="og:title" content="OSCHINA 搬迁申明" />
+<meta property="og:description" content="OSCHINA 搬迁申明" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://russellgao.cn/harbor-gc/" />
+<meta property="og:url" content="https://russellgao.cn/oschina-blog/" />
 <meta property="og:image" content="https://russellgao.cn/images/profile.jpg"/>
-<meta property="article:published_time" content="2020-11-29T00:00:00+00:00" />
-<meta property="article:modified_time" content="2020-11-30T22:44:38+08:00" /><meta property="og:site_name" content="大大很二" />
+<meta property="article:published_time" content="2020-11-30T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-12-01T15:06:11+08:00" /><meta property="og:site_name" content="大大很二" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://russellgao.cn/images/profile.jpg"/>
 
-<meta name="twitter:title" content="harbor gc 时遇到的坑"/>
-<meta name="twitter:description" content="harbor gc 时遇到的坑"/>
+<meta name="twitter:title" content="OSCHINA 搬迁申明"/>
+<meta name="twitter:description" content="OSCHINA 搬迁申明"/>
 <meta name="application-name" content="russellgao">
-<meta name="apple-mobile-web-app-title" content="russellgao"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://gitee.com/russellgao/blogs-image/raw/master/images/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://russellgao.cn/harbor-gc/" /><link rel="prev" href="https://russellgao.cn/golang-gmp/" /><link rel="next" href="https://russellgao.cn/oschina-blog/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+<meta name="apple-mobile-web-app-title" content="russellgao"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://gitee.com/russellgao/blogs-image/raw/master/images/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://russellgao.cn/oschina-blog/" /><link rel="prev" href="https://russellgao.cn/harbor-gc/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "harbor gc 时遇到的坑",
+        "headline": "OSCHINA 搬迁申明",
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/russellgao.cn\/harbor-gc\/"
-        },"genre": "posts","keywords": "云原生, harbor","wordcount":  377 ,
-        "url": "https:\/\/russellgao.cn\/harbor-gc\/","datePublished": "2020-11-29T00:00:00+00:00","dateModified": "2020-11-30T22:44:38+08:00","publisher": {
+            "@id": "https:\/\/russellgao.cn\/oschina-blog\/"
+        },"genre": "posts","wordcount":  6 ,
+        "url": "https:\/\/russellgao.cn\/oschina-blog\/","datePublished": "2020-11-30T00:00:00+00:00","dateModified": "2020-12-01T15:06:11+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
                 "name": "russellgao"
-            },"description": "harbor gc 时遇到的坑"
+            },"description": "OSCHINA 搬迁申明"
     }
     </script></head>
     <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
@@ -116,10 +116,10 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">Contents</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animated flipInX">harbor gc 时遇到的坑</h1><div class="post-meta">
+        </div><article class="page single"><h1 class="single-title animated flipInX">OSCHINA 搬迁申明</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-29">2020-11-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;377 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;2 minutes&nbsp;<span id="/harbor-gc/" class="leancloud_visitors" data-flag-title="harbor gc 时遇到的坑">
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-30">2020-11-30</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;6 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;One minute&nbsp;<span id="/oschina-blog/" class="leancloud_visitors" data-flag-title="OSCHINA 搬迁申明">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;views
                     </span>&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="true">
@@ -130,233 +130,38 @@
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
     <li><a href="#导读">导读</a></li>
-    <li><a href="#gc原理">GC原理</a></li>
-    <li><a href="#harbor-存储的目录结构">Harbor 存储的目录结构</a></li>
-    <li><a href="#gc过程">GC过程</a></li>
-    <li><a href="#遇到的坑">遇到的坑</a>
-      <ul>
-        <li><a href="#docker-pull-失败">docker pull 失败</a></li>
-      </ul>
-    </li>
-    <li><a href="#总结">总结</a></li>
-    <li><a href="#参考">参考</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="导读">导读</h2>
 <blockquote>
-<p>Harbor 是为企业用户设计的容器镜像仓库开源项目，包括了权限管理(RBAC)、LDAP、审计、安全漏洞扫描、镜像验真、管理界面、自我注册、HA 等企业必需的功能，同时针对中国用户的特点，设计镜像复制和中文支持等功能。</p>
-<p>在使用的过程会有 GC 的需求，可以想象下这几种场景:</p>
-<ul>
-<li>在 CI 的过程，同一个版本（SNAPSHOT/latest）编译很多次，只有最后一次产生的才有 tag ，那么之前的产生 blob 去哪了，或者还有用吗 ？</li>
-<li>镜像的生命周期已经结束，需要从仓库中删除，应该怎么操作？要知道在 Harbor 界面上删除只是标记删除，并不会释放存储空间。</li>
-</ul>
-<p>Harbor / Docker 官方已经提供比较完善的 GC 方案，可以解决 80% 的问题，但是 GC 的过程中还可能出现一些奇怪的现象，本文主要记录在 Harbor GC
-过程中踩过的坑。</p>
+<p>我的博客即将同步至 OSCHINA 社区，这是我的 OSCHINA ID：russellgao，邀请大家一同入驻：https://www.oschina.net/sharing-plan/apply</p>
 </blockquote>
-<h2 id="gc原理">GC原理</h2>
-<p>用一个官方例子说明:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">A -----&gt; a &lt;----- B
-    \--&gt; b     |
-         c &lt;--/
-</code></pre></td></tr></table>
-</div>
-</div><p>假设镜像 A 引用了层a,b ，镜像 B 引用了层 a,c ，在这个阶段，是不需要做 GC 的，接下来把 B 给删掉，如下:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">A -----&gt; a     B
-    \--&gt; b
-         c
-</code></pre></td></tr></table>
-</div>
-</div><p>在这个阶段层 c 是不属于任何镜像了，适合去 GC ，GC 完之后效果如下：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">A -----&gt; a
-    \--&gt; b
-</code></pre></td></tr></table>
-</div>
-</div><p>看着还是挺简单，很容易理解的对吧，但是当镜像数为 <code>10,000+</code> 以上，存储在 TB 级别以上时，事情可能又不那么简单了。</p>
-<h2 id="harbor-存储的目录结构">Harbor 存储的目录结构</h2>
-<p>Harbor 底层还是 Docker Registry，所以它们的存储结构是一样的，可以先看看它们在磁盘上存储结构:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback"># tree docker/registry/v2/
-docker/registry/v2
-    │   │   ├── blogs
-    │   │   │   └── sha256
-    │   │   │       └── 00
-    │   │   │           └── 000098c48e5c8502460fd4427fe19d9def6c3d245b46e4d3dd86a00c79ca3111
-    │   │   │               └── data
-    │   │   │           └── 000098c48e5c8502460fd4427fe19d9def6c3d245b46e4d3dd86a00c79ca3112
-    │   │   │               └── data
-    │   │   │       └── 01
-    │   │   │           └── 010098c48e5c8502460fd4427fe19d9def6c3d245b46e4d3dd86a00c79ca3111
-    │   │   │               └── data
-    │   │   │           └── 010098c48e5c8502460fd4427fe19d9def6c3d245b46e4d3dd86a00c79ca3112
-    │   │   │               └── data
-    │   │   ├── repositories
-    │   │   │   └── golang
-    │   │   │       └── golang-centos
-    │   │   │           └── _layers
-    │   │   │               └── sha256
-    │   │   │           └── _manifests
-    │   │   │               └── revisions
-    │   │   │                   └── sha256
-    │   │   │               └── tags
-    │   │   │                   └── 1.14
-    │   │   │                   └── 1.15
-</code></pre></td></tr></table>
-</div>
-</div><p>可以看到存储结构主要分为两个部分 <code>blogs</code> 和 <code>repositories</code> ，作用如下 :</p>
-<ul>
-<li>blogs 是镜像数据的真正存储。</li>
-<li>repositories 是镜像数据的引用，换言之存储的是blogs的索引。每个镜像都会声明它引用 blogs 中的哪些层。</li>
-</ul>
-<h2 id="gc过程">GC过程</h2>
-<p>有了上面的铺垫，GC 的过程应该很容易理解了。Harbor GC 采用的两阶段标记清除，先遍历 repositories 下的镜像，并且对引用到blogs
-进行标记，遍历完成之后把没有标记的 blogs 进行删除。</p>
-<p>看似完美的方案，在实际操作过程中却还有些坑，下面说说遇到的坑以及如何解决方案。</p>
-<h2 id="遇到的坑">遇到的坑</h2>
-<h3 id="docker-pull-失败">docker pull 失败</h3>
-<p>docker pull 的时候报错如下（unknown blob）：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">docker pull russellgao/toolkit
-...
-daa258f4f8c0: Already exists 
-0c9e9bbad61e: Already exists 
-fa786f5d7be0: Already exists 
-ebc05f08dcb7: Downloading 
-f919a7128c9a: Downloading 
-34dfbfa16f77: Download complete 
-65588873bd66: Download complete 
-fc1b74edeacc: Download complete 
-099607f21531: Download complete 
-09432885197f: Download complete 
-259a4564bedf: Download complete 
-ce223372b98e: Download complete 
-...
-unknown blob
-</code></pre></td></tr></table>
-</div>
-</div><p>这种情况主要的原因是在 <code>repositories</code> 中存在对 <code>blob</code> 的引用，但是 <code>blog</code> 中却不存在，造成这种可能的原因有：</p>
-<ul>
-<li>GC 的时候错误的删除了 blobs （大概率如此）</li>
-<li>blob 所在的磁盘损坏 （概率较小）</li>
-<li>blob 被人为删除（概率较小）</li>
-</ul>
-<p><strong>请注意：这种情况重新推送镜像是没有用的，因为在推送的时候，harbor 认为缺失的层是存在的，因为 repositories中存在，只有在下载时才会发现。</strong></p>
-<p>解决的方法:</p>
-<ul>
-<li>通过docker build 编译镜像时增加 <code>--no-cache</code> 参数，生成一个全新的镜像推送到镜像仓库，方法可能会解决问题，但也有可能解决不了，可以
-想象这么一个场景，缺失的层为基础镜像，如果基础镜像缺少层，那么这种方法就失效了。</li>
-<li>可以在部署一个镜像仓库（一般都会最少有两个仓库做互备），把编译好的镜像推送到新的仓库，然后根据缺少的 blob id 在新的仓库中找到对应的
-blob 数据，然后把缺少的 copy 到之前仓库，问题即可得到解决。如：</li>
-</ul>
-<p>缺少 <code>ebc05f08dcb7</code> 这一层，在新的仓库的中可以找到如下目录:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">docker/registry/v2/blobs/sha256/eb/ 
-</code></pre></td></tr></table>
-</div>
-</div><p>通过 <code>ebc05f08dcb7</code> 前缀找到具体的 blob 目录，然后把找到的这个目录 copy 到对应的仓库日录，问题即可得到解决。</p>
-<h2 id="总结">总结</h2>
-<p>这篇文章主要介绍了 harbor gc 的基本原理，然后记录在 GC 的过程中踩的坑，后续有其他坑持续补充。</p>
-<h2 id="参考">参考</h2>
-<ul>
-<li><a href="https://github.com/docker/docker.github.io/blob/master/registry/garbage-collection.md">https://github.com/docker/docker.github.io/blob/master/registry/garbage-collection.md</a></li>
-</ul>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2020-11-30</span>
+                <span>Updated on 2020-12-01</span>
             </div>
             <div class="post-info-license"></div>
         </div>
         <div class="post-info-line">
             <div class="post-info-md"><span>
-                            <a class="link-to-markdown" href="/harbor-gc/index.md" target="_blank">Read Markdown</a>
+                            <a class="link-to-markdown" href="/oschina-blog/index.md" target="_blank">Read Markdown</a>
                         </span></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://russellgao.cn/harbor-gc/" data-title="harbor gc 时遇到的坑" data-hashtags="云原生,harbor"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://russellgao.cn/harbor-gc/" data-hashtag="云原生"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="Share on WhatsApp" data-sharer="whatsapp" data-url="https://russellgao.cn/harbor-gc/" data-title="harbor gc 时遇到的坑" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://russellgao.cn/harbor-gc/" data-title="harbor gc 时遇到的坑"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://russellgao.cn/harbor-gc/" data-title="harbor gc 时遇到的坑"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="Share on Myspace" data-sharer="myspace" data-url="https://russellgao.cn/harbor-gc/" data-title="harbor gc 时遇到的坑" data-description="harbor gc 时遇到的坑"><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="Share on Blogger" data-sharer="blogger" data-url="https://russellgao.cn/harbor-gc/" data-title="harbor gc 时遇到的坑" data-description="harbor gc 时遇到的坑"><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="Share on Evernote" data-sharer="evernote" data-url="https://russellgao.cn/harbor-gc/" data-title="harbor gc 时遇到的坑"><i class="fab fa-evernote fa-fw"></i></a></span>
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://russellgao.cn/oschina-blog/" data-title="OSCHINA 搬迁申明"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://russellgao.cn/oschina-blog/"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="Share on WhatsApp" data-sharer="whatsapp" data-url="https://russellgao.cn/oschina-blog/" data-title="OSCHINA 搬迁申明" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://russellgao.cn/oschina-blog/" data-title="OSCHINA 搬迁申明"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://russellgao.cn/oschina-blog/" data-title="OSCHINA 搬迁申明"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="Share on Myspace" data-sharer="myspace" data-url="https://russellgao.cn/oschina-blog/" data-title="OSCHINA 搬迁申明" data-description="OSCHINA 搬迁申明"><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="Share on Blogger" data-sharer="blogger" data-url="https://russellgao.cn/oschina-blog/" data-title="OSCHINA 搬迁申明" data-description="OSCHINA 搬迁申明"><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="Share on Evernote" data-sharer="evernote" data-url="https://russellgao.cn/oschina-blog/" data-title="OSCHINA 搬迁申明"><i class="fab fa-evernote fa-fw"></i></a></span>
             </div>
         </div>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E4%BA%91%E5%8E%9F%E7%94%9F/">云原生</a>,&nbsp;<a href="/tags/harbor/">harbor</a></section>
+        <section class="post-tags"></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="/golang-gmp/" class="prev" rel="prev" title="细谈 Golang 中那些设计优美的细节-GMP"><i class="fas fa-angle-left fa-fw"></i>细谈 Golang 中那些设计优美的细节-GMP</a>
-            <a href="/oschina-blog/" class="next" rel="next" title="OSCHINA 搬迁申明">OSCHINA 搬迁申明<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="/harbor-gc/" class="prev" rel="prev" title="harbor gc 时遇到的坑"><i class="fas fa-angle-left fa-fw"></i>harbor gc 时遇到的坑</a></div>
 </div>
 <div id="comments"><div id="valine" class="comment"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
