@@ -5,35 +5,35 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>OSCHINA 搬迁申明 - 大大很二</title><meta name="Description" content="OSCHINA 搬迁申明"><meta property="og:title" content="OSCHINA 搬迁申明" />
-<meta property="og:description" content="OSCHINA 搬迁申明" />
+        <title>docker 内部构造到底是什么样子的? - 大大很二</title><meta name="Description" content="docker 底层原理"><meta property="og:title" content="docker 内部构造到底是什么样子的?" />
+<meta property="og:description" content="docker 底层原理" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://russellgao.cn/oschina-blog/" />
+<meta property="og:url" content="https://russellgao.cn/docker/" />
 <meta property="og:image" content="https://russellgao.cn/images/profile.jpg"/>
-<meta property="article:published_time" content="2020-11-30T00:00:00+00:00" />
-<meta property="article:modified_time" content="2020-12-01T15:06:11+08:00" /><meta property="og:site_name" content="大大很二" />
+<meta property="article:published_time" content="2020-12-05T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-12-05T00:00:00+00:00" /><meta property="og:site_name" content="大大很二" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://russellgao.cn/images/profile.jpg"/>
 
-<meta name="twitter:title" content="OSCHINA 搬迁申明"/>
-<meta name="twitter:description" content="OSCHINA 搬迁申明"/>
+<meta name="twitter:title" content="docker 内部构造到底是什么样子的?"/>
+<meta name="twitter:description" content="docker 底层原理"/>
 <meta name="application-name" content="russellgao">
-<meta name="apple-mobile-web-app-title" content="russellgao"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://gitee.com/russellgao/blogs-image/raw/master/images/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://russellgao.cn/oschina-blog/" /><link rel="prev" href="https://russellgao.cn/harbor-gc/" /><link rel="next" href="https://russellgao.cn/docker/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+<meta name="apple-mobile-web-app-title" content="russellgao"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://gitee.com/russellgao/blogs-image/raw/master/images/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://russellgao.cn/docker/" /><link rel="prev" href="https://russellgao.cn/oschina-blog/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "OSCHINA 搬迁申明",
+        "headline": "docker 内部构造到底是什么样子的?",
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/russellgao.cn\/oschina-blog\/"
-        },"genre": "posts","wordcount":  6 ,
-        "url": "https:\/\/russellgao.cn\/oschina-blog\/","datePublished": "2020-11-30T00:00:00+00:00","dateModified": "2020-12-01T15:06:11+08:00","publisher": {
+            "@id": "https:\/\/russellgao.cn\/docker\/"
+        },"genre": "posts","keywords": "docker","wordcount":  8 ,
+        "url": "https:\/\/russellgao.cn\/docker\/","datePublished": "2020-12-05T00:00:00+00:00","dateModified": "2020-12-05T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
                 "name": "russellgao"
-            },"description": "OSCHINA 搬迁申明"
+            },"description": "docker 底层原理"
     }
     </script></head>
     <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
@@ -116,10 +116,10 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">Contents</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animated flipInX">OSCHINA 搬迁申明</h1><div class="post-meta">
+        </div><article class="page single"><h1 class="single-title animated flipInX">docker 内部构造到底是什么样子的?</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-30">2020-11-30</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;6 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;One minute&nbsp;<span id="/oschina-blog/" class="leancloud_visitors" data-flag-title="OSCHINA 搬迁申明">
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-12-05">2020-12-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;8 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;One minute&nbsp;<span id="/docker/" class="leancloud_visitors" data-flag-title="docker 内部构造到底是什么样子的?">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;views
                     </span>&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="true">
@@ -134,35 +134,36 @@
 </nav></div>
             </div><div class="content" id="content"><h2 id="导读">导读</h2>
 <blockquote>
-<p>我的博客即将同步至 OSCHINA 社区，这是我的 OSCHINA ID：russellgao，邀请大家一同入驻：https://www.oschina.net/sharing-plan/apply</p>
+<p>提起 docker 大家应该耳熟能详，如使用 docker 所带来的持续集成、版本控制、可移植性、隔离性、安全性等诸多好处。docker
+的使用也很方便，但是其内部原理是什么样的？都有哪些组件？之间是如何相互协作的呢？这篇文章尝试揭开其内部运行原理，受限
+作者水平，如有不对之处，欢迎批评之处。</p>
 </blockquote>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2020-12-01</span>
+                <span>Updated on 2020-12-05</span>
             </div>
             <div class="post-info-license"></div>
         </div>
         <div class="post-info-line">
             <div class="post-info-md"><span>
-                            <a class="link-to-markdown" href="/oschina-blog/index.md" target="_blank">Read Markdown</a>
+                            <a class="link-to-markdown" href="/docker/index.md" target="_blank">Read Markdown</a>
                         </span></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://russellgao.cn/oschina-blog/" data-title="OSCHINA 搬迁申明"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://russellgao.cn/oschina-blog/"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="Share on WhatsApp" data-sharer="whatsapp" data-url="https://russellgao.cn/oschina-blog/" data-title="OSCHINA 搬迁申明" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://russellgao.cn/oschina-blog/" data-title="OSCHINA 搬迁申明"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://russellgao.cn/oschina-blog/" data-title="OSCHINA 搬迁申明"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="Share on Myspace" data-sharer="myspace" data-url="https://russellgao.cn/oschina-blog/" data-title="OSCHINA 搬迁申明" data-description="OSCHINA 搬迁申明"><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="Share on Blogger" data-sharer="blogger" data-url="https://russellgao.cn/oschina-blog/" data-title="OSCHINA 搬迁申明" data-description="OSCHINA 搬迁申明"><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="Share on Evernote" data-sharer="evernote" data-url="https://russellgao.cn/oschina-blog/" data-title="OSCHINA 搬迁申明"><i class="fab fa-evernote fa-fw"></i></a></span>
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://russellgao.cn/docker/" data-title="docker 内部构造到底是什么样子的?" data-hashtags="docker"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://russellgao.cn/docker/" data-hashtag="docker"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="Share on WhatsApp" data-sharer="whatsapp" data-url="https://russellgao.cn/docker/" data-title="docker 内部构造到底是什么样子的?" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://russellgao.cn/docker/" data-title="docker 内部构造到底是什么样子的?"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://russellgao.cn/docker/" data-title="docker 内部构造到底是什么样子的?"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="Share on Myspace" data-sharer="myspace" data-url="https://russellgao.cn/docker/" data-title="docker 内部构造到底是什么样子的?" data-description="docker 底层原理"><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="Share on Blogger" data-sharer="blogger" data-url="https://russellgao.cn/docker/" data-title="docker 内部构造到底是什么样子的?" data-description="docker 底层原理"><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="Share on Evernote" data-sharer="evernote" data-url="https://russellgao.cn/docker/" data-title="docker 内部构造到底是什么样子的?"><i class="fab fa-evernote fa-fw"></i></a></span>
             </div>
         </div>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/docker/">docker</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="/harbor-gc/" class="prev" rel="prev" title="harbor gc 时遇到的坑"><i class="fas fa-angle-left fa-fw"></i>harbor gc 时遇到的坑</a>
-            <a href="/docker/" class="next" rel="next" title="docker 内部构造到底是什么样子的?">docker 内部构造到底是什么样子的?<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="/oschina-blog/" class="prev" rel="prev" title="OSCHINA 搬迁申明"><i class="fas fa-angle-left fa-fw"></i>OSCHINA 搬迁申明</a></div>
 </div>
 <div id="comments"><div id="valine" class="comment"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.

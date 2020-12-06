@@ -4,7 +4,15 @@
         <link>https://russellgao.cn/posts/</link>
         <description>All Posts | 大大很二</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
-            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Mon, 30 Nov 2020 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Sat, 05 Dec 2020 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>docker 内部构造到底是什么样子的?</title>
+    <link>https://russellgao.cn/docker/</link>
+    <pubDate>Sat, 05 Dec 2020 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/docker/</guid>
+    <description><![CDATA[导读  提起 docker 大家应该耳熟能详，如使用 docker 所带来的持续集成、版本控制、可移植性、隔离性、安全性等诸多好处。docker 的使用也很方便，但是其内部原理是什么样的？都有哪些组件？之间是如何相互协作的呢？这篇文章尝试揭开其内部运行原理，受限 作者水平，如有不对之处，欢迎批评之处。
+ ]]></description>
+</item><item>
     <title>OSCHINA 搬迁申明</title>
     <link>https://russellgao.cn/oschina-blog/</link>
     <pubDate>Mon, 30 Nov 2020 00:00:00 &#43;0000</pubDate>
@@ -73,12 +81,5 @@ nginx.conf 中主要配置全局配置，配置好之后一般很少改动。]]>
     <guid>https://russellgao.cn/defer/</guid>
     <description><![CDATA[背景 在学习和使用 Go 的过程中发现，Go 在语言层面的设计有很多有趣的地方，所以准备用一个系列来细数这些有趣的地方。写这个系列一是为了加深自己的理解，二是愿意分享，分享 Go 中有趣的设计细节。每篇都会通过一个例子讲述一个细节，感兴趣的话可以关注一下哟！
 Go 介绍 Go（又称 Golang）是 Google 的 Robert Griesemer，Rob Pike 及 Ken Thompson 开发的一种静态强类型、编译型语言。Go 语言语法与 C 相近，但功能上有：内存安全，GC（垃圾回收），结构形态及 CSP-style 并发计算。]]></description>
-</item><item>
-    <title></title>
-    <link>https://russellgao.cn/posts/argorithm/</link>
-    <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://russellgao.cn/posts/argorithm/</guid>
-    <description><![CDATA[]]></description>
 </item></channel>
 </rss>
