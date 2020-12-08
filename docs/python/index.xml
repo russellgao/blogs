@@ -13,6 +13,16 @@
     
     
     <item>
+      <title>Python 中的迭代器与生成器</title>
+      <link>https://russellgao.cn/python/python-iter/</link>
+      <pubDate>Mon, 07 Dec 2020 18:32:00 +0000</pubDate>
+      <author>1060745366@qq.com (高维宗(russellgao))</author>
+      <guid>https://russellgao.cn/python/python-iter/</guid>
+      <description>导读  这篇文章主要介绍了 python 当中的迭代器与生成器，在涉及到大数量的场景应该考虑使用迭代器与生成器。
+ 可迭代对象 如果一个对象实现了 __iter__ 方法，那么我们就称它是一个可迭代对象。如果没有实现 __iter__ 而实现了 __getitem__ 方法，并且其参数是从0开始索引的，这种对象也是可迭代的，比如说序列。</description>
+    </item>
+    
+    <item>
       <title>python中的多线程与多进程（二）</title>
       <link>https://russellgao.cn/python/concurrent/</link>
       <pubDate>Wed, 18 Nov 2020 22:32:00 +0000</pubDate>

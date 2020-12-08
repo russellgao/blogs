@@ -2,12 +2,13 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://russellgao.cn/posts/</loc><lastmod>2020-12-07T18:32:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://russellgao.cn/tags/python/</loc><lastmod>2020-12-07T18:32:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://russellgao.cn/python-iter/</loc><lastmod>2020-12-07T18:32:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://russellgao.cn/tags/</loc><lastmod>2020-12-07T18:32:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://russellgao.cn/tags/%E7%94%9F%E6%88%90%E5%99%A8/</loc><lastmod>2020-12-07T18:32:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://russellgao.cn/tags/%E8%BF%AD%E4%BB%A3%E5%99%A8/</loc><lastmod>2020-12-07T18:32:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://russellgao.cn/posts/</loc><lastmod>2020-12-08T23:36:15&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://russellgao.cn/tags/python/</loc><lastmod>2020-12-08T23:36:15&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://russellgao.cn/python-iter/</loc><lastmod>2020-12-08T23:36:15&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://russellgao.cn/python/python-iter/</loc><lastmod>2020-12-07T18:32:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://russellgao.cn/tags/</loc><lastmod>2020-12-08T23:36:15&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://russellgao.cn/tags/%E7%94%9F%E6%88%90%E5%99%A8/</loc><lastmod>2020-12-08T23:36:15&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://russellgao.cn/tags/%E8%BF%AD%E4%BB%A3%E5%99%A8/</loc><lastmod>2020-12-08T23:36:15&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://russellgao.cn/oschina-blog/</loc><lastmod>2020-12-01T15:06:11&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
             <loc>https://russellgao.cn/tags/harbor/</loc><lastmod>2020-11-30T22:44:38&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
             <loc>https://russellgao.cn/harbor-gc/</loc><lastmod>2020-11-30T22:44:38&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>

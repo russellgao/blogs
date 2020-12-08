@@ -1,5 +1,16 @@
-# Python 中的迭代器与生成器
-
++++
+title = "Python 中的迭代器与生成器"
+description = "Python 中的迭代器与生成器"
+date = "2020-12-07 18:32:00"
+aliases = ["Python 中的迭代器与生成器"]
+author = "russellgao"
+draft = false
+tags = [
+    "python",
+    "迭代器",
+    "生成器"
+,]
++++
 
 ## 导读
 >这篇文章主要介绍了 python 当中的迭代器与生成器，在涉及到大数量的场景应该考虑使用迭代器与生成器。
@@ -151,5 +162,4 @@ for book in books :
 >- 任何对象只要实现了 `__iter__` 和 `next` 方法就是一个迭代器
 >- 生成器是一个特殊的迭代器，可以通过 `yield` 和 `()` 的方式生成
 >- 在数据量大的时候使用会有奇效
-
 
