@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>生成器 - Tag - 大大很二</title>
+        <link>https://russellgao.cn/tags/%E7%94%9F%E6%88%90%E5%99%A8/</link>
+        <description>生成器 - Tag - 大大很二</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Mon, 07 Dec 2020 18:32:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/tags/%E7%94%9F%E6%88%90%E5%99%A8/" rel="self" type="application/rss+xml" /><item>
+    <title>Python 中的迭代器与生成器</title>
+    <link>https://russellgao.cn/python-iter/</link>
+    <pubDate>Mon, 07 Dec 2020 18:32:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/python-iter/</guid>
+    <description><![CDATA[导读 这篇文章主要介绍了 python 当中的迭代器与生成器，在涉及到大数量的场景应该考虑使用迭代器与生成器。
+可迭代对象 如果一个对象实现了 __iter__ 方法，那么我们就称它是一个可迭代对象。如果没有实现 __iter__ 而实现了 __getitem__ 方法，并且其参数是从0开始索引的，这种对象也是可迭代的，比如说序列。]]></description>
+</item></channel>
+</rss>
