@@ -4,7 +4,14 @@
         <link>https://russellgao.cn/posts/</link>
         <description>All Posts | 大大很二</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
-            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Mon, 07 Dec 2020 18:32:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Wed, 09 Dec 2020 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>docker 原理之本地存储</title>
+    <link>https://russellgao.cn/docker-local-storage/</link>
+    <pubDate>Wed, 09 Dec 2020 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/docker-local-storage/</guid>
+    <description><![CDATA[导读  在前面的文章docker 原理之存储驱动中简单的介绍了 Docker 的存储驱动，这篇文章接着讲存储，目前的 docker 版本中默认的是 overlay2 ，所以这篇文章就带大家看看，在我们执行 docker build ，docker pull，docker run 等命令时本地存储有何变化。]]></description>
+</item><item>
     <title>docker 原理之存储驱动</title>
     <link>https://russellgao.cn/docker-storage/</link>
     <pubDate>Sat, 05 Dec 2020 00:00:00 &#43;0000</pubDate>
@@ -72,13 +79,5 @@ nginx.conf 中主要配置全局配置，配置好之后一般很少改动。]]>
     <guid>https://russellgao.cn/elk/</guid>
     <description><![CDATA[ELK  这篇文档是由我投稿的云原生社区的文章，节选自 istio-handbook，如果有兴趣可以参考这本书。
  ELK 指的是由 Elasticsearch + Logstash + Kibana 组成的日志采集、存储、展示为一体的日志解决方案，简称 &ldquo;ELK Stack&rdquo;。ELK Stack 还包含 Beats（如Filebeat、Metricbeat、Heartbeat等）、Kafka等成员，是目前主流的一种日志解决方案。]]></description>
-</item><item>
-    <title>细谈 Golang 中那些设计优美的细节-defer</title>
-    <link>https://russellgao.cn/defer/</link>
-    <pubDate>Sun, 08 Nov 2020 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://russellgao.cn/defer/</guid>
-    <description><![CDATA[背景 在学习和使用 Go 的过程中发现，Go 在语言层面的设计有很多有趣的地方，所以准备用一个系列来细数这些有趣的地方。写这个系列一是为了加深自己的理解，二是愿意分享，分享 Go 中有趣的设计细节。每篇都会通过一个例子讲述一个细节，感兴趣的话可以关注一下哟！
-Go 介绍 Go（又称 Golang）是 Google 的 Robert Griesemer，Rob Pike 及 Ken Thompson 开发的一种静态强类型、编译型语言。Go 语言语法与 C 相近，但功能上有：内存安全，GC（垃圾回收），结构形态及 CSP-style 并发计算。]]></description>
 </item></channel>
 </rss>

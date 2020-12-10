@@ -7,6 +7,13 @@
             <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster>
             <atom:link href="https://russellgao.cn/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>docker 原理之本地存储</title>
+    <link>https://russellgao.cn/docker-local-storage/</link>
+    <pubDate>Wed, 09 Dec 2020 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/docker-local-storage/</guid>
+    <description><![CDATA[导读  在前面的文章docker 原理之存储驱动中简单的介绍了 Docker 的存储驱动，这篇文章接着讲存储，目前的 docker 版本中默认的是 overlay2 ，所以这篇文章就带大家看看，在我们执行 docker build ，docker pull，docker run 等命令时本地存储有何变化。]]></description>
+</item><item>
     <title>Python 中的迭代器与生成器</title>
     <link>https://russellgao.cn/python-iter/</link>
     <pubDate>Mon, 07 Dec 2020 18:32:00 &#43;0000</pubDate>
@@ -74,12 +81,5 @@
     <guid>https://russellgao.cn/openresty-nginx.conf/</guid>
     <description><![CDATA[导读  openresty（nginx plus） 在日常工作中用的应该比较多，要想真正了解清楚其原理并不容易。我尝试着从配置的角度去分析 nginx 的基本原理。这篇主要介绍 nginx.conf 这个配置文件，后续再介绍其他的配置文件。
 nginx.conf 中主要配置全局配置，配置好之后一般很少改动。]]></description>
-</item><item>
-    <title>kubernetes 中patch与update比较</title>
-    <link>https://russellgao.cn/patch-update/</link>
-    <pubDate>Sat, 21 Nov 2020 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://russellgao.cn/patch-update/</guid>
-    <description><![CDATA[导读  不知道你有没有想过一个问题：对于一个 K8s 资源对象比如 Deployment，我们尝试在修改其中 image 镜像时，如果有其他人同时也在对这个 Deployment 做修改，会发生什么？]]></description>
 </item></channel>
 </rss>
