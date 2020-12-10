@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://russellgao.cn/docker-local-storage/" />
 <meta property="og:image" content="https://russellgao.cn/images/profile.jpg"/>
 <meta property="article:published_time" content="2020-12-09T00:00:00+00:00" />
-<meta property="article:modified_time" content="2020-12-09T00:00:00+00:00" /><meta property="og:site_name" content="大大很二" />
+<meta property="article:modified_time" content="2020-12-10T08:14:04+08:00" /><meta property="og:site_name" content="大大很二" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://russellgao.cn/images/profile.jpg"/>
 
@@ -27,8 +27,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/russellgao.cn\/docker-local-storage\/"
-        },"genre": "posts","keywords": "docker","wordcount":  41 ,
-        "url": "https:\/\/russellgao.cn\/docker-local-storage\/","datePublished": "2020-12-09T00:00:00+00:00","dateModified": "2020-12-09T00:00:00+00:00","publisher": {
+        },"genre": "posts","keywords": "docker","wordcount":  302 ,
+        "url": "https:\/\/russellgao.cn\/docker-local-storage\/","datePublished": "2020-12-09T00:00:00+00:00","dateModified": "2020-12-10T08:14:04+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -118,8 +118,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">docker 原理之本地存储</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-12-09">2020-12-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;41 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;One minute&nbsp;<span id="/docker-local-storage/" class="leancloud_visitors" data-flag-title="docker 原理之本地存储">
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-12-09">2020-12-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;302 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;2 minutes&nbsp;<span id="/docker-local-storage/" class="leancloud_visitors" data-flag-title="docker 原理之本地存储">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;views
                     </span>&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="true">
@@ -131,11 +131,13 @@
   <ul>
     <li><a href="#导读">导读</a></li>
     <li><a href="#背景">背景</a></li>
+    <li><a href="#本地目录">本地目录</a></li>
+    <li><a href="#参考">参考</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="导读">导读</h2>
 <blockquote>
-<p>在前面的文章<a href="../docker-storage" rel="">docker 原理之存储驱动</a>中简单的介绍了 Docker 的存储驱动，这篇文章接着讲存储，目前的 docker 版本中默认的是 <code>overlay2</code> ，所以这篇文章就带大家看看，在我们执行 <code>docker build</code> ，<code>docker pull</code>，<code>docker run</code> 等命令时本地存储有何变化。</p>
+<p>在前面的文章<a href="../docker-storage" rel="">docker 原理之存储驱动</a>中简单的介绍了 Docker 的存储驱动，这篇文章接着讲存储，目前的 docker 版本中默认的是 <code>overlay2</code> ，所以这篇文章就以 <code>overlay2</code> 为例带大家看看，在我们执行 <code>docker build</code> ，<code>docker pull</code>，<code>docker run</code> 等命令时本地存储有何变化。</p>
 </blockquote>
 <h2 id="背景">背景</h2>
 <ul>
@@ -161,11 +163,127 @@
         alt="https://gitee.com/russellgao/blogs-image/raw/master/images/docker/docker-local-storage-2.jpg"
         title="https://gitee.com/russellgao/blogs-image/raw/master/images/docker/docker-local-storage-2.jpg" /></p>
 <p>修改(增加) <code>--graph</code> 即可。</p>
+<h2 id="本地目录">本地目录</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># ll</span>
+总用量 <span class="m">48</span>
+drwx------ <span class="m">2</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 08:49 builder
+drwx--x--x <span class="m">4</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 08:49 buildkit
+drwx------ <span class="m">3</span> root root <span class="m">4096</span> 12月  <span class="m">2</span> 09:25 containers
+drwx------ <span class="m">3</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 08:49 image
+drwxr-x--- <span class="m">3</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 08:49 network
+drwx------ <span class="m">9</span> root root <span class="m">4096</span> 12月  <span class="m">2</span> 09:25 overlay2
+drwx------ <span class="m">4</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 08:49 plugins
+drwx------ <span class="m">2</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 08:49 runtimes
+drwx------ <span class="m">2</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 08:49 swarm
+drwx------ <span class="m">2</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:32 tmp
+drwx------ <span class="m">2</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 08:49 trust
+drwx------ <span class="m">2</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 08:49 volumes
+</code></pre></td></tr></table>
+</div>
+</div><p>可以用 <code>tree</code> 进行展开</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># tree -L 2</span>
+.
+├── builder
+│   └── fscache.db
+├── buildkit
+│   ├── cache.db
+│   ├── content
+│   ├── executor
+│   ├── metadata.db
+│   └── snapshots.db
+├── containers
+│   └── 9bd6ac07a8c962e2403203e1c45f4fb54733f9953cf318b34fc3f155bf2c0c59
+├── image
+│   └── overlay2
+├── network
+│   └── files
+├── overlay2
+│   ├── 00b65b9c288df8c0ae7cdacba531a7dc5cb006e6c768e19ee36055717b782acc
+│   ├── 1e53dddb1a0bb04ee4ebd24a8edb94b96e2fd471a72bf1b8608096b38cb16646
+│   ├── 1e53dddb1a0bb04ee4ebd24a8edb94b96e2fd471a72bf1b8608096b38cb16646-init
+│   ├── 5da215c4f218cbb1d9825fa111c21bf381dc35a9e6c7c6cd5c3ea952316031e4
+│   ├── 8cbfb8b74c887e780747c8e6f4b3b9223a513ff6d69770bac16abb76da4e314f
+│   ├── f1cf8b173467c98e08f3d276d7ccd8f9892c7c71dec2c4b335c39c6f175ae744
+│   └── l
+├── plugins
+│   ├── storage
+│   └── tmp
+├── runtimes
+├── swarm
+├── tmp
+├── trust
+└── volumes
+    └── metadata.db
+<span class="m">26</span> directories, <span class="m">5</span> files
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://segmentfault.com/a/1190000017579626">https://segmentfault.com/a/1190000017579626</a></li>
+<li><a href="https://arkingc.github.io/2017/05/05/2017-05-05-docker-filesystem-overlay/">https://arkingc.github.io/2017/05/05/2017-05-05-docker-filesystem-overlay/</a></li>
+<li><a href="https://www.cnblogs.com/wdliu/p/10483252.html">https://www.cnblogs.com/wdliu/p/10483252.html</a></li>
+</ul>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2020-12-09</span>
+                <span>Updated on 2020-12-10</span>
             </div>
             <div class="post-info-license"></div>
         </div>
