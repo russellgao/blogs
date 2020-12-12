@@ -12,7 +12,7 @@
     <pubDate>Wed, 09 Dec 2020 00:00:00 &#43;0000</pubDate>
     <author>Author</author>
     <guid>https://russellgao.cn/docker-local-storage/</guid>
-    <description><![CDATA[导读  在前面的文章docker 原理之存储驱动中简单的介绍了 Docker 的存储驱动，这篇文章接着讲存储，目前的 docker 版本中默认的是 overlay2 ，所以这篇文章就以 overlay2 为例带大家看看，在我们执行 docker build ，docker pull，docker run 等命令时本地存储有何变化。]]></description>
+    <description><![CDATA[导读  在前面的文章docker 原理之存储驱动中简单的介绍了 Docker 的存储驱动，这篇文章接着讲存储，目前的 docker 版本中默认的是 overlay2 ，所以这篇文章就以 overlay2 为例带大家看看，在我们执行 docker build ，docker pull，docker run 等命令时本地存储有何变化。 这篇文章比较长，如果看不完可以收藏起来后续需要用到的时候再查阅，称的上是干货满满，作者自己整理也花了较长的时间。]]></description>
 </item><item>
     <title>Python 中的迭代器与生成器</title>
     <link>https://russellgao.cn/python-iter/</link>
