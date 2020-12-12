@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://russellgao.cn/docker-local-storage/" />
 <meta property="og:image" content="https://russellgao.cn/images/profile.jpg"/>
 <meta property="article:published_time" content="2020-12-09T00:00:00+00:00" />
-<meta property="article:modified_time" content="2020-12-10T08:14:04+08:00" /><meta property="og:site_name" content="大大很二" />
+<meta property="article:modified_time" content="2020-12-11T09:06:17+08:00" /><meta property="og:site_name" content="大大很二" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://russellgao.cn/images/profile.jpg"/>
 
@@ -27,8 +27,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/russellgao.cn\/docker-local-storage\/"
-        },"genre": "posts","keywords": "docker","wordcount":  302 ,
-        "url": "https:\/\/russellgao.cn\/docker-local-storage\/","datePublished": "2020-12-09T00:00:00+00:00","dateModified": "2020-12-10T08:14:04+08:00","publisher": {
+        },"genre": "posts","keywords": "docker, 存储","wordcount":  4631 ,
+        "url": "https:\/\/russellgao.cn\/docker-local-storage\/","datePublished": "2020-12-09T00:00:00+00:00","dateModified": "2020-12-11T09:06:17+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -118,8 +118,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">docker 原理之本地存储</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-12-09">2020-12-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;302 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;2 minutes&nbsp;<span id="/docker-local-storage/" class="leancloud_visitors" data-flag-title="docker 原理之本地存储">
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-12-09">2020-12-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;4631 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;22 minutes&nbsp;<span id="/docker-local-storage/" class="leancloud_visitors" data-flag-title="docker 原理之本地存储">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;views
                     </span>&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="true">
@@ -131,13 +131,32 @@
   <ul>
     <li><a href="#导读">导读</a></li>
     <li><a href="#背景">背景</a></li>
-    <li><a href="#本地目录">本地目录</a></li>
+    <li><a href="#本地目录">本地目录</a>
+      <ul>
+        <li><a href="#image">image</a></li>
+        <li><a href="#distribution">distribution</a></li>
+        <li><a href="#imagedb">imagedb</a></li>
+        <li><a href="#layerdb">layerdb</a>
+          <ul>
+            <li><a href="#tmp">tmp</a></li>
+            <li><a href="#sha256">sha256</a></li>
+            <li><a href="#mounts">mounts</a></li>
+          </ul>
+        </li>
+        <li><a href="#overlay2">overlay2</a></li>
+        <li><a href="#containers">containers</a></li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a></li>
     <li><a href="#参考">参考</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="导读">导读</h2>
 <blockquote>
 <p>在前面的文章<a href="../docker-storage" rel="">docker 原理之存储驱动</a>中简单的介绍了 Docker 的存储驱动，这篇文章接着讲存储，目前的 docker 版本中默认的是 <code>overlay2</code> ，所以这篇文章就以 <code>overlay2</code> 为例带大家看看，在我们执行 <code>docker build</code> ，<code>docker pull</code>，<code>docker run</code> 等命令时本地存储有何变化。</p>
+</blockquote>
+<blockquote>
+<p>这篇文章比较长，如果看不完可以收藏起来后续需要用到的时候再查阅，称的上是干货满满，作者自己整理也花了较长的时间。</p>
 </blockquote>
 <h2 id="背景">背景</h2>
 <ul>
@@ -273,17 +292,1960 @@ drwx------ <span class="m">2</span> root root <span class="m">4096</span> 11月 
 <span class="m">26</span> directories, <span class="m">5</span> files
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="参考">参考</h2>
+</div><p>这篇文章以分析存储为主，涉及到的目录有 <code>image</code>,<code>containers</code>,<code>overlay2</code>，其他的目录放在后续的文章讨论。</p>
+<p>在真正开始之前，先想想几个问题(这也是我自己问我自己的问题) :</p>
+<ul>
+<li>docker build 的过程是怎样的?</li>
+<li>docker pull 和 docker build 产生的镜像存放在哪了？</li>
+<li>docker run 运行一个容器的时候过程是怎么样的?</li>
+</ul>
+<p>带着这些问题我们以一个例子进行说明 <code>russellgao/openresty:1.17.8.2-5-alpine</code></p>
+<h3 id="image">image</h3>
+<p>image 目录主要存放的镜像相关的信息，我们执行 <code>docker pull russellgao/openresty:1.17.8.2-5-alpine</code> 看看：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># docker pull russellgao/openresty:1.17.8.2-5-alpine</span>
+1.17.8.2-5-alpine: Pulling from russellgao/openresty
+df20fa9351a1: Already exists 
+5682af42731d: Pull <span class="nb">complete</span> 
+7c6cb2b54a9d: Pull <span class="nb">complete</span> 
+aa74dc345098: Pull <span class="nb">complete</span> 
+Digest: sha256:224ced85b5f8b679a8664a39b69c1b8feb09f8ba4343d834bd5b69433081389e
+Status: Downloaded newer image <span class="k">for</span> openresty/openresty:1.17.8.2-5-alpine
+</code></pre></td></tr></table>
+</div>
+</div><p>可以看到 pull 了 4 层下来了，我们看看 <code>image</code> 目录:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># tree image</span> 
+image
+└── overlay2
+    ├── distribution
+    │   ├── diffid-by-digest
+    │   │   └── sha256
+    │   │       ├── 5682af42731d652bd98d2456ed3da4f0595ed5d9e5b13ac8bb9590bb74f72eb8
+    │   │       ├── 7c6cb2b54a9d9d40c4a03dd6615b1c8e791feb5d81464a7702a9bb921f7a73e9
+    │   │       ├── aa74dc3450985aee599c181d650da8f8880ca1d6e2bc01a43831ca59b6e2a7b6
+    │   │       └── df20fa9351a15782c64e6dddb2d4a6f50bf6d3688060a34c4014b0d9a752eb4c
+    │   └── v2metadata-by-diffid
+    │       └── sha256
+    │           ├── 1680a9f16b18732726d0656b6d6ff9611a3c4460ca870827b537a87bbe10cc22
+    │           ├── 50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a
+    │           ├── 8521b614863046bf4bb604e3586feeca8b7ce1372f1d6664a5545e85ad9ca472
+    │           └── 9c572ba82b91e3ac35c7351bdacc6876c67f5d9bc69c5e51e8b2deeafae95e4f
+    ├── imagedb
+    │   ├── content
+    │   │   └── sha256
+    │   │       └── 1ddc7a18ba0bcc20c61447f391bfff98ac559eea590e7ac59b5b5f588f1f47ed
+    │   └── metadata
+    │       └── sha256
+    │           └── 1ddc7a18ba0bcc20c61447f391bfff98ac559eea590e7ac59b5b5f588f1f47ed
+    │               └── lastUpdated
+    ├── layerdb
+    │   ├── mounts
+    │   │   └── 9bd6ac07a8c962e2403203e1c45f4fb54733f9953cf318b34fc3f155bf2c0c59
+    │   │       ├── init-id
+    │   │       ├── mount-id
+    │   │       └── parent
+    │   ├── sha256
+    │   │   ├── 228fb92e31891f472e9857ee11d13c404ff7c88e808b05ce4ebdc80d785d71f3
+    │   │   │   ├── cache-id
+    │   │   │   ├── diff
+    │   │   │   ├── parent
+    │   │   │   ├── size
+    │   │   │   └── tar-split.json.gz
+    │   │   ├── 50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a
+    │   │   │   ├── cache-id
+    │   │   │   ├── diff
+    │   │   │   ├── size
+    │   │   │   └── tar-split.json.gz
+    │   │   ├── 5f72760956a669e4c9b33aa3f2f04baa84b0f4cf1e11676049981bafcbba74da
+    │   │   │   ├── cache-id
+    │   │   │   ├── diff
+    │   │   │   ├── parent
+    │   │   │   ├── size
+    │   │   │   └── tar-split.json.gz
+    │   │   └── fe267088885017d5e9a4621e68617a7f35e58dc2d0d747927882da21059854e3
+    │   │       ├── cache-id
+    │   │       ├── diff
+    │   │       ├── parent
+    │   │       ├── size
+    │   │       └── tar-split.json.gz
+    │   └── tmp
+    └── repositories.json
+
+<span class="m">21</span> directories, <span class="m">33</span> files
+</code></pre></td></tr></table>
+</div>
+</div><p>看看 <strong>repositories.json</strong> 中是内容 :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># cat image/overlay2/repositories.json |  jq .</span>
+<span class="o">{</span>
+  <span class="s2">&#34;Repositories&#34;</span>: <span class="o">{</span>
+    <span class="s2">&#34;openresty/openresty&#34;</span>: <span class="o">{</span>
+      <span class="s2">&#34;openresty/openresty:1.17.8.2-5-alpine&#34;</span>: <span class="s2">&#34;sha256:1ddc7a18ba0bcc20c61447f391bfff98ac559eea590e7ac59b5b5f588f1f47ed&#34;</span>,
+      <span class="s2">&#34;openresty/openresty@sha256:224ced85b5f8b679a8664a39b69c1b8feb09f8ba4343d834bd5b69433081389e&#34;</span>: <span class="s2">&#34;sha256:1ddc7a18ba0bcc20c61447f391bfff98ac559eea590e7ac59b5b5f588f1f47ed&#34;</span>
+    <span class="o">}</span>,
+    <span class="s2">&#34;russellgao/openresty&#34;</span>: <span class="o">{</span>
+      <span class="s2">&#34;russellgao/openresty:1.17.8.2-5-alpine&#34;</span>: <span class="s2">&#34;sha256:1ddc7a18ba0bcc20c61447f391bfff98ac559eea590e7ac59b5b5f588f1f47ed&#34;</span>,
+      <span class="s2">&#34;russellgao/openresty@sha256:84f53dc7517e9b6695fc8fd74916a1eb5970a92fc24a984f99bfb81508f3d261&#34;</span>: <span class="s2">&#34;sha256:1ddc7a18ba0bcc20c61447f391bfff98ac559eea590e7ac59b5b5f588f1f47ed&#34;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>repositories.json</strong> 中记录了这个机器上所有的镜像，可以看到这里有两个镜像 <code>openresty/openresty:1.17.8.2-5-alpine</code> 和 <code>russellgao/openresty:1.17.8.2-5-alpine</code> ，但其实只有一个镜像，因为后面的 <code>imageid</code> 是相同的，这个可以 <code>docker images</code> 验证一下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># docker images</span> 
+REPOSITORY             TAG                 IMAGE ID            CREATED             SIZE
+openresty/openresty    1.17.8.2-5-alpine   1ddc7a18ba0b        <span class="m">2</span> months ago        104MB
+russellgao/openresty   1.17.8.2-5-alpine   1ddc7a18ba0b        <span class="m">2</span> months ago        104MB
+</code></pre></td></tr></table>
+</div>
+</div><p><code>openresty/openresty:1.17.8.2-5-alpine</code> 和 <code>russellgao/openresty:1.17.8.2-5-alpine</code> 只是镜像 <code>1ddc7a18ba0b</code> 的 tag 。</p>
+<p>那么 <code>1ddc7a18ba0b</code> 镜像是怎么组成的呢? <code>image/overlay2/</code> 下面除了 repositories.json 还有3个目录 <code>distribution</code>,<code>imagedb</code>,<code>layerdb</code>，作用分别如下:</p>
+<ul>
+<li>distribution: 主要和镜像仓库的交互相关</li>
+<li>imagedb: 保存了镜像的元数据</li>
+<li>layerdb: 保存了镜像layer(层) 的数据</li>
+</ul>
+<p><code>image/overlay2/</code> 保存的是数据的链接，真正的镜像数据是存放在 <code>overlay2</code> 目录下，先看看 <code>distribution</code> :</p>
+<h3 id="distribution">distribution</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># tree  image/overlay2/distribution/</span>
+image/overlay2/distribution/
+├── diffid-by-digest
+│   └── sha256
+│       ├── 5682af42731d652bd98d2456ed3da4f0595ed5d9e5b13ac8bb9590bb74f72eb8
+│       ├── 7c6cb2b54a9d9d40c4a03dd6615b1c8e791feb5d81464a7702a9bb921f7a73e9
+│       ├── aa74dc3450985aee599c181d650da8f8880ca1d6e2bc01a43831ca59b6e2a7b6
+│       └── df20fa9351a15782c64e6dddb2d4a6f50bf6d3688060a34c4014b0d9a752eb4c
+└── v2metadata-by-diffid
+    └── sha256
+        ├── 1680a9f16b18732726d0656b6d6ff9611a3c4460ca870827b537a87bbe10cc22
+        ├── 50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a
+        ├── 8521b614863046bf4bb604e3586feeca8b7ce1372f1d6664a5545e85ad9ca472
+        └── 9c572ba82b91e3ac35c7351bdacc6876c67f5d9bc69c5e51e8b2deeafae95e4f
+
+<span class="m">4</span> directories, <span class="m">8</span> files
+</code></pre></td></tr></table>
+</div>
+</div><p>请注意看 <code>image/overlay2/distribution/diffid-by-digest/sha256</code> 下面，回过头再看看 docker pull 的过程，这里的就是 <code>digestid</code> ，docker pull
+的时候也是通过 <code>digestid</code> 实现的，这个id对应的是 <code>docker repository</code> 中的 <code>blob id</code>，在 <code>docker repository</code> 的 <code>blobs</code> 目录下可以找到。</p>
+<p>可以查看具体的文件，如 <code>cat image/overlay2/distribution/diffid-by-digest/sha256/5682af42731d652bd98d2456ed3da4f0595ed5d9e5b13ac8bb9590bb74f72eb8 </code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># cat image/overlay2/distribution/diffid-by-digest/sha256/5682af42731d652bd98d2456ed3da4f0595ed5d9e5b13ac8bb9590bb74f72eb8</span> 
+sha256:9c572ba82b91e3ac35c7351bdacc6876c67f5d9bc69c5e51e8b2deeafae95e4f
+</code></pre></td></tr></table>
+</div>
+</div><p>不难发现它们之间是相互引用的，可以实现 <code>diffid</code> 和 <code>digest</code> 的相互转换。</p>
+<h3 id="imagedb">imagedb</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># tree  image/overlay2/imagedb/</span>
+image/overlay2/imagedb/
+├── content
+│   └── sha256
+│       └── 1ddc7a18ba0bcc20c61447f391bfff98ac559eea590e7ac59b5b5f588f1f47ed
+└── metadata
+    └── sha256
+        └── 1ddc7a18ba0bcc20c61447f391bfff98ac559eea590e7ac59b5b5f588f1f47ed
+            └── lastUpdated
+
+<span class="m">5</span> directories, <span class="m">2</span> files
+</code></pre></td></tr></table>
+</div>
+</div><p>可以看到 <code>imagedb</code> 是以镜像为单位进行存储的，看一下 <code>content</code> 下面的具体内容 :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span><span class="lnt">169
+</span><span class="lnt">170
+</span><span class="lnt">171
+</span><span class="lnt">172
+</span><span class="lnt">173
+</span><span class="lnt">174
+</span><span class="lnt">175
+</span><span class="lnt">176
+</span><span class="lnt">177
+</span><span class="lnt">178
+</span><span class="lnt">179
+</span><span class="lnt">180
+</span><span class="lnt">181
+</span><span class="lnt">182
+</span><span class="lnt">183
+</span><span class="lnt">184
+</span><span class="lnt">185
+</span><span class="lnt">186
+</span><span class="lnt">187
+</span><span class="lnt">188
+</span><span class="lnt">189
+</span><span class="lnt">190
+</span><span class="lnt">191
+</span><span class="lnt">192
+</span><span class="lnt">193
+</span><span class="lnt">194
+</span><span class="lnt">195
+</span><span class="lnt">196
+</span><span class="lnt">197
+</span><span class="lnt">198
+</span><span class="lnt">199
+</span><span class="lnt">200
+</span><span class="lnt">201
+</span><span class="lnt">202
+</span><span class="lnt">203
+</span><span class="lnt">204
+</span><span class="lnt">205
+</span><span class="lnt">206
+</span><span class="lnt">207
+</span><span class="lnt">208
+</span><span class="lnt">209
+</span><span class="lnt">210
+</span><span class="lnt">211
+</span><span class="lnt">212
+</span><span class="lnt">213
+</span><span class="lnt">214
+</span><span class="lnt">215
+</span><span class="lnt">216
+</span><span class="lnt">217
+</span><span class="lnt">218
+</span><span class="lnt">219
+</span><span class="lnt">220
+</span><span class="lnt">221
+</span><span class="lnt">222
+</span><span class="lnt">223
+</span><span class="lnt">224
+</span><span class="lnt">225
+</span><span class="lnt">226
+</span><span class="lnt">227
+</span><span class="lnt">228
+</span><span class="lnt">229
+</span><span class="lnt">230
+</span><span class="lnt">231
+</span><span class="lnt">232
+</span><span class="lnt">233
+</span><span class="lnt">234
+</span><span class="lnt">235
+</span><span class="lnt">236
+</span><span class="lnt">237
+</span><span class="lnt">238
+</span><span class="lnt">239
+</span><span class="lnt">240
+</span><span class="lnt">241
+</span><span class="lnt">242
+</span><span class="lnt">243
+</span><span class="lnt">244
+</span><span class="lnt">245
+</span><span class="lnt">246
+</span><span class="lnt">247
+</span><span class="lnt">248
+</span><span class="lnt">249
+</span><span class="lnt">250
+</span><span class="lnt">251
+</span><span class="lnt">252
+</span><span class="lnt">253
+</span><span class="lnt">254
+</span><span class="lnt">255
+</span><span class="lnt">256
+</span><span class="lnt">257
+</span><span class="lnt">258
+</span><span class="lnt">259
+</span><span class="lnt">260
+</span><span class="lnt">261
+</span><span class="lnt">262
+</span><span class="lnt">263
+</span><span class="lnt">264
+</span><span class="lnt">265
+</span><span class="lnt">266
+</span><span class="lnt">267
+</span><span class="lnt">268
+</span><span class="lnt">269
+</span><span class="lnt">270
+</span><span class="lnt">271
+</span><span class="lnt">272
+</span><span class="lnt">273
+</span><span class="lnt">274
+</span><span class="lnt">275
+</span><span class="lnt">276
+</span><span class="lnt">277
+</span><span class="lnt">278
+</span><span class="lnt">279
+</span><span class="lnt">280
+</span><span class="lnt">281
+</span><span class="lnt">282
+</span><span class="lnt">283
+</span><span class="lnt">284
+</span><span class="lnt">285
+</span><span class="lnt">286
+</span><span class="lnt">287
+</span><span class="lnt">288
+</span><span class="lnt">289
+</span><span class="lnt">290
+</span><span class="lnt">291
+</span><span class="lnt">292
+</span><span class="lnt">293
+</span><span class="lnt">294
+</span><span class="lnt">295
+</span><span class="lnt">296
+</span><span class="lnt">297
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># cat image/overlay2/imagedb/content/sha256/1ddc7a18ba0bcc20c61447f391bfff98ac559eea590e7ac59b5b5f588f1f47ed |  jq .</span>
+<span class="o">{</span>
+  <span class="s2">&#34;architecture&#34;</span>: <span class="s2">&#34;amd64&#34;</span>,
+  <span class="s2">&#34;config&#34;</span>: <span class="o">{</span>
+    <span class="s2">&#34;Hostname&#34;</span>: <span class="s2">&#34;&#34;</span>,
+    <span class="s2">&#34;Domainname&#34;</span>: <span class="s2">&#34;&#34;</span>,
+    <span class="s2">&#34;User&#34;</span>: <span class="s2">&#34;&#34;</span>,
+    <span class="s2">&#34;AttachStdin&#34;</span>: false,
+    <span class="s2">&#34;AttachStdout&#34;</span>: false,
+    <span class="s2">&#34;AttachStderr&#34;</span>: false,
+    <span class="s2">&#34;Tty&#34;</span>: false,
+    <span class="s2">&#34;OpenStdin&#34;</span>: false,
+    <span class="s2">&#34;StdinOnce&#34;</span>: false,
+    <span class="s2">&#34;Env&#34;</span>: <span class="o">[</span>
+      <span class="s2">&#34;PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin&#34;</span>
+    <span class="o">]</span>,
+    <span class="s2">&#34;Cmd&#34;</span>: <span class="o">[</span>
+      <span class="s2">&#34;/usr/local/openresty/bin/openresty&#34;</span>,
+      <span class="s2">&#34;-g&#34;</span>,
+      <span class="s2">&#34;daemon off;&#34;</span>
+    <span class="o">]</span>,
+    <span class="s2">&#34;ArgsEscaped&#34;</span>: true,
+    <span class="s2">&#34;Image&#34;</span>: <span class="s2">&#34;sha256:0b827067ad09ab8a0b9a73a45f5b1c408b84db1ca6883a4c544078ed43b8b5e3&#34;</span>,
+    <span class="s2">&#34;Volumes&#34;</span>: null,
+    <span class="s2">&#34;WorkingDir&#34;</span>: <span class="s2">&#34;&#34;</span>,
+    <span class="s2">&#34;Entrypoint&#34;</span>: null,
+    <span class="s2">&#34;OnBuild&#34;</span>: null,
+    <span class="s2">&#34;Labels&#34;</span>: <span class="o">{</span>
+      <span class="s2">&#34;maintainer&#34;</span>: <span class="s2">&#34;Evan Wies &lt;evan@neomantra.net&gt;&#34;</span>,
+      <span class="s2">&#34;resty_add_package_builddeps&#34;</span>: <span class="s2">&#34;&#34;</span>,
+      <span class="s2">&#34;resty_add_package_rundeps&#34;</span>: <span class="s2">&#34;&#34;</span>,
+      <span class="s2">&#34;resty_config_deps&#34;</span>: <span class="s2">&#34;--with-pcre     --with-cc-opt=&#39;-DNGX_LUA_ABORT_AT_PANIC -I/usr/local/openresty/pcre/include -I/usr/local/openresty/openssl/include&#39;     --with-ld-opt=&#39;-L/usr/local/openresty/pcre/lib -L/usr/local/openresty/openssl/lib -Wl,-rpath,/usr/local/openresty/pcre/lib:/usr/local/openresty/openssl/lib&#39;     &#34;</span>,
+      <span class="s2">&#34;resty_config_options&#34;</span>: <span class="s2">&#34;    --with-compat     --with-file-aio     --with-http_addition_module     --with-http_auth_request_module     --with-http_dav_module     --with-http_flv_module     --with-http_geoip_module=dynamic     --with-http_gunzip_module     --with-http_gzip_static_module     --with-http_image_filter_module=dynamic     --with-http_mp4_module     --with-http_random_index_module     --with-http_realip_module     --with-http_secure_link_module     --with-http_slice_module     --with-http_ssl_module     --with-http_stub_status_module     --with-http_sub_module     --with-http_v2_module     --with-http_xslt_module=dynamic     --with-ipv6     --with-mail     --with-mail_ssl_module     --with-md5-asm     --with-pcre-jit     --with-sha1-asm     --with-stream     --with-stream_ssl_module     --with-threads     &#34;</span>,
+      <span class="s2">&#34;resty_config_options_more&#34;</span>: <span class="s2">&#34;&#34;</span>,
+      <span class="s2">&#34;resty_eval_post_make&#34;</span>: <span class="s2">&#34;&#34;</span>,
+      <span class="s2">&#34;resty_eval_pre_configure&#34;</span>: <span class="s2">&#34;&#34;</span>,
+      <span class="s2">&#34;resty_image_base&#34;</span>: <span class="s2">&#34;alpine&#34;</span>,
+      <span class="s2">&#34;resty_image_tag&#34;</span>: <span class="s2">&#34;3.12&#34;</span>,
+      <span class="s2">&#34;resty_openssl_patch_version&#34;</span>: <span class="s2">&#34;1.1.1f&#34;</span>,
+      <span class="s2">&#34;resty_openssl_url_base&#34;</span>: <span class="s2">&#34;https://www.openssl.org/source&#34;</span>,
+      <span class="s2">&#34;resty_openssl_version&#34;</span>: <span class="s2">&#34;1.1.1g&#34;</span>,
+      <span class="s2">&#34;resty_pcre_version&#34;</span>: <span class="s2">&#34;8.44&#34;</span>,
+      <span class="s2">&#34;resty_version&#34;</span>: <span class="s2">&#34;1.17.8.2&#34;</span>
+    <span class="o">}</span>,
+    <span class="s2">&#34;StopSignal&#34;</span>: <span class="s2">&#34;SIGQUIT&#34;</span>
+  <span class="o">}</span>,
+  <span class="s2">&#34;container&#34;</span>: <span class="s2">&#34;0ae35046dd1afef0f1f525360939abc524dbd469a92470c5836dfbb7dc666923&#34;</span>,
+  <span class="s2">&#34;container_config&#34;</span>: <span class="o">{</span>
+    <span class="s2">&#34;Hostname&#34;</span>: <span class="s2">&#34;0ae35046dd1a&#34;</span>,
+    <span class="s2">&#34;Domainname&#34;</span>: <span class="s2">&#34;&#34;</span>,
+    <span class="s2">&#34;User&#34;</span>: <span class="s2">&#34;&#34;</span>,
+    <span class="s2">&#34;AttachStdin&#34;</span>: false,
+    <span class="s2">&#34;AttachStdout&#34;</span>: false,
+    <span class="s2">&#34;AttachStderr&#34;</span>: false,
+    <span class="s2">&#34;Tty&#34;</span>: false,
+    <span class="s2">&#34;OpenStdin&#34;</span>: false,
+    <span class="s2">&#34;StdinOnce&#34;</span>: false,
+    <span class="s2">&#34;Env&#34;</span>: <span class="o">[</span>
+      <span class="s2">&#34;PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin&#34;</span>
+    <span class="o">]</span>,
+    <span class="s2">&#34;Cmd&#34;</span>: <span class="o">[</span>
+      <span class="s2">&#34;/bin/sh&#34;</span>,
+      <span class="s2">&#34;-c&#34;</span>,
+      <span class="s2">&#34;#(nop) &#34;</span>,
+      <span class="s2">&#34;STOPSIGNAL SIGQUIT&#34;</span>
+    <span class="o">]</span>,
+    <span class="s2">&#34;ArgsEscaped&#34;</span>: true,
+    <span class="s2">&#34;Image&#34;</span>: <span class="s2">&#34;sha256:0b827067ad09ab8a0b9a73a45f5b1c408b84db1ca6883a4c544078ed43b8b5e3&#34;</span>,
+    <span class="s2">&#34;Volumes&#34;</span>: null,
+    <span class="s2">&#34;WorkingDir&#34;</span>: <span class="s2">&#34;&#34;</span>,
+    <span class="s2">&#34;Entrypoint&#34;</span>: null,
+    <span class="s2">&#34;OnBuild&#34;</span>: null,
+    <span class="s2">&#34;Labels&#34;</span>: <span class="o">{</span>
+      <span class="s2">&#34;maintainer&#34;</span>: <span class="s2">&#34;Evan Wies &lt;evan@neomantra.net&gt;&#34;</span>,
+      <span class="s2">&#34;resty_add_package_builddeps&#34;</span>: <span class="s2">&#34;&#34;</span>,
+      <span class="s2">&#34;resty_add_package_rundeps&#34;</span>: <span class="s2">&#34;&#34;</span>,
+      <span class="s2">&#34;resty_config_deps&#34;</span>: <span class="s2">&#34;--with-pcre     --with-cc-opt=&#39;-DNGX_LUA_ABORT_AT_PANIC -I/usr/local/openresty/pcre/include -I/usr/local/openresty/openssl/include&#39;     --with-ld-opt=&#39;-L/usr/local/openresty/pcre/lib -L/usr/local/openresty/openssl/lib -Wl,-rpath,/usr/local/openresty/pcre/lib:/usr/local/openresty/openssl/lib&#39;     &#34;</span>,
+      <span class="s2">&#34;resty_config_options&#34;</span>: <span class="s2">&#34;    --with-compat     --with-file-aio     --with-http_addition_module     --with-http_auth_request_module     --with-http_dav_module     --with-http_flv_module     --with-http_geoip_module=dynamic     --with-http_gunzip_module     --with-http_gzip_static_module     --with-http_image_filter_module=dynamic     --with-http_mp4_module     --with-http_random_index_module     --with-http_realip_module     --with-http_secure_link_module     --with-http_slice_module     --with-http_ssl_module     --with-http_stub_status_module     --with-http_sub_module     --with-http_v2_module     --with-http_xslt_module=dynamic     --with-ipv6     --with-mail     --with-mail_ssl_module     --with-md5-asm     --with-pcre-jit     --with-sha1-asm     --with-stream     --with-stream_ssl_module     --with-threads     &#34;</span>,
+      <span class="s2">&#34;resty_config_options_more&#34;</span>: <span class="s2">&#34;&#34;</span>,
+      <span class="s2">&#34;resty_eval_post_make&#34;</span>: <span class="s2">&#34;&#34;</span>,
+      <span class="s2">&#34;resty_eval_pre_configure&#34;</span>: <span class="s2">&#34;&#34;</span>,
+      <span class="s2">&#34;resty_image_base&#34;</span>: <span class="s2">&#34;alpine&#34;</span>,
+      <span class="s2">&#34;resty_image_tag&#34;</span>: <span class="s2">&#34;3.12&#34;</span>,
+      <span class="s2">&#34;resty_openssl_patch_version&#34;</span>: <span class="s2">&#34;1.1.1f&#34;</span>,
+      <span class="s2">&#34;resty_openssl_url_base&#34;</span>: <span class="s2">&#34;https://www.openssl.org/source&#34;</span>,
+      <span class="s2">&#34;resty_openssl_version&#34;</span>: <span class="s2">&#34;1.1.1g&#34;</span>,
+      <span class="s2">&#34;resty_pcre_version&#34;</span>: <span class="s2">&#34;8.44&#34;</span>,
+      <span class="s2">&#34;resty_version&#34;</span>: <span class="s2">&#34;1.17.8.2&#34;</span>
+    <span class="o">}</span>,
+    <span class="s2">&#34;StopSignal&#34;</span>: <span class="s2">&#34;SIGQUIT&#34;</span>
+  <span class="o">}</span>,
+  <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:25:11.080239395Z&#34;</span>,
+  <span class="s2">&#34;docker_version&#34;</span>: <span class="s2">&#34;18.06.0-ce&#34;</span>,
+  <span class="s2">&#34;history&#34;</span>: <span class="o">[</span>
+    <span class="o">{</span>
+      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-05-29T21:19:46.192045972Z&#34;</span>,
+      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop) ADD file:c92c248239f8c7b9b3c067650954815f391b7bcb09023f984972c082ace2a8d0 in / &#34;</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-05-29T21:19:46.363518345Z&#34;</span>,
+      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  CMD [\&#34;/bin/sh\&#34;]&#34;</span>,
+      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:11.417409263Z&#34;</span>,
+      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  LABEL maintainer=Evan Wies &lt;evan@neomantra.net&gt;&#34;</span>,
+      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:11.510209288Z&#34;</span>,
+      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  ARG RESTY_IMAGE_BASE=alpine&#34;</span>,
+      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:11.601623273Z&#34;</span>,
+      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  ARG RESTY_IMAGE_TAG=3.12&#34;</span>,
+      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:11.688966243Z&#34;</span>,
+      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  ARG RESTY_VERSION=1.17.8.2&#34;</span>,
+      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:11.783539793Z&#34;</span>,
+      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  ARG RESTY_OPENSSL_VERSION=1.1.1g&#34;</span>,
+      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:11.885734193Z&#34;</span>,
+      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  ARG RESTY_OPENSSL_PATCH_VERSION=1.1.1f&#34;</span>,
+      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:11.977916317Z&#34;</span>,
+      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  ARG RESTY_OPENSSL_URL_BASE=https://www.openssl.org/source&#34;</span>,
+      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:12.075117786Z&#34;</span>,
+      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  ARG RESTY_PCRE_VERSION=8.44&#34;</span>,
+      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:12.169065223Z&#34;</span>,
+      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  ARG RESTY_J=1&#34;</span>,
+      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:12.268734856Z&#34;</span>,
+      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  ARG RESTY_CONFIG_OPTIONS=    --with-compat     --with-file-aio     --with-http_addition_module     --with-http_auth_request_module     --with-http_dav_module     --with-http_flv_module     --with-http_geoip_module=dynamic     --with-http_gunzip_module     --with-http_gzip_static_module     --with-http_image_filter_module=dynamic     --with-http_mp4_module     --with-http_random_index_module     --with-http_realip_module     --with-http_secure_link_module     --with-http_slice_module     --with-http_ssl_module     --with-http_stub_status_module     --with-http_sub_module     --with-http_v2_module     --with-http_xslt_module=dynamic     --with-ipv6     --with-mail     --with-mail_ssl_module     --with-md5-asm     --with-pcre-jit     --with-sha1-asm     --with-stream     --with-stream_ssl_module     --with-threads     &#34;</span>,
+      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:12.363332751Z&#34;</span>,
+      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  ARG RESTY_CONFIG_OPTIONS_MORE=&#34;</span>,
+      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:12.462196367Z&#34;</span>,
+      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  ARG RESTY_LUAJIT_OPTIONS=--with-luajit-xcflags=&#39;-DLUAJIT_NUMMODE=2 -DLUAJIT_ENABLE_LUA52COMPAT&#39;&#34;</span>,
+      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:12.553726712Z&#34;</span>,
+      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  ARG RESTY_ADD_PACKAGE_BUILDDEPS=&#34;</span>,
+      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:12.644512619Z&#34;</span>,
+      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  ARG RESTY_ADD_PACKAGE_RUNDEPS=&#34;</span>,
+      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:12.740127392Z&#34;</span>,
+      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  ARG RESTY_EVAL_PRE_CONFIGURE=&#34;</span>,
+      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:12.833898538Z&#34;</span>,
+      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  ARG RESTY_EVAL_POST_MAKE=&#34;</span>,
+      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:12.93159843Z&#34;</span>,
+      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  ARG _RESTY_CONFIG_DEPS=--with-pcre     --with-cc-opt=&#39;-DNGX_LUA_ABORT_AT_PANIC -I/usr/local/openresty/pcre/include -I/usr/local/openresty/openssl/include&#39;     --with-ld-opt=&#39;-L/usr/local/openresty/pcre/lib -L/usr/local/openresty/openssl/lib -Wl,-rpath,/usr/local/openresty/pcre/lib:/usr/local/openresty/openssl/lib&#39;     &#34;</span>,
+      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:13.022542363Z&#34;</span>,
+      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  LABEL resty_image_base=alpine&#34;</span>,
+      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:13.120036187Z&#34;</span>,
+      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  LABEL resty_image_tag=3.12&#34;</span>,
+      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:13.20899948Z&#34;</span>,
+      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  LABEL resty_version=1.17.8.2&#34;</span>,
+      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:13.292383125Z&#34;</span>,
+      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  LABEL resty_openssl_version=1.1.1g&#34;</span>,
+      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:13.385097561Z&#34;</span>,
+      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  LABEL resty_openssl_patch_version=1.1.1f&#34;</span>,
+      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:13.476173083Z&#34;</span>,
+      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  LABEL resty_openssl_url_base=https://www.openssl.org/source&#34;</span>,
+      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:13.564110015Z&#34;</span>,
+      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  LABEL resty_pcre_version=8.44&#34;</span>,
+      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:13.653688493Z&#34;</span>,
+      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  LABEL resty_config_options=    --with-compat     --with-file-aio     --with-http_addition_module     --with-http_auth_request_module     --with-http_dav_module     --with-http_flv_module     --with-http_geoip_module=dynamic     --with-http_gunzip_module     --with-http_gzip_static_module     --with-http_image_filter_module=dynamic     --with-http_mp4_module     --with-http_random_index_module     --with-http_realip_module     --with-http_secure_link_module     --with-http_slice_module     --with-http_ssl_module     --with-http_stub_status_module     --with-http_sub_module     --with-http_v2_module     --with-http_xslt_module=dynamic     --with-ipv6     --with-mail     --with-mail_ssl_module     --with-md5-asm     --with-pcre-jit     --with-sha1-asm     --with-stream     --with-stream_ssl_module     --with-threads     &#34;</span>,
+      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:13.747250902Z&#34;</span>,
+      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  LABEL resty_config_options_more=&#34;</span>,
+      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:13.839314208Z&#34;</span>,
+      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  LABEL resty_config_deps=--with-pcre     --with-cc-opt=&#39;-DNGX_LUA_ABORT_AT_PANIC -I/usr/local/openresty/pcre/include -I/usr/local/openresty/openssl/include&#39;     --with-ld-opt=&#39;-L/usr/local/openresty/pcre/lib -L/usr/local/openresty/openssl/lib -Wl,-rpath,/usr/local/openresty/pcre/lib:/usr/local/openresty/openssl/lib&#39;     &#34;</span>,
+      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:13.938461929Z&#34;</span>,
+      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  LABEL resty_add_package_builddeps=&#34;</span>,
+      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:14.023327305Z&#34;</span>,
+      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  LABEL resty_add_package_rundeps=&#34;</span>,
+      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:14.111176277Z&#34;</span>,
+      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  LABEL resty_eval_pre_configure=&#34;</span>,
+      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:14.211102965Z&#34;</span>,
+      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  LABEL resty_eval_post_make=&#34;</span>,
+      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:25:10.276243663Z&#34;</span>,
+      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;|16 RESTY_ADD_PACKAGE_BUILDDEPS= RESTY_ADD_PACKAGE_RUNDEPS= RESTY_CONFIG_OPTIONS=    --with-compat     --with-file-aio     --with-http_addition_module     --with-http_auth_request_module     --with-http_dav_module     --with-http_flv_module     --with-http_geoip_module=dynamic     --with-http_gunzip_module     --with-http_gzip_static_module     --with-http_image_filter_module=dynamic     --with-http_mp4_module     --with-http_random_index_module     --with-http_realip_module     --with-http_secure_link_module     --with-http_slice_module     --with-http_ssl_module     --with-http_stub_status_module     --with-http_sub_module     --with-http_v2_module     --with-http_xslt_module=dynamic     --with-ipv6     --with-mail     --with-mail_ssl_module     --with-md5-asm     --with-pcre-jit     --with-sha1-asm     --with-stream     --with-stream_ssl_module     --with-threads      RESTY_CONFIG_OPTIONS_MORE= RESTY_EVAL_POST_MAKE= RESTY_EVAL_PRE_CONFIGURE= RESTY_IMAGE_BASE=alpine RESTY_IMAGE_TAG=3.12 RESTY_J=1 RESTY_LUAJIT_OPTIONS=--with-luajit-xcflags=&#39;-DLUAJIT_NUMMODE=2 -DLUAJIT_ENABLE_LUA52COMPAT&#39; RESTY_OPENSSL_PATCH_VERSION=1.1.1f RESTY_OPENSSL_URL_BASE=https://www.openssl.org/source RESTY_OPENSSL_VERSION=1.1.1g RESTY_PCRE_VERSION=8.44 RESTY_VERSION=1.17.8.2 _RESTY_CONFIG_DEPS=--with-pcre     --with-cc-opt=&#39;-DNGX_LUA_ABORT_AT_PANIC -I/usr/local/openresty/pcre/include -I/usr/local/openresty/openssl/include&#39;     --with-ld-opt=&#39;-L/usr/local/openresty/pcre/lib -L/usr/local/openresty/openssl/lib -Wl,-rpath,/usr/local/openresty/pcre/lib:/usr/local/openresty/openssl/lib&#39;      /bin/sh -c apk add --no-cache --virtual .build-deps         build-base         coreutils         curl         gd-dev         geoip-dev         libxslt-dev         linux-headers         make         perl-dev         readline-dev         zlib-dev         </span><span class="si">${</span><span class="nv">RESTY_ADD_PACKAGE_BUILDDEPS</span><span class="si">}</span><span class="s2">     &amp;&amp; apk add --no-cache         gd         geoip         libgcc         libxslt         zlib         </span><span class="si">${</span><span class="nv">RESTY_ADD_PACKAGE_RUNDEPS</span><span class="si">}</span><span class="s2">     &amp;&amp; cd /tmp     &amp;&amp; if [ -n \&#34;</span><span class="si">${</span><span class="nv">RESTY_EVAL_PRE_CONFIGURE</span><span class="si">}</span><span class="s2">\&#34; ]; then eval </span><span class="k">$(</span><span class="nb">echo</span> <span class="si">${</span><span class="nv">RESTY_EVAL_PRE_CONFIGURE</span><span class="si">}</span><span class="k">)</span><span class="s2">; fi     &amp;&amp; cd /tmp     &amp;&amp; curl -fSL \&#34;</span><span class="si">${</span><span class="nv">RESTY_OPENSSL_URL_BASE</span><span class="si">}</span><span class="s2">/openssl-</span><span class="si">${</span><span class="nv">RESTY_OPENSSL_VERSION</span><span class="si">}</span><span class="s2">.tar.gz\&#34; -o openssl-</span><span class="si">${</span><span class="nv">RESTY_OPENSSL_VERSION</span><span class="si">}</span><span class="s2">.tar.gz     &amp;&amp; tar xzf openssl-</span><span class="si">${</span><span class="nv">RESTY_OPENSSL_VERSION</span><span class="si">}</span><span class="s2">.tar.gz     &amp;&amp; cd openssl-</span><span class="si">${</span><span class="nv">RESTY_OPENSSL_VERSION</span><span class="si">}</span><span class="s2">     &amp;&amp; if [ </span><span class="k">$(</span><span class="nb">echo</span> <span class="si">${</span><span class="nv">RESTY_OPENSSL_VERSION</span><span class="si">}</span> <span class="p">|</span> cut -c 1-5<span class="k">)</span><span class="s2"> = \&#34;1.1.1\&#34; ] ; then         echo &#39;patching OpenSSL 1.1.1 for OpenResty&#39;         &amp;&amp; curl -s https://raw.githubusercontent.com/openresty/openresty/master/patches/openssl-</span><span class="si">${</span><span class="nv">RESTY_OPENSSL_PATCH_VERSION</span><span class="si">}</span><span class="s2">-sess_set_get_cb_yield.patch | patch -p1 ;     fi     &amp;&amp; if [ </span><span class="k">$(</span><span class="nb">echo</span> <span class="si">${</span><span class="nv">RESTY_OPENSSL_VERSION</span><span class="si">}</span> <span class="p">|</span> cut -c 1-5<span class="k">)</span><span class="s2"> = \&#34;1.1.0\&#34; ] ; then         echo &#39;patching OpenSSL 1.1.0 for OpenResty&#39;         &amp;&amp; curl -s https://raw.githubusercontent.com/openresty/openresty/ed328977028c3ec3033bc25873ee360056e247cd/patches/openssl-1.1.0j-parallel_build_fix.patch | patch -p1         &amp;&amp; curl -s https://raw.githubusercontent.com/openresty/openresty/master/patches/openssl-</span><span class="si">${</span><span class="nv">RESTY_OPENSSL_PATCH_VERSION</span><span class="si">}</span><span class="s2">-sess_set_get_cb_yield.patch | patch -p1 ;     fi     &amp;&amp; ./config       no-threads shared zlib -g       enable-ssl3 enable-ssl3-method       --prefix=/usr/local/openresty/openssl       --libdir=lib       -Wl,-rpath,/usr/local/openresty/openssl/lib     &amp;&amp; make -j</span><span class="si">${</span><span class="nv">RESTY_J</span><span class="si">}</span><span class="s2">     &amp;&amp; make -j</span><span class="si">${</span><span class="nv">RESTY_J</span><span class="si">}</span><span class="s2"> install_sw     &amp;&amp; cd /tmp     &amp;&amp; curl -fSL https://ftp.pcre.org/pub/pcre/pcre-</span><span class="si">${</span><span class="nv">RESTY_PCRE_VERSION</span><span class="si">}</span><span class="s2">.tar.gz -o pcre-</span><span class="si">${</span><span class="nv">RESTY_PCRE_VERSION</span><span class="si">}</span><span class="s2">.tar.gz     &amp;&amp; tar xzf pcre-</span><span class="si">${</span><span class="nv">RESTY_PCRE_VERSION</span><span class="si">}</span><span class="s2">.tar.gz     &amp;&amp; cd /tmp/pcre-</span><span class="si">${</span><span class="nv">RESTY_PCRE_VERSION</span><span class="si">}</span><span class="s2">     &amp;&amp; ./configure         --prefix=/usr/local/openresty/pcre         --disable-cpp         --enable-jit         --enable-utf         --enable-unicode-properties     &amp;&amp; make -j</span><span class="si">${</span><span class="nv">RESTY_J</span><span class="si">}</span><span class="s2">     &amp;&amp; make -j</span><span class="si">${</span><span class="nv">RESTY_J</span><span class="si">}</span><span class="s2"> install     &amp;&amp; cd /tmp     &amp;&amp; curl -fSL https://openresty.org/download/openresty-</span><span class="si">${</span><span class="nv">RESTY_VERSION</span><span class="si">}</span><span class="s2">.tar.gz -o openresty-</span><span class="si">${</span><span class="nv">RESTY_VERSION</span><span class="si">}</span><span class="s2">.tar.gz     &amp;&amp; tar xzf openresty-</span><span class="si">${</span><span class="nv">RESTY_VERSION</span><span class="si">}</span><span class="s2">.tar.gz     &amp;&amp; cd /tmp/openresty-</span><span class="si">${</span><span class="nv">RESTY_VERSION</span><span class="si">}</span><span class="s2">     &amp;&amp; eval ./configure -j</span><span class="si">${</span><span class="nv">RESTY_J</span><span class="si">}</span><span class="s2"> </span><span class="si">${</span><span class="nv">_RESTY_CONFIG_DEPS</span><span class="si">}</span><span class="s2"> </span><span class="si">${</span><span class="nv">RESTY_CONFIG_OPTIONS</span><span class="si">}</span><span class="s2"> </span><span class="si">${</span><span class="nv">RESTY_CONFIG_OPTIONS_MORE</span><span class="si">}</span><span class="s2"> </span><span class="si">${</span><span class="nv">RESTY_LUAJIT_OPTIONS</span><span class="si">}</span><span class="s2">     &amp;&amp; make -j</span><span class="si">${</span><span class="nv">RESTY_J</span><span class="si">}</span><span class="s2">     &amp;&amp; make -j</span><span class="si">${</span><span class="nv">RESTY_J</span><span class="si">}</span><span class="s2"> install     &amp;&amp; cd /tmp     &amp;&amp; if [ -n \&#34;</span><span class="si">${</span><span class="nv">RESTY_EVAL_POST_MAKE</span><span class="si">}</span><span class="s2">\&#34; ]; then eval </span><span class="k">$(</span><span class="nb">echo</span> <span class="si">${</span><span class="nv">RESTY_EVAL_POST_MAKE</span><span class="si">}</span><span class="k">)</span><span class="s2">; fi     &amp;&amp; rm -rf         openssl-</span><span class="si">${</span><span class="nv">RESTY_OPENSSL_VERSION</span><span class="si">}</span><span class="s2">.tar.gz openssl-</span><span class="si">${</span><span class="nv">RESTY_OPENSSL_VERSION</span><span class="si">}</span><span class="s2">         pcre-</span><span class="si">${</span><span class="nv">RESTY_PCRE_VERSION</span><span class="si">}</span><span class="s2">.tar.gz pcre-</span><span class="si">${</span><span class="nv">RESTY_PCRE_VERSION</span><span class="si">}</span><span class="s2">         openresty-</span><span class="si">${</span><span class="nv">RESTY_VERSION</span><span class="si">}</span><span class="s2">.tar.gz openresty-</span><span class="si">${</span><span class="nv">RESTY_VERSION</span><span class="si">}</span><span class="s2">     &amp;&amp; apk del .build-deps     &amp;&amp; mkdir -p /var/run/openresty     &amp;&amp; ln -sf /dev/stdout /usr/local/openresty/nginx/logs/access.log     &amp;&amp; ln -sf /dev/stderr /usr/local/openresty/nginx/logs/error.log&#34;</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:25:10.712994475Z&#34;</span>,
+      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin&#34;</span>,
+      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:25:10.806730628Z&#34;</span>,
+      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop) COPY file:871e3c814ada8b73d3bd53e819bd122b5612587624e3eb6ef6e97d83522238fc in /usr/local/openresty/nginx/conf/nginx.conf &#34;</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:25:10.8995482Z&#34;</span>,
+      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop) COPY file:1832501c6083278533ce3d09a4140cc30795ddf825ad6a0ad52ea84858291e53 in /etc/nginx/conf.d/default.conf &#34;</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:25:10.984062974Z&#34;</span>,
+      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  CMD [\&#34;/usr/local/openresty/bin/openresty\&#34; \&#34;-g\&#34; \&#34;daemon off;\&#34;]&#34;</span>,
+      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:25:11.080239395Z&#34;</span>,
+      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  STOPSIGNAL SIGQUIT&#34;</span>,
+      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
+    <span class="o">}</span>
+  <span class="o">]</span>,
+  <span class="s2">&#34;os&#34;</span>: <span class="s2">&#34;linux&#34;</span>,
+  <span class="s2">&#34;rootfs&#34;</span>: <span class="o">{</span>
+    <span class="s2">&#34;type&#34;</span>: <span class="s2">&#34;layers&#34;</span>,
+    <span class="s2">&#34;diff_ids&#34;</span>: <span class="o">[</span>
+      <span class="s2">&#34;sha256:50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a&#34;</span>,
+      <span class="s2">&#34;sha256:9c572ba82b91e3ac35c7351bdacc6876c67f5d9bc69c5e51e8b2deeafae95e4f&#34;</span>,
+      <span class="s2">&#34;sha256:1680a9f16b18732726d0656b6d6ff9611a3c4460ca870827b537a87bbe10cc22&#34;</span>,
+      <span class="s2">&#34;sha256:8521b614863046bf4bb604e3586feeca8b7ce1372f1d6664a5545e85ad9ca472&#34;</span>
+    <span class="o">]</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>可以看到这个里面是保存了镜像的元信息，这是再执行一下 <code>docker inspect 1ddc7a18ba0b </code> ,会发现它们的输出是出奇的相似 :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># docker inspect 1ddc7a18ba0b</span> 
+<span class="o">[</span>
+    <span class="o">{</span>
+        <span class="s2">&#34;Id&#34;</span>: <span class="s2">&#34;sha256:1ddc7a18ba0bcc20c61447f391bfff98ac559eea590e7ac59b5b5f588f1f47ed&#34;</span>,
+        <span class="s2">&#34;RepoTags&#34;</span>: <span class="o">[</span>
+            <span class="s2">&#34;openresty/openresty:1.17.8.2-5-alpine&#34;</span>,
+            <span class="s2">&#34;russellgao/openresty:1.17.8.2-5-alpine&#34;</span>
+        <span class="o">]</span>,
+        <span class="s2">&#34;RepoDigests&#34;</span>: <span class="o">[</span>
+            <span class="s2">&#34;openresty/openresty@sha256:224ced85b5f8b679a8664a39b69c1b8feb09f8ba4343d834bd5b69433081389e&#34;</span>,
+            <span class="s2">&#34;russellgao/openresty@sha256:84f53dc7517e9b6695fc8fd74916a1eb5970a92fc24a984f99bfb81508f3d261&#34;</span>
+        <span class="o">]</span>,
+        <span class="s2">&#34;Parent&#34;</span>: <span class="s2">&#34;&#34;</span>,
+        <span class="s2">&#34;Comment&#34;</span>: <span class="s2">&#34;&#34;</span>,
+        <span class="s2">&#34;Created&#34;</span>: <span class="s2">&#34;2020-09-18T16:25:11.080239395Z&#34;</span>,
+        <span class="s2">&#34;Container&#34;</span>: <span class="s2">&#34;0ae35046dd1afef0f1f525360939abc524dbd469a92470c5836dfbb7dc666923&#34;</span>,
+        <span class="s2">&#34;ContainerConfig&#34;</span>: <span class="o">{</span>
+            <span class="s2">&#34;Hostname&#34;</span>: <span class="s2">&#34;0ae35046dd1a&#34;</span>,
+            <span class="s2">&#34;Domainname&#34;</span>: <span class="s2">&#34;&#34;</span>,
+            <span class="s2">&#34;User&#34;</span>: <span class="s2">&#34;&#34;</span>,
+            <span class="s2">&#34;AttachStdin&#34;</span>: false,
+            <span class="s2">&#34;AttachStdout&#34;</span>: false,
+            <span class="s2">&#34;AttachStderr&#34;</span>: false,
+            <span class="s2">&#34;Tty&#34;</span>: false,
+            <span class="s2">&#34;OpenStdin&#34;</span>: false,
+            <span class="s2">&#34;StdinOnce&#34;</span>: false,
+            <span class="s2">&#34;Env&#34;</span>: <span class="o">[</span>
+                <span class="s2">&#34;PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin&#34;</span>
+            <span class="o">]</span>,
+            <span class="s2">&#34;Cmd&#34;</span>: <span class="o">[</span>
+                <span class="s2">&#34;/bin/sh&#34;</span>,
+                <span class="s2">&#34;-c&#34;</span>,
+                <span class="s2">&#34;#(nop) &#34;</span>,
+                <span class="s2">&#34;STOPSIGNAL SIGQUIT&#34;</span>
+            <span class="o">]</span>,
+            <span class="s2">&#34;ArgsEscaped&#34;</span>: true,
+            <span class="s2">&#34;Image&#34;</span>: <span class="s2">&#34;sha256:0b827067ad09ab8a0b9a73a45f5b1c408b84db1ca6883a4c544078ed43b8b5e3&#34;</span>,
+            <span class="s2">&#34;Volumes&#34;</span>: null,
+            <span class="s2">&#34;WorkingDir&#34;</span>: <span class="s2">&#34;&#34;</span>,
+            <span class="s2">&#34;Entrypoint&#34;</span>: null,
+            <span class="s2">&#34;OnBuild&#34;</span>: null,
+            <span class="s2">&#34;Labels&#34;</span>: <span class="o">{</span>
+                <span class="s2">&#34;maintainer&#34;</span>: <span class="s2">&#34;Evan Wies &lt;evan@neomantra.net&gt;&#34;</span>,
+                <span class="s2">&#34;resty_add_package_builddeps&#34;</span>: <span class="s2">&#34;&#34;</span>,
+                <span class="s2">&#34;resty_add_package_rundeps&#34;</span>: <span class="s2">&#34;&#34;</span>,
+                <span class="s2">&#34;resty_config_deps&#34;</span>: <span class="s2">&#34;--with-pcre     --with-cc-opt=&#39;-DNGX_LUA_ABORT_AT_PANIC -I/usr/local/openresty/pcre/include -I/usr/local/openresty/openssl/include&#39;     --with-ld-opt=&#39;-L/usr/local/openresty/pcre/lib -L/usr/local/openresty/openssl/lib -Wl,-rpath,/usr/local/openresty/pcre/lib:/usr/local/openresty/openssl/lib&#39;     &#34;</span>,
+                <span class="s2">&#34;resty_config_options&#34;</span>: <span class="s2">&#34;    --with-compat     --with-file-aio     --with-http_addition_module     --with-http_auth_request_module     --with-http_dav_module     --with-http_flv_module     --with-http_geoip_module=dynamic     --with-http_gunzip_module     --with-http_gzip_static_module     --with-http_image_filter_module=dynamic     --with-http_mp4_module     --with-http_random_index_module     --with-http_realip_module     --with-http_secure_link_module     --with-http_slice_module     --with-http_ssl_module     --with-http_stub_status_module     --with-http_sub_module     --with-http_v2_module     --with-http_xslt_module=dynamic     --with-ipv6     --with-mail     --with-mail_ssl_module     --with-md5-asm     --with-pcre-jit     --with-sha1-asm     --with-stream     --with-stream_ssl_module     --with-threads     &#34;</span>,
+                <span class="s2">&#34;resty_config_options_more&#34;</span>: <span class="s2">&#34;&#34;</span>,
+                <span class="s2">&#34;resty_eval_post_make&#34;</span>: <span class="s2">&#34;&#34;</span>,
+                <span class="s2">&#34;resty_eval_pre_configure&#34;</span>: <span class="s2">&#34;&#34;</span>,
+                <span class="s2">&#34;resty_image_base&#34;</span>: <span class="s2">&#34;alpine&#34;</span>,
+                <span class="s2">&#34;resty_image_tag&#34;</span>: <span class="s2">&#34;3.12&#34;</span>,
+                <span class="s2">&#34;resty_openssl_patch_version&#34;</span>: <span class="s2">&#34;1.1.1f&#34;</span>,
+                <span class="s2">&#34;resty_openssl_url_base&#34;</span>: <span class="s2">&#34;https://www.openssl.org/source&#34;</span>,
+                <span class="s2">&#34;resty_openssl_version&#34;</span>: <span class="s2">&#34;1.1.1g&#34;</span>,
+                <span class="s2">&#34;resty_pcre_version&#34;</span>: <span class="s2">&#34;8.44&#34;</span>,
+                <span class="s2">&#34;resty_version&#34;</span>: <span class="s2">&#34;1.17.8.2&#34;</span>
+            <span class="o">}</span>,
+            <span class="s2">&#34;StopSignal&#34;</span>: <span class="s2">&#34;SIGQUIT&#34;</span>
+        <span class="o">}</span>,
+        <span class="s2">&#34;DockerVersion&#34;</span>: <span class="s2">&#34;18.06.0-ce&#34;</span>,
+        <span class="s2">&#34;Author&#34;</span>: <span class="s2">&#34;&#34;</span>,
+        <span class="s2">&#34;Config&#34;</span>: <span class="o">{</span>
+            <span class="s2">&#34;Hostname&#34;</span>: <span class="s2">&#34;&#34;</span>,
+            <span class="s2">&#34;Domainname&#34;</span>: <span class="s2">&#34;&#34;</span>,
+            <span class="s2">&#34;User&#34;</span>: <span class="s2">&#34;&#34;</span>,
+            <span class="s2">&#34;AttachStdin&#34;</span>: false,
+            <span class="s2">&#34;AttachStdout&#34;</span>: false,
+            <span class="s2">&#34;AttachStderr&#34;</span>: false,
+            <span class="s2">&#34;Tty&#34;</span>: false,
+            <span class="s2">&#34;OpenStdin&#34;</span>: false,
+            <span class="s2">&#34;StdinOnce&#34;</span>: false,
+            <span class="s2">&#34;Env&#34;</span>: <span class="o">[</span>
+                <span class="s2">&#34;PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin&#34;</span>
+            <span class="o">]</span>,
+            <span class="s2">&#34;Cmd&#34;</span>: <span class="o">[</span>
+                <span class="s2">&#34;/usr/local/openresty/bin/openresty&#34;</span>,
+                <span class="s2">&#34;-g&#34;</span>,
+                <span class="s2">&#34;daemon off;&#34;</span>
+            <span class="o">]</span>,
+            <span class="s2">&#34;ArgsEscaped&#34;</span>: true,
+            <span class="s2">&#34;Image&#34;</span>: <span class="s2">&#34;sha256:0b827067ad09ab8a0b9a73a45f5b1c408b84db1ca6883a4c544078ed43b8b5e3&#34;</span>,
+            <span class="s2">&#34;Volumes&#34;</span>: null,
+            <span class="s2">&#34;WorkingDir&#34;</span>: <span class="s2">&#34;&#34;</span>,
+            <span class="s2">&#34;Entrypoint&#34;</span>: null,
+            <span class="s2">&#34;OnBuild&#34;</span>: null,
+            <span class="s2">&#34;Labels&#34;</span>: <span class="o">{</span>
+                <span class="s2">&#34;maintainer&#34;</span>: <span class="s2">&#34;Evan Wies &lt;evan@neomantra.net&gt;&#34;</span>,
+                <span class="s2">&#34;resty_add_package_builddeps&#34;</span>: <span class="s2">&#34;&#34;</span>,
+                <span class="s2">&#34;resty_add_package_rundeps&#34;</span>: <span class="s2">&#34;&#34;</span>,
+                <span class="s2">&#34;resty_config_deps&#34;</span>: <span class="s2">&#34;--with-pcre     --with-cc-opt=&#39;-DNGX_LUA_ABORT_AT_PANIC -I/usr/local/openresty/pcre/include -I/usr/local/openresty/openssl/include&#39;     --with-ld-opt=&#39;-L/usr/local/openresty/pcre/lib -L/usr/local/openresty/openssl/lib -Wl,-rpath,/usr/local/openresty/pcre/lib:/usr/local/openresty/openssl/lib&#39;     &#34;</span>,
+                <span class="s2">&#34;resty_config_options&#34;</span>: <span class="s2">&#34;    --with-compat     --with-file-aio     --with-http_addition_module     --with-http_auth_request_module     --with-http_dav_module     --with-http_flv_module     --with-http_geoip_module=dynamic     --with-http_gunzip_module     --with-http_gzip_static_module     --with-http_image_filter_module=dynamic     --with-http_mp4_module     --with-http_random_index_module     --with-http_realip_module     --with-http_secure_link_module     --with-http_slice_module     --with-http_ssl_module     --with-http_stub_status_module     --with-http_sub_module     --with-http_v2_module     --with-http_xslt_module=dynamic     --with-ipv6     --with-mail     --with-mail_ssl_module     --with-md5-asm     --with-pcre-jit     --with-sha1-asm     --with-stream     --with-stream_ssl_module     --with-threads     &#34;</span>,
+                <span class="s2">&#34;resty_config_options_more&#34;</span>: <span class="s2">&#34;&#34;</span>,
+                <span class="s2">&#34;resty_eval_post_make&#34;</span>: <span class="s2">&#34;&#34;</span>,
+                <span class="s2">&#34;resty_eval_pre_configure&#34;</span>: <span class="s2">&#34;&#34;</span>,
+                <span class="s2">&#34;resty_image_base&#34;</span>: <span class="s2">&#34;alpine&#34;</span>,
+                <span class="s2">&#34;resty_image_tag&#34;</span>: <span class="s2">&#34;3.12&#34;</span>,
+                <span class="s2">&#34;resty_openssl_patch_version&#34;</span>: <span class="s2">&#34;1.1.1f&#34;</span>,
+                <span class="s2">&#34;resty_openssl_url_base&#34;</span>: <span class="s2">&#34;https://www.openssl.org/source&#34;</span>,
+                <span class="s2">&#34;resty_openssl_version&#34;</span>: <span class="s2">&#34;1.1.1g&#34;</span>,
+                <span class="s2">&#34;resty_pcre_version&#34;</span>: <span class="s2">&#34;8.44&#34;</span>,
+                <span class="s2">&#34;resty_version&#34;</span>: <span class="s2">&#34;1.17.8.2&#34;</span>
+            <span class="o">}</span>,
+            <span class="s2">&#34;StopSignal&#34;</span>: <span class="s2">&#34;SIGQUIT&#34;</span>
+        <span class="o">}</span>,
+        <span class="s2">&#34;Architecture&#34;</span>: <span class="s2">&#34;amd64&#34;</span>,
+        <span class="s2">&#34;Os&#34;</span>: <span class="s2">&#34;linux&#34;</span>,
+        <span class="s2">&#34;Size&#34;</span>: 103896354,
+        <span class="s2">&#34;VirtualSize&#34;</span>: 103896354,
+        <span class="s2">&#34;GraphDriver&#34;</span>: <span class="o">{</span>
+            <span class="s2">&#34;Data&#34;</span>: <span class="o">{</span>
+                <span class="s2">&#34;LowerDir&#34;</span>: <span class="s2">&#34;/var/lib/docker/overlay2/00b65b9c288df8c0ae7cdacba531a7dc5cb006e6c768e19ee36055717b782acc/diff:/var/lib/docker/overlay2/f1cf8b173467c98e08f3d276d7ccd8f9892c7c71dec2c4b335c39c6f175ae744/diff:/var/lib/docker/overlay2/8cbfb8b74c887e780747c8e6f4b3b9223a513ff6d69770bac16abb76da4e314f/diff&#34;</span>,
+                <span class="s2">&#34;MergedDir&#34;</span>: <span class="s2">&#34;/var/lib/docker/overlay2/5da215c4f218cbb1d9825fa111c21bf381dc35a9e6c7c6cd5c3ea952316031e4/merged&#34;</span>,
+                <span class="s2">&#34;UpperDir&#34;</span>: <span class="s2">&#34;/var/lib/docker/overlay2/5da215c4f218cbb1d9825fa111c21bf381dc35a9e6c7c6cd5c3ea952316031e4/diff&#34;</span>,
+                <span class="s2">&#34;WorkDir&#34;</span>: <span class="s2">&#34;/var/lib/docker/overlay2/5da215c4f218cbb1d9825fa111c21bf381dc35a9e6c7c6cd5c3ea952316031e4/work&#34;</span>
+            <span class="o">}</span>,
+            <span class="s2">&#34;Name&#34;</span>: <span class="s2">&#34;overlay2&#34;</span>
+        <span class="o">}</span>,
+        <span class="s2">&#34;RootFS&#34;</span>: <span class="o">{</span>
+            <span class="s2">&#34;Type&#34;</span>: <span class="s2">&#34;layers&#34;</span>,
+            <span class="s2">&#34;Layers&#34;</span>: <span class="o">[</span>
+                <span class="s2">&#34;sha256:50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a&#34;</span>,
+                <span class="s2">&#34;sha256:9c572ba82b91e3ac35c7351bdacc6876c67f5d9bc69c5e51e8b2deeafae95e4f&#34;</span>,
+                <span class="s2">&#34;sha256:1680a9f16b18732726d0656b6d6ff9611a3c4460ca870827b537a87bbe10cc22&#34;</span>,
+                <span class="s2">&#34;sha256:8521b614863046bf4bb604e3586feeca8b7ce1372f1d6664a5545e85ad9ca472&#34;</span>
+            <span class="o">]</span>
+        <span class="o">}</span>,
+        <span class="s2">&#34;Metadata&#34;</span>: <span class="o">{</span>
+            <span class="s2">&#34;LastTagTime&#34;</span>: <span class="s2">&#34;2020-11-11T13:35:12.051705855+08:00&#34;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">]</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>我自己的理解，docker inspect 执行时就是读取 <code>image/overlay2/imagedb/content</code> 中的内容加工之后输出的，这里面有些内容可以仔细理解一下(从上往下看) :</p>
+<ul>
+<li><strong>config:</strong> 后续如果根据这个镜像启动容器时，config 中的内容就是容器的默认参数，</li>
+<li><strong>container:</strong> 此处是一个容器ID，是在 <code>docker build</code> 阶段用于生成镜像的容器，此处可以简单介绍下 <code>docker build</code> 的过程：
+<ul>
+<li>根据 Dockerfile 的指令，按理说每个指令就是一层，但实际情况并非如此哟，这里分两种情况讨论:
+<ul>
+<li>形如 <code>RUN</code>、<code>ADD</code> 指令，会造成文件系统改变的指令，会生成新的层</li>
+<li>形如 <code>LABEL</code>、<code>ENV</code>、<code>CMD</code> 指令，这类指令不会造成文件系统的改变，只会改变镜像的配置，具体来说就是会改变 <code>config</code> 的值，会直接修改配置，不会生成新的层。</li>
+</ul>
+</li>
+<li>如果指令需要生成新的层，则根据上一层产生的镜像启动一个新的容器运行这个指令，正常运行结束以后会 <code>docker commit</code> 成一个新的镜像</li>
+<li>所以这个 <code>container</code> 就是刚刚起的容器的ID，后面会用一个例子说明。</li>
+</ul>
+</li>
+<li><strong>container_config:</strong> 用来生成这层镜像的容器的配置，换言之就是上述 <code>container</code> 的配置，可以看到 <code>config</code> 和 <code>container_config</code> 配置一致。</li>
+<li><strong>created:</strong> 镜像的生成时间</li>
+<li><strong>docker_version:</strong> <code>docker build</code> 的执行环境</li>
+<li><strong>history:</strong>  镜像的构建历史(包含所有的历史执行指令)。</li>
+<li><strong>rootfs:</strong> 镜像所有包含所有层的 <code>diff_id</code> ,顺序从上往下按照 <code>layer</code> 的顺序排列。<strong>这里需要特别注意一下，rootfs 中存的是 diff_id，后面会一步一步解释如何和真正 layer 关联起来</strong></li>
+</ul>
+<h3 id="layerdb">layerdb</h3>
+<p>前面我们说过，<code>imagedb</code> 存的是元数据，那么 <code>layerdb</code> 应该存的是 layer 相关信息?先看看这个目录下面有什么:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># ll  image/overlay2/layerdb/</span>
+总用量 <span class="m">12</span>
+drwxr-xr-x <span class="m">3</span> root root <span class="m">4096</span> 12月  <span class="m">2</span> 09:25 mounts
+drwxr-xr-x <span class="m">6</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:32 sha256
+drwxr-xr-x <span class="m">2</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:32 tmp
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="tmp">tmp</h4>
+<p>tmp 是一个临时目录</p>
+<h4 id="sha256">sha256</h4>
+<p>sha256: 先看看这个下面有什么 <code>ll  image/overlay2/layerdb/sha256/</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># ll  image/overlay2/layerdb/sha256/</span>
+总用量 <span class="m">16</span>
+drwx------ <span class="m">2</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:32 228fb92e31891f472e9857ee11d13c404ff7c88e808b05ce4ebdc80d785d71f3
+drwx------ <span class="m">2</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:31 50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a
+drwx------ <span class="m">2</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:32 5f72760956a669e4c9b33aa3f2f04baa84b0f4cf1e11676049981bafcbba74da
+drwx------ <span class="m">2</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:32 fe267088885017d5e9a4621e68617a7f35e58dc2d0d747927882da21059854e3
+</code></pre></td></tr></table>
+</div>
+</div><p>咋一看这里和 <code>rootfs</code> 中的 <code>diff_id</code> 并不相同，只有一层是一样的(只有base layer是相同)。这里的是 <code>chain_id</code> ，那么什么是 <code>chain_id</code>呢？</p>
+<ul>
+<li>diff_id: 描述的是某一层的变化</li>
+<li>chain_id: 描述的是一系列变化</li>
+</ul>
+<p>diff_id 和 chain_id 的计算公式为:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">ChainID<span class="o">(</span>A<span class="o">)</span> <span class="o">=</span> DiffID<span class="o">(</span>A<span class="o">)</span>
+ChainID<span class="o">(</span>A <span class="p">|</span> B<span class="o">)</span> <span class="o">=</span> Digest<span class="o">(</span>ChainID<span class="o">(</span>A<span class="o">)</span> + <span class="s2">&#34; &#34;</span> + DiffID<span class="o">(</span>B<span class="o">))</span>
+ChainID<span class="o">(</span>A <span class="p">|</span> B <span class="p">|</span> C<span class="o">)</span> <span class="o">=</span> Digest<span class="o">(</span>ChainID<span class="o">(</span>A <span class="p">|</span> B<span class="o">)</span> + <span class="s2">&#34; &#34;</span> + DiffID<span class="o">(</span>C<span class="o">))</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>是不是有点绕，回到我们的例子看看：
+rootfs 中的 diff_id 为:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="s2">&#34;diff_ids&#34;</span>: <span class="o">[</span>
+  <span class="s2">&#34;sha256:50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a&#34;</span>,
+  <span class="s2">&#34;sha256:9c572ba82b91e3ac35c7351bdacc6876c67f5d9bc69c5e51e8b2deeafae95e4f&#34;</span>,
+  <span class="s2">&#34;sha256:1680a9f16b18732726d0656b6d6ff9611a3c4460ca870827b537a87bbe10cc22&#34;</span>,
+  <span class="s2">&#34;sha256:8521b614863046bf4bb604e3586feeca8b7ce1372f1d6664a5545e85ad9ca472&#34;</span>
+<span class="o">]</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>chain_id 为:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">drwx------ <span class="m">2</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:32 228fb92e31891f472e9857ee11d13c404ff7c88e808b05ce4ebdc80d785d71f3
+drwx------ <span class="m">2</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:31 50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a
+drwx------ <span class="m">2</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:32 5f72760956a669e4c9b33aa3f2f04baa84b0f4cf1e11676049981bafcbba74da
+drwx------ <span class="m">2</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:32 fe267088885017d5e9a4621e68617a7f35e58dc2d0d747927882da21059854e3
+</code></pre></td></tr></table>
+</div>
+</div><p>根据上面的公式 base layer 的 diff_id 和 chain_id 是相同的:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a -&gt; 50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a
+</code></pre></td></tr></table>
+</div>
+</div><p>在继续看看下面的算法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># echo -n &#34;sha256:50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a sha256:9c572ba82b91e3ac35c7351bdacc6876c67f5d9bc69c5e51e8b2deeafae95e4f&#34; | sha256sum</span>
+fe267088885017d5e9a4621e68617a7f35e58dc2d0d747927882da21059854e3  -
+<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span># 
+<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># echo -n &#34;sha256:fe267088885017d5e9a4621e68617a7f35e58dc2d0d747927882da21059854e3 sha256:1680a9f16b18732726d0656b6d6ff9611a3c4460ca870827b537a87bbe10cc22&#34; | sha256sum</span>
+5f72760956a669e4c9b33aa3f2f04baa84b0f4cf1e11676049981bafcbba74da  -
+<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># echo -n &#34;sha256:5f72760956a669e4c9b33aa3f2f04baa84b0f4cf1e11676049981bafcbba74da sha256:8521b614863046bf4bb604e3586feeca8b7ce1372f1d6664a5545e85ad9ca472&#34; | sha256sum</span>
+228fb92e31891f472e9857ee11d13c404ff7c88e808b05ce4ebdc80d785d71f3  -
+</code></pre></td></tr></table>
+</div>
+</div><p>这么一演算就事情就变的清晰起来了:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a -&gt; 50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a
+9c572ba82b91e3ac35c7351bdacc6876c67f5d9bc69c5e51e8b2deeafae95e4f -&gt; fe267088885017d5e9a4621e68617a7f35e58dc2d0d747927882da21059854e3
+1680a9f16b18732726d0656b6d6ff9611a3c4460ca870827b537a87bbe10cc22 -&gt; 5f72760956a669e4c9b33aa3f2f04baa84b0f4cf1e11676049981bafcbba74da
+8521b614863046bf4bb604e3586feeca8b7ce1372f1d6664a5545e85ad9ca472 -&gt; 228fb92e31891f472e9857ee11d13c404ff7c88e808b05ce4ebdc80d785d71f3
+</code></pre></td></tr></table>
+</div>
+</div><p>理清它们之间的关系就比较好办了，在看看 chain_id 目录下都有什么:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># tree image/overlay2/layerdb/sha256/</span>
+image/overlay2/layerdb/sha256/
+├── 228fb92e31891f472e9857ee11d13c404ff7c88e808b05ce4ebdc80d785d71f3
+│   ├── cache-id
+│   ├── diff
+│   ├── parent
+│   ├── size
+│   └── tar-split.json.gz
+├── 50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a
+│   ├── cache-id
+│   ├── diff
+│   ├── size
+│   └── tar-split.json.gz
+├── 5f72760956a669e4c9b33aa3f2f04baa84b0f4cf1e11676049981bafcbba74da
+│   ├── cache-id
+│   ├── diff
+│   ├── parent
+│   ├── size
+│   └── tar-split.json.gz
+└── fe267088885017d5e9a4621e68617a7f35e58dc2d0d747927882da21059854e3
+    ├── cache-id
+    ├── diff
+    ├── parent
+    ├── size
+    └── tar-split.json.gz
+
+<span class="m">4</span> directories, <span class="m">19</span> files
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>cache-id: 保存的是真正的 layer id 信息，可以看看:</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># cat image/overlay2/layerdb/sha256/50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a/cache-id</span> 
+8cbfb8b74c887e780747c8e6f4b3b9223a513ff6d69770bac16abb76da4e314f<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span># 
+<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># ll overlay2/</span>
+总用量 <span class="m">28</span>
+drwx------ <span class="m">4</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:32 00b65b9c288df8c0ae7cdacba531a7dc5cb006e6c768e19ee36055717b782acc
+drwx------ <span class="m">5</span> root root <span class="m">4096</span> 12月  <span class="m">2</span> 09:25 1e53dddb1a0bb04ee4ebd24a8edb94b96e2fd471a72bf1b8608096b38cb16646
+drwx------ <span class="m">4</span> root root <span class="m">4096</span> 12月  <span class="m">2</span> 09:25 1e53dddb1a0bb04ee4ebd24a8edb94b96e2fd471a72bf1b8608096b38cb16646-init
+drwx------ <span class="m">4</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:48 5da215c4f218cbb1d9825fa111c21bf381dc35a9e6c7c6cd5c3ea952316031e4
+drwx------ <span class="m">3</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:32 8cbfb8b74c887e780747c8e6f4b3b9223a513ff6d69770bac16abb76da4e314f
+drwx------ <span class="m">4</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:32 f1cf8b173467c98e08f3d276d7ccd8f9892c7c71dec2c4b335c39c6f175ae744
+drwx------ <span class="m">2</span> root root <span class="m">4096</span> 12月  <span class="m">2</span> 09:25 l
+</code></pre></td></tr></table>
+</div>
+</div><p>可以看到 cache-id 中的内容是可以和 <code>overlay2</code> 目录中的内容可以对应起来，overlay2 中的内容等会详细介绍。</p>
+<ul>
+<li>diff: 该层的 diff_id ，可以和上面的计算对应着看</li>
+<li>size: 该层的大小，单位为字节，看看这个镜像每层的大小信息:</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># cat image/overlay2/layerdb/sha256/50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a/size</span> 
+5574537<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># cat image/overlay2/layerdb/sha256/fe267088885017d5e9a4621e68617a7f35e58dc2d0d747927882da21059854e3/size</span> 
+98318464<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># cat image/overlay2/layerdb/sha256/5f72760956a669e4c9b33aa3f2f04baa84b0f4cf1e11676049981bafcbba74da/size</span> 
+1762<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># cat image/overlay2/layerdb/sha256/228fb92e31891f472e9857ee11d13c404ff7c88e808b05ce4ebdc80d785d71f3/size</span> 
+1591<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span># 
+<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># docker images</span> 
+REPOSITORY             TAG                 IMAGE ID            CREATED             SIZE
+openresty/openresty    1.17.8.2-5-alpine   1ddc7a18ba0b        <span class="m">2</span> months ago        104MB
+russellgao/openresty   1.17.8.2-5-alpine   1ddc7a18ba0b        <span class="m">2</span> months ago        104MB
+</code></pre></td></tr></table>
+</div>
+</div><p>total = ceil((5574537 + 98318464 + 1762 + 1591) / 1000 + 1000)</p>
+<p>可以看到和 docker images 中的 size 是一样的</p>
+<ul>
+<li>parent: 除了 base 层之外，其余每个层都有 parent 这个文件，这个文件保存了上一层的 chain_id</li>
+<li>tar-split.json.gz: layer 层数据 tar 压缩包的 split 文件，该文件生成需要 <a href="https://github.com/vbatts/tar-split" target="_blank" rel="noopener noreffer">tar-split</a>,通过它可以还原 layer 的 tar 包。</li>
+</ul>
+<h4 id="mounts">mounts</h4>
+<p>mounts 从名字就可以看出来挂载，没错，这里就是保存了容器的挂载信息，看看下面的命令输出:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># docker ps -a</span> 
+CONTAINER ID        IMAGE                                    COMMAND                  CREATED             STATUS              PORTS                                      NAMES
+9bd6ac07a8c9        russellgao/openresty:1.17.8.2-5-alpine   <span class="s2">&#34;/usr/local/openrest…&#34;</span>   <span class="m">10</span> days ago         Up <span class="m">2</span> days           0.0.0.0:80-&gt;80/tcp, 0.0.0.0:443-&gt;443/tcp   openresty-app-1
+<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># ll containers/</span>
+总用量 <span class="m">4</span>
+drwx------ <span class="m">4</span> root root <span class="m">4096</span> 12月 <span class="m">12</span> 09:56 9bd6ac07a8c962e2403203e1c45f4fb54733f9953cf318b34fc3f155bf2c0c59
+<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span># 
+<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># cat image/overlay2/layerdb/mounts/9bd6ac07a8c962e2403203e1c45f4fb54733f9953cf318b34fc3f155bf2c0c59/init-id</span> 
+1e53dddb1a0bb04ee4ebd24a8edb94b96e2fd471a72bf1b8608096b38cb16646-init<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span># 
+<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># cat image/overlay2/layerdb/mounts/9bd6ac07a8c962e2403203e1c45f4fb54733f9953cf318b34fc3f155bf2c0c59/mount-id</span> 
+1e53dddb1a0bb04ee4ebd24a8edb94b96e2fd471a72bf1b8608096b38cb16646<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span># 
+<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span># 
+<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># cat image/overlay2/layerdb/mounts/9bd6ac07a8c962e2403203e1c45f4fb54733f9953cf318b34fc3f155bf2c0c59/parent</span> 
+sha256:228fb92e31891f472e9857ee11d13c404ff7c88e808b05ce4ebdc80d785d71f3<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span># 
+<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span># 
+<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># ll overlay2/</span>
+总用量 <span class="m">28</span>
+drwx------ <span class="m">4</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:32 00b65b9c288df8c0ae7cdacba531a7dc5cb006e6c768e19ee36055717b782acc
+drwx------ <span class="m">5</span> root root <span class="m">4096</span> 12月  <span class="m">2</span> 09:25 1e53dddb1a0bb04ee4ebd24a8edb94b96e2fd471a72bf1b8608096b38cb16646
+drwx------ <span class="m">4</span> root root <span class="m">4096</span> 12月  <span class="m">2</span> 09:25 1e53dddb1a0bb04ee4ebd24a8edb94b96e2fd471a72bf1b8608096b38cb16646-init
+drwx------ <span class="m">4</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:48 5da215c4f218cbb1d9825fa111c21bf381dc35a9e6c7c6cd5c3ea952316031e4
+drwx------ <span class="m">3</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:32 8cbfb8b74c887e780747c8e6f4b3b9223a513ff6d69770bac16abb76da4e314f
+drwx------ <span class="m">4</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:32 f1cf8b173467c98e08f3d276d7ccd8f9892c7c71dec2c4b335c39c6f175ae744
+drwx------ <span class="m">2</span> root root <span class="m">4096</span> 12月  <span class="m">2</span> 09:25 l
+</code></pre></td></tr></table>
+</div>
+</div><p>可以看出来， mounts 保存了容器的镜像的挂载信息，内容是具体的 <code>layer id</code></p>
+<blockquote>
+<p><strong>这里需要理解一下，这里的挂载指的是挂载容器的镜像层，和 <code>docker run</code> 时 <code>-v</code> 挂载是没有关系</strong>
+简单理解「容器=镜像+读写层」，镜像=「layer1 + layer2 + &hellip; + layern」的叠加，这里挂载的所有layer 叠加之后的只读层。</p>
+</blockquote>
+<p>到这里 <code>image</code> 目录就介绍结束了，接下来再看看 <code>overlay2</code> 目录 。</p>
+<h3 id="overlay2">overlay2</h3>
+<p>overlay2 目录存放的每一层的具体数据，先看看目录结构:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># tree overlay2/ -L 2</span>
+<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># tree -L 2 overlay2/</span>
+overlay2/
+├── 00b65b9c288df8c0ae7cdacba531a7dc5cb006e6c768e19ee36055717b782acc
+│   ├── committed
+│   ├── diff
+│   ├── link
+│   ├── lower
+│   └── work
+├── 5da215c4f218cbb1d9825fa111c21bf381dc35a9e6c7c6cd5c3ea952316031e4
+│   ├── committed
+│   ├── diff
+│   ├── link
+│   ├── lower
+│   └── work
+├── 8cbfb8b74c887e780747c8e6f4b3b9223a513ff6d69770bac16abb76da4e314f
+│   ├── committed
+│   ├── diff
+│   └── link
+├── b04b728c94b5a269e9d102329c930e3781212717e830e1941e1008088d823cdc
+│   ├── diff
+│   ├── link
+│   ├── lower
+│   ├── merged
+│   └── work
+├── b04b728c94b5a269e9d102329c930e3781212717e830e1941e1008088d823cdc-init
+│   ├── committed
+│   ├── diff
+│   ├── link
+│   ├── lower
+│   └── work
+├── f1cf8b173467c98e08f3d276d7ccd8f9892c7c71dec2c4b335c39c6f175ae744
+│   ├── committed
+│   ├── diff
+│   ├── link
+│   ├── lower
+│   └── work
+└── l
+    ├── 2NFRHNZBFYCUAPMTFCKUR5R4DS -&gt; ../b04b728c94b5a269e9d102329c930e3781212717e830e1941e1008088d823cdc/diff
+    ├── 33RV26M4VMX3ZUISOG26USXBKR -&gt; ../f1cf8b173467c98e08f3d276d7ccd8f9892c7c71dec2c4b335c39c6f175ae744/diff
+    ├── BGEYC7V6ULKFOOIITWCEKITQEU -&gt; ../b04b728c94b5a269e9d102329c930e3781212717e830e1941e1008088d823cdc-init/diff
+    ├── HG76ICE67NTXFL7AYXCMI3EK4Y -&gt; ../00b65b9c288df8c0ae7cdacba531a7dc5cb006e6c768e19ee36055717b782acc/diff
+    ├── L5XCYQVZ6DOSLJNP6HXCZQZ7A5 -&gt; ../5da215c4f218cbb1d9825fa111c21bf381dc35a9e6c7c6cd5c3ea952316031e4/diff
+    └── MUHXHRXFSGNCBKQ2AUXDFOUDLF -&gt; ../8cbfb8b74c887e780747c8e6f4b3b9223a513ff6d69770bac16abb76da4e314f/diff
+
+<span class="m">25</span> directories, <span class="m">16</span> files
+</code></pre></td></tr></table>
+</div>
+</div><p>可以看到 overlay2 一级目录下有个特殊目录 <code>l</code> , <code>l</code> 下是各个layer 软链接，防止mount 命令太长而发生错误，所以就用短链接了。</p>
+<p>细心的你一定发现了这么几个问题:</p>
+<ul>
+<li>这个镜像只有 4 个层，这里为啥会有 6 个层(目录)</li>
+<li>为啥具体layer 下的目录/文件结构不一样</li>
+<li>有的 layer 为啥带了 <code>-init</code> 后缀，有的没有</li>
+</ul>
+<p>有 6 个layer 层是因为我这里启动了一个容器，会生成两个层(读写层和这个镜像merged之后的只读层)，删除容器之后看看:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># docker rm -f openresty-app-1</span> 
+openresty-app-1
+<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># ll overlay2/</span>
+总用量 <span class="m">20</span>
+drwx------ <span class="m">4</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:32 00b65b9c288df8c0ae7cdacba531a7dc5cb006e6c768e19ee36055717b782acc
+drwx------ <span class="m">4</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:48 5da215c4f218cbb1d9825fa111c21bf381dc35a9e6c7c6cd5c3ea952316031e4
+drwx------ <span class="m">3</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:32 8cbfb8b74c887e780747c8e6f4b3b9223a513ff6d69770bac16abb76da4e314f
+drwx------ <span class="m">4</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:32 f1cf8b173467c98e08f3d276d7ccd8f9892c7c71dec2c4b335c39c6f175ae744
+drwx------ <span class="m">2</span> root root <span class="m">4096</span> 12月 <span class="m">12</span> 13:29 l
+</code></pre></td></tr></table>
+</div>
+</div><p>这下和之前讨论对上了， 和 <code>cache-id</code> 中的内容一一对应</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># ll image/overlay2/layerdb/sha256/*/cache-id</span>
+-rw-r--r-- <span class="m">1</span> root root <span class="m">64</span> 11月 <span class="m">11</span> 13:32 image/overlay2/layerdb/sha256/228fb92e31891f472e9857ee11d13c404ff7c88e808b05ce4ebdc80d785d71f3/cache-id
+-rw-r--r-- <span class="m">1</span> root root <span class="m">64</span> 11月 <span class="m">11</span> 13:31 image/overlay2/layerdb/sha256/50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a/cache-id
+-rw-r--r-- <span class="m">1</span> root root <span class="m">64</span> 11月 <span class="m">11</span> 13:32 image/overlay2/layerdb/sha256/5f72760956a669e4c9b33aa3f2f04baa84b0f4cf1e11676049981bafcbba74da/cache-id
+-rw-r--r-- <span class="m">1</span> root root <span class="m">64</span> 11月 <span class="m">11</span> 13:32 image/overlay2/layerdb/sha256/fe267088885017d5e9a4621e68617a7f35e58dc2d0d747927882da21059854e3/cache-id
+</code></pre></td></tr></table>
+</div>
+</div><p>在看看具体镜像 layer 层的内容:</p>
+<ul>
+<li>diff: 这个层所做的改动，如通过 <code>ADD</code>、<code>RUN</code> 等指令对做文件系统做出的改变都在这里了。</li>
+<li>link: 自己的link值，在刚刚的 <code>overlay2/l</code> 目录下可以看的到。
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># cat   overlay2/00b65b9c288df8c0ae7cdacba531a7dc5cb006e6c768e19ee36055717b782acc/link</span> 
+HG76ICE67NTXFL7AYXCMI3EK4Y
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>lower: 该层所依赖的层的所有link，base layer 不依赖任何层，所以也就不会有 <code>lower</code> 这个文件，最后一层依赖之前的所有层，如:
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># cat overlay2/5da215c4f218cbb1d9825fa111c21bf381dc35a9e6c7c6cd5c3ea952316031e4/lower</span> 
+l/HG76ICE67NTXFL7AYXCMI3EK4Y:l/33RV26M4VMX3ZUISOG26USXBKR:l/MUHXHRXFSGNCBKQ2AUXDFOUDLF
+</code></pre></td></tr></table>
+</div>
+</div><p>这个镜像的最后一层依赖前面的层</p>
+</li>
+<li>merged:容器的最终视图，merge 了 镜像层加读写层</li>
+</ul>
+<blockquote>
+<p>启动容器新建的两层在 <code>containers</code> 中详细说。</p>
+</blockquote>
+<h3 id="containers">containers</h3>
+<p>我们一直说 docker 镜像是分层的， 容器 = 镜像 + 读写层 ，如果还没有什么感觉的话不妨再来看一个图:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/russellgao/blogs-image/raw/master/images/docker/docker-local-storage-container.svg"
+        data-srcset="https://gitee.com/russellgao/blogs-image/raw/master/images/docker/docker-local-storage-container.svg, https://gitee.com/russellgao/blogs-image/raw/master/images/docker/docker-local-storage-container.svg 1.5x, https://gitee.com/russellgao/blogs-image/raw/master/images/docker/docker-local-storage-container.svg 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/russellgao/blogs-image/raw/master/images/docker/docker-local-storage-container.svg"
+        title="https://gitee.com/russellgao/blogs-image/raw/master/images/docker/docker-local-storage-container.svg" /></p>
+<p>可以看到容器是依赖于镜像，启动容器时会先把镜像的各个 layer 联合挂载成一个统一的视图(只读层)，就是我们在 <code>overlay2</code> 目录中看到的 <code>b04b728c94b5a269e9d102329c930e3781212717e830e1941e1008088d823cdc-init</code> 目录，
+去掉 <code>-init</code> 就是对应的读写层。</p>
+<p>看看 <code>containers</code> 目录下都有什么:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># tree -L 2 containers/</span>
+containers/
+└── 4ec800c3ec10654a6ea2b2317ac198514748464a217ef63bb58ef67874a79ae0
+    ├── 4ec800c3ec10654a6ea2b2317ac198514748464a217ef63bb58ef67874a79ae0-json.log
+    ├── checkpoints
+    ├── config.v2.json
+    ├── hostconfig.json
+    ├── hostname
+    ├── hosts
+    ├── mounts
+    ├── resolv.conf
+    └── resolv.conf.hash
+
+<span class="m">3</span> directories, <span class="m">7</span> files
+<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># docker ps -a</span>
+CONTAINER ID        IMAGE                                    COMMAND                  CREATED             STATUS              PORTS                                      NAMES
+4ec800c3ec10        russellgao/openresty:1.17.8.2-5-alpine   <span class="s2">&#34;/usr/local/openrest…&#34;</span>   About an hour ago   Up About an hour    0.0.0.0:80-&gt;80/tcp, 0.0.0.0:443-&gt;443/tcp   openresty-app-1
+
+</code></pre></td></tr></table>
+</div>
+</div><p>可以看到这个下面是以容器为单位进行存放的，保存了每个容器的详细配置，在容器里看到的<code>hostname</code>,<code>/etc/hosts</code>,<code>dns</code> 等各种配置在这里都可以找得到，这里就不展开看每个具体文件了，有兴趣者可以自行查看。</p>
+<blockquote>
+<p>值得一提的是，通过 <code>docker inspect containername</code> 得到的内容在 <code>containers/xxx/config.v2.json</code> 都可以找的到哦，可以查看它们的输出，会发现出奇的相似哦。</p>
+</blockquote>
+<p><strong>请注意好玩的事情来了</strong></p>
+<p>我们说到 <strong>容器=镜像+读写层</strong> ，那是不是以为着我们在读写层做修改，容器中可以看到，反之在容器中做的修改，在读写层也应该能看到才对。</p>
+<blockquote>
+<p>读写层时各临时的 layer 层(临时目录) ，当容器被删除时，这个 layer 也会随之被删除。</p>
+</blockquote>
+<p>做了实验看看:
+最初读写层的内容和容器的根目录如下:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># ll overlay2/b04b728c94b5a269e9d102329c930e3781212717e830e1941e1008088d823cdc/diff/</span>
+总用量 <span class="m">16</span>
+drwxr-xr-x <span class="m">3</span> root root <span class="m">4096</span> 9月  <span class="m">19</span> 00:25 run
+drwxr-xr-x <span class="m">3</span> root root <span class="m">4096</span> 9月  <span class="m">19</span> 00:25 usr
+<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span># 
+<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># docker exec openresty-app-1 ls -l /</span>
+total <span class="m">64</span>
+drwxr-xr-x    <span class="m">1</span> root     root          <span class="m">4096</span> Sep <span class="m">18</span> 16:25 bin
+drwxr-xr-x    <span class="m">5</span> root     root           <span class="m">340</span> Dec <span class="m">12</span> 05:29 dev
+drwxr-xr-x    <span class="m">1</span> root     root          <span class="m">4096</span> Dec <span class="m">12</span> 05:29 etc
+drwxr-xr-x    <span class="m">2</span> root     root          <span class="m">4096</span> May <span class="m">29</span>  <span class="m">2020</span> home
+drwxr-xr-x    <span class="m">1</span> root     root          <span class="m">4096</span> Sep <span class="m">18</span> 16:25 lib
+drwxr-xr-x    <span class="m">5</span> root     root          <span class="m">4096</span> May <span class="m">29</span>  <span class="m">2020</span> media
+drwxr-xr-x    <span class="m">2</span> root     root          <span class="m">4096</span> May <span class="m">29</span>  <span class="m">2020</span> mnt
+drwxr-xr-x    <span class="m">2</span> root     root          <span class="m">4096</span> May <span class="m">29</span>  <span class="m">2020</span> opt
+dr-xr-xr-x  <span class="m">114</span> root     root             <span class="m">0</span> Dec <span class="m">12</span> 05:29 proc
+drwx------    <span class="m">2</span> root     root          <span class="m">4096</span> May <span class="m">29</span>  <span class="m">2020</span> root
+drwxr-xr-x    <span class="m">1</span> root     root          <span class="m">4096</span> Sep <span class="m">18</span> 16:25 run
+drwxr-xr-x    <span class="m">2</span> root     root          <span class="m">4096</span> May <span class="m">29</span>  <span class="m">2020</span> sbin
+drwxr-xr-x    <span class="m">2</span> root     root          <span class="m">4096</span> May <span class="m">29</span>  <span class="m">2020</span> srv
+dr-xr-xr-x   <span class="m">13</span> root     root             <span class="m">0</span> Nov <span class="m">11</span> 00:49 sys
+drwxrwxrwt    <span class="m">1</span> root     root          <span class="m">4096</span> Sep <span class="m">18</span> 16:25 tmp
+drwxr-xr-x    <span class="m">1</span> root     root          <span class="m">4096</span> Sep <span class="m">18</span> 16:25 usr
+drwxr-xr-x    <span class="m">1</span> root     root          <span class="m">4096</span> May <span class="m">29</span>  <span class="m">2020</span> var
+</code></pre></td></tr></table>
+</div>
+</div><p>进入到容器并在根目录生成一个文件:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># docker exec -it  openresty-app-1 sh</span>
+/ <span class="c1"># echo &#34;测试容器的读写层-20201209&#34; &gt; /test-layer.20201209.txt</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>读写层看看什么情况:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># ll overlay2/b04b728c94b5a269e9d102329c930e3781212717e830e1941e1008088d823cdc/diff/</span>
+总用量 <span class="m">24</span>
+drwx------ <span class="m">2</span> root root <span class="m">4096</span> 12月 <span class="m">12</span> 15:22 root
+drwxr-xr-x <span class="m">3</span> root root <span class="m">4096</span> 9月  <span class="m">19</span> 00:25 run
+-rw-r--r-- <span class="m">1</span> root root   <span class="m">34</span> 12月 <span class="m">12</span> 15:22 test-layer.20201209.txt
+drwxr-xr-x <span class="m">3</span> root root <span class="m">4096</span> 9月  <span class="m">19</span> 00:25 usr
+<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># cat overlay2/b04b728c94b5a269e9d102329c930e3781212717e830e1941e1008088d823cdc/diff/test-layer.20201209.txt</span> 
+测试容器的读写层-20201209
+</code></pre></td></tr></table>
+</div>
+</div><p>可以看到在容器中新建的文件确实在读写层中可以看到，那么反过来再试试</p>
+<p>在读写层新建一个文件:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># echo &#34;测试容器的读写层-20201209-abcdefg&#34; &gt; overlay2/b04b728c94b5a269e9d102329c930e3781212717e830e1941e1008088d823cdc/diff/test-layer.20201209-abcdefg.txt</span> 
+<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># ll overlay2/b04b728c94b5a269e9d102329c930e3781212717e830e1941e1008088d823cdc/diff/</span>
+总用量 <span class="m">28</span>
+drwx------ <span class="m">2</span> root root <span class="m">4096</span> 12月 <span class="m">12</span> 15:22 root
+drwxr-xr-x <span class="m">3</span> root root <span class="m">4096</span> 9月  <span class="m">19</span> 00:25 run
+-rw-r--r-- <span class="m">1</span> root root   <span class="m">42</span> 12月 <span class="m">12</span> 15:26 test-layer.20201209-abcdefg.txt
+-rw-r--r-- <span class="m">1</span> root root   <span class="m">34</span> 12月 <span class="m">12</span> 15:22 test-layer.20201209.txt
+drwxr-xr-x <span class="m">3</span> root root <span class="m">4096</span> 9月  <span class="m">19</span> 00:25 usr
+</code></pre></td></tr></table>
+</div>
+</div><p>进到容器中看看:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># docker exec -it openresty-app-1 sh</span>
+/ <span class="c1"># ls -l</span> 
+total <span class="m">72</span>
+drwxr-xr-x    <span class="m">1</span> root     root          <span class="m">4096</span> Sep <span class="m">18</span> 16:25 bin
+drwxr-xr-x    <span class="m">5</span> root     root           <span class="m">340</span> Dec <span class="m">12</span> 05:29 dev
+drwxr-xr-x    <span class="m">1</span> root     root          <span class="m">4096</span> Dec <span class="m">12</span> 05:29 etc
+drwxr-xr-x    <span class="m">2</span> root     root          <span class="m">4096</span> May <span class="m">29</span>  <span class="m">2020</span> home
+drwxr-xr-x    <span class="m">1</span> root     root          <span class="m">4096</span> Sep <span class="m">18</span> 16:25 lib
+drwxr-xr-x    <span class="m">5</span> root     root          <span class="m">4096</span> May <span class="m">29</span>  <span class="m">2020</span> media
+drwxr-xr-x    <span class="m">2</span> root     root          <span class="m">4096</span> May <span class="m">29</span>  <span class="m">2020</span> mnt
+drwxr-xr-x    <span class="m">2</span> root     root          <span class="m">4096</span> May <span class="m">29</span>  <span class="m">2020</span> opt
+dr-xr-xr-x  <span class="m">114</span> root     root             <span class="m">0</span> Dec <span class="m">12</span> 05:29 proc
+drwx------    <span class="m">1</span> root     root          <span class="m">4096</span> Dec <span class="m">12</span> 07:22 root
+drwxr-xr-x    <span class="m">1</span> root     root          <span class="m">4096</span> Sep <span class="m">18</span> 16:25 run
+drwxr-xr-x    <span class="m">2</span> root     root          <span class="m">4096</span> May <span class="m">29</span>  <span class="m">2020</span> sbin
+drwxr-xr-x    <span class="m">2</span> root     root          <span class="m">4096</span> May <span class="m">29</span>  <span class="m">2020</span> srv
+dr-xr-xr-x   <span class="m">13</span> root     root             <span class="m">0</span> Nov <span class="m">11</span> 00:49 sys
+-rw-r--r--    <span class="m">1</span> root     root            <span class="m">42</span> Dec <span class="m">12</span> 07:26 test-layer.20201209-abcdefg.txt
+-rw-r--r--    <span class="m">1</span> root     root            <span class="m">34</span> Dec <span class="m">12</span> 07:22 test-layer.20201209.txt
+drwxrwxrwt    <span class="m">1</span> root     root          <span class="m">4096</span> Sep <span class="m">18</span> 16:25 tmp
+drwxr-xr-x    <span class="m">1</span> root     root          <span class="m">4096</span> Sep <span class="m">18</span> 16:25 usr
+drwxr-xr-x    <span class="m">1</span> root     root          <span class="m">4096</span> May <span class="m">29</span>  <span class="m">2020</span> var
+/ <span class="c1"># cat test-layer.20201209-abcdefg.txt</span> 
+测试容器的读写层-20201209-abcdefg
+</code></pre></td></tr></table>
+</div>
+</div><p>可以看到和我们设想的一致。</p>
+<h2 id="总结">总结</h2>
+<blockquote>
+<p>这篇文章很长，难免表达逻辑上出现混乱，感谢能耐心看完的小伙伴，如果有不对之处欢迎批评指正。</p>
+</blockquote>
+<ul>
+<li>image/overlay2
+<ul>
+<li>distribution: 和镜像分发相关，记录了diffid 与 digest 之间的关系。</li>
+<li>imagedb: 记录了镜像的元信息，其中<code>content</code>中的内容和<code>docker inspect image</code> 结果基本一直。</li>
+<li>layerdb: 记录了 layer 的元信息，如真正的 layerid， size 等信息。</li>
+<li>repositories.json: 记录这个主机上所有的镜像。</li>
+</ul>
+</li>
+<li>overlay2: 镜像的具体layer 层的内容，包括镜像的只读层和容器的读写层。其中读写层是临时层，当容器删除时也会随之删除，在这一层的 diff 目录下做修改，容器内也会随之看到。</li>
+<li>containers: 容器的配置信息，通过 <code>docker inspect containerid</code> 得到的结果和 <code>containers/xxx</code> 下的内容基本一直。</li>
+</ul>
+<h2 id="参考">参考</h2>
 <ul>
 <li><a href="https://segmentfault.com/a/1190000017579626">https://segmentfault.com/a/1190000017579626</a></li>
-<li><a href="https://arkingc.github.io/2017/05/05/2017-05-05-docker-filesystem-overlay/">https://arkingc.github.io/2017/05/05/2017-05-05-docker-filesystem-overlay/</a></li>
-<li><a href="https://www.cnblogs.com/wdliu/p/10483252.html">https://www.cnblogs.com/wdliu/p/10483252.html</a></li>
 </ul>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2020-12-10</span>
+                <span>Updated on 2020-12-11</span>
             </div>
             <div class="post-info-license"></div>
         </div>
@@ -292,13 +2254,13 @@ drwx------ <span class="m">2</span> root root <span class="m">4096</span> 11月 
                             <a class="link-to-markdown" href="/docker-local-storage/index.md" target="_blank">Read Markdown</a>
                         </span></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://russellgao.cn/docker-local-storage/" data-title="docker 原理之本地存储" data-hashtags="docker"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://russellgao.cn/docker-local-storage/" data-hashtag="docker"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="Share on WhatsApp" data-sharer="whatsapp" data-url="https://russellgao.cn/docker-local-storage/" data-title="docker 原理之本地存储" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://russellgao.cn/docker-local-storage/" data-title="docker 原理之本地存储"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://russellgao.cn/docker-local-storage/" data-title="docker 原理之本地存储"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="Share on Myspace" data-sharer="myspace" data-url="https://russellgao.cn/docker-local-storage/" data-title="docker 原理之本地存储" data-description="docker 原理之本地存储"><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="Share on Blogger" data-sharer="blogger" data-url="https://russellgao.cn/docker-local-storage/" data-title="docker 原理之本地存储" data-description="docker 原理之本地存储"><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="Share on Evernote" data-sharer="evernote" data-url="https://russellgao.cn/docker-local-storage/" data-title="docker 原理之本地存储"><i class="fab fa-evernote fa-fw"></i></a></span>
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://russellgao.cn/docker-local-storage/" data-title="docker 原理之本地存储" data-hashtags="docker,存储"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://russellgao.cn/docker-local-storage/" data-hashtag="docker"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="Share on WhatsApp" data-sharer="whatsapp" data-url="https://russellgao.cn/docker-local-storage/" data-title="docker 原理之本地存储" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://russellgao.cn/docker-local-storage/" data-title="docker 原理之本地存储"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://russellgao.cn/docker-local-storage/" data-title="docker 原理之本地存储"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="Share on Myspace" data-sharer="myspace" data-url="https://russellgao.cn/docker-local-storage/" data-title="docker 原理之本地存储" data-description="docker 原理之本地存储"><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="Share on Blogger" data-sharer="blogger" data-url="https://russellgao.cn/docker-local-storage/" data-title="docker 原理之本地存储" data-description="docker 原理之本地存储"><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="Share on Evernote" data-sharer="evernote" data-url="https://russellgao.cn/docker-local-storage/" data-title="docker 原理之本地存储"><i class="fab fa-evernote fa-fw"></i></a></span>
             </div>
         </div>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/docker/">docker</a></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/docker/">docker</a>,&nbsp;<a href="/tags/%E5%AD%98%E5%82%A8/">存储</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
         </section>
