@@ -7,7 +7,8 @@ author = "russellgao"
 draft = false
 tags = [
     "kubernetes",
-    "kubectl"
+    "kubectl" ,
+    "cli"
 ]
 +++
 
