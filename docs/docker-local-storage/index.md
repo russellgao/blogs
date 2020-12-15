@@ -21,7 +21,7 @@
 修改(增加) `--graph` 即可。
 
 ## 本地目录
-```shell script
+```
 [root@iZuf685opgs9oyozju9i2bZ docker]# ll
 总用量 48
 drwx------ 2 root root 4096 11月 11 08:49 builder
@@ -39,7 +39,7 @@ drwx------ 2 root root 4096 11月 11 08:49 volumes
 ```
 
 可以用 `tree` 进行展开
-```shell script
+```
 [root@iZuf685opgs9oyozju9i2bZ docker]# tree -L 2
 .
 ├── builder
@@ -88,7 +88,7 @@ drwx------ 2 root root 4096 11月 11 08:49 volumes
 
 ### image
 image 目录主要存放的镜像相关的信息，我们执行 `docker pull russellgao/openresty:1.17.8.2-5-alpine` 看看：
-```shell script
+```
 [root@iZuf685opgs9oyozju9i2bZ docker]# docker pull russellgao/openresty:1.17.8.2-5-alpine
 1.17.8.2-5-alpine: Pulling from russellgao/openresty
 df20fa9351a1: Already exists 
@@ -100,7 +100,7 @@ Status: Downloaded newer image for openresty/openresty:1.17.8.2-5-alpine
 ```
 
 可以看到 pull 了 4 层下来了，我们看看 `image` 目录:
-```shell script
+```
 [root@iZuf685opgs9oyozju9i2bZ docker]# tree image 
 image
 └── overlay2
@@ -162,7 +162,7 @@ image
 ```
 
 看看 **repositories.json** 中是内容 :
-```shell script
+```
 [root@iZuf685opgs9oyozju9i2bZ docker]# cat image/overlay2/repositories.json |  jq .
 {
   "Repositories": {
@@ -178,7 +178,7 @@ image
 }
 ```
 **repositories.json** 中记录了这个机器上所有的镜像，可以看到这里有两个镜像 `openresty/openresty:1.17.8.2-5-alpine` 和 `russellgao/openresty:1.17.8.2-5-alpine` ，但其实只有一个镜像，因为后面的 `imageid` 是相同的，这个可以 `docker images` 验证一下
-```shell script
+```
 [root@iZuf685opgs9oyozju9i2bZ docker]# docker images 
 REPOSITORY             TAG                 IMAGE ID            CREATED             SIZE
 openresty/openresty    1.17.8.2-5-alpine   1ddc7a18ba0b        2 months ago        104MB
@@ -197,7 +197,7 @@ russellgao/openresty   1.17.8.2-5-alpine   1ddc7a18ba0b        2 months ago     
 
 ### distribution
 
-```shell script
+```
 [root@iZuf685opgs9oyozju9i2bZ docker]# tree  image/overlay2/distribution/
 image/overlay2/distribution/
 ├── diffid-by-digest
@@ -219,7 +219,7 @@ image/overlay2/distribution/
 的时候也是通过 `digestid` 实现的，这个id对应的是 `docker repository` 中的 `blob id`，在 `docker repository` 的 `blobs` 目录下可以找到。
 
 可以查看具体的文件，如 `cat image/overlay2/distribution/diffid-by-digest/sha256/5682af42731d652bd98d2456ed3da4f0595ed5d9e5b13ac8bb9590bb74f72eb8 `
-```shell script
+```
 [root@iZuf685opgs9oyozju9i2bZ docker]# cat image/overlay2/distribution/diffid-by-digest/sha256/5682af42731d652bd98d2456ed3da4f0595ed5d9e5b13ac8bb9590bb74f72eb8 
 sha256:9c572ba82b91e3ac35c7351bdacc6876c67f5d9bc69c5e51e8b2deeafae95e4f
 ```
@@ -227,7 +227,7 @@ sha256:9c572ba82b91e3ac35c7351bdacc6876c67f5d9bc69c5e51e8b2deeafae95e4f
 不难发现它们之间是相互引用的，可以实现 `diffid` 和 `digest` 的相互转换。
 
 ### imagedb
-```shell script
+```
 [root@iZuf685opgs9oyozju9i2bZ docker]# tree  image/overlay2/imagedb/
 image/overlay2/imagedb/
 ├── content
@@ -242,7 +242,7 @@ image/overlay2/imagedb/
 ```
 
 可以看到 `imagedb` 是以镜像为单位进行存储的，看一下 `content` 下面的具体内容 :
-```shell script
+```
 [root@iZuf685opgs9oyozju9i2bZ docker]# cat image/overlay2/imagedb/content/sha256/1ddc7a18ba0bcc20c61447f391bfff98ac559eea590e7ac59b5b5f588f1f47ed |  jq .
 {
   "architecture": "amd64",
@@ -543,7 +543,7 @@ image/overlay2/imagedb/
 ```
 
 可以看到这个里面是保存了镜像的元信息，这是再执行一下 `docker inspect 1ddc7a18ba0b ` ,会发现它们的输出是出奇的相似 :
-```shell script
+```
 [root@iZuf685opgs9oyozju9i2bZ docker]# docker inspect 1ddc7a18ba0b 
 [
     {
@@ -694,7 +694,7 @@ image/overlay2/imagedb/
 
 ### layerdb
 前面我们说过，`imagedb` 存的是元数据，那么 `layerdb` 应该存的是 layer 相关信息?先看看这个目录下面有什么: 
-```shell script
+```
 [root@iZuf685opgs9oyozju9i2bZ docker]# ll  image/overlay2/layerdb/
 总用量 12
 drwxr-xr-x 3 root root 4096 12月  2 09:25 mounts
@@ -708,7 +708,7 @@ tmp 是一个临时目录
 #### sha256
 
 sha256: 先看看这个下面有什么 `ll  image/overlay2/layerdb/sha256/`
-```shell script
+```
 [root@iZuf685opgs9oyozju9i2bZ docker]# ll  image/overlay2/layerdb/sha256/
 总用量 16
 drwx------ 2 root root 4096 11月 11 13:32 228fb92e31891f472e9857ee11d13c404ff7c88e808b05ce4ebdc80d785d71f3
@@ -722,14 +722,14 @@ drwx------ 2 root root 4096 11月 11 13:32 fe267088885017d5e9a4621e68617a7f35e58
 - chain_id: 描述的是一系列变化
 
 diff_id 和 chain_id 的计算公式为:
-```shell script
+```
 ChainID(A) = DiffID(A)
 ChainID(A | B) = Digest(ChainID(A) + " " + DiffID(B))
 ChainID(A | B | C) = Digest(ChainID(A | B) + " " + DiffID(C))
 ```
 是不是有点绕，回到我们的例子看看：
 rootfs 中的 diff_id 为:
-```shell script
+```
 "diff_ids": [
   "sha256:50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a",
   "sha256:9c572ba82b91e3ac35c7351bdacc6876c67f5d9bc69c5e51e8b2deeafae95e4f",
@@ -738,18 +738,18 @@ rootfs 中的 diff_id 为:
 ]
 ```
 chain_id 为:
-```shell script
+```
 drwx------ 2 root root 4096 11月 11 13:32 228fb92e31891f472e9857ee11d13c404ff7c88e808b05ce4ebdc80d785d71f3
 drwx------ 2 root root 4096 11月 11 13:31 50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a
 drwx------ 2 root root 4096 11月 11 13:32 5f72760956a669e4c9b33aa3f2f04baa84b0f4cf1e11676049981bafcbba74da
 drwx------ 2 root root 4096 11月 11 13:32 fe267088885017d5e9a4621e68617a7f35e58dc2d0d747927882da21059854e3
 ```
 根据上面的公式 base layer 的 diff_id 和 chain_id 是相同的:
-```shell script
+```
 50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a -> 50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a
 ```
 在继续看看下面的算法
-```shell script
+```
 [root@iZuf685opgs9oyozju9i2bZ docker]# echo -n "sha256:50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a sha256:9c572ba82b91e3ac35c7351bdacc6876c67f5d9bc69c5e51e8b2deeafae95e4f" | sha256sum
 fe267088885017d5e9a4621e68617a7f35e58dc2d0d747927882da21059854e3  -
 [root@iZuf685opgs9oyozju9i2bZ docker]# 
@@ -759,7 +759,7 @@ fe267088885017d5e9a4621e68617a7f35e58dc2d0d747927882da21059854e3  -
 228fb92e31891f472e9857ee11d13c404ff7c88e808b05ce4ebdc80d785d71f3  -
 ```
 这么一演算就事情就变的清晰起来了:
-```shell script
+```
 50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a -> 50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a
 9c572ba82b91e3ac35c7351bdacc6876c67f5d9bc69c5e51e8b2deeafae95e4f -> fe267088885017d5e9a4621e68617a7f35e58dc2d0d747927882da21059854e3
 1680a9f16b18732726d0656b6d6ff9611a3c4460ca870827b537a87bbe10cc22 -> 5f72760956a669e4c9b33aa3f2f04baa84b0f4cf1e11676049981bafcbba74da
@@ -767,7 +767,7 @@ fe267088885017d5e9a4621e68617a7f35e58dc2d0d747927882da21059854e3  -
 ```
 
 理清它们之间的关系就比较好办了，在看看 chain_id 目录下都有什么:
-```shell script
+```
 [root@iZuf685opgs9oyozju9i2bZ docker]# tree image/overlay2/layerdb/sha256/
 image/overlay2/layerdb/sha256/
 ├── 228fb92e31891f472e9857ee11d13c404ff7c88e808b05ce4ebdc80d785d71f3
@@ -797,7 +797,7 @@ image/overlay2/layerdb/sha256/
 4 directories, 19 files
 ```
 - cache-id: 保存的是真正的 layer id 信息，可以看看:
-```shell script
+```
 [root@iZuf685opgs9oyozju9i2bZ docker]# cat image/overlay2/layerdb/sha256/50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a/cache-id 
 8cbfb8b74c887e780747c8e6f4b3b9223a513ff6d69770bac16abb76da4e314f[root@iZuf685opgs9oyozju9i2bZ docker]# 
 [root@iZuf685opgs9oyozju9i2bZ docker]# ll overlay2/
@@ -813,7 +813,7 @@ drwx------ 2 root root 4096 12月  2 09:25 l
 可以看到 cache-id 中的内容是可以和 `overlay2` 目录中的内容可以对应起来，overlay2 中的内容等会详细介绍。
 - diff: 该层的 diff_id ，可以和上面的计算对应着看
 - size: 该层的大小，单位为字节，看看这个镜像每层的大小信息: 
-```shell script
+```
 [root@iZuf685opgs9oyozju9i2bZ docker]# cat image/overlay2/layerdb/sha256/50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a/size 
 5574537[root@iZuf685opgs9oyozju9i2bZ docker]# cat image/overlay2/layerdb/sha256/fe267088885017d5e9a4621e68617a7f35e58dc2d0d747927882da21059854e3/size 
 98318464[root@iZuf685opgs9oyozju9i2bZ docker]# cat image/overlay2/layerdb/sha256/5f72760956a669e4c9b33aa3f2f04baa84b0f4cf1e11676049981bafcbba74da/size 
@@ -832,7 +832,7 @@ total = ceil((5574537 + 98318464 + 1762 + 1591) / 1000 + 1000)
 
 #### mounts
 mounts 从名字就可以看出来挂载，没错，这里就是保存了容器的挂载信息，看看下面的命令输出: 
-```shell script
+```
 [root@iZuf685opgs9oyozju9i2bZ docker]# docker ps -a 
 CONTAINER ID        IMAGE                                    COMMAND                  CREATED             STATUS              PORTS                                      NAMES
 9bd6ac07a8c9        russellgao/openresty:1.17.8.2-5-alpine   "/usr/local/openrest…"   10 days ago         Up 2 days           0.0.0.0:80->80/tcp, 0.0.0.0:443->443/tcp   openresty-app-1
@@ -867,7 +867,7 @@ drwx------ 2 root root 4096 12月  2 09:25 l
 ### overlay2
 overlay2 目录存放的每一层的具体数据，先看看目录结构:
 
-```shell script
+```
 [root@iZuf685opgs9oyozju9i2bZ docker]# tree overlay2/ -L 2
 [root@iZuf685opgs9oyozju9i2bZ docker]# tree -L 2 overlay2/
 overlay2/
@@ -925,7 +925,7 @@ overlay2/
 - 有的 layer 为啥带了 `-init` 后缀，有的没有
 
 有 6 个layer 层是因为我这里启动了一个容器，会生成两个层(读写层和这个镜像merged之后的只读层)，删除容器之后看看:
-```shell script
+```
 [root@iZuf685opgs9oyozju9i2bZ docker]# docker rm -f openresty-app-1 
 openresty-app-1
 [root@iZuf685opgs9oyozju9i2bZ docker]# ll overlay2/
@@ -938,7 +938,7 @@ drwx------ 2 root root 4096 12月 12 13:29 l
 ```
 
 这下和之前讨论对上了， 和 `cache-id` 中的内容一一对应
-```shell script
+```
 [root@iZuf685opgs9oyozju9i2bZ docker]# ll image/overlay2/layerdb/sha256/*/cache-id
 -rw-r--r-- 1 root root 64 11月 11 13:32 image/overlay2/layerdb/sha256/228fb92e31891f472e9857ee11d13c404ff7c88e808b05ce4ebdc80d785d71f3/cache-id
 -rw-r--r-- 1 root root 64 11月 11 13:31 image/overlay2/layerdb/sha256/50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a/cache-id
@@ -950,12 +950,12 @@ drwx------ 2 root root 4096 12月 12 13:29 l
 
 - diff: 这个层所做的改动，如通过 `ADD`、`RUN` 等指令对做文件系统做出的改变都在这里了。
 - link: 自己的link值，在刚刚的 `overlay2/l` 目录下可以看的到。
-    ```shell script
+    ```
     [root@iZuf685opgs9oyozju9i2bZ docker]# cat   overlay2/00b65b9c288df8c0ae7cdacba531a7dc5cb006e6c768e19ee36055717b782acc/link 
     HG76ICE67NTXFL7AYXCMI3EK4Y
     ```
 - lower: 该层所依赖的层的所有link，base layer 不依赖任何层，所以也就不会有 `lower` 这个文件，最后一层依赖之前的所有层，如:
-    ```shell script
+    ```
     [root@iZuf685opgs9oyozju9i2bZ docker]# cat overlay2/5da215c4f218cbb1d9825fa111c21bf381dc35a9e6c7c6cd5c3ea952316031e4/lower 
     l/HG76ICE67NTXFL7AYXCMI3EK4Y:l/33RV26M4VMX3ZUISOG26USXBKR:l/MUHXHRXFSGNCBKQ2AUXDFOUDLF
     ```
@@ -974,7 +974,7 @@ drwx------ 2 root root 4096 12月 12 13:29 l
 
 看看 `containers` 目录下都有什么: 
 
-```shell script
+```
 [root@iZuf685opgs9oyozju9i2bZ docker]# tree -L 2 containers/
 containers/
 └── 4ec800c3ec10654a6ea2b2317ac198514748464a217ef63bb58ef67874a79ae0
@@ -1007,7 +1007,7 @@ CONTAINER ID        IMAGE                                    COMMAND            
 做了实验看看:
 最初读写层的内容和容器的根目录如下:
 
-```shell script
+```
 [root@iZuf685opgs9oyozju9i2bZ docker]# ll overlay2/b04b728c94b5a269e9d102329c930e3781212717e830e1941e1008088d823cdc/diff/
 总用量 16
 drwxr-xr-x 3 root root 4096 9月  19 00:25 run
@@ -1035,13 +1035,13 @@ drwxr-xr-x    1 root     root          4096 May 29  2020 var
 ```
 
 进入到容器并在根目录生成一个文件:
-```shell script
+```
 [root@iZuf685opgs9oyozju9i2bZ docker]# docker exec -it  openresty-app-1 sh
 / # echo "测试容器的读写层-20201209" > /test-layer.20201209.txt
 ```
 
 读写层看看什么情况:
-```shell script
+```
 [root@iZuf685opgs9oyozju9i2bZ docker]# ll overlay2/b04b728c94b5a269e9d102329c930e3781212717e830e1941e1008088d823cdc/diff/
 总用量 24
 drwx------ 2 root root 4096 12月 12 15:22 root
@@ -1055,7 +1055,7 @@ drwxr-xr-x 3 root root 4096 9月  19 00:25 usr
 
 在读写层新建一个文件:
 
-```shell script
+```
 [root@iZuf685opgs9oyozju9i2bZ docker]# echo "测试容器的读写层-20201209-abcdefg" > overlay2/b04b728c94b5a269e9d102329c930e3781212717e830e1941e1008088d823cdc/diff/test-layer.20201209-abcdefg.txt 
 [root@iZuf685opgs9oyozju9i2bZ docker]# ll overlay2/b04b728c94b5a269e9d102329c930e3781212717e830e1941e1008088d823cdc/diff/
 总用量 28
@@ -1067,7 +1067,7 @@ drwxr-xr-x 3 root root 4096 9月  19 00:25 usr
 ```
 
 进到容器中看看:
-```shell script
+```
 [root@iZuf685opgs9oyozju9i2bZ docker]# docker exec -it openresty-app-1 sh
 / # ls -l 
 total 72

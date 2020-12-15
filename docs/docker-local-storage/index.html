@@ -11,14 +11,14 @@
 <meta property="og:url" content="https://russellgao.cn/docker-local-storage/" />
 <meta property="og:image" content="https://russellgao.cn/images/profile.jpg"/>
 <meta property="article:published_time" content="2020-12-09T00:00:00+00:00" />
-<meta property="article:modified_time" content="2020-12-12T16:01:35+08:00" /><meta property="og:site_name" content="大大很二" />
+<meta property="article:modified_time" content="2020-12-13T10:51:26+08:00" /><meta property="og:site_name" content="大大很二" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://russellgao.cn/images/profile.jpg"/>
 
 <meta name="twitter:title" content="docker 原理之本地存储"/>
 <meta name="twitter:description" content="docker 原理之本地存储"/>
 <meta name="application-name" content="russellgao">
-<meta name="apple-mobile-web-app-title" content="russellgao"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://gitee.com/russellgao/blogs-image/raw/master/images/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://russellgao.cn/docker-local-storage/" /><link rel="prev" href="https://russellgao.cn/docker-storage/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+<meta name="apple-mobile-web-app-title" content="russellgao"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://gitee.com/russellgao/blogs-image/raw/master/images/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://russellgao.cn/docker-local-storage/" /><link rel="prev" href="https://russellgao.cn/docker-storage/" /><link rel="next" href="https://russellgao.cn/git-command/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -27,8 +27,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/russellgao.cn\/docker-local-storage\/"
-        },"genre": "posts","keywords": "docker, 存储","wordcount":  4631 ,
-        "url": "https:\/\/russellgao.cn\/docker-local-storage\/","datePublished": "2020-12-09T00:00:00+00:00","dateModified": "2020-12-12T16:01:35+08:00","publisher": {
+        },"genre": "posts","keywords": "docker, 存储","wordcount":  4652 ,
+        "url": "https:\/\/russellgao.cn\/docker-local-storage\/","datePublished": "2020-12-09T00:00:00+00:00","dateModified": "2020-12-13T10:51:26+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -118,7 +118,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">docker 原理之本地存储</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-12-09">2020-12-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;4631 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-12-09">2020-12-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;4652 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;22 minutes&nbsp;<span id="/docker-local-storage/" class="leancloud_visitors" data-flag-title="docker 原理之本地存储">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;views
                     </span>&nbsp;</div>
@@ -199,20 +199,20 @@
 </span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># ll</span>
-总用量 <span class="m">48</span>
-drwx------ <span class="m">2</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 08:49 builder
-drwx--x--x <span class="m">4</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 08:49 buildkit
-drwx------ <span class="m">3</span> root root <span class="m">4096</span> 12月  <span class="m">2</span> 09:25 containers
-drwx------ <span class="m">3</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 08:49 image
-drwxr-x--- <span class="m">3</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 08:49 network
-drwx------ <span class="m">9</span> root root <span class="m">4096</span> 12月  <span class="m">2</span> 09:25 overlay2
-drwx------ <span class="m">4</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 08:49 plugins
-drwx------ <span class="m">2</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 08:49 runtimes
-drwx------ <span class="m">2</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 08:49 swarm
-drwx------ <span class="m">2</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:32 tmp
-drwx------ <span class="m">2</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 08:49 trust
-drwx------ <span class="m">2</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 08:49 volumes
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@iZuf685opgs9oyozju9i2bZ docker]# ll
+总用量 48
+drwx------ 2 root root 4096 11月 11 08:49 builder
+drwx--x--x 4 root root 4096 11月 11 08:49 buildkit
+drwx------ 3 root root 4096 12月  2 09:25 containers
+drwx------ 3 root root 4096 11月 11 08:49 image
+drwxr-x--- 3 root root 4096 11月 11 08:49 network
+drwx------ 9 root root 4096 12月  2 09:25 overlay2
+drwx------ 4 root root 4096 11月 11 08:49 plugins
+drwx------ 2 root root 4096 11月 11 08:49 runtimes
+drwx------ 2 root root 4096 11月 11 08:49 swarm
+drwx------ 2 root root 4096 11月 11 13:32 tmp
+drwx------ 2 root root 4096 11月 11 08:49 trust
+drwx------ 2 root root 4096 11月 11 08:49 volumes
 </code></pre></td></tr></table>
 </div>
 </div><p>可以用 <code>tree</code> 进行展开</p>
@@ -254,7 +254,7 @@ drwx------ <span class="m">2</span> root root <span class="m">4096</span> 11月 
 </span><span class="lnt">34
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># tree -L 2</span>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@iZuf685opgs9oyozju9i2bZ docker]# tree -L 2
 .
 ├── builder
 │   └── fscache.db
@@ -287,7 +287,7 @@ drwx------ <span class="m">2</span> root root <span class="m">4096</span> 11月 
 ├── trust
 └── volumes
     └── metadata.db
-<span class="m">26</span> directories, <span class="m">5</span> files
+26 directories, 5 files
 </code></pre></td></tr></table>
 </div>
 </div><p>这篇文章以分析存储为主，涉及到的目录有 <code>image</code>,<code>containers</code>,<code>overlay2</code>，其他的目录放在后续的文章讨论。</p>
@@ -312,14 +312,14 @@ drwx------ <span class="m">2</span> root root <span class="m">4096</span> 11月 
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># docker pull russellgao/openresty:1.17.8.2-5-alpine</span>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@iZuf685opgs9oyozju9i2bZ docker]# docker pull russellgao/openresty:1.17.8.2-5-alpine
 1.17.8.2-5-alpine: Pulling from russellgao/openresty
 df20fa9351a1: Already exists 
-5682af42731d: Pull <span class="nb">complete</span> 
-7c6cb2b54a9d: Pull <span class="nb">complete</span> 
-aa74dc345098: Pull <span class="nb">complete</span> 
+5682af42731d: Pull complete 
+7c6cb2b54a9d: Pull complete 
+aa74dc345098: Pull complete 
 Digest: sha256:224ced85b5f8b679a8664a39b69c1b8feb09f8ba4343d834bd5b69433081389e
-Status: Downloaded newer image <span class="k">for</span> openresty/openresty:1.17.8.2-5-alpine
+Status: Downloaded newer image for openresty/openresty:1.17.8.2-5-alpine
 </code></pre></td></tr></table>
 </div>
 </div><p>可以看到 pull 了 4 层下来了，我们看看 <code>image</code> 目录:</p>
@@ -385,7 +385,7 @@ Status: Downloaded newer image <span class="k">for</span> openresty/openresty:1.
 </span><span class="lnt">58
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># tree image</span> 
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@iZuf685opgs9oyozju9i2bZ docker]# tree image 
 image
 └── overlay2
     ├── distribution
@@ -442,7 +442,7 @@ image
     │   └── tmp
     └── repositories.json
 
-<span class="m">21</span> directories, <span class="m">33</span> files
+21 directories, 33 files
 </code></pre></td></tr></table>
 </div>
 </div><p>看看 <strong>repositories.json</strong> 中是内容 :</p>
@@ -463,19 +463,19 @@ image
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># cat image/overlay2/repositories.json |  jq .</span>
-<span class="o">{</span>
-  <span class="s2">&#34;Repositories&#34;</span>: <span class="o">{</span>
-    <span class="s2">&#34;openresty/openresty&#34;</span>: <span class="o">{</span>
-      <span class="s2">&#34;openresty/openresty:1.17.8.2-5-alpine&#34;</span>: <span class="s2">&#34;sha256:1ddc7a18ba0bcc20c61447f391bfff98ac559eea590e7ac59b5b5f588f1f47ed&#34;</span>,
-      <span class="s2">&#34;openresty/openresty@sha256:224ced85b5f8b679a8664a39b69c1b8feb09f8ba4343d834bd5b69433081389e&#34;</span>: <span class="s2">&#34;sha256:1ddc7a18ba0bcc20c61447f391bfff98ac559eea590e7ac59b5b5f588f1f47ed&#34;</span>
-    <span class="o">}</span>,
-    <span class="s2">&#34;russellgao/openresty&#34;</span>: <span class="o">{</span>
-      <span class="s2">&#34;russellgao/openresty:1.17.8.2-5-alpine&#34;</span>: <span class="s2">&#34;sha256:1ddc7a18ba0bcc20c61447f391bfff98ac559eea590e7ac59b5b5f588f1f47ed&#34;</span>,
-      <span class="s2">&#34;russellgao/openresty@sha256:84f53dc7517e9b6695fc8fd74916a1eb5970a92fc24a984f99bfb81508f3d261&#34;</span>: <span class="s2">&#34;sha256:1ddc7a18ba0bcc20c61447f391bfff98ac559eea590e7ac59b5b5f588f1f47ed&#34;</span>
-    <span class="o">}</span>
-  <span class="o">}</span>
-<span class="o">}</span>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@iZuf685opgs9oyozju9i2bZ docker]# cat image/overlay2/repositories.json |  jq .
+{
+  &#34;Repositories&#34;: {
+    &#34;openresty/openresty&#34;: {
+      &#34;openresty/openresty:1.17.8.2-5-alpine&#34;: &#34;sha256:1ddc7a18ba0bcc20c61447f391bfff98ac559eea590e7ac59b5b5f588f1f47ed&#34;,
+      &#34;openresty/openresty@sha256:224ced85b5f8b679a8664a39b69c1b8feb09f8ba4343d834bd5b69433081389e&#34;: &#34;sha256:1ddc7a18ba0bcc20c61447f391bfff98ac559eea590e7ac59b5b5f588f1f47ed&#34;
+    },
+    &#34;russellgao/openresty&#34;: {
+      &#34;russellgao/openresty:1.17.8.2-5-alpine&#34;: &#34;sha256:1ddc7a18ba0bcc20c61447f391bfff98ac559eea590e7ac59b5b5f588f1f47ed&#34;,
+      &#34;russellgao/openresty@sha256:84f53dc7517e9b6695fc8fd74916a1eb5970a92fc24a984f99bfb81508f3d261&#34;: &#34;sha256:1ddc7a18ba0bcc20c61447f391bfff98ac559eea590e7ac59b5b5f588f1f47ed&#34;
+    }
+  }
+}
 </code></pre></td></tr></table>
 </div>
 </div><p><strong>repositories.json</strong> 中记录了这个机器上所有的镜像，可以看到这里有两个镜像 <code>openresty/openresty:1.17.8.2-5-alpine</code> 和 <code>russellgao/openresty:1.17.8.2-5-alpine</code> ，但其实只有一个镜像，因为后面的 <code>imageid</code> 是相同的，这个可以 <code>docker images</code> 验证一下</p>
@@ -487,10 +487,10 @@ image
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># docker images</span> 
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@iZuf685opgs9oyozju9i2bZ docker]# docker images 
 REPOSITORY             TAG                 IMAGE ID            CREATED             SIZE
-openresty/openresty    1.17.8.2-5-alpine   1ddc7a18ba0b        <span class="m">2</span> months ago        104MB
-russellgao/openresty   1.17.8.2-5-alpine   1ddc7a18ba0b        <span class="m">2</span> months ago        104MB
+openresty/openresty    1.17.8.2-5-alpine   1ddc7a18ba0b        2 months ago        104MB
+russellgao/openresty   1.17.8.2-5-alpine   1ddc7a18ba0b        2 months ago        104MB
 </code></pre></td></tr></table>
 </div>
 </div><p><code>openresty/openresty:1.17.8.2-5-alpine</code> 和 <code>russellgao/openresty:1.17.8.2-5-alpine</code> 只是镜像 <code>1ddc7a18ba0b</code> 的 tag 。</p>
@@ -522,7 +522,7 @@ russellgao/openresty   1.17.8.2-5-alpine   1ddc7a18ba0b        <span class="m">2
 </span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># tree  image/overlay2/distribution/</span>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@iZuf685opgs9oyozju9i2bZ docker]# tree  image/overlay2/distribution/
 image/overlay2/distribution/
 ├── diffid-by-digest
 │   └── sha256
@@ -537,7 +537,7 @@ image/overlay2/distribution/
         ├── 8521b614863046bf4bb604e3586feeca8b7ce1372f1d6664a5545e85ad9ca472
         └── 9c572ba82b91e3ac35c7351bdacc6876c67f5d9bc69c5e51e8b2deeafae95e4f
 
-<span class="m">4</span> directories, <span class="m">8</span> files
+4 directories, 8 files
 </code></pre></td></tr></table>
 </div>
 </div><p>请注意看 <code>image/overlay2/distribution/diffid-by-digest/sha256</code> 下面，回过头再看看 docker pull 的过程，这里的就是 <code>digestid</code> ，docker pull
@@ -549,7 +549,7 @@ image/overlay2/distribution/
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># cat image/overlay2/distribution/diffid-by-digest/sha256/5682af42731d652bd98d2456ed3da4f0595ed5d9e5b13ac8bb9590bb74f72eb8</span> 
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@iZuf685opgs9oyozju9i2bZ docker]# cat image/overlay2/distribution/diffid-by-digest/sha256/5682af42731d652bd98d2456ed3da4f0595ed5d9e5b13ac8bb9590bb74f72eb8 
 sha256:9c572ba82b91e3ac35c7351bdacc6876c67f5d9bc69c5e51e8b2deeafae95e4f
 </code></pre></td></tr></table>
 </div>
@@ -570,7 +570,7 @@ sha256:9c572ba82b91e3ac35c7351bdacc6876c67f5d9bc69c5e51e8b2deeafae95e4f
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># tree  image/overlay2/imagedb/</span>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@iZuf685opgs9oyozju9i2bZ docker]# tree  image/overlay2/imagedb/
 image/overlay2/imagedb/
 ├── content
 │   └── sha256
@@ -580,7 +580,7 @@ image/overlay2/imagedb/
         └── 1ddc7a18ba0bcc20c61447f391bfff98ac559eea590e7ac59b5b5f588f1f47ed
             └── lastUpdated
 
-<span class="m">5</span> directories, <span class="m">2</span> files
+5 directories, 2 files
 </code></pre></td></tr></table>
 </div>
 </div><p>可以看到 <code>imagedb</code> 是以镜像为单位进行存储的，看一下 <code>content</code> 下面的具体内容 :</p>
@@ -885,303 +885,303 @@ image/overlay2/imagedb/
 </span><span class="lnt">297
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># cat image/overlay2/imagedb/content/sha256/1ddc7a18ba0bcc20c61447f391bfff98ac559eea590e7ac59b5b5f588f1f47ed |  jq .</span>
-<span class="o">{</span>
-  <span class="s2">&#34;architecture&#34;</span>: <span class="s2">&#34;amd64&#34;</span>,
-  <span class="s2">&#34;config&#34;</span>: <span class="o">{</span>
-    <span class="s2">&#34;Hostname&#34;</span>: <span class="s2">&#34;&#34;</span>,
-    <span class="s2">&#34;Domainname&#34;</span>: <span class="s2">&#34;&#34;</span>,
-    <span class="s2">&#34;User&#34;</span>: <span class="s2">&#34;&#34;</span>,
-    <span class="s2">&#34;AttachStdin&#34;</span>: false,
-    <span class="s2">&#34;AttachStdout&#34;</span>: false,
-    <span class="s2">&#34;AttachStderr&#34;</span>: false,
-    <span class="s2">&#34;Tty&#34;</span>: false,
-    <span class="s2">&#34;OpenStdin&#34;</span>: false,
-    <span class="s2">&#34;StdinOnce&#34;</span>: false,
-    <span class="s2">&#34;Env&#34;</span>: <span class="o">[</span>
-      <span class="s2">&#34;PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin&#34;</span>
-    <span class="o">]</span>,
-    <span class="s2">&#34;Cmd&#34;</span>: <span class="o">[</span>
-      <span class="s2">&#34;/usr/local/openresty/bin/openresty&#34;</span>,
-      <span class="s2">&#34;-g&#34;</span>,
-      <span class="s2">&#34;daemon off;&#34;</span>
-    <span class="o">]</span>,
-    <span class="s2">&#34;ArgsEscaped&#34;</span>: true,
-    <span class="s2">&#34;Image&#34;</span>: <span class="s2">&#34;sha256:0b827067ad09ab8a0b9a73a45f5b1c408b84db1ca6883a4c544078ed43b8b5e3&#34;</span>,
-    <span class="s2">&#34;Volumes&#34;</span>: null,
-    <span class="s2">&#34;WorkingDir&#34;</span>: <span class="s2">&#34;&#34;</span>,
-    <span class="s2">&#34;Entrypoint&#34;</span>: null,
-    <span class="s2">&#34;OnBuild&#34;</span>: null,
-    <span class="s2">&#34;Labels&#34;</span>: <span class="o">{</span>
-      <span class="s2">&#34;maintainer&#34;</span>: <span class="s2">&#34;Evan Wies &lt;evan@neomantra.net&gt;&#34;</span>,
-      <span class="s2">&#34;resty_add_package_builddeps&#34;</span>: <span class="s2">&#34;&#34;</span>,
-      <span class="s2">&#34;resty_add_package_rundeps&#34;</span>: <span class="s2">&#34;&#34;</span>,
-      <span class="s2">&#34;resty_config_deps&#34;</span>: <span class="s2">&#34;--with-pcre     --with-cc-opt=&#39;-DNGX_LUA_ABORT_AT_PANIC -I/usr/local/openresty/pcre/include -I/usr/local/openresty/openssl/include&#39;     --with-ld-opt=&#39;-L/usr/local/openresty/pcre/lib -L/usr/local/openresty/openssl/lib -Wl,-rpath,/usr/local/openresty/pcre/lib:/usr/local/openresty/openssl/lib&#39;     &#34;</span>,
-      <span class="s2">&#34;resty_config_options&#34;</span>: <span class="s2">&#34;    --with-compat     --with-file-aio     --with-http_addition_module     --with-http_auth_request_module     --with-http_dav_module     --with-http_flv_module     --with-http_geoip_module=dynamic     --with-http_gunzip_module     --with-http_gzip_static_module     --with-http_image_filter_module=dynamic     --with-http_mp4_module     --with-http_random_index_module     --with-http_realip_module     --with-http_secure_link_module     --with-http_slice_module     --with-http_ssl_module     --with-http_stub_status_module     --with-http_sub_module     --with-http_v2_module     --with-http_xslt_module=dynamic     --with-ipv6     --with-mail     --with-mail_ssl_module     --with-md5-asm     --with-pcre-jit     --with-sha1-asm     --with-stream     --with-stream_ssl_module     --with-threads     &#34;</span>,
-      <span class="s2">&#34;resty_config_options_more&#34;</span>: <span class="s2">&#34;&#34;</span>,
-      <span class="s2">&#34;resty_eval_post_make&#34;</span>: <span class="s2">&#34;&#34;</span>,
-      <span class="s2">&#34;resty_eval_pre_configure&#34;</span>: <span class="s2">&#34;&#34;</span>,
-      <span class="s2">&#34;resty_image_base&#34;</span>: <span class="s2">&#34;alpine&#34;</span>,
-      <span class="s2">&#34;resty_image_tag&#34;</span>: <span class="s2">&#34;3.12&#34;</span>,
-      <span class="s2">&#34;resty_openssl_patch_version&#34;</span>: <span class="s2">&#34;1.1.1f&#34;</span>,
-      <span class="s2">&#34;resty_openssl_url_base&#34;</span>: <span class="s2">&#34;https://www.openssl.org/source&#34;</span>,
-      <span class="s2">&#34;resty_openssl_version&#34;</span>: <span class="s2">&#34;1.1.1g&#34;</span>,
-      <span class="s2">&#34;resty_pcre_version&#34;</span>: <span class="s2">&#34;8.44&#34;</span>,
-      <span class="s2">&#34;resty_version&#34;</span>: <span class="s2">&#34;1.17.8.2&#34;</span>
-    <span class="o">}</span>,
-    <span class="s2">&#34;StopSignal&#34;</span>: <span class="s2">&#34;SIGQUIT&#34;</span>
-  <span class="o">}</span>,
-  <span class="s2">&#34;container&#34;</span>: <span class="s2">&#34;0ae35046dd1afef0f1f525360939abc524dbd469a92470c5836dfbb7dc666923&#34;</span>,
-  <span class="s2">&#34;container_config&#34;</span>: <span class="o">{</span>
-    <span class="s2">&#34;Hostname&#34;</span>: <span class="s2">&#34;0ae35046dd1a&#34;</span>,
-    <span class="s2">&#34;Domainname&#34;</span>: <span class="s2">&#34;&#34;</span>,
-    <span class="s2">&#34;User&#34;</span>: <span class="s2">&#34;&#34;</span>,
-    <span class="s2">&#34;AttachStdin&#34;</span>: false,
-    <span class="s2">&#34;AttachStdout&#34;</span>: false,
-    <span class="s2">&#34;AttachStderr&#34;</span>: false,
-    <span class="s2">&#34;Tty&#34;</span>: false,
-    <span class="s2">&#34;OpenStdin&#34;</span>: false,
-    <span class="s2">&#34;StdinOnce&#34;</span>: false,
-    <span class="s2">&#34;Env&#34;</span>: <span class="o">[</span>
-      <span class="s2">&#34;PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin&#34;</span>
-    <span class="o">]</span>,
-    <span class="s2">&#34;Cmd&#34;</span>: <span class="o">[</span>
-      <span class="s2">&#34;/bin/sh&#34;</span>,
-      <span class="s2">&#34;-c&#34;</span>,
-      <span class="s2">&#34;#(nop) &#34;</span>,
-      <span class="s2">&#34;STOPSIGNAL SIGQUIT&#34;</span>
-    <span class="o">]</span>,
-    <span class="s2">&#34;ArgsEscaped&#34;</span>: true,
-    <span class="s2">&#34;Image&#34;</span>: <span class="s2">&#34;sha256:0b827067ad09ab8a0b9a73a45f5b1c408b84db1ca6883a4c544078ed43b8b5e3&#34;</span>,
-    <span class="s2">&#34;Volumes&#34;</span>: null,
-    <span class="s2">&#34;WorkingDir&#34;</span>: <span class="s2">&#34;&#34;</span>,
-    <span class="s2">&#34;Entrypoint&#34;</span>: null,
-    <span class="s2">&#34;OnBuild&#34;</span>: null,
-    <span class="s2">&#34;Labels&#34;</span>: <span class="o">{</span>
-      <span class="s2">&#34;maintainer&#34;</span>: <span class="s2">&#34;Evan Wies &lt;evan@neomantra.net&gt;&#34;</span>,
-      <span class="s2">&#34;resty_add_package_builddeps&#34;</span>: <span class="s2">&#34;&#34;</span>,
-      <span class="s2">&#34;resty_add_package_rundeps&#34;</span>: <span class="s2">&#34;&#34;</span>,
-      <span class="s2">&#34;resty_config_deps&#34;</span>: <span class="s2">&#34;--with-pcre     --with-cc-opt=&#39;-DNGX_LUA_ABORT_AT_PANIC -I/usr/local/openresty/pcre/include -I/usr/local/openresty/openssl/include&#39;     --with-ld-opt=&#39;-L/usr/local/openresty/pcre/lib -L/usr/local/openresty/openssl/lib -Wl,-rpath,/usr/local/openresty/pcre/lib:/usr/local/openresty/openssl/lib&#39;     &#34;</span>,
-      <span class="s2">&#34;resty_config_options&#34;</span>: <span class="s2">&#34;    --with-compat     --with-file-aio     --with-http_addition_module     --with-http_auth_request_module     --with-http_dav_module     --with-http_flv_module     --with-http_geoip_module=dynamic     --with-http_gunzip_module     --with-http_gzip_static_module     --with-http_image_filter_module=dynamic     --with-http_mp4_module     --with-http_random_index_module     --with-http_realip_module     --with-http_secure_link_module     --with-http_slice_module     --with-http_ssl_module     --with-http_stub_status_module     --with-http_sub_module     --with-http_v2_module     --with-http_xslt_module=dynamic     --with-ipv6     --with-mail     --with-mail_ssl_module     --with-md5-asm     --with-pcre-jit     --with-sha1-asm     --with-stream     --with-stream_ssl_module     --with-threads     &#34;</span>,
-      <span class="s2">&#34;resty_config_options_more&#34;</span>: <span class="s2">&#34;&#34;</span>,
-      <span class="s2">&#34;resty_eval_post_make&#34;</span>: <span class="s2">&#34;&#34;</span>,
-      <span class="s2">&#34;resty_eval_pre_configure&#34;</span>: <span class="s2">&#34;&#34;</span>,
-      <span class="s2">&#34;resty_image_base&#34;</span>: <span class="s2">&#34;alpine&#34;</span>,
-      <span class="s2">&#34;resty_image_tag&#34;</span>: <span class="s2">&#34;3.12&#34;</span>,
-      <span class="s2">&#34;resty_openssl_patch_version&#34;</span>: <span class="s2">&#34;1.1.1f&#34;</span>,
-      <span class="s2">&#34;resty_openssl_url_base&#34;</span>: <span class="s2">&#34;https://www.openssl.org/source&#34;</span>,
-      <span class="s2">&#34;resty_openssl_version&#34;</span>: <span class="s2">&#34;1.1.1g&#34;</span>,
-      <span class="s2">&#34;resty_pcre_version&#34;</span>: <span class="s2">&#34;8.44&#34;</span>,
-      <span class="s2">&#34;resty_version&#34;</span>: <span class="s2">&#34;1.17.8.2&#34;</span>
-    <span class="o">}</span>,
-    <span class="s2">&#34;StopSignal&#34;</span>: <span class="s2">&#34;SIGQUIT&#34;</span>
-  <span class="o">}</span>,
-  <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:25:11.080239395Z&#34;</span>,
-  <span class="s2">&#34;docker_version&#34;</span>: <span class="s2">&#34;18.06.0-ce&#34;</span>,
-  <span class="s2">&#34;history&#34;</span>: <span class="o">[</span>
-    <span class="o">{</span>
-      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-05-29T21:19:46.192045972Z&#34;</span>,
-      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop) ADD file:c92c248239f8c7b9b3c067650954815f391b7bcb09023f984972c082ace2a8d0 in / &#34;</span>
-    <span class="o">}</span>,
-    <span class="o">{</span>
-      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-05-29T21:19:46.363518345Z&#34;</span>,
-      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  CMD [\&#34;/bin/sh\&#34;]&#34;</span>,
-      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
-    <span class="o">}</span>,
-    <span class="o">{</span>
-      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:11.417409263Z&#34;</span>,
-      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  LABEL maintainer=Evan Wies &lt;evan@neomantra.net&gt;&#34;</span>,
-      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
-    <span class="o">}</span>,
-    <span class="o">{</span>
-      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:11.510209288Z&#34;</span>,
-      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  ARG RESTY_IMAGE_BASE=alpine&#34;</span>,
-      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
-    <span class="o">}</span>,
-    <span class="o">{</span>
-      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:11.601623273Z&#34;</span>,
-      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  ARG RESTY_IMAGE_TAG=3.12&#34;</span>,
-      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
-    <span class="o">}</span>,
-    <span class="o">{</span>
-      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:11.688966243Z&#34;</span>,
-      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  ARG RESTY_VERSION=1.17.8.2&#34;</span>,
-      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
-    <span class="o">}</span>,
-    <span class="o">{</span>
-      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:11.783539793Z&#34;</span>,
-      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  ARG RESTY_OPENSSL_VERSION=1.1.1g&#34;</span>,
-      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
-    <span class="o">}</span>,
-    <span class="o">{</span>
-      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:11.885734193Z&#34;</span>,
-      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  ARG RESTY_OPENSSL_PATCH_VERSION=1.1.1f&#34;</span>,
-      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
-    <span class="o">}</span>,
-    <span class="o">{</span>
-      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:11.977916317Z&#34;</span>,
-      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  ARG RESTY_OPENSSL_URL_BASE=https://www.openssl.org/source&#34;</span>,
-      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
-    <span class="o">}</span>,
-    <span class="o">{</span>
-      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:12.075117786Z&#34;</span>,
-      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  ARG RESTY_PCRE_VERSION=8.44&#34;</span>,
-      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
-    <span class="o">}</span>,
-    <span class="o">{</span>
-      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:12.169065223Z&#34;</span>,
-      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  ARG RESTY_J=1&#34;</span>,
-      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
-    <span class="o">}</span>,
-    <span class="o">{</span>
-      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:12.268734856Z&#34;</span>,
-      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  ARG RESTY_CONFIG_OPTIONS=    --with-compat     --with-file-aio     --with-http_addition_module     --with-http_auth_request_module     --with-http_dav_module     --with-http_flv_module     --with-http_geoip_module=dynamic     --with-http_gunzip_module     --with-http_gzip_static_module     --with-http_image_filter_module=dynamic     --with-http_mp4_module     --with-http_random_index_module     --with-http_realip_module     --with-http_secure_link_module     --with-http_slice_module     --with-http_ssl_module     --with-http_stub_status_module     --with-http_sub_module     --with-http_v2_module     --with-http_xslt_module=dynamic     --with-ipv6     --with-mail     --with-mail_ssl_module     --with-md5-asm     --with-pcre-jit     --with-sha1-asm     --with-stream     --with-stream_ssl_module     --with-threads     &#34;</span>,
-      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
-    <span class="o">}</span>,
-    <span class="o">{</span>
-      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:12.363332751Z&#34;</span>,
-      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  ARG RESTY_CONFIG_OPTIONS_MORE=&#34;</span>,
-      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
-    <span class="o">}</span>,
-    <span class="o">{</span>
-      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:12.462196367Z&#34;</span>,
-      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  ARG RESTY_LUAJIT_OPTIONS=--with-luajit-xcflags=&#39;-DLUAJIT_NUMMODE=2 -DLUAJIT_ENABLE_LUA52COMPAT&#39;&#34;</span>,
-      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
-    <span class="o">}</span>,
-    <span class="o">{</span>
-      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:12.553726712Z&#34;</span>,
-      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  ARG RESTY_ADD_PACKAGE_BUILDDEPS=&#34;</span>,
-      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
-    <span class="o">}</span>,
-    <span class="o">{</span>
-      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:12.644512619Z&#34;</span>,
-      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  ARG RESTY_ADD_PACKAGE_RUNDEPS=&#34;</span>,
-      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
-    <span class="o">}</span>,
-    <span class="o">{</span>
-      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:12.740127392Z&#34;</span>,
-      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  ARG RESTY_EVAL_PRE_CONFIGURE=&#34;</span>,
-      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
-    <span class="o">}</span>,
-    <span class="o">{</span>
-      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:12.833898538Z&#34;</span>,
-      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  ARG RESTY_EVAL_POST_MAKE=&#34;</span>,
-      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
-    <span class="o">}</span>,
-    <span class="o">{</span>
-      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:12.93159843Z&#34;</span>,
-      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  ARG _RESTY_CONFIG_DEPS=--with-pcre     --with-cc-opt=&#39;-DNGX_LUA_ABORT_AT_PANIC -I/usr/local/openresty/pcre/include -I/usr/local/openresty/openssl/include&#39;     --with-ld-opt=&#39;-L/usr/local/openresty/pcre/lib -L/usr/local/openresty/openssl/lib -Wl,-rpath,/usr/local/openresty/pcre/lib:/usr/local/openresty/openssl/lib&#39;     &#34;</span>,
-      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
-    <span class="o">}</span>,
-    <span class="o">{</span>
-      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:13.022542363Z&#34;</span>,
-      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  LABEL resty_image_base=alpine&#34;</span>,
-      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
-    <span class="o">}</span>,
-    <span class="o">{</span>
-      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:13.120036187Z&#34;</span>,
-      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  LABEL resty_image_tag=3.12&#34;</span>,
-      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
-    <span class="o">}</span>,
-    <span class="o">{</span>
-      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:13.20899948Z&#34;</span>,
-      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  LABEL resty_version=1.17.8.2&#34;</span>,
-      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
-    <span class="o">}</span>,
-    <span class="o">{</span>
-      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:13.292383125Z&#34;</span>,
-      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  LABEL resty_openssl_version=1.1.1g&#34;</span>,
-      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
-    <span class="o">}</span>,
-    <span class="o">{</span>
-      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:13.385097561Z&#34;</span>,
-      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  LABEL resty_openssl_patch_version=1.1.1f&#34;</span>,
-      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
-    <span class="o">}</span>,
-    <span class="o">{</span>
-      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:13.476173083Z&#34;</span>,
-      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  LABEL resty_openssl_url_base=https://www.openssl.org/source&#34;</span>,
-      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
-    <span class="o">}</span>,
-    <span class="o">{</span>
-      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:13.564110015Z&#34;</span>,
-      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  LABEL resty_pcre_version=8.44&#34;</span>,
-      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
-    <span class="o">}</span>,
-    <span class="o">{</span>
-      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:13.653688493Z&#34;</span>,
-      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  LABEL resty_config_options=    --with-compat     --with-file-aio     --with-http_addition_module     --with-http_auth_request_module     --with-http_dav_module     --with-http_flv_module     --with-http_geoip_module=dynamic     --with-http_gunzip_module     --with-http_gzip_static_module     --with-http_image_filter_module=dynamic     --with-http_mp4_module     --with-http_random_index_module     --with-http_realip_module     --with-http_secure_link_module     --with-http_slice_module     --with-http_ssl_module     --with-http_stub_status_module     --with-http_sub_module     --with-http_v2_module     --with-http_xslt_module=dynamic     --with-ipv6     --with-mail     --with-mail_ssl_module     --with-md5-asm     --with-pcre-jit     --with-sha1-asm     --with-stream     --with-stream_ssl_module     --with-threads     &#34;</span>,
-      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
-    <span class="o">}</span>,
-    <span class="o">{</span>
-      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:13.747250902Z&#34;</span>,
-      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  LABEL resty_config_options_more=&#34;</span>,
-      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
-    <span class="o">}</span>,
-    <span class="o">{</span>
-      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:13.839314208Z&#34;</span>,
-      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  LABEL resty_config_deps=--with-pcre     --with-cc-opt=&#39;-DNGX_LUA_ABORT_AT_PANIC -I/usr/local/openresty/pcre/include -I/usr/local/openresty/openssl/include&#39;     --with-ld-opt=&#39;-L/usr/local/openresty/pcre/lib -L/usr/local/openresty/openssl/lib -Wl,-rpath,/usr/local/openresty/pcre/lib:/usr/local/openresty/openssl/lib&#39;     &#34;</span>,
-      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
-    <span class="o">}</span>,
-    <span class="o">{</span>
-      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:13.938461929Z&#34;</span>,
-      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  LABEL resty_add_package_builddeps=&#34;</span>,
-      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
-    <span class="o">}</span>,
-    <span class="o">{</span>
-      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:14.023327305Z&#34;</span>,
-      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  LABEL resty_add_package_rundeps=&#34;</span>,
-      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
-    <span class="o">}</span>,
-    <span class="o">{</span>
-      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:14.111176277Z&#34;</span>,
-      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  LABEL resty_eval_pre_configure=&#34;</span>,
-      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
-    <span class="o">}</span>,
-    <span class="o">{</span>
-      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:18:14.211102965Z&#34;</span>,
-      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  LABEL resty_eval_post_make=&#34;</span>,
-      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
-    <span class="o">}</span>,
-    <span class="o">{</span>
-      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:25:10.276243663Z&#34;</span>,
-      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;|16 RESTY_ADD_PACKAGE_BUILDDEPS= RESTY_ADD_PACKAGE_RUNDEPS= RESTY_CONFIG_OPTIONS=    --with-compat     --with-file-aio     --with-http_addition_module     --with-http_auth_request_module     --with-http_dav_module     --with-http_flv_module     --with-http_geoip_module=dynamic     --with-http_gunzip_module     --with-http_gzip_static_module     --with-http_image_filter_module=dynamic     --with-http_mp4_module     --with-http_random_index_module     --with-http_realip_module     --with-http_secure_link_module     --with-http_slice_module     --with-http_ssl_module     --with-http_stub_status_module     --with-http_sub_module     --with-http_v2_module     --with-http_xslt_module=dynamic     --with-ipv6     --with-mail     --with-mail_ssl_module     --with-md5-asm     --with-pcre-jit     --with-sha1-asm     --with-stream     --with-stream_ssl_module     --with-threads      RESTY_CONFIG_OPTIONS_MORE= RESTY_EVAL_POST_MAKE= RESTY_EVAL_PRE_CONFIGURE= RESTY_IMAGE_BASE=alpine RESTY_IMAGE_TAG=3.12 RESTY_J=1 RESTY_LUAJIT_OPTIONS=--with-luajit-xcflags=&#39;-DLUAJIT_NUMMODE=2 -DLUAJIT_ENABLE_LUA52COMPAT&#39; RESTY_OPENSSL_PATCH_VERSION=1.1.1f RESTY_OPENSSL_URL_BASE=https://www.openssl.org/source RESTY_OPENSSL_VERSION=1.1.1g RESTY_PCRE_VERSION=8.44 RESTY_VERSION=1.17.8.2 _RESTY_CONFIG_DEPS=--with-pcre     --with-cc-opt=&#39;-DNGX_LUA_ABORT_AT_PANIC -I/usr/local/openresty/pcre/include -I/usr/local/openresty/openssl/include&#39;     --with-ld-opt=&#39;-L/usr/local/openresty/pcre/lib -L/usr/local/openresty/openssl/lib -Wl,-rpath,/usr/local/openresty/pcre/lib:/usr/local/openresty/openssl/lib&#39;      /bin/sh -c apk add --no-cache --virtual .build-deps         build-base         coreutils         curl         gd-dev         geoip-dev         libxslt-dev         linux-headers         make         perl-dev         readline-dev         zlib-dev         </span><span class="si">${</span><span class="nv">RESTY_ADD_PACKAGE_BUILDDEPS</span><span class="si">}</span><span class="s2">     &amp;&amp; apk add --no-cache         gd         geoip         libgcc         libxslt         zlib         </span><span class="si">${</span><span class="nv">RESTY_ADD_PACKAGE_RUNDEPS</span><span class="si">}</span><span class="s2">     &amp;&amp; cd /tmp     &amp;&amp; if [ -n \&#34;</span><span class="si">${</span><span class="nv">RESTY_EVAL_PRE_CONFIGURE</span><span class="si">}</span><span class="s2">\&#34; ]; then eval </span><span class="k">$(</span><span class="nb">echo</span> <span class="si">${</span><span class="nv">RESTY_EVAL_PRE_CONFIGURE</span><span class="si">}</span><span class="k">)</span><span class="s2">; fi     &amp;&amp; cd /tmp     &amp;&amp; curl -fSL \&#34;</span><span class="si">${</span><span class="nv">RESTY_OPENSSL_URL_BASE</span><span class="si">}</span><span class="s2">/openssl-</span><span class="si">${</span><span class="nv">RESTY_OPENSSL_VERSION</span><span class="si">}</span><span class="s2">.tar.gz\&#34; -o openssl-</span><span class="si">${</span><span class="nv">RESTY_OPENSSL_VERSION</span><span class="si">}</span><span class="s2">.tar.gz     &amp;&amp; tar xzf openssl-</span><span class="si">${</span><span class="nv">RESTY_OPENSSL_VERSION</span><span class="si">}</span><span class="s2">.tar.gz     &amp;&amp; cd openssl-</span><span class="si">${</span><span class="nv">RESTY_OPENSSL_VERSION</span><span class="si">}</span><span class="s2">     &amp;&amp; if [ </span><span class="k">$(</span><span class="nb">echo</span> <span class="si">${</span><span class="nv">RESTY_OPENSSL_VERSION</span><span class="si">}</span> <span class="p">|</span> cut -c 1-5<span class="k">)</span><span class="s2"> = \&#34;1.1.1\&#34; ] ; then         echo &#39;patching OpenSSL 1.1.1 for OpenResty&#39;         &amp;&amp; curl -s https://raw.githubusercontent.com/openresty/openresty/master/patches/openssl-</span><span class="si">${</span><span class="nv">RESTY_OPENSSL_PATCH_VERSION</span><span class="si">}</span><span class="s2">-sess_set_get_cb_yield.patch | patch -p1 ;     fi     &amp;&amp; if [ </span><span class="k">$(</span><span class="nb">echo</span> <span class="si">${</span><span class="nv">RESTY_OPENSSL_VERSION</span><span class="si">}</span> <span class="p">|</span> cut -c 1-5<span class="k">)</span><span class="s2"> = \&#34;1.1.0\&#34; ] ; then         echo &#39;patching OpenSSL 1.1.0 for OpenResty&#39;         &amp;&amp; curl -s https://raw.githubusercontent.com/openresty/openresty/ed328977028c3ec3033bc25873ee360056e247cd/patches/openssl-1.1.0j-parallel_build_fix.patch | patch -p1         &amp;&amp; curl -s https://raw.githubusercontent.com/openresty/openresty/master/patches/openssl-</span><span class="si">${</span><span class="nv">RESTY_OPENSSL_PATCH_VERSION</span><span class="si">}</span><span class="s2">-sess_set_get_cb_yield.patch | patch -p1 ;     fi     &amp;&amp; ./config       no-threads shared zlib -g       enable-ssl3 enable-ssl3-method       --prefix=/usr/local/openresty/openssl       --libdir=lib       -Wl,-rpath,/usr/local/openresty/openssl/lib     &amp;&amp; make -j</span><span class="si">${</span><span class="nv">RESTY_J</span><span class="si">}</span><span class="s2">     &amp;&amp; make -j</span><span class="si">${</span><span class="nv">RESTY_J</span><span class="si">}</span><span class="s2"> install_sw     &amp;&amp; cd /tmp     &amp;&amp; curl -fSL https://ftp.pcre.org/pub/pcre/pcre-</span><span class="si">${</span><span class="nv">RESTY_PCRE_VERSION</span><span class="si">}</span><span class="s2">.tar.gz -o pcre-</span><span class="si">${</span><span class="nv">RESTY_PCRE_VERSION</span><span class="si">}</span><span class="s2">.tar.gz     &amp;&amp; tar xzf pcre-</span><span class="si">${</span><span class="nv">RESTY_PCRE_VERSION</span><span class="si">}</span><span class="s2">.tar.gz     &amp;&amp; cd /tmp/pcre-</span><span class="si">${</span><span class="nv">RESTY_PCRE_VERSION</span><span class="si">}</span><span class="s2">     &amp;&amp; ./configure         --prefix=/usr/local/openresty/pcre         --disable-cpp         --enable-jit         --enable-utf         --enable-unicode-properties     &amp;&amp; make -j</span><span class="si">${</span><span class="nv">RESTY_J</span><span class="si">}</span><span class="s2">     &amp;&amp; make -j</span><span class="si">${</span><span class="nv">RESTY_J</span><span class="si">}</span><span class="s2"> install     &amp;&amp; cd /tmp     &amp;&amp; curl -fSL https://openresty.org/download/openresty-</span><span class="si">${</span><span class="nv">RESTY_VERSION</span><span class="si">}</span><span class="s2">.tar.gz -o openresty-</span><span class="si">${</span><span class="nv">RESTY_VERSION</span><span class="si">}</span><span class="s2">.tar.gz     &amp;&amp; tar xzf openresty-</span><span class="si">${</span><span class="nv">RESTY_VERSION</span><span class="si">}</span><span class="s2">.tar.gz     &amp;&amp; cd /tmp/openresty-</span><span class="si">${</span><span class="nv">RESTY_VERSION</span><span class="si">}</span><span class="s2">     &amp;&amp; eval ./configure -j</span><span class="si">${</span><span class="nv">RESTY_J</span><span class="si">}</span><span class="s2"> </span><span class="si">${</span><span class="nv">_RESTY_CONFIG_DEPS</span><span class="si">}</span><span class="s2"> </span><span class="si">${</span><span class="nv">RESTY_CONFIG_OPTIONS</span><span class="si">}</span><span class="s2"> </span><span class="si">${</span><span class="nv">RESTY_CONFIG_OPTIONS_MORE</span><span class="si">}</span><span class="s2"> </span><span class="si">${</span><span class="nv">RESTY_LUAJIT_OPTIONS</span><span class="si">}</span><span class="s2">     &amp;&amp; make -j</span><span class="si">${</span><span class="nv">RESTY_J</span><span class="si">}</span><span class="s2">     &amp;&amp; make -j</span><span class="si">${</span><span class="nv">RESTY_J</span><span class="si">}</span><span class="s2"> install     &amp;&amp; cd /tmp     &amp;&amp; if [ -n \&#34;</span><span class="si">${</span><span class="nv">RESTY_EVAL_POST_MAKE</span><span class="si">}</span><span class="s2">\&#34; ]; then eval </span><span class="k">$(</span><span class="nb">echo</span> <span class="si">${</span><span class="nv">RESTY_EVAL_POST_MAKE</span><span class="si">}</span><span class="k">)</span><span class="s2">; fi     &amp;&amp; rm -rf         openssl-</span><span class="si">${</span><span class="nv">RESTY_OPENSSL_VERSION</span><span class="si">}</span><span class="s2">.tar.gz openssl-</span><span class="si">${</span><span class="nv">RESTY_OPENSSL_VERSION</span><span class="si">}</span><span class="s2">         pcre-</span><span class="si">${</span><span class="nv">RESTY_PCRE_VERSION</span><span class="si">}</span><span class="s2">.tar.gz pcre-</span><span class="si">${</span><span class="nv">RESTY_PCRE_VERSION</span><span class="si">}</span><span class="s2">         openresty-</span><span class="si">${</span><span class="nv">RESTY_VERSION</span><span class="si">}</span><span class="s2">.tar.gz openresty-</span><span class="si">${</span><span class="nv">RESTY_VERSION</span><span class="si">}</span><span class="s2">     &amp;&amp; apk del .build-deps     &amp;&amp; mkdir -p /var/run/openresty     &amp;&amp; ln -sf /dev/stdout /usr/local/openresty/nginx/logs/access.log     &amp;&amp; ln -sf /dev/stderr /usr/local/openresty/nginx/logs/error.log&#34;</span>
-    <span class="o">}</span>,
-    <span class="o">{</span>
-      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:25:10.712994475Z&#34;</span>,
-      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin&#34;</span>,
-      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
-    <span class="o">}</span>,
-    <span class="o">{</span>
-      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:25:10.806730628Z&#34;</span>,
-      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop) COPY file:871e3c814ada8b73d3bd53e819bd122b5612587624e3eb6ef6e97d83522238fc in /usr/local/openresty/nginx/conf/nginx.conf &#34;</span>
-    <span class="o">}</span>,
-    <span class="o">{</span>
-      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:25:10.8995482Z&#34;</span>,
-      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop) COPY file:1832501c6083278533ce3d09a4140cc30795ddf825ad6a0ad52ea84858291e53 in /etc/nginx/conf.d/default.conf &#34;</span>
-    <span class="o">}</span>,
-    <span class="o">{</span>
-      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:25:10.984062974Z&#34;</span>,
-      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  CMD [\&#34;/usr/local/openresty/bin/openresty\&#34; \&#34;-g\&#34; \&#34;daemon off;\&#34;]&#34;</span>,
-      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
-    <span class="o">}</span>,
-    <span class="o">{</span>
-      <span class="s2">&#34;created&#34;</span>: <span class="s2">&#34;2020-09-18T16:25:11.080239395Z&#34;</span>,
-      <span class="s2">&#34;created_by&#34;</span>: <span class="s2">&#34;/bin/sh -c #(nop)  STOPSIGNAL SIGQUIT&#34;</span>,
-      <span class="s2">&#34;empty_layer&#34;</span>: <span class="nb">true</span>
-    <span class="o">}</span>
-  <span class="o">]</span>,
-  <span class="s2">&#34;os&#34;</span>: <span class="s2">&#34;linux&#34;</span>,
-  <span class="s2">&#34;rootfs&#34;</span>: <span class="o">{</span>
-    <span class="s2">&#34;type&#34;</span>: <span class="s2">&#34;layers&#34;</span>,
-    <span class="s2">&#34;diff_ids&#34;</span>: <span class="o">[</span>
-      <span class="s2">&#34;sha256:50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a&#34;</span>,
-      <span class="s2">&#34;sha256:9c572ba82b91e3ac35c7351bdacc6876c67f5d9bc69c5e51e8b2deeafae95e4f&#34;</span>,
-      <span class="s2">&#34;sha256:1680a9f16b18732726d0656b6d6ff9611a3c4460ca870827b537a87bbe10cc22&#34;</span>,
-      <span class="s2">&#34;sha256:8521b614863046bf4bb604e3586feeca8b7ce1372f1d6664a5545e85ad9ca472&#34;</span>
-    <span class="o">]</span>
-  <span class="o">}</span>
-<span class="o">}</span>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@iZuf685opgs9oyozju9i2bZ docker]# cat image/overlay2/imagedb/content/sha256/1ddc7a18ba0bcc20c61447f391bfff98ac559eea590e7ac59b5b5f588f1f47ed |  jq .
+{
+  &#34;architecture&#34;: &#34;amd64&#34;,
+  &#34;config&#34;: {
+    &#34;Hostname&#34;: &#34;&#34;,
+    &#34;Domainname&#34;: &#34;&#34;,
+    &#34;User&#34;: &#34;&#34;,
+    &#34;AttachStdin&#34;: false,
+    &#34;AttachStdout&#34;: false,
+    &#34;AttachStderr&#34;: false,
+    &#34;Tty&#34;: false,
+    &#34;OpenStdin&#34;: false,
+    &#34;StdinOnce&#34;: false,
+    &#34;Env&#34;: [
+      &#34;PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin&#34;
+    ],
+    &#34;Cmd&#34;: [
+      &#34;/usr/local/openresty/bin/openresty&#34;,
+      &#34;-g&#34;,
+      &#34;daemon off;&#34;
+    ],
+    &#34;ArgsEscaped&#34;: true,
+    &#34;Image&#34;: &#34;sha256:0b827067ad09ab8a0b9a73a45f5b1c408b84db1ca6883a4c544078ed43b8b5e3&#34;,
+    &#34;Volumes&#34;: null,
+    &#34;WorkingDir&#34;: &#34;&#34;,
+    &#34;Entrypoint&#34;: null,
+    &#34;OnBuild&#34;: null,
+    &#34;Labels&#34;: {
+      &#34;maintainer&#34;: &#34;Evan Wies &lt;evan@neomantra.net&gt;&#34;,
+      &#34;resty_add_package_builddeps&#34;: &#34;&#34;,
+      &#34;resty_add_package_rundeps&#34;: &#34;&#34;,
+      &#34;resty_config_deps&#34;: &#34;--with-pcre     --with-cc-opt=&#39;-DNGX_LUA_ABORT_AT_PANIC -I/usr/local/openresty/pcre/include -I/usr/local/openresty/openssl/include&#39;     --with-ld-opt=&#39;-L/usr/local/openresty/pcre/lib -L/usr/local/openresty/openssl/lib -Wl,-rpath,/usr/local/openresty/pcre/lib:/usr/local/openresty/openssl/lib&#39;     &#34;,
+      &#34;resty_config_options&#34;: &#34;    --with-compat     --with-file-aio     --with-http_addition_module     --with-http_auth_request_module     --with-http_dav_module     --with-http_flv_module     --with-http_geoip_module=dynamic     --with-http_gunzip_module     --with-http_gzip_static_module     --with-http_image_filter_module=dynamic     --with-http_mp4_module     --with-http_random_index_module     --with-http_realip_module     --with-http_secure_link_module     --with-http_slice_module     --with-http_ssl_module     --with-http_stub_status_module     --with-http_sub_module     --with-http_v2_module     --with-http_xslt_module=dynamic     --with-ipv6     --with-mail     --with-mail_ssl_module     --with-md5-asm     --with-pcre-jit     --with-sha1-asm     --with-stream     --with-stream_ssl_module     --with-threads     &#34;,
+      &#34;resty_config_options_more&#34;: &#34;&#34;,
+      &#34;resty_eval_post_make&#34;: &#34;&#34;,
+      &#34;resty_eval_pre_configure&#34;: &#34;&#34;,
+      &#34;resty_image_base&#34;: &#34;alpine&#34;,
+      &#34;resty_image_tag&#34;: &#34;3.12&#34;,
+      &#34;resty_openssl_patch_version&#34;: &#34;1.1.1f&#34;,
+      &#34;resty_openssl_url_base&#34;: &#34;https://www.openssl.org/source&#34;,
+      &#34;resty_openssl_version&#34;: &#34;1.1.1g&#34;,
+      &#34;resty_pcre_version&#34;: &#34;8.44&#34;,
+      &#34;resty_version&#34;: &#34;1.17.8.2&#34;
+    },
+    &#34;StopSignal&#34;: &#34;SIGQUIT&#34;
+  },
+  &#34;container&#34;: &#34;0ae35046dd1afef0f1f525360939abc524dbd469a92470c5836dfbb7dc666923&#34;,
+  &#34;container_config&#34;: {
+    &#34;Hostname&#34;: &#34;0ae35046dd1a&#34;,
+    &#34;Domainname&#34;: &#34;&#34;,
+    &#34;User&#34;: &#34;&#34;,
+    &#34;AttachStdin&#34;: false,
+    &#34;AttachStdout&#34;: false,
+    &#34;AttachStderr&#34;: false,
+    &#34;Tty&#34;: false,
+    &#34;OpenStdin&#34;: false,
+    &#34;StdinOnce&#34;: false,
+    &#34;Env&#34;: [
+      &#34;PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin&#34;
+    ],
+    &#34;Cmd&#34;: [
+      &#34;/bin/sh&#34;,
+      &#34;-c&#34;,
+      &#34;#(nop) &#34;,
+      &#34;STOPSIGNAL SIGQUIT&#34;
+    ],
+    &#34;ArgsEscaped&#34;: true,
+    &#34;Image&#34;: &#34;sha256:0b827067ad09ab8a0b9a73a45f5b1c408b84db1ca6883a4c544078ed43b8b5e3&#34;,
+    &#34;Volumes&#34;: null,
+    &#34;WorkingDir&#34;: &#34;&#34;,
+    &#34;Entrypoint&#34;: null,
+    &#34;OnBuild&#34;: null,
+    &#34;Labels&#34;: {
+      &#34;maintainer&#34;: &#34;Evan Wies &lt;evan@neomantra.net&gt;&#34;,
+      &#34;resty_add_package_builddeps&#34;: &#34;&#34;,
+      &#34;resty_add_package_rundeps&#34;: &#34;&#34;,
+      &#34;resty_config_deps&#34;: &#34;--with-pcre     --with-cc-opt=&#39;-DNGX_LUA_ABORT_AT_PANIC -I/usr/local/openresty/pcre/include -I/usr/local/openresty/openssl/include&#39;     --with-ld-opt=&#39;-L/usr/local/openresty/pcre/lib -L/usr/local/openresty/openssl/lib -Wl,-rpath,/usr/local/openresty/pcre/lib:/usr/local/openresty/openssl/lib&#39;     &#34;,
+      &#34;resty_config_options&#34;: &#34;    --with-compat     --with-file-aio     --with-http_addition_module     --with-http_auth_request_module     --with-http_dav_module     --with-http_flv_module     --with-http_geoip_module=dynamic     --with-http_gunzip_module     --with-http_gzip_static_module     --with-http_image_filter_module=dynamic     --with-http_mp4_module     --with-http_random_index_module     --with-http_realip_module     --with-http_secure_link_module     --with-http_slice_module     --with-http_ssl_module     --with-http_stub_status_module     --with-http_sub_module     --with-http_v2_module     --with-http_xslt_module=dynamic     --with-ipv6     --with-mail     --with-mail_ssl_module     --with-md5-asm     --with-pcre-jit     --with-sha1-asm     --with-stream     --with-stream_ssl_module     --with-threads     &#34;,
+      &#34;resty_config_options_more&#34;: &#34;&#34;,
+      &#34;resty_eval_post_make&#34;: &#34;&#34;,
+      &#34;resty_eval_pre_configure&#34;: &#34;&#34;,
+      &#34;resty_image_base&#34;: &#34;alpine&#34;,
+      &#34;resty_image_tag&#34;: &#34;3.12&#34;,
+      &#34;resty_openssl_patch_version&#34;: &#34;1.1.1f&#34;,
+      &#34;resty_openssl_url_base&#34;: &#34;https://www.openssl.org/source&#34;,
+      &#34;resty_openssl_version&#34;: &#34;1.1.1g&#34;,
+      &#34;resty_pcre_version&#34;: &#34;8.44&#34;,
+      &#34;resty_version&#34;: &#34;1.17.8.2&#34;
+    },
+    &#34;StopSignal&#34;: &#34;SIGQUIT&#34;
+  },
+  &#34;created&#34;: &#34;2020-09-18T16:25:11.080239395Z&#34;,
+  &#34;docker_version&#34;: &#34;18.06.0-ce&#34;,
+  &#34;history&#34;: [
+    {
+      &#34;created&#34;: &#34;2020-05-29T21:19:46.192045972Z&#34;,
+      &#34;created_by&#34;: &#34;/bin/sh -c #(nop) ADD file:c92c248239f8c7b9b3c067650954815f391b7bcb09023f984972c082ace2a8d0 in / &#34;
+    },
+    {
+      &#34;created&#34;: &#34;2020-05-29T21:19:46.363518345Z&#34;,
+      &#34;created_by&#34;: &#34;/bin/sh -c #(nop)  CMD [\&#34;/bin/sh\&#34;]&#34;,
+      &#34;empty_layer&#34;: true
+    },
+    {
+      &#34;created&#34;: &#34;2020-09-18T16:18:11.417409263Z&#34;,
+      &#34;created_by&#34;: &#34;/bin/sh -c #(nop)  LABEL maintainer=Evan Wies &lt;evan@neomantra.net&gt;&#34;,
+      &#34;empty_layer&#34;: true
+    },
+    {
+      &#34;created&#34;: &#34;2020-09-18T16:18:11.510209288Z&#34;,
+      &#34;created_by&#34;: &#34;/bin/sh -c #(nop)  ARG RESTY_IMAGE_BASE=alpine&#34;,
+      &#34;empty_layer&#34;: true
+    },
+    {
+      &#34;created&#34;: &#34;2020-09-18T16:18:11.601623273Z&#34;,
+      &#34;created_by&#34;: &#34;/bin/sh -c #(nop)  ARG RESTY_IMAGE_TAG=3.12&#34;,
+      &#34;empty_layer&#34;: true
+    },
+    {
+      &#34;created&#34;: &#34;2020-09-18T16:18:11.688966243Z&#34;,
+      &#34;created_by&#34;: &#34;/bin/sh -c #(nop)  ARG RESTY_VERSION=1.17.8.2&#34;,
+      &#34;empty_layer&#34;: true
+    },
+    {
+      &#34;created&#34;: &#34;2020-09-18T16:18:11.783539793Z&#34;,
+      &#34;created_by&#34;: &#34;/bin/sh -c #(nop)  ARG RESTY_OPENSSL_VERSION=1.1.1g&#34;,
+      &#34;empty_layer&#34;: true
+    },
+    {
+      &#34;created&#34;: &#34;2020-09-18T16:18:11.885734193Z&#34;,
+      &#34;created_by&#34;: &#34;/bin/sh -c #(nop)  ARG RESTY_OPENSSL_PATCH_VERSION=1.1.1f&#34;,
+      &#34;empty_layer&#34;: true
+    },
+    {
+      &#34;created&#34;: &#34;2020-09-18T16:18:11.977916317Z&#34;,
+      &#34;created_by&#34;: &#34;/bin/sh -c #(nop)  ARG RESTY_OPENSSL_URL_BASE=https://www.openssl.org/source&#34;,
+      &#34;empty_layer&#34;: true
+    },
+    {
+      &#34;created&#34;: &#34;2020-09-18T16:18:12.075117786Z&#34;,
+      &#34;created_by&#34;: &#34;/bin/sh -c #(nop)  ARG RESTY_PCRE_VERSION=8.44&#34;,
+      &#34;empty_layer&#34;: true
+    },
+    {
+      &#34;created&#34;: &#34;2020-09-18T16:18:12.169065223Z&#34;,
+      &#34;created_by&#34;: &#34;/bin/sh -c #(nop)  ARG RESTY_J=1&#34;,
+      &#34;empty_layer&#34;: true
+    },
+    {
+      &#34;created&#34;: &#34;2020-09-18T16:18:12.268734856Z&#34;,
+      &#34;created_by&#34;: &#34;/bin/sh -c #(nop)  ARG RESTY_CONFIG_OPTIONS=    --with-compat     --with-file-aio     --with-http_addition_module     --with-http_auth_request_module     --with-http_dav_module     --with-http_flv_module     --with-http_geoip_module=dynamic     --with-http_gunzip_module     --with-http_gzip_static_module     --with-http_image_filter_module=dynamic     --with-http_mp4_module     --with-http_random_index_module     --with-http_realip_module     --with-http_secure_link_module     --with-http_slice_module     --with-http_ssl_module     --with-http_stub_status_module     --with-http_sub_module     --with-http_v2_module     --with-http_xslt_module=dynamic     --with-ipv6     --with-mail     --with-mail_ssl_module     --with-md5-asm     --with-pcre-jit     --with-sha1-asm     --with-stream     --with-stream_ssl_module     --with-threads     &#34;,
+      &#34;empty_layer&#34;: true
+    },
+    {
+      &#34;created&#34;: &#34;2020-09-18T16:18:12.363332751Z&#34;,
+      &#34;created_by&#34;: &#34;/bin/sh -c #(nop)  ARG RESTY_CONFIG_OPTIONS_MORE=&#34;,
+      &#34;empty_layer&#34;: true
+    },
+    {
+      &#34;created&#34;: &#34;2020-09-18T16:18:12.462196367Z&#34;,
+      &#34;created_by&#34;: &#34;/bin/sh -c #(nop)  ARG RESTY_LUAJIT_OPTIONS=--with-luajit-xcflags=&#39;-DLUAJIT_NUMMODE=2 -DLUAJIT_ENABLE_LUA52COMPAT&#39;&#34;,
+      &#34;empty_layer&#34;: true
+    },
+    {
+      &#34;created&#34;: &#34;2020-09-18T16:18:12.553726712Z&#34;,
+      &#34;created_by&#34;: &#34;/bin/sh -c #(nop)  ARG RESTY_ADD_PACKAGE_BUILDDEPS=&#34;,
+      &#34;empty_layer&#34;: true
+    },
+    {
+      &#34;created&#34;: &#34;2020-09-18T16:18:12.644512619Z&#34;,
+      &#34;created_by&#34;: &#34;/bin/sh -c #(nop)  ARG RESTY_ADD_PACKAGE_RUNDEPS=&#34;,
+      &#34;empty_layer&#34;: true
+    },
+    {
+      &#34;created&#34;: &#34;2020-09-18T16:18:12.740127392Z&#34;,
+      &#34;created_by&#34;: &#34;/bin/sh -c #(nop)  ARG RESTY_EVAL_PRE_CONFIGURE=&#34;,
+      &#34;empty_layer&#34;: true
+    },
+    {
+      &#34;created&#34;: &#34;2020-09-18T16:18:12.833898538Z&#34;,
+      &#34;created_by&#34;: &#34;/bin/sh -c #(nop)  ARG RESTY_EVAL_POST_MAKE=&#34;,
+      &#34;empty_layer&#34;: true
+    },
+    {
+      &#34;created&#34;: &#34;2020-09-18T16:18:12.93159843Z&#34;,
+      &#34;created_by&#34;: &#34;/bin/sh -c #(nop)  ARG _RESTY_CONFIG_DEPS=--with-pcre     --with-cc-opt=&#39;-DNGX_LUA_ABORT_AT_PANIC -I/usr/local/openresty/pcre/include -I/usr/local/openresty/openssl/include&#39;     --with-ld-opt=&#39;-L/usr/local/openresty/pcre/lib -L/usr/local/openresty/openssl/lib -Wl,-rpath,/usr/local/openresty/pcre/lib:/usr/local/openresty/openssl/lib&#39;     &#34;,
+      &#34;empty_layer&#34;: true
+    },
+    {
+      &#34;created&#34;: &#34;2020-09-18T16:18:13.022542363Z&#34;,
+      &#34;created_by&#34;: &#34;/bin/sh -c #(nop)  LABEL resty_image_base=alpine&#34;,
+      &#34;empty_layer&#34;: true
+    },
+    {
+      &#34;created&#34;: &#34;2020-09-18T16:18:13.120036187Z&#34;,
+      &#34;created_by&#34;: &#34;/bin/sh -c #(nop)  LABEL resty_image_tag=3.12&#34;,
+      &#34;empty_layer&#34;: true
+    },
+    {
+      &#34;created&#34;: &#34;2020-09-18T16:18:13.20899948Z&#34;,
+      &#34;created_by&#34;: &#34;/bin/sh -c #(nop)  LABEL resty_version=1.17.8.2&#34;,
+      &#34;empty_layer&#34;: true
+    },
+    {
+      &#34;created&#34;: &#34;2020-09-18T16:18:13.292383125Z&#34;,
+      &#34;created_by&#34;: &#34;/bin/sh -c #(nop)  LABEL resty_openssl_version=1.1.1g&#34;,
+      &#34;empty_layer&#34;: true
+    },
+    {
+      &#34;created&#34;: &#34;2020-09-18T16:18:13.385097561Z&#34;,
+      &#34;created_by&#34;: &#34;/bin/sh -c #(nop)  LABEL resty_openssl_patch_version=1.1.1f&#34;,
+      &#34;empty_layer&#34;: true
+    },
+    {
+      &#34;created&#34;: &#34;2020-09-18T16:18:13.476173083Z&#34;,
+      &#34;created_by&#34;: &#34;/bin/sh -c #(nop)  LABEL resty_openssl_url_base=https://www.openssl.org/source&#34;,
+      &#34;empty_layer&#34;: true
+    },
+    {
+      &#34;created&#34;: &#34;2020-09-18T16:18:13.564110015Z&#34;,
+      &#34;created_by&#34;: &#34;/bin/sh -c #(nop)  LABEL resty_pcre_version=8.44&#34;,
+      &#34;empty_layer&#34;: true
+    },
+    {
+      &#34;created&#34;: &#34;2020-09-18T16:18:13.653688493Z&#34;,
+      &#34;created_by&#34;: &#34;/bin/sh -c #(nop)  LABEL resty_config_options=    --with-compat     --with-file-aio     --with-http_addition_module     --with-http_auth_request_module     --with-http_dav_module     --with-http_flv_module     --with-http_geoip_module=dynamic     --with-http_gunzip_module     --with-http_gzip_static_module     --with-http_image_filter_module=dynamic     --with-http_mp4_module     --with-http_random_index_module     --with-http_realip_module     --with-http_secure_link_module     --with-http_slice_module     --with-http_ssl_module     --with-http_stub_status_module     --with-http_sub_module     --with-http_v2_module     --with-http_xslt_module=dynamic     --with-ipv6     --with-mail     --with-mail_ssl_module     --with-md5-asm     --with-pcre-jit     --with-sha1-asm     --with-stream     --with-stream_ssl_module     --with-threads     &#34;,
+      &#34;empty_layer&#34;: true
+    },
+    {
+      &#34;created&#34;: &#34;2020-09-18T16:18:13.747250902Z&#34;,
+      &#34;created_by&#34;: &#34;/bin/sh -c #(nop)  LABEL resty_config_options_more=&#34;,
+      &#34;empty_layer&#34;: true
+    },
+    {
+      &#34;created&#34;: &#34;2020-09-18T16:18:13.839314208Z&#34;,
+      &#34;created_by&#34;: &#34;/bin/sh -c #(nop)  LABEL resty_config_deps=--with-pcre     --with-cc-opt=&#39;-DNGX_LUA_ABORT_AT_PANIC -I/usr/local/openresty/pcre/include -I/usr/local/openresty/openssl/include&#39;     --with-ld-opt=&#39;-L/usr/local/openresty/pcre/lib -L/usr/local/openresty/openssl/lib -Wl,-rpath,/usr/local/openresty/pcre/lib:/usr/local/openresty/openssl/lib&#39;     &#34;,
+      &#34;empty_layer&#34;: true
+    },
+    {
+      &#34;created&#34;: &#34;2020-09-18T16:18:13.938461929Z&#34;,
+      &#34;created_by&#34;: &#34;/bin/sh -c #(nop)  LABEL resty_add_package_builddeps=&#34;,
+      &#34;empty_layer&#34;: true
+    },
+    {
+      &#34;created&#34;: &#34;2020-09-18T16:18:14.023327305Z&#34;,
+      &#34;created_by&#34;: &#34;/bin/sh -c #(nop)  LABEL resty_add_package_rundeps=&#34;,
+      &#34;empty_layer&#34;: true
+    },
+    {
+      &#34;created&#34;: &#34;2020-09-18T16:18:14.111176277Z&#34;,
+      &#34;created_by&#34;: &#34;/bin/sh -c #(nop)  LABEL resty_eval_pre_configure=&#34;,
+      &#34;empty_layer&#34;: true
+    },
+    {
+      &#34;created&#34;: &#34;2020-09-18T16:18:14.211102965Z&#34;,
+      &#34;created_by&#34;: &#34;/bin/sh -c #(nop)  LABEL resty_eval_post_make=&#34;,
+      &#34;empty_layer&#34;: true
+    },
+    {
+      &#34;created&#34;: &#34;2020-09-18T16:25:10.276243663Z&#34;,
+      &#34;created_by&#34;: &#34;|16 RESTY_ADD_PACKAGE_BUILDDEPS= RESTY_ADD_PACKAGE_RUNDEPS= RESTY_CONFIG_OPTIONS=    --with-compat     --with-file-aio     --with-http_addition_module     --with-http_auth_request_module     --with-http_dav_module     --with-http_flv_module     --with-http_geoip_module=dynamic     --with-http_gunzip_module     --with-http_gzip_static_module     --with-http_image_filter_module=dynamic     --with-http_mp4_module     --with-http_random_index_module     --with-http_realip_module     --with-http_secure_link_module     --with-http_slice_module     --with-http_ssl_module     --with-http_stub_status_module     --with-http_sub_module     --with-http_v2_module     --with-http_xslt_module=dynamic     --with-ipv6     --with-mail     --with-mail_ssl_module     --with-md5-asm     --with-pcre-jit     --with-sha1-asm     --with-stream     --with-stream_ssl_module     --with-threads      RESTY_CONFIG_OPTIONS_MORE= RESTY_EVAL_POST_MAKE= RESTY_EVAL_PRE_CONFIGURE= RESTY_IMAGE_BASE=alpine RESTY_IMAGE_TAG=3.12 RESTY_J=1 RESTY_LUAJIT_OPTIONS=--with-luajit-xcflags=&#39;-DLUAJIT_NUMMODE=2 -DLUAJIT_ENABLE_LUA52COMPAT&#39; RESTY_OPENSSL_PATCH_VERSION=1.1.1f RESTY_OPENSSL_URL_BASE=https://www.openssl.org/source RESTY_OPENSSL_VERSION=1.1.1g RESTY_PCRE_VERSION=8.44 RESTY_VERSION=1.17.8.2 _RESTY_CONFIG_DEPS=--with-pcre     --with-cc-opt=&#39;-DNGX_LUA_ABORT_AT_PANIC -I/usr/local/openresty/pcre/include -I/usr/local/openresty/openssl/include&#39;     --with-ld-opt=&#39;-L/usr/local/openresty/pcre/lib -L/usr/local/openresty/openssl/lib -Wl,-rpath,/usr/local/openresty/pcre/lib:/usr/local/openresty/openssl/lib&#39;      /bin/sh -c apk add --no-cache --virtual .build-deps         build-base         coreutils         curl         gd-dev         geoip-dev         libxslt-dev         linux-headers         make         perl-dev         readline-dev         zlib-dev         ${RESTY_ADD_PACKAGE_BUILDDEPS}     &amp;&amp; apk add --no-cache         gd         geoip         libgcc         libxslt         zlib         ${RESTY_ADD_PACKAGE_RUNDEPS}     &amp;&amp; cd /tmp     &amp;&amp; if [ -n \&#34;${RESTY_EVAL_PRE_CONFIGURE}\&#34; ]; then eval $(echo ${RESTY_EVAL_PRE_CONFIGURE}); fi     &amp;&amp; cd /tmp     &amp;&amp; curl -fSL \&#34;${RESTY_OPENSSL_URL_BASE}/openssl-${RESTY_OPENSSL_VERSION}.tar.gz\&#34; -o openssl-${RESTY_OPENSSL_VERSION}.tar.gz     &amp;&amp; tar xzf openssl-${RESTY_OPENSSL_VERSION}.tar.gz     &amp;&amp; cd openssl-${RESTY_OPENSSL_VERSION}     &amp;&amp; if [ $(echo ${RESTY_OPENSSL_VERSION} | cut -c 1-5) = \&#34;1.1.1\&#34; ] ; then         echo &#39;patching OpenSSL 1.1.1 for OpenResty&#39;         &amp;&amp; curl -s https://raw.githubusercontent.com/openresty/openresty/master/patches/openssl-${RESTY_OPENSSL_PATCH_VERSION}-sess_set_get_cb_yield.patch | patch -p1 ;     fi     &amp;&amp; if [ $(echo ${RESTY_OPENSSL_VERSION} | cut -c 1-5) = \&#34;1.1.0\&#34; ] ; then         echo &#39;patching OpenSSL 1.1.0 for OpenResty&#39;         &amp;&amp; curl -s https://raw.githubusercontent.com/openresty/openresty/ed328977028c3ec3033bc25873ee360056e247cd/patches/openssl-1.1.0j-parallel_build_fix.patch | patch -p1         &amp;&amp; curl -s https://raw.githubusercontent.com/openresty/openresty/master/patches/openssl-${RESTY_OPENSSL_PATCH_VERSION}-sess_set_get_cb_yield.patch | patch -p1 ;     fi     &amp;&amp; ./config       no-threads shared zlib -g       enable-ssl3 enable-ssl3-method       --prefix=/usr/local/openresty/openssl       --libdir=lib       -Wl,-rpath,/usr/local/openresty/openssl/lib     &amp;&amp; make -j${RESTY_J}     &amp;&amp; make -j${RESTY_J} install_sw     &amp;&amp; cd /tmp     &amp;&amp; curl -fSL https://ftp.pcre.org/pub/pcre/pcre-${RESTY_PCRE_VERSION}.tar.gz -o pcre-${RESTY_PCRE_VERSION}.tar.gz     &amp;&amp; tar xzf pcre-${RESTY_PCRE_VERSION}.tar.gz     &amp;&amp; cd /tmp/pcre-${RESTY_PCRE_VERSION}     &amp;&amp; ./configure         --prefix=/usr/local/openresty/pcre         --disable-cpp         --enable-jit         --enable-utf         --enable-unicode-properties     &amp;&amp; make -j${RESTY_J}     &amp;&amp; make -j${RESTY_J} install     &amp;&amp; cd /tmp     &amp;&amp; curl -fSL https://openresty.org/download/openresty-${RESTY_VERSION}.tar.gz -o openresty-${RESTY_VERSION}.tar.gz     &amp;&amp; tar xzf openresty-${RESTY_VERSION}.tar.gz     &amp;&amp; cd /tmp/openresty-${RESTY_VERSION}     &amp;&amp; eval ./configure -j${RESTY_J} ${_RESTY_CONFIG_DEPS} ${RESTY_CONFIG_OPTIONS} ${RESTY_CONFIG_OPTIONS_MORE} ${RESTY_LUAJIT_OPTIONS}     &amp;&amp; make -j${RESTY_J}     &amp;&amp; make -j${RESTY_J} install     &amp;&amp; cd /tmp     &amp;&amp; if [ -n \&#34;${RESTY_EVAL_POST_MAKE}\&#34; ]; then eval $(echo ${RESTY_EVAL_POST_MAKE}); fi     &amp;&amp; rm -rf         openssl-${RESTY_OPENSSL_VERSION}.tar.gz openssl-${RESTY_OPENSSL_VERSION}         pcre-${RESTY_PCRE_VERSION}.tar.gz pcre-${RESTY_PCRE_VERSION}         openresty-${RESTY_VERSION}.tar.gz openresty-${RESTY_VERSION}     &amp;&amp; apk del .build-deps     &amp;&amp; mkdir -p /var/run/openresty     &amp;&amp; ln -sf /dev/stdout /usr/local/openresty/nginx/logs/access.log     &amp;&amp; ln -sf /dev/stderr /usr/local/openresty/nginx/logs/error.log&#34;
+    },
+    {
+      &#34;created&#34;: &#34;2020-09-18T16:25:10.712994475Z&#34;,
+      &#34;created_by&#34;: &#34;/bin/sh -c #(nop)  ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin&#34;,
+      &#34;empty_layer&#34;: true
+    },
+    {
+      &#34;created&#34;: &#34;2020-09-18T16:25:10.806730628Z&#34;,
+      &#34;created_by&#34;: &#34;/bin/sh -c #(nop) COPY file:871e3c814ada8b73d3bd53e819bd122b5612587624e3eb6ef6e97d83522238fc in /usr/local/openresty/nginx/conf/nginx.conf &#34;
+    },
+    {
+      &#34;created&#34;: &#34;2020-09-18T16:25:10.8995482Z&#34;,
+      &#34;created_by&#34;: &#34;/bin/sh -c #(nop) COPY file:1832501c6083278533ce3d09a4140cc30795ddf825ad6a0ad52ea84858291e53 in /etc/nginx/conf.d/default.conf &#34;
+    },
+    {
+      &#34;created&#34;: &#34;2020-09-18T16:25:10.984062974Z&#34;,
+      &#34;created_by&#34;: &#34;/bin/sh -c #(nop)  CMD [\&#34;/usr/local/openresty/bin/openresty\&#34; \&#34;-g\&#34; \&#34;daemon off;\&#34;]&#34;,
+      &#34;empty_layer&#34;: true
+    },
+    {
+      &#34;created&#34;: &#34;2020-09-18T16:25:11.080239395Z&#34;,
+      &#34;created_by&#34;: &#34;/bin/sh -c #(nop)  STOPSIGNAL SIGQUIT&#34;,
+      &#34;empty_layer&#34;: true
+    }
+  ],
+  &#34;os&#34;: &#34;linux&#34;,
+  &#34;rootfs&#34;: {
+    &#34;type&#34;: &#34;layers&#34;,
+    &#34;diff_ids&#34;: [
+      &#34;sha256:50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a&#34;,
+      &#34;sha256:9c572ba82b91e3ac35c7351bdacc6876c67f5d9bc69c5e51e8b2deeafae95e4f&#34;,
+      &#34;sha256:1680a9f16b18732726d0656b6d6ff9611a3c4460ca870827b537a87bbe10cc22&#34;,
+      &#34;sha256:8521b614863046bf4bb604e3586feeca8b7ce1372f1d6664a5545e85ad9ca472&#34;
+    ]
+  }
+}
 </code></pre></td></tr></table>
 </div>
 </div><p>可以看到这个里面是保存了镜像的元信息，这是再执行一下 <code>docker inspect 1ddc7a18ba0b </code> ,会发现它们的输出是出奇的相似 :</p>
@@ -1321,138 +1321,138 @@ image/overlay2/imagedb/
 </span><span class="lnt">132
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># docker inspect 1ddc7a18ba0b</span> 
-<span class="o">[</span>
-    <span class="o">{</span>
-        <span class="s2">&#34;Id&#34;</span>: <span class="s2">&#34;sha256:1ddc7a18ba0bcc20c61447f391bfff98ac559eea590e7ac59b5b5f588f1f47ed&#34;</span>,
-        <span class="s2">&#34;RepoTags&#34;</span>: <span class="o">[</span>
-            <span class="s2">&#34;openresty/openresty:1.17.8.2-5-alpine&#34;</span>,
-            <span class="s2">&#34;russellgao/openresty:1.17.8.2-5-alpine&#34;</span>
-        <span class="o">]</span>,
-        <span class="s2">&#34;RepoDigests&#34;</span>: <span class="o">[</span>
-            <span class="s2">&#34;openresty/openresty@sha256:224ced85b5f8b679a8664a39b69c1b8feb09f8ba4343d834bd5b69433081389e&#34;</span>,
-            <span class="s2">&#34;russellgao/openresty@sha256:84f53dc7517e9b6695fc8fd74916a1eb5970a92fc24a984f99bfb81508f3d261&#34;</span>
-        <span class="o">]</span>,
-        <span class="s2">&#34;Parent&#34;</span>: <span class="s2">&#34;&#34;</span>,
-        <span class="s2">&#34;Comment&#34;</span>: <span class="s2">&#34;&#34;</span>,
-        <span class="s2">&#34;Created&#34;</span>: <span class="s2">&#34;2020-09-18T16:25:11.080239395Z&#34;</span>,
-        <span class="s2">&#34;Container&#34;</span>: <span class="s2">&#34;0ae35046dd1afef0f1f525360939abc524dbd469a92470c5836dfbb7dc666923&#34;</span>,
-        <span class="s2">&#34;ContainerConfig&#34;</span>: <span class="o">{</span>
-            <span class="s2">&#34;Hostname&#34;</span>: <span class="s2">&#34;0ae35046dd1a&#34;</span>,
-            <span class="s2">&#34;Domainname&#34;</span>: <span class="s2">&#34;&#34;</span>,
-            <span class="s2">&#34;User&#34;</span>: <span class="s2">&#34;&#34;</span>,
-            <span class="s2">&#34;AttachStdin&#34;</span>: false,
-            <span class="s2">&#34;AttachStdout&#34;</span>: false,
-            <span class="s2">&#34;AttachStderr&#34;</span>: false,
-            <span class="s2">&#34;Tty&#34;</span>: false,
-            <span class="s2">&#34;OpenStdin&#34;</span>: false,
-            <span class="s2">&#34;StdinOnce&#34;</span>: false,
-            <span class="s2">&#34;Env&#34;</span>: <span class="o">[</span>
-                <span class="s2">&#34;PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin&#34;</span>
-            <span class="o">]</span>,
-            <span class="s2">&#34;Cmd&#34;</span>: <span class="o">[</span>
-                <span class="s2">&#34;/bin/sh&#34;</span>,
-                <span class="s2">&#34;-c&#34;</span>,
-                <span class="s2">&#34;#(nop) &#34;</span>,
-                <span class="s2">&#34;STOPSIGNAL SIGQUIT&#34;</span>
-            <span class="o">]</span>,
-            <span class="s2">&#34;ArgsEscaped&#34;</span>: true,
-            <span class="s2">&#34;Image&#34;</span>: <span class="s2">&#34;sha256:0b827067ad09ab8a0b9a73a45f5b1c408b84db1ca6883a4c544078ed43b8b5e3&#34;</span>,
-            <span class="s2">&#34;Volumes&#34;</span>: null,
-            <span class="s2">&#34;WorkingDir&#34;</span>: <span class="s2">&#34;&#34;</span>,
-            <span class="s2">&#34;Entrypoint&#34;</span>: null,
-            <span class="s2">&#34;OnBuild&#34;</span>: null,
-            <span class="s2">&#34;Labels&#34;</span>: <span class="o">{</span>
-                <span class="s2">&#34;maintainer&#34;</span>: <span class="s2">&#34;Evan Wies &lt;evan@neomantra.net&gt;&#34;</span>,
-                <span class="s2">&#34;resty_add_package_builddeps&#34;</span>: <span class="s2">&#34;&#34;</span>,
-                <span class="s2">&#34;resty_add_package_rundeps&#34;</span>: <span class="s2">&#34;&#34;</span>,
-                <span class="s2">&#34;resty_config_deps&#34;</span>: <span class="s2">&#34;--with-pcre     --with-cc-opt=&#39;-DNGX_LUA_ABORT_AT_PANIC -I/usr/local/openresty/pcre/include -I/usr/local/openresty/openssl/include&#39;     --with-ld-opt=&#39;-L/usr/local/openresty/pcre/lib -L/usr/local/openresty/openssl/lib -Wl,-rpath,/usr/local/openresty/pcre/lib:/usr/local/openresty/openssl/lib&#39;     &#34;</span>,
-                <span class="s2">&#34;resty_config_options&#34;</span>: <span class="s2">&#34;    --with-compat     --with-file-aio     --with-http_addition_module     --with-http_auth_request_module     --with-http_dav_module     --with-http_flv_module     --with-http_geoip_module=dynamic     --with-http_gunzip_module     --with-http_gzip_static_module     --with-http_image_filter_module=dynamic     --with-http_mp4_module     --with-http_random_index_module     --with-http_realip_module     --with-http_secure_link_module     --with-http_slice_module     --with-http_ssl_module     --with-http_stub_status_module     --with-http_sub_module     --with-http_v2_module     --with-http_xslt_module=dynamic     --with-ipv6     --with-mail     --with-mail_ssl_module     --with-md5-asm     --with-pcre-jit     --with-sha1-asm     --with-stream     --with-stream_ssl_module     --with-threads     &#34;</span>,
-                <span class="s2">&#34;resty_config_options_more&#34;</span>: <span class="s2">&#34;&#34;</span>,
-                <span class="s2">&#34;resty_eval_post_make&#34;</span>: <span class="s2">&#34;&#34;</span>,
-                <span class="s2">&#34;resty_eval_pre_configure&#34;</span>: <span class="s2">&#34;&#34;</span>,
-                <span class="s2">&#34;resty_image_base&#34;</span>: <span class="s2">&#34;alpine&#34;</span>,
-                <span class="s2">&#34;resty_image_tag&#34;</span>: <span class="s2">&#34;3.12&#34;</span>,
-                <span class="s2">&#34;resty_openssl_patch_version&#34;</span>: <span class="s2">&#34;1.1.1f&#34;</span>,
-                <span class="s2">&#34;resty_openssl_url_base&#34;</span>: <span class="s2">&#34;https://www.openssl.org/source&#34;</span>,
-                <span class="s2">&#34;resty_openssl_version&#34;</span>: <span class="s2">&#34;1.1.1g&#34;</span>,
-                <span class="s2">&#34;resty_pcre_version&#34;</span>: <span class="s2">&#34;8.44&#34;</span>,
-                <span class="s2">&#34;resty_version&#34;</span>: <span class="s2">&#34;1.17.8.2&#34;</span>
-            <span class="o">}</span>,
-            <span class="s2">&#34;StopSignal&#34;</span>: <span class="s2">&#34;SIGQUIT&#34;</span>
-        <span class="o">}</span>,
-        <span class="s2">&#34;DockerVersion&#34;</span>: <span class="s2">&#34;18.06.0-ce&#34;</span>,
-        <span class="s2">&#34;Author&#34;</span>: <span class="s2">&#34;&#34;</span>,
-        <span class="s2">&#34;Config&#34;</span>: <span class="o">{</span>
-            <span class="s2">&#34;Hostname&#34;</span>: <span class="s2">&#34;&#34;</span>,
-            <span class="s2">&#34;Domainname&#34;</span>: <span class="s2">&#34;&#34;</span>,
-            <span class="s2">&#34;User&#34;</span>: <span class="s2">&#34;&#34;</span>,
-            <span class="s2">&#34;AttachStdin&#34;</span>: false,
-            <span class="s2">&#34;AttachStdout&#34;</span>: false,
-            <span class="s2">&#34;AttachStderr&#34;</span>: false,
-            <span class="s2">&#34;Tty&#34;</span>: false,
-            <span class="s2">&#34;OpenStdin&#34;</span>: false,
-            <span class="s2">&#34;StdinOnce&#34;</span>: false,
-            <span class="s2">&#34;Env&#34;</span>: <span class="o">[</span>
-                <span class="s2">&#34;PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin&#34;</span>
-            <span class="o">]</span>,
-            <span class="s2">&#34;Cmd&#34;</span>: <span class="o">[</span>
-                <span class="s2">&#34;/usr/local/openresty/bin/openresty&#34;</span>,
-                <span class="s2">&#34;-g&#34;</span>,
-                <span class="s2">&#34;daemon off;&#34;</span>
-            <span class="o">]</span>,
-            <span class="s2">&#34;ArgsEscaped&#34;</span>: true,
-            <span class="s2">&#34;Image&#34;</span>: <span class="s2">&#34;sha256:0b827067ad09ab8a0b9a73a45f5b1c408b84db1ca6883a4c544078ed43b8b5e3&#34;</span>,
-            <span class="s2">&#34;Volumes&#34;</span>: null,
-            <span class="s2">&#34;WorkingDir&#34;</span>: <span class="s2">&#34;&#34;</span>,
-            <span class="s2">&#34;Entrypoint&#34;</span>: null,
-            <span class="s2">&#34;OnBuild&#34;</span>: null,
-            <span class="s2">&#34;Labels&#34;</span>: <span class="o">{</span>
-                <span class="s2">&#34;maintainer&#34;</span>: <span class="s2">&#34;Evan Wies &lt;evan@neomantra.net&gt;&#34;</span>,
-                <span class="s2">&#34;resty_add_package_builddeps&#34;</span>: <span class="s2">&#34;&#34;</span>,
-                <span class="s2">&#34;resty_add_package_rundeps&#34;</span>: <span class="s2">&#34;&#34;</span>,
-                <span class="s2">&#34;resty_config_deps&#34;</span>: <span class="s2">&#34;--with-pcre     --with-cc-opt=&#39;-DNGX_LUA_ABORT_AT_PANIC -I/usr/local/openresty/pcre/include -I/usr/local/openresty/openssl/include&#39;     --with-ld-opt=&#39;-L/usr/local/openresty/pcre/lib -L/usr/local/openresty/openssl/lib -Wl,-rpath,/usr/local/openresty/pcre/lib:/usr/local/openresty/openssl/lib&#39;     &#34;</span>,
-                <span class="s2">&#34;resty_config_options&#34;</span>: <span class="s2">&#34;    --with-compat     --with-file-aio     --with-http_addition_module     --with-http_auth_request_module     --with-http_dav_module     --with-http_flv_module     --with-http_geoip_module=dynamic     --with-http_gunzip_module     --with-http_gzip_static_module     --with-http_image_filter_module=dynamic     --with-http_mp4_module     --with-http_random_index_module     --with-http_realip_module     --with-http_secure_link_module     --with-http_slice_module     --with-http_ssl_module     --with-http_stub_status_module     --with-http_sub_module     --with-http_v2_module     --with-http_xslt_module=dynamic     --with-ipv6     --with-mail     --with-mail_ssl_module     --with-md5-asm     --with-pcre-jit     --with-sha1-asm     --with-stream     --with-stream_ssl_module     --with-threads     &#34;</span>,
-                <span class="s2">&#34;resty_config_options_more&#34;</span>: <span class="s2">&#34;&#34;</span>,
-                <span class="s2">&#34;resty_eval_post_make&#34;</span>: <span class="s2">&#34;&#34;</span>,
-                <span class="s2">&#34;resty_eval_pre_configure&#34;</span>: <span class="s2">&#34;&#34;</span>,
-                <span class="s2">&#34;resty_image_base&#34;</span>: <span class="s2">&#34;alpine&#34;</span>,
-                <span class="s2">&#34;resty_image_tag&#34;</span>: <span class="s2">&#34;3.12&#34;</span>,
-                <span class="s2">&#34;resty_openssl_patch_version&#34;</span>: <span class="s2">&#34;1.1.1f&#34;</span>,
-                <span class="s2">&#34;resty_openssl_url_base&#34;</span>: <span class="s2">&#34;https://www.openssl.org/source&#34;</span>,
-                <span class="s2">&#34;resty_openssl_version&#34;</span>: <span class="s2">&#34;1.1.1g&#34;</span>,
-                <span class="s2">&#34;resty_pcre_version&#34;</span>: <span class="s2">&#34;8.44&#34;</span>,
-                <span class="s2">&#34;resty_version&#34;</span>: <span class="s2">&#34;1.17.8.2&#34;</span>
-            <span class="o">}</span>,
-            <span class="s2">&#34;StopSignal&#34;</span>: <span class="s2">&#34;SIGQUIT&#34;</span>
-        <span class="o">}</span>,
-        <span class="s2">&#34;Architecture&#34;</span>: <span class="s2">&#34;amd64&#34;</span>,
-        <span class="s2">&#34;Os&#34;</span>: <span class="s2">&#34;linux&#34;</span>,
-        <span class="s2">&#34;Size&#34;</span>: 103896354,
-        <span class="s2">&#34;VirtualSize&#34;</span>: 103896354,
-        <span class="s2">&#34;GraphDriver&#34;</span>: <span class="o">{</span>
-            <span class="s2">&#34;Data&#34;</span>: <span class="o">{</span>
-                <span class="s2">&#34;LowerDir&#34;</span>: <span class="s2">&#34;/var/lib/docker/overlay2/00b65b9c288df8c0ae7cdacba531a7dc5cb006e6c768e19ee36055717b782acc/diff:/var/lib/docker/overlay2/f1cf8b173467c98e08f3d276d7ccd8f9892c7c71dec2c4b335c39c6f175ae744/diff:/var/lib/docker/overlay2/8cbfb8b74c887e780747c8e6f4b3b9223a513ff6d69770bac16abb76da4e314f/diff&#34;</span>,
-                <span class="s2">&#34;MergedDir&#34;</span>: <span class="s2">&#34;/var/lib/docker/overlay2/5da215c4f218cbb1d9825fa111c21bf381dc35a9e6c7c6cd5c3ea952316031e4/merged&#34;</span>,
-                <span class="s2">&#34;UpperDir&#34;</span>: <span class="s2">&#34;/var/lib/docker/overlay2/5da215c4f218cbb1d9825fa111c21bf381dc35a9e6c7c6cd5c3ea952316031e4/diff&#34;</span>,
-                <span class="s2">&#34;WorkDir&#34;</span>: <span class="s2">&#34;/var/lib/docker/overlay2/5da215c4f218cbb1d9825fa111c21bf381dc35a9e6c7c6cd5c3ea952316031e4/work&#34;</span>
-            <span class="o">}</span>,
-            <span class="s2">&#34;Name&#34;</span>: <span class="s2">&#34;overlay2&#34;</span>
-        <span class="o">}</span>,
-        <span class="s2">&#34;RootFS&#34;</span>: <span class="o">{</span>
-            <span class="s2">&#34;Type&#34;</span>: <span class="s2">&#34;layers&#34;</span>,
-            <span class="s2">&#34;Layers&#34;</span>: <span class="o">[</span>
-                <span class="s2">&#34;sha256:50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a&#34;</span>,
-                <span class="s2">&#34;sha256:9c572ba82b91e3ac35c7351bdacc6876c67f5d9bc69c5e51e8b2deeafae95e4f&#34;</span>,
-                <span class="s2">&#34;sha256:1680a9f16b18732726d0656b6d6ff9611a3c4460ca870827b537a87bbe10cc22&#34;</span>,
-                <span class="s2">&#34;sha256:8521b614863046bf4bb604e3586feeca8b7ce1372f1d6664a5545e85ad9ca472&#34;</span>
-            <span class="o">]</span>
-        <span class="o">}</span>,
-        <span class="s2">&#34;Metadata&#34;</span>: <span class="o">{</span>
-            <span class="s2">&#34;LastTagTime&#34;</span>: <span class="s2">&#34;2020-11-11T13:35:12.051705855+08:00&#34;</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-<span class="o">]</span>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@iZuf685opgs9oyozju9i2bZ docker]# docker inspect 1ddc7a18ba0b 
+[
+    {
+        &#34;Id&#34;: &#34;sha256:1ddc7a18ba0bcc20c61447f391bfff98ac559eea590e7ac59b5b5f588f1f47ed&#34;,
+        &#34;RepoTags&#34;: [
+            &#34;openresty/openresty:1.17.8.2-5-alpine&#34;,
+            &#34;russellgao/openresty:1.17.8.2-5-alpine&#34;
+        ],
+        &#34;RepoDigests&#34;: [
+            &#34;openresty/openresty@sha256:224ced85b5f8b679a8664a39b69c1b8feb09f8ba4343d834bd5b69433081389e&#34;,
+            &#34;russellgao/openresty@sha256:84f53dc7517e9b6695fc8fd74916a1eb5970a92fc24a984f99bfb81508f3d261&#34;
+        ],
+        &#34;Parent&#34;: &#34;&#34;,
+        &#34;Comment&#34;: &#34;&#34;,
+        &#34;Created&#34;: &#34;2020-09-18T16:25:11.080239395Z&#34;,
+        &#34;Container&#34;: &#34;0ae35046dd1afef0f1f525360939abc524dbd469a92470c5836dfbb7dc666923&#34;,
+        &#34;ContainerConfig&#34;: {
+            &#34;Hostname&#34;: &#34;0ae35046dd1a&#34;,
+            &#34;Domainname&#34;: &#34;&#34;,
+            &#34;User&#34;: &#34;&#34;,
+            &#34;AttachStdin&#34;: false,
+            &#34;AttachStdout&#34;: false,
+            &#34;AttachStderr&#34;: false,
+            &#34;Tty&#34;: false,
+            &#34;OpenStdin&#34;: false,
+            &#34;StdinOnce&#34;: false,
+            &#34;Env&#34;: [
+                &#34;PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin&#34;
+            ],
+            &#34;Cmd&#34;: [
+                &#34;/bin/sh&#34;,
+                &#34;-c&#34;,
+                &#34;#(nop) &#34;,
+                &#34;STOPSIGNAL SIGQUIT&#34;
+            ],
+            &#34;ArgsEscaped&#34;: true,
+            &#34;Image&#34;: &#34;sha256:0b827067ad09ab8a0b9a73a45f5b1c408b84db1ca6883a4c544078ed43b8b5e3&#34;,
+            &#34;Volumes&#34;: null,
+            &#34;WorkingDir&#34;: &#34;&#34;,
+            &#34;Entrypoint&#34;: null,
+            &#34;OnBuild&#34;: null,
+            &#34;Labels&#34;: {
+                &#34;maintainer&#34;: &#34;Evan Wies &lt;evan@neomantra.net&gt;&#34;,
+                &#34;resty_add_package_builddeps&#34;: &#34;&#34;,
+                &#34;resty_add_package_rundeps&#34;: &#34;&#34;,
+                &#34;resty_config_deps&#34;: &#34;--with-pcre     --with-cc-opt=&#39;-DNGX_LUA_ABORT_AT_PANIC -I/usr/local/openresty/pcre/include -I/usr/local/openresty/openssl/include&#39;     --with-ld-opt=&#39;-L/usr/local/openresty/pcre/lib -L/usr/local/openresty/openssl/lib -Wl,-rpath,/usr/local/openresty/pcre/lib:/usr/local/openresty/openssl/lib&#39;     &#34;,
+                &#34;resty_config_options&#34;: &#34;    --with-compat     --with-file-aio     --with-http_addition_module     --with-http_auth_request_module     --with-http_dav_module     --with-http_flv_module     --with-http_geoip_module=dynamic     --with-http_gunzip_module     --with-http_gzip_static_module     --with-http_image_filter_module=dynamic     --with-http_mp4_module     --with-http_random_index_module     --with-http_realip_module     --with-http_secure_link_module     --with-http_slice_module     --with-http_ssl_module     --with-http_stub_status_module     --with-http_sub_module     --with-http_v2_module     --with-http_xslt_module=dynamic     --with-ipv6     --with-mail     --with-mail_ssl_module     --with-md5-asm     --with-pcre-jit     --with-sha1-asm     --with-stream     --with-stream_ssl_module     --with-threads     &#34;,
+                &#34;resty_config_options_more&#34;: &#34;&#34;,
+                &#34;resty_eval_post_make&#34;: &#34;&#34;,
+                &#34;resty_eval_pre_configure&#34;: &#34;&#34;,
+                &#34;resty_image_base&#34;: &#34;alpine&#34;,
+                &#34;resty_image_tag&#34;: &#34;3.12&#34;,
+                &#34;resty_openssl_patch_version&#34;: &#34;1.1.1f&#34;,
+                &#34;resty_openssl_url_base&#34;: &#34;https://www.openssl.org/source&#34;,
+                &#34;resty_openssl_version&#34;: &#34;1.1.1g&#34;,
+                &#34;resty_pcre_version&#34;: &#34;8.44&#34;,
+                &#34;resty_version&#34;: &#34;1.17.8.2&#34;
+            },
+            &#34;StopSignal&#34;: &#34;SIGQUIT&#34;
+        },
+        &#34;DockerVersion&#34;: &#34;18.06.0-ce&#34;,
+        &#34;Author&#34;: &#34;&#34;,
+        &#34;Config&#34;: {
+            &#34;Hostname&#34;: &#34;&#34;,
+            &#34;Domainname&#34;: &#34;&#34;,
+            &#34;User&#34;: &#34;&#34;,
+            &#34;AttachStdin&#34;: false,
+            &#34;AttachStdout&#34;: false,
+            &#34;AttachStderr&#34;: false,
+            &#34;Tty&#34;: false,
+            &#34;OpenStdin&#34;: false,
+            &#34;StdinOnce&#34;: false,
+            &#34;Env&#34;: [
+                &#34;PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin&#34;
+            ],
+            &#34;Cmd&#34;: [
+                &#34;/usr/local/openresty/bin/openresty&#34;,
+                &#34;-g&#34;,
+                &#34;daemon off;&#34;
+            ],
+            &#34;ArgsEscaped&#34;: true,
+            &#34;Image&#34;: &#34;sha256:0b827067ad09ab8a0b9a73a45f5b1c408b84db1ca6883a4c544078ed43b8b5e3&#34;,
+            &#34;Volumes&#34;: null,
+            &#34;WorkingDir&#34;: &#34;&#34;,
+            &#34;Entrypoint&#34;: null,
+            &#34;OnBuild&#34;: null,
+            &#34;Labels&#34;: {
+                &#34;maintainer&#34;: &#34;Evan Wies &lt;evan@neomantra.net&gt;&#34;,
+                &#34;resty_add_package_builddeps&#34;: &#34;&#34;,
+                &#34;resty_add_package_rundeps&#34;: &#34;&#34;,
+                &#34;resty_config_deps&#34;: &#34;--with-pcre     --with-cc-opt=&#39;-DNGX_LUA_ABORT_AT_PANIC -I/usr/local/openresty/pcre/include -I/usr/local/openresty/openssl/include&#39;     --with-ld-opt=&#39;-L/usr/local/openresty/pcre/lib -L/usr/local/openresty/openssl/lib -Wl,-rpath,/usr/local/openresty/pcre/lib:/usr/local/openresty/openssl/lib&#39;     &#34;,
+                &#34;resty_config_options&#34;: &#34;    --with-compat     --with-file-aio     --with-http_addition_module     --with-http_auth_request_module     --with-http_dav_module     --with-http_flv_module     --with-http_geoip_module=dynamic     --with-http_gunzip_module     --with-http_gzip_static_module     --with-http_image_filter_module=dynamic     --with-http_mp4_module     --with-http_random_index_module     --with-http_realip_module     --with-http_secure_link_module     --with-http_slice_module     --with-http_ssl_module     --with-http_stub_status_module     --with-http_sub_module     --with-http_v2_module     --with-http_xslt_module=dynamic     --with-ipv6     --with-mail     --with-mail_ssl_module     --with-md5-asm     --with-pcre-jit     --with-sha1-asm     --with-stream     --with-stream_ssl_module     --with-threads     &#34;,
+                &#34;resty_config_options_more&#34;: &#34;&#34;,
+                &#34;resty_eval_post_make&#34;: &#34;&#34;,
+                &#34;resty_eval_pre_configure&#34;: &#34;&#34;,
+                &#34;resty_image_base&#34;: &#34;alpine&#34;,
+                &#34;resty_image_tag&#34;: &#34;3.12&#34;,
+                &#34;resty_openssl_patch_version&#34;: &#34;1.1.1f&#34;,
+                &#34;resty_openssl_url_base&#34;: &#34;https://www.openssl.org/source&#34;,
+                &#34;resty_openssl_version&#34;: &#34;1.1.1g&#34;,
+                &#34;resty_pcre_version&#34;: &#34;8.44&#34;,
+                &#34;resty_version&#34;: &#34;1.17.8.2&#34;
+            },
+            &#34;StopSignal&#34;: &#34;SIGQUIT&#34;
+        },
+        &#34;Architecture&#34;: &#34;amd64&#34;,
+        &#34;Os&#34;: &#34;linux&#34;,
+        &#34;Size&#34;: 103896354,
+        &#34;VirtualSize&#34;: 103896354,
+        &#34;GraphDriver&#34;: {
+            &#34;Data&#34;: {
+                &#34;LowerDir&#34;: &#34;/var/lib/docker/overlay2/00b65b9c288df8c0ae7cdacba531a7dc5cb006e6c768e19ee36055717b782acc/diff:/var/lib/docker/overlay2/f1cf8b173467c98e08f3d276d7ccd8f9892c7c71dec2c4b335c39c6f175ae744/diff:/var/lib/docker/overlay2/8cbfb8b74c887e780747c8e6f4b3b9223a513ff6d69770bac16abb76da4e314f/diff&#34;,
+                &#34;MergedDir&#34;: &#34;/var/lib/docker/overlay2/5da215c4f218cbb1d9825fa111c21bf381dc35a9e6c7c6cd5c3ea952316031e4/merged&#34;,
+                &#34;UpperDir&#34;: &#34;/var/lib/docker/overlay2/5da215c4f218cbb1d9825fa111c21bf381dc35a9e6c7c6cd5c3ea952316031e4/diff&#34;,
+                &#34;WorkDir&#34;: &#34;/var/lib/docker/overlay2/5da215c4f218cbb1d9825fa111c21bf381dc35a9e6c7c6cd5c3ea952316031e4/work&#34;
+            },
+            &#34;Name&#34;: &#34;overlay2&#34;
+        },
+        &#34;RootFS&#34;: {
+            &#34;Type&#34;: &#34;layers&#34;,
+            &#34;Layers&#34;: [
+                &#34;sha256:50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a&#34;,
+                &#34;sha256:9c572ba82b91e3ac35c7351bdacc6876c67f5d9bc69c5e51e8b2deeafae95e4f&#34;,
+                &#34;sha256:1680a9f16b18732726d0656b6d6ff9611a3c4460ca870827b537a87bbe10cc22&#34;,
+                &#34;sha256:8521b614863046bf4bb604e3586feeca8b7ce1372f1d6664a5545e85ad9ca472&#34;
+            ]
+        },
+        &#34;Metadata&#34;: {
+            &#34;LastTagTime&#34;: &#34;2020-11-11T13:35:12.051705855+08:00&#34;
+        }
+    }
+]
 </code></pre></td></tr></table>
 </div>
 </div><p>我自己的理解，docker inspect 执行时就是读取 <code>image/overlay2/imagedb/content</code> 中的内容加工之后输出的，这里面有些内容可以仔细理解一下(从上往下看) :</p>
@@ -1487,11 +1487,11 @@ image/overlay2/imagedb/
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># ll  image/overlay2/layerdb/</span>
-总用量 <span class="m">12</span>
-drwxr-xr-x <span class="m">3</span> root root <span class="m">4096</span> 12月  <span class="m">2</span> 09:25 mounts
-drwxr-xr-x <span class="m">6</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:32 sha256
-drwxr-xr-x <span class="m">2</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:32 tmp
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@iZuf685opgs9oyozju9i2bZ docker]# ll  image/overlay2/layerdb/
+总用量 12
+drwxr-xr-x 3 root root 4096 12月  2 09:25 mounts
+drwxr-xr-x 6 root root 4096 11月 11 13:32 sha256
+drwxr-xr-x 2 root root 4096 11月 11 13:32 tmp
 </code></pre></td></tr></table>
 </div>
 </div><h4 id="tmp">tmp</h4>
@@ -1508,12 +1508,12 @@ drwxr-xr-x <span class="m">2</span> root root <span class="m">4096</span> 11月 
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># ll  image/overlay2/layerdb/sha256/</span>
-总用量 <span class="m">16</span>
-drwx------ <span class="m">2</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:32 228fb92e31891f472e9857ee11d13c404ff7c88e808b05ce4ebdc80d785d71f3
-drwx------ <span class="m">2</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:31 50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a
-drwx------ <span class="m">2</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:32 5f72760956a669e4c9b33aa3f2f04baa84b0f4cf1e11676049981bafcbba74da
-drwx------ <span class="m">2</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:32 fe267088885017d5e9a4621e68617a7f35e58dc2d0d747927882da21059854e3
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@iZuf685opgs9oyozju9i2bZ docker]# ll  image/overlay2/layerdb/sha256/
+总用量 16
+drwx------ 2 root root 4096 11月 11 13:32 228fb92e31891f472e9857ee11d13c404ff7c88e808b05ce4ebdc80d785d71f3
+drwx------ 2 root root 4096 11月 11 13:31 50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a
+drwx------ 2 root root 4096 11月 11 13:32 5f72760956a669e4c9b33aa3f2f04baa84b0f4cf1e11676049981bafcbba74da
+drwx------ 2 root root 4096 11月 11 13:32 fe267088885017d5e9a4621e68617a7f35e58dc2d0d747927882da21059854e3
 </code></pre></td></tr></table>
 </div>
 </div><p>咋一看这里和 <code>rootfs</code> 中的 <code>diff_id</code> 并不相同，只有一层是一样的(只有base layer是相同)。这里的是 <code>chain_id</code> ，那么什么是 <code>chain_id</code>呢？</p>
@@ -1529,9 +1529,9 @@ drwx------ <span class="m">2</span> root root <span class="m">4096</span> 11月 
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">ChainID<span class="o">(</span>A<span class="o">)</span> <span class="o">=</span> DiffID<span class="o">(</span>A<span class="o">)</span>
-ChainID<span class="o">(</span>A <span class="p">|</span> B<span class="o">)</span> <span class="o">=</span> Digest<span class="o">(</span>ChainID<span class="o">(</span>A<span class="o">)</span> + <span class="s2">&#34; &#34;</span> + DiffID<span class="o">(</span>B<span class="o">))</span>
-ChainID<span class="o">(</span>A <span class="p">|</span> B <span class="p">|</span> C<span class="o">)</span> <span class="o">=</span> Digest<span class="o">(</span>ChainID<span class="o">(</span>A <span class="p">|</span> B<span class="o">)</span> + <span class="s2">&#34; &#34;</span> + DiffID<span class="o">(</span>C<span class="o">))</span>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">ChainID(A) = DiffID(A)
+ChainID(A | B) = Digest(ChainID(A) + &#34; &#34; + DiffID(B))
+ChainID(A | B | C) = Digest(ChainID(A | B) + &#34; &#34; + DiffID(C))
 </code></pre></td></tr></table>
 </div>
 </div><p>是不是有点绕，回到我们的例子看看：
@@ -1546,12 +1546,12 @@ rootfs 中的 diff_id 为:</p>
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="s2">&#34;diff_ids&#34;</span>: <span class="o">[</span>
-  <span class="s2">&#34;sha256:50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a&#34;</span>,
-  <span class="s2">&#34;sha256:9c572ba82b91e3ac35c7351bdacc6876c67f5d9bc69c5e51e8b2deeafae95e4f&#34;</span>,
-  <span class="s2">&#34;sha256:1680a9f16b18732726d0656b6d6ff9611a3c4460ca870827b537a87bbe10cc22&#34;</span>,
-  <span class="s2">&#34;sha256:8521b614863046bf4bb604e3586feeca8b7ce1372f1d6664a5545e85ad9ca472&#34;</span>
-<span class="o">]</span>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">&#34;diff_ids&#34;: [
+  &#34;sha256:50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a&#34;,
+  &#34;sha256:9c572ba82b91e3ac35c7351bdacc6876c67f5d9bc69c5e51e8b2deeafae95e4f&#34;,
+  &#34;sha256:1680a9f16b18732726d0656b6d6ff9611a3c4460ca870827b537a87bbe10cc22&#34;,
+  &#34;sha256:8521b614863046bf4bb604e3586feeca8b7ce1372f1d6664a5545e85ad9ca472&#34;
+]
 </code></pre></td></tr></table>
 </div>
 </div><p>chain_id 为:</p>
@@ -1563,10 +1563,10 @@ rootfs 中的 diff_id 为:</p>
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">drwx------ <span class="m">2</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:32 228fb92e31891f472e9857ee11d13c404ff7c88e808b05ce4ebdc80d785d71f3
-drwx------ <span class="m">2</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:31 50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a
-drwx------ <span class="m">2</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:32 5f72760956a669e4c9b33aa3f2f04baa84b0f4cf1e11676049981bafcbba74da
-drwx------ <span class="m">2</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:32 fe267088885017d5e9a4621e68617a7f35e58dc2d0d747927882da21059854e3
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">drwx------ 2 root root 4096 11月 11 13:32 228fb92e31891f472e9857ee11d13c404ff7c88e808b05ce4ebdc80d785d71f3
+drwx------ 2 root root 4096 11月 11 13:31 50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a
+drwx------ 2 root root 4096 11月 11 13:32 5f72760956a669e4c9b33aa3f2f04baa84b0f4cf1e11676049981bafcbba74da
+drwx------ 2 root root 4096 11月 11 13:32 fe267088885017d5e9a4621e68617a7f35e58dc2d0d747927882da21059854e3
 </code></pre></td></tr></table>
 </div>
 </div><p>根据上面的公式 base layer 的 diff_id 和 chain_id 是相同的:</p>
@@ -1575,7 +1575,7 @@ drwx------ <span class="m">2</span> root root <span class="m">4096</span> 11月 
 <pre class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a -&gt; 50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a -&gt; 50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a
 </code></pre></td></tr></table>
 </div>
 </div><p>在继续看看下面的算法</p>
@@ -1590,12 +1590,12 @@ drwx------ <span class="m">2</span> root root <span class="m">4096</span> 11月 
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># echo -n &#34;sha256:50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a sha256:9c572ba82b91e3ac35c7351bdacc6876c67f5d9bc69c5e51e8b2deeafae95e4f&#34; | sha256sum</span>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@iZuf685opgs9oyozju9i2bZ docker]# echo -n &#34;sha256:50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a sha256:9c572ba82b91e3ac35c7351bdacc6876c67f5d9bc69c5e51e8b2deeafae95e4f&#34; | sha256sum
 fe267088885017d5e9a4621e68617a7f35e58dc2d0d747927882da21059854e3  -
-<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span># 
-<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># echo -n &#34;sha256:fe267088885017d5e9a4621e68617a7f35e58dc2d0d747927882da21059854e3 sha256:1680a9f16b18732726d0656b6d6ff9611a3c4460ca870827b537a87bbe10cc22&#34; | sha256sum</span>
+[root@iZuf685opgs9oyozju9i2bZ docker]# 
+[root@iZuf685opgs9oyozju9i2bZ docker]# echo -n &#34;sha256:fe267088885017d5e9a4621e68617a7f35e58dc2d0d747927882da21059854e3 sha256:1680a9f16b18732726d0656b6d6ff9611a3c4460ca870827b537a87bbe10cc22&#34; | sha256sum
 5f72760956a669e4c9b33aa3f2f04baa84b0f4cf1e11676049981bafcbba74da  -
-<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># echo -n &#34;sha256:5f72760956a669e4c9b33aa3f2f04baa84b0f4cf1e11676049981bafcbba74da sha256:8521b614863046bf4bb604e3586feeca8b7ce1372f1d6664a5545e85ad9ca472&#34; | sha256sum</span>
+[root@iZuf685opgs9oyozju9i2bZ docker]# echo -n &#34;sha256:5f72760956a669e4c9b33aa3f2f04baa84b0f4cf1e11676049981bafcbba74da sha256:8521b614863046bf4bb604e3586feeca8b7ce1372f1d6664a5545e85ad9ca472&#34; | sha256sum
 228fb92e31891f472e9857ee11d13c404ff7c88e808b05ce4ebdc80d785d71f3  -
 </code></pre></td></tr></table>
 </div>
@@ -1608,7 +1608,7 @@ fe267088885017d5e9a4621e68617a7f35e58dc2d0d747927882da21059854e3  -
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a -&gt; 50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a -&gt; 50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a
 9c572ba82b91e3ac35c7351bdacc6876c67f5d9bc69c5e51e8b2deeafae95e4f -&gt; fe267088885017d5e9a4621e68617a7f35e58dc2d0d747927882da21059854e3
 1680a9f16b18732726d0656b6d6ff9611a3c4460ca870827b537a87bbe10cc22 -&gt; 5f72760956a669e4c9b33aa3f2f04baa84b0f4cf1e11676049981bafcbba74da
 8521b614863046bf4bb604e3586feeca8b7ce1372f1d6664a5545e85ad9ca472 -&gt; 228fb92e31891f472e9857ee11d13c404ff7c88e808b05ce4ebdc80d785d71f3
@@ -1646,7 +1646,7 @@ fe267088885017d5e9a4621e68617a7f35e58dc2d0d747927882da21059854e3  -
 </span><span class="lnt">27
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># tree image/overlay2/layerdb/sha256/</span>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@iZuf685opgs9oyozju9i2bZ docker]# tree image/overlay2/layerdb/sha256/
 image/overlay2/layerdb/sha256/
 ├── 228fb92e31891f472e9857ee11d13c404ff7c88e808b05ce4ebdc80d785d71f3
 │   ├── cache-id
@@ -1672,7 +1672,7 @@ image/overlay2/layerdb/sha256/
     ├── size
     └── tar-split.json.gz
 
-<span class="m">4</span> directories, <span class="m">19</span> files
+4 directories, 19 files
 </code></pre></td></tr></table>
 </div>
 </div><ul>
@@ -1693,17 +1693,17 @@ image/overlay2/layerdb/sha256/
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># cat image/overlay2/layerdb/sha256/50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a/cache-id</span> 
-8cbfb8b74c887e780747c8e6f4b3b9223a513ff6d69770bac16abb76da4e314f<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span># 
-<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># ll overlay2/</span>
-总用量 <span class="m">28</span>
-drwx------ <span class="m">4</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:32 00b65b9c288df8c0ae7cdacba531a7dc5cb006e6c768e19ee36055717b782acc
-drwx------ <span class="m">5</span> root root <span class="m">4096</span> 12月  <span class="m">2</span> 09:25 1e53dddb1a0bb04ee4ebd24a8edb94b96e2fd471a72bf1b8608096b38cb16646
-drwx------ <span class="m">4</span> root root <span class="m">4096</span> 12月  <span class="m">2</span> 09:25 1e53dddb1a0bb04ee4ebd24a8edb94b96e2fd471a72bf1b8608096b38cb16646-init
-drwx------ <span class="m">4</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:48 5da215c4f218cbb1d9825fa111c21bf381dc35a9e6c7c6cd5c3ea952316031e4
-drwx------ <span class="m">3</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:32 8cbfb8b74c887e780747c8e6f4b3b9223a513ff6d69770bac16abb76da4e314f
-drwx------ <span class="m">4</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:32 f1cf8b173467c98e08f3d276d7ccd8f9892c7c71dec2c4b335c39c6f175ae744
-drwx------ <span class="m">2</span> root root <span class="m">4096</span> 12月  <span class="m">2</span> 09:25 l
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@iZuf685opgs9oyozju9i2bZ docker]# cat image/overlay2/layerdb/sha256/50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a/cache-id 
+8cbfb8b74c887e780747c8e6f4b3b9223a513ff6d69770bac16abb76da4e314f[root@iZuf685opgs9oyozju9i2bZ docker]# 
+[root@iZuf685opgs9oyozju9i2bZ docker]# ll overlay2/
+总用量 28
+drwx------ 4 root root 4096 11月 11 13:32 00b65b9c288df8c0ae7cdacba531a7dc5cb006e6c768e19ee36055717b782acc
+drwx------ 5 root root 4096 12月  2 09:25 1e53dddb1a0bb04ee4ebd24a8edb94b96e2fd471a72bf1b8608096b38cb16646
+drwx------ 4 root root 4096 12月  2 09:25 1e53dddb1a0bb04ee4ebd24a8edb94b96e2fd471a72bf1b8608096b38cb16646-init
+drwx------ 4 root root 4096 11月 11 13:48 5da215c4f218cbb1d9825fa111c21bf381dc35a9e6c7c6cd5c3ea952316031e4
+drwx------ 3 root root 4096 11月 11 13:32 8cbfb8b74c887e780747c8e6f4b3b9223a513ff6d69770bac16abb76da4e314f
+drwx------ 4 root root 4096 11月 11 13:32 f1cf8b173467c98e08f3d276d7ccd8f9892c7c71dec2c4b335c39c6f175ae744
+drwx------ 2 root root 4096 12月  2 09:25 l
 </code></pre></td></tr></table>
 </div>
 </div><p>可以看到 cache-id 中的内容是可以和 <code>overlay2</code> 目录中的内容可以对应起来，overlay2 中的内容等会详细介绍。</p>
@@ -1724,15 +1724,15 @@ drwx------ <span class="m">2</span> root root <span class="m">4096</span> 12月 
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># cat image/overlay2/layerdb/sha256/50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a/size</span> 
-5574537<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># cat image/overlay2/layerdb/sha256/fe267088885017d5e9a4621e68617a7f35e58dc2d0d747927882da21059854e3/size</span> 
-98318464<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># cat image/overlay2/layerdb/sha256/5f72760956a669e4c9b33aa3f2f04baa84b0f4cf1e11676049981bafcbba74da/size</span> 
-1762<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># cat image/overlay2/layerdb/sha256/228fb92e31891f472e9857ee11d13c404ff7c88e808b05ce4ebdc80d785d71f3/size</span> 
-1591<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span># 
-<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># docker images</span> 
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@iZuf685opgs9oyozju9i2bZ docker]# cat image/overlay2/layerdb/sha256/50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a/size 
+5574537[root@iZuf685opgs9oyozju9i2bZ docker]# cat image/overlay2/layerdb/sha256/fe267088885017d5e9a4621e68617a7f35e58dc2d0d747927882da21059854e3/size 
+98318464[root@iZuf685opgs9oyozju9i2bZ docker]# cat image/overlay2/layerdb/sha256/5f72760956a669e4c9b33aa3f2f04baa84b0f4cf1e11676049981bafcbba74da/size 
+1762[root@iZuf685opgs9oyozju9i2bZ docker]# cat image/overlay2/layerdb/sha256/228fb92e31891f472e9857ee11d13c404ff7c88e808b05ce4ebdc80d785d71f3/size 
+1591[root@iZuf685opgs9oyozju9i2bZ docker]# 
+[root@iZuf685opgs9oyozju9i2bZ docker]# docker images 
 REPOSITORY             TAG                 IMAGE ID            CREATED             SIZE
-openresty/openresty    1.17.8.2-5-alpine   1ddc7a18ba0b        <span class="m">2</span> months ago        104MB
-russellgao/openresty   1.17.8.2-5-alpine   1ddc7a18ba0b        <span class="m">2</span> months ago        104MB
+openresty/openresty    1.17.8.2-5-alpine   1ddc7a18ba0b        2 months ago        104MB
+russellgao/openresty   1.17.8.2-5-alpine   1ddc7a18ba0b        2 months ago        104MB
 </code></pre></td></tr></table>
 </div>
 </div><p>total = ceil((5574537 + 98318464 + 1762 + 1591) / 1000 + 1000)</p>
@@ -1771,30 +1771,30 @@ russellgao/openresty   1.17.8.2-5-alpine   1ddc7a18ba0b        <span class="m">2
 </span><span class="lnt">24
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># docker ps -a</span> 
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@iZuf685opgs9oyozju9i2bZ docker]# docker ps -a 
 CONTAINER ID        IMAGE                                    COMMAND                  CREATED             STATUS              PORTS                                      NAMES
-9bd6ac07a8c9        russellgao/openresty:1.17.8.2-5-alpine   <span class="s2">&#34;/usr/local/openrest…&#34;</span>   <span class="m">10</span> days ago         Up <span class="m">2</span> days           0.0.0.0:80-&gt;80/tcp, 0.0.0.0:443-&gt;443/tcp   openresty-app-1
-<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># ll containers/</span>
-总用量 <span class="m">4</span>
-drwx------ <span class="m">4</span> root root <span class="m">4096</span> 12月 <span class="m">12</span> 09:56 9bd6ac07a8c962e2403203e1c45f4fb54733f9953cf318b34fc3f155bf2c0c59
-<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span># 
-<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># cat image/overlay2/layerdb/mounts/9bd6ac07a8c962e2403203e1c45f4fb54733f9953cf318b34fc3f155bf2c0c59/init-id</span> 
-1e53dddb1a0bb04ee4ebd24a8edb94b96e2fd471a72bf1b8608096b38cb16646-init<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span># 
-<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># cat image/overlay2/layerdb/mounts/9bd6ac07a8c962e2403203e1c45f4fb54733f9953cf318b34fc3f155bf2c0c59/mount-id</span> 
-1e53dddb1a0bb04ee4ebd24a8edb94b96e2fd471a72bf1b8608096b38cb16646<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span># 
-<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span># 
-<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># cat image/overlay2/layerdb/mounts/9bd6ac07a8c962e2403203e1c45f4fb54733f9953cf318b34fc3f155bf2c0c59/parent</span> 
-sha256:228fb92e31891f472e9857ee11d13c404ff7c88e808b05ce4ebdc80d785d71f3<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span># 
-<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span># 
-<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># ll overlay2/</span>
-总用量 <span class="m">28</span>
-drwx------ <span class="m">4</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:32 00b65b9c288df8c0ae7cdacba531a7dc5cb006e6c768e19ee36055717b782acc
-drwx------ <span class="m">5</span> root root <span class="m">4096</span> 12月  <span class="m">2</span> 09:25 1e53dddb1a0bb04ee4ebd24a8edb94b96e2fd471a72bf1b8608096b38cb16646
-drwx------ <span class="m">4</span> root root <span class="m">4096</span> 12月  <span class="m">2</span> 09:25 1e53dddb1a0bb04ee4ebd24a8edb94b96e2fd471a72bf1b8608096b38cb16646-init
-drwx------ <span class="m">4</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:48 5da215c4f218cbb1d9825fa111c21bf381dc35a9e6c7c6cd5c3ea952316031e4
-drwx------ <span class="m">3</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:32 8cbfb8b74c887e780747c8e6f4b3b9223a513ff6d69770bac16abb76da4e314f
-drwx------ <span class="m">4</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:32 f1cf8b173467c98e08f3d276d7ccd8f9892c7c71dec2c4b335c39c6f175ae744
-drwx------ <span class="m">2</span> root root <span class="m">4096</span> 12月  <span class="m">2</span> 09:25 l
+9bd6ac07a8c9        russellgao/openresty:1.17.8.2-5-alpine   &#34;/usr/local/openrest…&#34;   10 days ago         Up 2 days           0.0.0.0:80-&gt;80/tcp, 0.0.0.0:443-&gt;443/tcp   openresty-app-1
+[root@iZuf685opgs9oyozju9i2bZ docker]# ll containers/
+总用量 4
+drwx------ 4 root root 4096 12月 12 09:56 9bd6ac07a8c962e2403203e1c45f4fb54733f9953cf318b34fc3f155bf2c0c59
+[root@iZuf685opgs9oyozju9i2bZ docker]# 
+[root@iZuf685opgs9oyozju9i2bZ docker]# cat image/overlay2/layerdb/mounts/9bd6ac07a8c962e2403203e1c45f4fb54733f9953cf318b34fc3f155bf2c0c59/init-id 
+1e53dddb1a0bb04ee4ebd24a8edb94b96e2fd471a72bf1b8608096b38cb16646-init[root@iZuf685opgs9oyozju9i2bZ docker]# 
+[root@iZuf685opgs9oyozju9i2bZ docker]# cat image/overlay2/layerdb/mounts/9bd6ac07a8c962e2403203e1c45f4fb54733f9953cf318b34fc3f155bf2c0c59/mount-id 
+1e53dddb1a0bb04ee4ebd24a8edb94b96e2fd471a72bf1b8608096b38cb16646[root@iZuf685opgs9oyozju9i2bZ docker]# 
+[root@iZuf685opgs9oyozju9i2bZ docker]# 
+[root@iZuf685opgs9oyozju9i2bZ docker]# cat image/overlay2/layerdb/mounts/9bd6ac07a8c962e2403203e1c45f4fb54733f9953cf318b34fc3f155bf2c0c59/parent 
+sha256:228fb92e31891f472e9857ee11d13c404ff7c88e808b05ce4ebdc80d785d71f3[root@iZuf685opgs9oyozju9i2bZ docker]# 
+[root@iZuf685opgs9oyozju9i2bZ docker]# 
+[root@iZuf685opgs9oyozju9i2bZ docker]# ll overlay2/
+总用量 28
+drwx------ 4 root root 4096 11月 11 13:32 00b65b9c288df8c0ae7cdacba531a7dc5cb006e6c768e19ee36055717b782acc
+drwx------ 5 root root 4096 12月  2 09:25 1e53dddb1a0bb04ee4ebd24a8edb94b96e2fd471a72bf1b8608096b38cb16646
+drwx------ 4 root root 4096 12月  2 09:25 1e53dddb1a0bb04ee4ebd24a8edb94b96e2fd471a72bf1b8608096b38cb16646-init
+drwx------ 4 root root 4096 11月 11 13:48 5da215c4f218cbb1d9825fa111c21bf381dc35a9e6c7c6cd5c3ea952316031e4
+drwx------ 3 root root 4096 11月 11 13:32 8cbfb8b74c887e780747c8e6f4b3b9223a513ff6d69770bac16abb76da4e314f
+drwx------ 4 root root 4096 11月 11 13:32 f1cf8b173467c98e08f3d276d7ccd8f9892c7c71dec2c4b335c39c6f175ae744
+drwx------ 2 root root 4096 12月  2 09:25 l
 </code></pre></td></tr></table>
 </div>
 </div><p>可以看出来， mounts 保存了容器的镜像的挂载信息，内容是具体的 <code>layer id</code></p>
@@ -1855,8 +1855,8 @@ drwx------ <span class="m">2</span> root root <span class="m">4096</span> 12月 
 </span><span class="lnt">46
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># tree overlay2/ -L 2</span>
-<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># tree -L 2 overlay2/</span>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@iZuf685opgs9oyozju9i2bZ docker]# tree overlay2/ -L 2
+[root@iZuf685opgs9oyozju9i2bZ docker]# tree -L 2 overlay2/
 overlay2/
 ├── 00b65b9c288df8c0ae7cdacba531a7dc5cb006e6c768e19ee36055717b782acc
 │   ├── committed
@@ -1900,7 +1900,7 @@ overlay2/
     ├── L5XCYQVZ6DOSLJNP6HXCZQZ7A5 -&gt; ../5da215c4f218cbb1d9825fa111c21bf381dc35a9e6c7c6cd5c3ea952316031e4/diff
     └── MUHXHRXFSGNCBKQ2AUXDFOUDLF -&gt; ../8cbfb8b74c887e780747c8e6f4b3b9223a513ff6d69770bac16abb76da4e314f/diff
 
-<span class="m">25</span> directories, <span class="m">16</span> files
+25 directories, 16 files
 </code></pre></td></tr></table>
 </div>
 </div><p>可以看到 overlay2 一级目录下有个特殊目录 <code>l</code> , <code>l</code> 下是各个layer 软链接，防止mount 命令太长而发生错误，所以就用短链接了。</p>
@@ -1924,15 +1924,15 @@ overlay2/
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># docker rm -f openresty-app-1</span> 
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@iZuf685opgs9oyozju9i2bZ docker]# docker rm -f openresty-app-1 
 openresty-app-1
-<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># ll overlay2/</span>
-总用量 <span class="m">20</span>
-drwx------ <span class="m">4</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:32 00b65b9c288df8c0ae7cdacba531a7dc5cb006e6c768e19ee36055717b782acc
-drwx------ <span class="m">4</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:48 5da215c4f218cbb1d9825fa111c21bf381dc35a9e6c7c6cd5c3ea952316031e4
-drwx------ <span class="m">3</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:32 8cbfb8b74c887e780747c8e6f4b3b9223a513ff6d69770bac16abb76da4e314f
-drwx------ <span class="m">4</span> root root <span class="m">4096</span> 11月 <span class="m">11</span> 13:32 f1cf8b173467c98e08f3d276d7ccd8f9892c7c71dec2c4b335c39c6f175ae744
-drwx------ <span class="m">2</span> root root <span class="m">4096</span> 12月 <span class="m">12</span> 13:29 l
+[root@iZuf685opgs9oyozju9i2bZ docker]# ll overlay2/
+总用量 20
+drwx------ 4 root root 4096 11月 11 13:32 00b65b9c288df8c0ae7cdacba531a7dc5cb006e6c768e19ee36055717b782acc
+drwx------ 4 root root 4096 11月 11 13:48 5da215c4f218cbb1d9825fa111c21bf381dc35a9e6c7c6cd5c3ea952316031e4
+drwx------ 3 root root 4096 11月 11 13:32 8cbfb8b74c887e780747c8e6f4b3b9223a513ff6d69770bac16abb76da4e314f
+drwx------ 4 root root 4096 11月 11 13:32 f1cf8b173467c98e08f3d276d7ccd8f9892c7c71dec2c4b335c39c6f175ae744
+drwx------ 2 root root 4096 12月 12 13:29 l
 </code></pre></td></tr></table>
 </div>
 </div><p>这下和之前讨论对上了， 和 <code>cache-id</code> 中的内容一一对应</p>
@@ -1945,11 +1945,11 @@ drwx------ <span class="m">2</span> root root <span class="m">4096</span> 12月 
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># ll image/overlay2/layerdb/sha256/*/cache-id</span>
--rw-r--r-- <span class="m">1</span> root root <span class="m">64</span> 11月 <span class="m">11</span> 13:32 image/overlay2/layerdb/sha256/228fb92e31891f472e9857ee11d13c404ff7c88e808b05ce4ebdc80d785d71f3/cache-id
--rw-r--r-- <span class="m">1</span> root root <span class="m">64</span> 11月 <span class="m">11</span> 13:31 image/overlay2/layerdb/sha256/50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a/cache-id
--rw-r--r-- <span class="m">1</span> root root <span class="m">64</span> 11月 <span class="m">11</span> 13:32 image/overlay2/layerdb/sha256/5f72760956a669e4c9b33aa3f2f04baa84b0f4cf1e11676049981bafcbba74da/cache-id
--rw-r--r-- <span class="m">1</span> root root <span class="m">64</span> 11月 <span class="m">11</span> 13:32 image/overlay2/layerdb/sha256/fe267088885017d5e9a4621e68617a7f35e58dc2d0d747927882da21059854e3/cache-id
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@iZuf685opgs9oyozju9i2bZ docker]# ll image/overlay2/layerdb/sha256/*/cache-id
+-rw-r--r-- 1 root root 64 11月 11 13:32 image/overlay2/layerdb/sha256/228fb92e31891f472e9857ee11d13c404ff7c88e808b05ce4ebdc80d785d71f3/cache-id
+-rw-r--r-- 1 root root 64 11月 11 13:31 image/overlay2/layerdb/sha256/50644c29ef5a27c9a40c393a73ece2479de78325cae7d762ef3cdc19bf42dd0a/cache-id
+-rw-r--r-- 1 root root 64 11月 11 13:32 image/overlay2/layerdb/sha256/5f72760956a669e4c9b33aa3f2f04baa84b0f4cf1e11676049981bafcbba74da/cache-id
+-rw-r--r-- 1 root root 64 11月 11 13:32 image/overlay2/layerdb/sha256/fe267088885017d5e9a4621e68617a7f35e58dc2d0d747927882da21059854e3/cache-id
 </code></pre></td></tr></table>
 </div>
 </div><p>在看看具体镜像 layer 层的内容:</p>
@@ -1962,7 +1962,7 @@ drwx------ <span class="m">2</span> root root <span class="m">4096</span> 12月 
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># cat   overlay2/00b65b9c288df8c0ae7cdacba531a7dc5cb006e6c768e19ee36055717b782acc/link</span> 
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@iZuf685opgs9oyozju9i2bZ docker]# cat   overlay2/00b65b9c288df8c0ae7cdacba531a7dc5cb006e6c768e19ee36055717b782acc/link 
 HG76ICE67NTXFL7AYXCMI3EK4Y
 </code></pre></td></tr></table>
 </div>
@@ -1974,7 +1974,7 @@ HG76ICE67NTXFL7AYXCMI3EK4Y
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># cat overlay2/5da215c4f218cbb1d9825fa111c21bf381dc35a9e6c7c6cd5c3ea952316031e4/lower</span> 
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@iZuf685opgs9oyozju9i2bZ docker]# cat overlay2/5da215c4f218cbb1d9825fa111c21bf381dc35a9e6c7c6cd5c3ea952316031e4/lower 
 l/HG76ICE67NTXFL7AYXCMI3EK4Y:l/33RV26M4VMX3ZUISOG26USXBKR:l/MUHXHRXFSGNCBKQ2AUXDFOUDLF
 </code></pre></td></tr></table>
 </div>
@@ -2020,7 +2020,7 @@ l/HG76ICE67NTXFL7AYXCMI3EK4Y:l/33RV26M4VMX3ZUISOG26USXBKR:l/MUHXHRXFSGNCBKQ2AUXD
 </span><span class="lnt">18
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># tree -L 2 containers/</span>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@iZuf685opgs9oyozju9i2bZ docker]# tree -L 2 containers/
 containers/
 └── 4ec800c3ec10654a6ea2b2317ac198514748464a217ef63bb58ef67874a79ae0
     ├── 4ec800c3ec10654a6ea2b2317ac198514748464a217ef63bb58ef67874a79ae0-json.log
@@ -2033,10 +2033,10 @@ containers/
     ├── resolv.conf
     └── resolv.conf.hash
 
-<span class="m">3</span> directories, <span class="m">7</span> files
-<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># docker ps -a</span>
+3 directories, 7 files
+[root@iZuf685opgs9oyozju9i2bZ docker]# docker ps -a
 CONTAINER ID        IMAGE                                    COMMAND                  CREATED             STATUS              PORTS                                      NAMES
-4ec800c3ec10        russellgao/openresty:1.17.8.2-5-alpine   <span class="s2">&#34;/usr/local/openrest…&#34;</span>   About an hour ago   Up About an hour    0.0.0.0:80-&gt;80/tcp, 0.0.0.0:443-&gt;443/tcp   openresty-app-1
+4ec800c3ec10        russellgao/openresty:1.17.8.2-5-alpine   &#34;/usr/local/openrest…&#34;   About an hour ago   Up About an hour    0.0.0.0:80-&gt;80/tcp, 0.0.0.0:443-&gt;443/tcp   openresty-app-1
 
 </code></pre></td></tr></table>
 </div>
@@ -2079,30 +2079,30 @@ CONTAINER ID        IMAGE                                    COMMAND            
 </span><span class="lnt">24
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># ll overlay2/b04b728c94b5a269e9d102329c930e3781212717e830e1941e1008088d823cdc/diff/</span>
-总用量 <span class="m">16</span>
-drwxr-xr-x <span class="m">3</span> root root <span class="m">4096</span> 9月  <span class="m">19</span> 00:25 run
-drwxr-xr-x <span class="m">3</span> root root <span class="m">4096</span> 9月  <span class="m">19</span> 00:25 usr
-<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span># 
-<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># docker exec openresty-app-1 ls -l /</span>
-total <span class="m">64</span>
-drwxr-xr-x    <span class="m">1</span> root     root          <span class="m">4096</span> Sep <span class="m">18</span> 16:25 bin
-drwxr-xr-x    <span class="m">5</span> root     root           <span class="m">340</span> Dec <span class="m">12</span> 05:29 dev
-drwxr-xr-x    <span class="m">1</span> root     root          <span class="m">4096</span> Dec <span class="m">12</span> 05:29 etc
-drwxr-xr-x    <span class="m">2</span> root     root          <span class="m">4096</span> May <span class="m">29</span>  <span class="m">2020</span> home
-drwxr-xr-x    <span class="m">1</span> root     root          <span class="m">4096</span> Sep <span class="m">18</span> 16:25 lib
-drwxr-xr-x    <span class="m">5</span> root     root          <span class="m">4096</span> May <span class="m">29</span>  <span class="m">2020</span> media
-drwxr-xr-x    <span class="m">2</span> root     root          <span class="m">4096</span> May <span class="m">29</span>  <span class="m">2020</span> mnt
-drwxr-xr-x    <span class="m">2</span> root     root          <span class="m">4096</span> May <span class="m">29</span>  <span class="m">2020</span> opt
-dr-xr-xr-x  <span class="m">114</span> root     root             <span class="m">0</span> Dec <span class="m">12</span> 05:29 proc
-drwx------    <span class="m">2</span> root     root          <span class="m">4096</span> May <span class="m">29</span>  <span class="m">2020</span> root
-drwxr-xr-x    <span class="m">1</span> root     root          <span class="m">4096</span> Sep <span class="m">18</span> 16:25 run
-drwxr-xr-x    <span class="m">2</span> root     root          <span class="m">4096</span> May <span class="m">29</span>  <span class="m">2020</span> sbin
-drwxr-xr-x    <span class="m">2</span> root     root          <span class="m">4096</span> May <span class="m">29</span>  <span class="m">2020</span> srv
-dr-xr-xr-x   <span class="m">13</span> root     root             <span class="m">0</span> Nov <span class="m">11</span> 00:49 sys
-drwxrwxrwt    <span class="m">1</span> root     root          <span class="m">4096</span> Sep <span class="m">18</span> 16:25 tmp
-drwxr-xr-x    <span class="m">1</span> root     root          <span class="m">4096</span> Sep <span class="m">18</span> 16:25 usr
-drwxr-xr-x    <span class="m">1</span> root     root          <span class="m">4096</span> May <span class="m">29</span>  <span class="m">2020</span> var
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@iZuf685opgs9oyozju9i2bZ docker]# ll overlay2/b04b728c94b5a269e9d102329c930e3781212717e830e1941e1008088d823cdc/diff/
+总用量 16
+drwxr-xr-x 3 root root 4096 9月  19 00:25 run
+drwxr-xr-x 3 root root 4096 9月  19 00:25 usr
+[root@iZuf685opgs9oyozju9i2bZ docker]# 
+[root@iZuf685opgs9oyozju9i2bZ docker]# docker exec openresty-app-1 ls -l /
+total 64
+drwxr-xr-x    1 root     root          4096 Sep 18 16:25 bin
+drwxr-xr-x    5 root     root           340 Dec 12 05:29 dev
+drwxr-xr-x    1 root     root          4096 Dec 12 05:29 etc
+drwxr-xr-x    2 root     root          4096 May 29  2020 home
+drwxr-xr-x    1 root     root          4096 Sep 18 16:25 lib
+drwxr-xr-x    5 root     root          4096 May 29  2020 media
+drwxr-xr-x    2 root     root          4096 May 29  2020 mnt
+drwxr-xr-x    2 root     root          4096 May 29  2020 opt
+dr-xr-xr-x  114 root     root             0 Dec 12 05:29 proc
+drwx------    2 root     root          4096 May 29  2020 root
+drwxr-xr-x    1 root     root          4096 Sep 18 16:25 run
+drwxr-xr-x    2 root     root          4096 May 29  2020 sbin
+drwxr-xr-x    2 root     root          4096 May 29  2020 srv
+dr-xr-xr-x   13 root     root             0 Nov 11 00:49 sys
+drwxrwxrwt    1 root     root          4096 Sep 18 16:25 tmp
+drwxr-xr-x    1 root     root          4096 Sep 18 16:25 usr
+drwxr-xr-x    1 root     root          4096 May 29  2020 var
 </code></pre></td></tr></table>
 </div>
 </div><p>进入到容器并在根目录生成一个文件:</p>
@@ -2112,8 +2112,8 @@ drwxr-xr-x    <span class="m">1</span> root     root          <span class="m">40
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># docker exec -it  openresty-app-1 sh</span>
-/ <span class="c1"># echo &#34;测试容器的读写层-20201209&#34; &gt; /test-layer.20201209.txt</span>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@iZuf685opgs9oyozju9i2bZ docker]# docker exec -it  openresty-app-1 sh
+/ # echo &#34;测试容器的读写层-20201209&#34; &gt; /test-layer.20201209.txt
 </code></pre></td></tr></table>
 </div>
 </div><p>读写层看看什么情况:</p>
@@ -2129,13 +2129,13 @@ drwxr-xr-x    <span class="m">1</span> root     root          <span class="m">40
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># ll overlay2/b04b728c94b5a269e9d102329c930e3781212717e830e1941e1008088d823cdc/diff/</span>
-总用量 <span class="m">24</span>
-drwx------ <span class="m">2</span> root root <span class="m">4096</span> 12月 <span class="m">12</span> 15:22 root
-drwxr-xr-x <span class="m">3</span> root root <span class="m">4096</span> 9月  <span class="m">19</span> 00:25 run
--rw-r--r-- <span class="m">1</span> root root   <span class="m">34</span> 12月 <span class="m">12</span> 15:22 test-layer.20201209.txt
-drwxr-xr-x <span class="m">3</span> root root <span class="m">4096</span> 9月  <span class="m">19</span> 00:25 usr
-<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># cat overlay2/b04b728c94b5a269e9d102329c930e3781212717e830e1941e1008088d823cdc/diff/test-layer.20201209.txt</span> 
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@iZuf685opgs9oyozju9i2bZ docker]# ll overlay2/b04b728c94b5a269e9d102329c930e3781212717e830e1941e1008088d823cdc/diff/
+总用量 24
+drwx------ 2 root root 4096 12月 12 15:22 root
+drwxr-xr-x 3 root root 4096 9月  19 00:25 run
+-rw-r--r-- 1 root root   34 12月 12 15:22 test-layer.20201209.txt
+drwxr-xr-x 3 root root 4096 9月  19 00:25 usr
+[root@iZuf685opgs9oyozju9i2bZ docker]# cat overlay2/b04b728c94b5a269e9d102329c930e3781212717e830e1941e1008088d823cdc/diff/test-layer.20201209.txt 
 测试容器的读写层-20201209
 </code></pre></td></tr></table>
 </div>
@@ -2153,14 +2153,14 @@ drwxr-xr-x <span class="m">3</span> root root <span class="m">4096</span> 9月  
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># echo &#34;测试容器的读写层-20201209-abcdefg&#34; &gt; overlay2/b04b728c94b5a269e9d102329c930e3781212717e830e1941e1008088d823cdc/diff/test-layer.20201209-abcdefg.txt</span> 
-<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># ll overlay2/b04b728c94b5a269e9d102329c930e3781212717e830e1941e1008088d823cdc/diff/</span>
-总用量 <span class="m">28</span>
-drwx------ <span class="m">2</span> root root <span class="m">4096</span> 12月 <span class="m">12</span> 15:22 root
-drwxr-xr-x <span class="m">3</span> root root <span class="m">4096</span> 9月  <span class="m">19</span> 00:25 run
--rw-r--r-- <span class="m">1</span> root root   <span class="m">42</span> 12月 <span class="m">12</span> 15:26 test-layer.20201209-abcdefg.txt
--rw-r--r-- <span class="m">1</span> root root   <span class="m">34</span> 12月 <span class="m">12</span> 15:22 test-layer.20201209.txt
-drwxr-xr-x <span class="m">3</span> root root <span class="m">4096</span> 9月  <span class="m">19</span> 00:25 usr
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@iZuf685opgs9oyozju9i2bZ docker]# echo &#34;测试容器的读写层-20201209-abcdefg&#34; &gt; overlay2/b04b728c94b5a269e9d102329c930e3781212717e830e1941e1008088d823cdc/diff/test-layer.20201209-abcdefg.txt 
+[root@iZuf685opgs9oyozju9i2bZ docker]# ll overlay2/b04b728c94b5a269e9d102329c930e3781212717e830e1941e1008088d823cdc/diff/
+总用量 28
+drwx------ 2 root root 4096 12月 12 15:22 root
+drwxr-xr-x 3 root root 4096 9月  19 00:25 run
+-rw-r--r-- 1 root root   42 12月 12 15:26 test-layer.20201209-abcdefg.txt
+-rw-r--r-- 1 root root   34 12月 12 15:22 test-layer.20201209.txt
+drwxr-xr-x 3 root root 4096 9月  19 00:25 usr
 </code></pre></td></tr></table>
 </div>
 </div><p>进到容器中看看:</p>
@@ -2192,29 +2192,29 @@ drwxr-xr-x <span class="m">3</span> root root <span class="m">4096</span> 9月  
 </span><span class="lnt">24
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ docker<span class="o">]</span><span class="c1"># docker exec -it openresty-app-1 sh</span>
-/ <span class="c1"># ls -l</span> 
-total <span class="m">72</span>
-drwxr-xr-x    <span class="m">1</span> root     root          <span class="m">4096</span> Sep <span class="m">18</span> 16:25 bin
-drwxr-xr-x    <span class="m">5</span> root     root           <span class="m">340</span> Dec <span class="m">12</span> 05:29 dev
-drwxr-xr-x    <span class="m">1</span> root     root          <span class="m">4096</span> Dec <span class="m">12</span> 05:29 etc
-drwxr-xr-x    <span class="m">2</span> root     root          <span class="m">4096</span> May <span class="m">29</span>  <span class="m">2020</span> home
-drwxr-xr-x    <span class="m">1</span> root     root          <span class="m">4096</span> Sep <span class="m">18</span> 16:25 lib
-drwxr-xr-x    <span class="m">5</span> root     root          <span class="m">4096</span> May <span class="m">29</span>  <span class="m">2020</span> media
-drwxr-xr-x    <span class="m">2</span> root     root          <span class="m">4096</span> May <span class="m">29</span>  <span class="m">2020</span> mnt
-drwxr-xr-x    <span class="m">2</span> root     root          <span class="m">4096</span> May <span class="m">29</span>  <span class="m">2020</span> opt
-dr-xr-xr-x  <span class="m">114</span> root     root             <span class="m">0</span> Dec <span class="m">12</span> 05:29 proc
-drwx------    <span class="m">1</span> root     root          <span class="m">4096</span> Dec <span class="m">12</span> 07:22 root
-drwxr-xr-x    <span class="m">1</span> root     root          <span class="m">4096</span> Sep <span class="m">18</span> 16:25 run
-drwxr-xr-x    <span class="m">2</span> root     root          <span class="m">4096</span> May <span class="m">29</span>  <span class="m">2020</span> sbin
-drwxr-xr-x    <span class="m">2</span> root     root          <span class="m">4096</span> May <span class="m">29</span>  <span class="m">2020</span> srv
-dr-xr-xr-x   <span class="m">13</span> root     root             <span class="m">0</span> Nov <span class="m">11</span> 00:49 sys
--rw-r--r--    <span class="m">1</span> root     root            <span class="m">42</span> Dec <span class="m">12</span> 07:26 test-layer.20201209-abcdefg.txt
--rw-r--r--    <span class="m">1</span> root     root            <span class="m">34</span> Dec <span class="m">12</span> 07:22 test-layer.20201209.txt
-drwxrwxrwt    <span class="m">1</span> root     root          <span class="m">4096</span> Sep <span class="m">18</span> 16:25 tmp
-drwxr-xr-x    <span class="m">1</span> root     root          <span class="m">4096</span> Sep <span class="m">18</span> 16:25 usr
-drwxr-xr-x    <span class="m">1</span> root     root          <span class="m">4096</span> May <span class="m">29</span>  <span class="m">2020</span> var
-/ <span class="c1"># cat test-layer.20201209-abcdefg.txt</span> 
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@iZuf685opgs9oyozju9i2bZ docker]# docker exec -it openresty-app-1 sh
+/ # ls -l 
+total 72
+drwxr-xr-x    1 root     root          4096 Sep 18 16:25 bin
+drwxr-xr-x    5 root     root           340 Dec 12 05:29 dev
+drwxr-xr-x    1 root     root          4096 Dec 12 05:29 etc
+drwxr-xr-x    2 root     root          4096 May 29  2020 home
+drwxr-xr-x    1 root     root          4096 Sep 18 16:25 lib
+drwxr-xr-x    5 root     root          4096 May 29  2020 media
+drwxr-xr-x    2 root     root          4096 May 29  2020 mnt
+drwxr-xr-x    2 root     root          4096 May 29  2020 opt
+dr-xr-xr-x  114 root     root             0 Dec 12 05:29 proc
+drwx------    1 root     root          4096 Dec 12 07:22 root
+drwxr-xr-x    1 root     root          4096 Sep 18 16:25 run
+drwxr-xr-x    2 root     root          4096 May 29  2020 sbin
+drwxr-xr-x    2 root     root          4096 May 29  2020 srv
+dr-xr-xr-x   13 root     root             0 Nov 11 00:49 sys
+-rw-r--r--    1 root     root            42 Dec 12 07:26 test-layer.20201209-abcdefg.txt
+-rw-r--r--    1 root     root            34 Dec 12 07:22 test-layer.20201209.txt
+drwxrwxrwt    1 root     root          4096 Sep 18 16:25 tmp
+drwxr-xr-x    1 root     root          4096 Sep 18 16:25 usr
+drwxr-xr-x    1 root     root          4096 May 29  2020 var
+/ # cat test-layer.20201209-abcdefg.txt 
 测试容器的读写层-20201209-abcdefg
 </code></pre></td></tr></table>
 </div>
@@ -2243,7 +2243,7 @@ drwxr-xr-x    <span class="m">1</span> root     root          <span class="m">40
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2020-12-12</span>
+                <span>Updated on 2020-12-13</span>
             </div>
             <div class="post-info-license"></div>
         </div>
@@ -2264,7 +2264,8 @@ drwxr-xr-x    <span class="m">1</span> root     root          <span class="m">40
         </section>
     </div>
 
-    <div class="post-nav"><a href="/docker-storage/" class="prev" rel="prev" title="docker 原理之存储驱动"><i class="fas fa-angle-left fa-fw"></i>docker 原理之存储驱动</a></div>
+    <div class="post-nav"><a href="/docker-storage/" class="prev" rel="prev" title="docker 原理之存储驱动"><i class="fas fa-angle-left fa-fw"></i>docker 原理之存储驱动</a>
+            <a href="/git-command/" class="next" rel="next" title="git 常用命令">git 常用命令<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div id="comments"><div id="valine" class="comment"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
