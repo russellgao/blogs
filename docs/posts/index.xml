@@ -4,7 +4,14 @@
         <link>https://russellgao.cn/posts/</link>
         <description>All Posts | 大大很二</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
-            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Mon, 14 Dec 2020 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Tue, 15 Dec 2020 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>cpu 负载与使用率原理</title>
+    <link>https://russellgao.cn/cpu/</link>
+    <pubDate>Tue, 15 Dec 2020 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/cpu/</guid>
+    <description><![CDATA[导读  在定位性能问题时，一个绕不开的话题就是 CPU ，会觉得 CPU 不够用了，或者是瓶颈了，那么怎么来确定是 CPU 的问题呢？衡量 CPU 的指标有两个，CPU 负载(load average) 和 使用率，这两者有什么关系和区别呢？ 这篇文章带大家深层次的了解一下 CPU 。]]></description>
+</item><item>
     <title>git 常用命令</title>
     <link>https://russellgao.cn/git-command/</link>
     <pubDate>Mon, 14 Dec 2020 00:00:00 &#43;0000</pubDate>
@@ -72,12 +79,5 @@
     <guid>https://russellgao.cn/openresty-nginx.conf/</guid>
     <description><![CDATA[导读  openresty（nginx plus） 在日常工作中用的应该比较多，要想真正了解清楚其原理并不容易。我尝试着从配置的角度去分析 nginx 的基本原理。这篇主要介绍 nginx.conf 这个配置文件，后续再介绍其他的配置文件。
 nginx.conf 中主要配置全局配置，配置好之后一般很少改动。]]></description>
-</item><item>
-    <title>markdown中插入表情的方法</title>
-    <link>https://russellgao.cn/markdownemoji/</link>
-    <pubDate>Thu, 19 Nov 2020 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://russellgao.cn/markdownemoji/</guid>
-    <description><![CDATA[导读  markdown 中也是可以插入表情，但并不是所有的markdown 解析器都支持，我本地用的 Goland、MacDown 不支持，但是 hugo 是支持的， 写作的过程可以适当加入一些表情，可以表达当时写作的一个心情。]]></description>
 </item></channel>
 </rss>

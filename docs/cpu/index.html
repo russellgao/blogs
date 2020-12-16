@@ -5,35 +5,35 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>git 常用命令 - 大大很二</title><meta name="Description" content="git 常用命令"><meta property="og:title" content="git 常用命令" />
-<meta property="og:description" content="git 常用命令" />
+        <title>cpu 负载与使用率原理 - 大大很二</title><meta name="Description" content="cpu 负载与使用率原理"><meta property="og:title" content="cpu 负载与使用率原理" />
+<meta property="og:description" content="cpu 负载与使用率原理" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://russellgao.cn/git-command/" />
+<meta property="og:url" content="https://russellgao.cn/cpu/" />
 <meta property="og:image" content="https://russellgao.cn/images/profile.jpg"/>
-<meta property="article:published_time" content="2020-12-14T00:00:00+00:00" />
-<meta property="article:modified_time" content="2020-12-15T13:59:25+08:00" /><meta property="og:site_name" content="大大很二" />
+<meta property="article:published_time" content="2020-12-15T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-12-15T00:00:00+00:00" /><meta property="og:site_name" content="大大很二" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://russellgao.cn/images/profile.jpg"/>
 
-<meta name="twitter:title" content="git 常用命令"/>
-<meta name="twitter:description" content="git 常用命令"/>
+<meta name="twitter:title" content="cpu 负载与使用率原理"/>
+<meta name="twitter:description" content="cpu 负载与使用率原理"/>
 <meta name="application-name" content="russellgao">
-<meta name="apple-mobile-web-app-title" content="russellgao"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://gitee.com/russellgao/blogs-image/raw/master/images/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://russellgao.cn/git-command/" /><link rel="prev" href="https://russellgao.cn/docker-local-storage/" /><link rel="next" href="https://russellgao.cn/cpu/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+<meta name="apple-mobile-web-app-title" content="russellgao"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://gitee.com/russellgao/blogs-image/raw/master/images/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://russellgao.cn/cpu/" /><link rel="prev" href="https://russellgao.cn/git-command/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "git 常用命令",
+        "headline": "cpu 负载与使用率原理",
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/russellgao.cn\/git-command\/"
-        },"genre": "posts","keywords": "git, cli","wordcount":  115 ,
-        "url": "https:\/\/russellgao.cn\/git-command\/","datePublished": "2020-12-14T00:00:00+00:00","dateModified": "2020-12-15T13:59:25+08:00","publisher": {
+            "@id": "https:\/\/russellgao.cn\/cpu\/"
+        },"genre": "posts","keywords": "linux, cpu","wordcount":  29 ,
+        "url": "https:\/\/russellgao.cn\/cpu\/","datePublished": "2020-12-15T00:00:00+00:00","dateModified": "2020-12-15T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
                 "name": "russellgao"
-            },"description": "git 常用命令"
+            },"description": "cpu 负载与使用率原理"
     }
     </script></head>
     <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
@@ -116,10 +116,10 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">Contents</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animated flipInX">git 常用命令</h1><div class="post-meta">
+        </div><article class="page single"><h1 class="single-title animated flipInX">cpu 负载与使用率原理</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-12-14">2020-12-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;115 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;One minute&nbsp;<span id="/git-command/" class="leancloud_visitors" data-flag-title="git 常用命令">
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-12-15">2020-12-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;29 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;One minute&nbsp;<span id="/cpu/" class="leancloud_visitors" data-flag-title="cpu 负载与使用率原理">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;views
                     </span>&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="true">
@@ -130,176 +130,26 @@
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
     <li><a href="#导读">导读</a></li>
-    <li><a href="#常用命令">常用命令</a>
-      <ul>
-        <li><a href="#检出代码">检出代码</a></li>
-        <li><a href="#查看分支">查看分支</a></li>
-        <li><a href="#创建分支">创建分支</a></li>
-        <li><a href="#删除本地分支">删除本地分支</a></li>
-        <li><a href="#检出分支">检出分支</a></li>
-        <li><a href="#拉取代码">拉取代码</a></li>
-        <li><a href="#把修改文件提交到缓冲区">把修改文件提交到缓冲区</a></li>
-        <li><a href="#本地提交">本地提交</a></li>
-        <li><a href="#推送代码">推送代码</a></li>
-        <li><a href="#合并代码">合并代码</a></li>
-        <li><a href="#cherry-pick">cherry pick</a></li>
-        <li><a href="#跟踪">跟踪</a></li>
-        <li><a href="#丢弃本地修改">丢弃本地修改</a></li>
-        <li><a href="#取消本地提交">取消本地提交</a></li>
-        <li><a href="#本地清除git上已经删除的分支">本地清除git上已经删除的分支</a></li>
-      </ul>
-    </li>
+    <li><a href="#什么是cpu">什么是CPU</a></li>
+    <li><a href="#cpu-结构">CPU 结构</a></li>
+    <li><a href="#cpu-负载">CPU 负载</a></li>
+    <li><a href="#cpu-使用率">CPU 使用率</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="导读">导读</h2>
 <blockquote>
-<p>这篇文章主要记录了 <code>git</code> 的一些常用命令，后续会持续补充更新。</p>
+<p>在定位性能问题时，一个绕不开的话题就是 CPU ，会觉得 CPU 不够用了，或者是瓶颈了，那么怎么来确定是 CPU 的问题呢？衡量 CPU 的指标有两个，CPU 负载(load average) 和 使用率，这两者有什么关系和区别呢？
+这篇文章带大家深层次的了解一下 CPU 。</p>
 </blockquote>
-<h2 id="常用命令">常用命令</h2>
-<h3 id="检出代码">检出代码</h3>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">git clone url -b git_branch 
-</code></pre></td></tr></table>
-</div>
-</div><h3 id="查看分支">查看分支</h3>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">git branch -a 
-</code></pre></td></tr></table>
-</div>
-</div><h3 id="创建分支">创建分支</h3>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">git branch xxx
-</code></pre></td></tr></table>
-</div>
-</div><h3 id="删除本地分支">删除本地分支</h3>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">git branch -d xxxxx
-</code></pre></td></tr></table>
-</div>
-</div><h3 id="检出分支">检出分支</h3>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">git checkout git_branch 
-</code></pre></td></tr></table>
-</div>
-</div><h3 id="拉取代码">拉取代码</h3>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">git pull 
-</code></pre></td></tr></table>
-</div>
-</div><h3 id="把修改文件提交到缓冲区">把修改文件提交到缓冲区</h3>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">git add &lt;filename&gt;
-</code></pre></td></tr></table>
-</div>
-</div><h3 id="本地提交">本地提交</h3>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">git commit -m <span class="s2">&#34;代码提交信息&#34;</span>
-</code></pre></td></tr></table>
-</div>
-</div><h3 id="推送代码">推送代码</h3>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">git push origin local_branch:remote_branch          
-例 : git push origin release/release:release/release
-</code></pre></td></tr></table>
-</div>
-</div><h3 id="合并代码">合并代码</h3>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">git merge origin/remote
-</code></pre></td></tr></table>
-</div>
-</div><h3 id="cherry-pick">cherry pick</h3>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">git cherry-pick commit_id
-</code></pre></td></tr></table>
-</div>
-</div><h3 id="跟踪">跟踪</h3>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">git branch --set-upstream-to<span class="o">=</span>remote_branch local_branch     
-例 git branch --set-upstream-to<span class="o">=</span>origin/release/release release/release
-</code></pre></td></tr></table>
-</div>
-</div><h3 id="丢弃本地修改">丢弃本地修改</h3>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">git checkout -- file          
-例 git checkout -- test.py
-</code></pre></td></tr></table>
-</div>
-</div><h3 id="取消本地提交">取消本地提交</h3>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">- git log 查找需要恢复的 commit_id
-- git reset --hard commit_id
-</code></pre></td></tr></table>
-</div>
-</div><h3 id="本地清除git上已经删除的分支">本地清除git上已经删除的分支</h3>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">git remote prune origin
-</code></pre></td></tr></table>
-</div>
-</div></div><div class="post-footer" id="post-footer">
+<h2 id="什么是cpu">什么是CPU</h2>
+<p>CPU 就是计算机的中央处理器(Central Processing Unit)，其功能主要是解释计算机指令以及处理计算机软件中的数据。CPU是计算机中负责读取指令，对指令译码并执行指令的核心部件。中央处理器主要包括两个部分，即控制器、运算器，其中还包括高速缓冲存储器及实现它们之间联系的数据、控制的总线。电子计算机三大核心部件就是CPU、内部存储器、输入/输出设备。中央处理器的功效主要为处理指令、执行操作、控制时间、处理数据。</p>
+<blockquote>
+<p>来自百度百科上的定义。</p>
+</blockquote>
+<h2 id="cpu-结构">CPU 结构</h2>
+<h2 id="cpu-负载">CPU 负载</h2>
+<h2 id="cpu-使用率">CPU 使用率</h2>
+</div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
@@ -309,23 +159,22 @@
         </div>
         <div class="post-info-line">
             <div class="post-info-md"><span>
-                            <a class="link-to-markdown" href="/git-command/index.md" target="_blank">Read Markdown</a>
+                            <a class="link-to-markdown" href="/cpu/index.md" target="_blank">Read Markdown</a>
                         </span></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://russellgao.cn/git-command/" data-title="git 常用命令" data-hashtags="git,cli"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://russellgao.cn/git-command/" data-hashtag="git"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="Share on WhatsApp" data-sharer="whatsapp" data-url="https://russellgao.cn/git-command/" data-title="git 常用命令" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://russellgao.cn/git-command/" data-title="git 常用命令"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://russellgao.cn/git-command/" data-title="git 常用命令"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="Share on Myspace" data-sharer="myspace" data-url="https://russellgao.cn/git-command/" data-title="git 常用命令" data-description="git 常用命令"><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="Share on Blogger" data-sharer="blogger" data-url="https://russellgao.cn/git-command/" data-title="git 常用命令" data-description="git 常用命令"><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="Share on Evernote" data-sharer="evernote" data-url="https://russellgao.cn/git-command/" data-title="git 常用命令"><i class="fab fa-evernote fa-fw"></i></a></span>
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://russellgao.cn/cpu/" data-title="cpu 负载与使用率原理" data-hashtags="linux,cpu"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://russellgao.cn/cpu/" data-hashtag="linux"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="Share on WhatsApp" data-sharer="whatsapp" data-url="https://russellgao.cn/cpu/" data-title="cpu 负载与使用率原理" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://russellgao.cn/cpu/" data-title="cpu 负载与使用率原理"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://russellgao.cn/cpu/" data-title="cpu 负载与使用率原理"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="Share on Myspace" data-sharer="myspace" data-url="https://russellgao.cn/cpu/" data-title="cpu 负载与使用率原理" data-description="cpu 负载与使用率原理"><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="Share on Blogger" data-sharer="blogger" data-url="https://russellgao.cn/cpu/" data-title="cpu 负载与使用率原理" data-description="cpu 负载与使用率原理"><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="Share on Evernote" data-sharer="evernote" data-url="https://russellgao.cn/cpu/" data-title="cpu 负载与使用率原理"><i class="fab fa-evernote fa-fw"></i></a></span>
             </div>
         </div>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/git/">git</a>,&nbsp;<a href="/tags/cli/">cli</a></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/linux/">linux</a>,&nbsp;<a href="/tags/cpu/">cpu</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="/docker-local-storage/" class="prev" rel="prev" title="docker 原理之本地存储"><i class="fas fa-angle-left fa-fw"></i>docker 原理之本地存储</a>
-            <a href="/cpu/" class="next" rel="next" title="cpu 负载与使用率原理">cpu 负载与使用率原理<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="/git-command/" class="prev" rel="prev" title="git 常用命令"><i class="fas fa-angle-left fa-fw"></i>git 常用命令</a></div>
 </div>
 <div id="comments"><div id="valine" class="comment"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.

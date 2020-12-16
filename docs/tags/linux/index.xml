@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>linux - Tag - 大大很二</title>
+        <link>https://russellgao.cn/tags/linux/</link>
+        <description>linux - Tag - 大大很二</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Tue, 15 Dec 2020 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/tags/linux/" rel="self" type="application/rss+xml" /><item>
+    <title>cpu 负载与使用率原理</title>
+    <link>https://russellgao.cn/cpu/</link>
+    <pubDate>Tue, 15 Dec 2020 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/cpu/</guid>
+    <description><![CDATA[导读  在定位性能问题时，一个绕不开的话题就是 CPU ，会觉得 CPU 不够用了，或者是瓶颈了，那么怎么来确定是 CPU 的问题呢？衡量 CPU 的指标有两个，CPU 负载(load average) 和 使用率，这两者有什么关系和区别呢？ 这篇文章带大家深层次的了解一下 CPU 。]]></description>
+</item></channel>
+</rss>

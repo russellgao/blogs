@@ -7,6 +7,13 @@
             <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster>
             <atom:link href="https://russellgao.cn/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>cpu 负载与使用率原理</title>
+    <link>https://russellgao.cn/cpu/</link>
+    <pubDate>Tue, 15 Dec 2020 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/cpu/</guid>
+    <description><![CDATA[导读  在定位性能问题时，一个绕不开的话题就是 CPU ，会觉得 CPU 不够用了，或者是瓶颈了，那么怎么来确定是 CPU 的问题呢？衡量 CPU 的指标有两个，CPU 负载(load average) 和 使用率，这两者有什么关系和区别呢？ 这篇文章带大家深层次的了解一下 CPU 。]]></description>
+</item><item>
     <title>git 常用命令</title>
     <link>https://russellgao.cn/git-command/</link>
     <pubDate>Mon, 14 Dec 2020 00:00:00 &#43;0000</pubDate>
@@ -74,12 +81,5 @@
     <author>Author</author>
     <guid>https://russellgao.cn/pod-create/</guid>
     <description><![CDATA[导读  Pod 应该算是 kubernetes 的基本盘，Pod 是 kubernetes 的最小调度单位，我这里有个问题，说通过 kubectl apply -f  创建一个 Pod ，从执行到 Pod 正常运行 kubernetes 做了什么事情呢？都有哪些组件参与呢？这篇文档主要讲述从提交 Pod 的创建请求到 Pod 的正常运行的这个过程追踪。]]></description>
-</item><item>
-    <title>openresty 配置文件 （二）</title>
-    <link>https://russellgao.cn/openresty-server/</link>
-    <pubDate>Mon, 23 Nov 2020 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://russellgao.cn/openresty-server/</guid>
-    <description><![CDATA[导读  这篇是继上一篇 openresty 配置文件 （一） 介绍了 openresty 全局配置之后，介绍 openresty server 配置，server 的配置一般单独放在 conf.]]></description>
 </item></channel>
 </rss>
