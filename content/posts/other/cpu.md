@@ -35,7 +35,7 @@ CPU 就是计算机的中央处理器(Central Processing Unit)，其功能主要
 所以得出一个结论: **总核数 = 物理核数 * 每个物理核心的核数 * 超线程数**
 
 ### cpu 信息查看
-在 unix 系统下查看 cpu 详细信息的方法为 : 
+在 unix 系统下查看 CPU 详细信息的方法为 `cat /proc/cpuinfo ` : 
 
 ```shell script
 [root@iZuf685opgs9oyozju9i2bZ ~]# cat /proc/cpuinfo 
@@ -91,6 +91,62 @@ cache_alignment	: 64
 address sizes	: 46 bits physical, 48 bits virtual
 power management:
 ```
+上面这是一个 `1一个物理核心，一个物理核心只有一个核` 的 CPU 详细信息。
+
+关键指标说明: 
+
+- processor: 逻辑核心的序号，默认从 0 开始，对于单核处理器，则可以认为是其CPU编号，对于多核处理器则可以是物理核、或者使用超线程技术虚拟的逻辑核。
+- vendor_id: CPU 制造商
+- cpu family: CPU 产品系列代号
+- model: CPU属于其系列中的哪一代的代号
+- model name: CPU属于的名字及其编号、标称主频
+- stepping: CPU属于制作更新版本
+- cpu MHz: CPU的实际使用主频
+- cache size: CPU二级缓存大小
+- physical id: 单个CPU的标号
+- siblings: 单个CPU逻辑物理核数
+- core id: 当前物理核在其所处CPU中的编号，这个编号不一定连续
+- cpu cores: 该逻辑核所处CPU的物理核数
+- apicid: 用来区分不同逻辑核的编号，系统中每个逻辑核的此编号必然不同，此编号不一定连续
+- fpu: 是否具有浮点运算单元（Floating Point Unit）
+- fpu_exception: 是否支持浮点计算异常
+- cpuid level : 执行cpuid指令前，eax寄存器中的值，根据不同的值cpuid指令会返回不同的内容
+- wp: 表明当前CPU是否在内核态支持对用户空间的写保护（Write Protection）
+- flags: 当前CPU支持的功能
+- bogomips: 在系统内核启动时粗略测算的CPU速度（Million Instructions Per Second）
+- clflush size: 每次刷新缓存的大小单位
+- cache_alignment: 缓存地址对齐单位
+- address sizes: 可访问地址空间位数
+- power management: 对能源管理的支持
+
+
+对于 cpu 的常用操作如下:
+> 查看 CPU 型号:
+>```shell script
+>[root@iZuf685opgs9oyozju9i2bZ ~]# cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c
+>       2  Intel(R) Xeon(R) Platinum 8269CY CPU @ 2.50GHz
+>```
+> 查看物理 CPU 个数
+>```shell script
+>[root@iZuf685opgs9oyozju9i2bZ ~]# cat /proc/cpuinfo| grep "physical id"| sort| uniq| wc -l
+> 1
+>```
+> 查看每个物理 CPU 中 core 的个数(即核数)
+> ```shell script
+>[root@iZuf685opgs9oyozju9i2bZ ~]# cat /proc/cpuinfo| grep "cpu cores"| uniq 
+>cpu cores	: 1
+> ```
+> 查看逻辑 CPU 的个数
+> ```shell script
+>[root@iZuf685opgs9oyozju9i2bZ ~]# cat /proc/cpuinfo| grep "processor"| wc -l
+>2
+>```
+> 查看 CPU 是运行在 32 位还是 64 位模式下
+> ```shell script
+>[root@iZuf685opgs9oyozju9i2bZ ~]# getconf LONG_BIT
+> 64
+> ```
+
 
 ## CPU 负载
 在 unix 系统下可以通过 `top` 命令看到3个值 :
@@ -104,13 +160,31 @@ Tasks:  99 total,   1 running,  98 sleeping,   0 stopped,   0 zombie
 
 load average: 0.00, 0.01, 0.05 表示系统在最近 `1、5、15`分钟内的平均负载。那么什么是负载呢 ?
 
-> cpu 负载指的是: 系统在一段时间内正在使用和等待使用CPU的平均任务数。描述的是任务的排队情况。
+> CPU 负载指的是: 系统在一段时间内正在使用和等待使用CPU的平均任务数。描述的是任务的排队情况。
 
 借用网上的一个例子：**公用电话**
 
 
 ## CPU 使用率
-cpu使用率是程序在运行期间实时占用的CPU百分比。描述的是 cpu 的繁忙情况。
+CPU 使用率是程序在运行期间实时占用的CPU百分比。描述的是 cpu 的繁忙情况。
+
+cpu 使用率高不一定负载高，看看下面的代码:
+```go
+func main() {
+	for {
+		num1 := 1
+		num2 := 1
+		num3 := num1 + num2
+		fmt.Println(num3)
+	}
+}
+```
+
+这个程序会一直占着 cpu ，如果是单核的，cpu 使用率为 100%，负载为1。
 
 ## 总结
-
+- CPU 就是计算机的中央处理器(Central Processing Unit)，其功能主要是解释计算机指令以及处理计算机软件中的数据
+- 总核数 = 物理核数 * 每个物理核心的核数 * 超线程数
+- CPU 负载是系统在一段时间内正在使用和等待使用CPU的平均任务数。描述的是任务的排队情况。
+- CPU 使用率是程序在运行期间实时占用的CPU百分比。描述的是 cpu 的繁忙情况。
+- CPU 负载高并不能说明 CPU 使用率高，反之亦然。
