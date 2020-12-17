@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://russellgao.cn/cpu/" />
 <meta property="og:image" content="https://russellgao.cn/images/profile.jpg"/>
 <meta property="article:published_time" content="2020-12-15T00:00:00+00:00" />
-<meta property="article:modified_time" content="2020-12-16T22:54:17+08:00" /><meta property="og:site_name" content="大大很二" />
+<meta property="article:modified_time" content="2020-12-17T21:17:29+08:00" /><meta property="og:site_name" content="大大很二" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://russellgao.cn/images/profile.jpg"/>
 
@@ -27,8 +27,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/russellgao.cn\/cpu\/"
-        },"genre": "posts","keywords": "linux, cpu","wordcount":  749 ,
-        "url": "https:\/\/russellgao.cn\/cpu\/","datePublished": "2020-12-15T00:00:00+00:00","dateModified": "2020-12-16T22:54:17+08:00","publisher": {
+        },"genre": "posts","keywords": "linux, cpu","wordcount":  766 ,
+        "url": "https:\/\/russellgao.cn\/cpu\/","datePublished": "2020-12-15T00:00:00+00:00","dateModified": "2020-12-17T21:17:29+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -118,7 +118,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">深入浅出的聊聊 cpu 负载与使用率</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-12-15">2020-12-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;749 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-12-15">2020-12-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;766 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;4 minutes&nbsp;<span id="/cpu/" class="leancloud_visitors" data-flag-title="深入浅出的聊聊 cpu 负载与使用率">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;views
                     </span>&nbsp;</div>
@@ -138,6 +138,13 @@
     </li>
     <li><a href="#cpu-负载">CPU 负载</a></li>
     <li><a href="#cpu-使用率">CPU 使用率</a></li>
+    <li><a href="#负载与使用率分析">负载与使用率分析</a>
+      <ul>
+        <li><a href="#负载高使用率低">负载高、使用率低</a></li>
+        <li><a href="#利用率高负载低">利用率高、负载低</a></li>
+        <li><a href="#使用率低负载低iops-高">使用率低、负载低、IOPS 高</a></li>
+      </ul>
+    </li>
     <li><a href="#总结">总结</a></li>
   </ul>
 </nav></div>
@@ -279,7 +286,7 @@ address sizes	: <span class="m">46</span> bits physical, <span class="m">48</spa
 power management:
 </code></pre></td></tr></table>
 </div>
-</div><p>上面这是一个 <code>1一个物理核心，一个物理核心只有一个核</code> 的 CPU 详细信息。</p>
+</div><p>上面这是一个 <code>1一个物理核心，一个物理核心只有一个核，一个核上有两个超线程</code> 的 CPU 详细信息。</p>
 <p>关键指标说明:</p>
 <ul>
 <li>processor: 逻辑核心的序号，默认从 0 开始，对于单核处理器，则可以认为是其CPU编号，对于多核处理器则可以是物理核、或者使用超线程技术虚拟的逻辑核。</li>
@@ -387,6 +394,8 @@ Tasks:  <span class="m">99</span> total,   <span class="m">1</span> running,  <s
 <p>CPU 负载指的是: 系统在一段时间内正在使用和等待使用CPU的平均任务数。描述的是任务的排队情况。</p>
 </blockquote>
 <p>借用网上的一个例子：<strong>公用电话</strong></p>
+<p>把CPU比作电话亭，把任务比作排队打电话的人。有一堆人排队打电话，每个人只允许打1分钟的电话，如果时间到了还没有打完还是需要重新去排队。在打电话的时候，肯定会遇到排队等待电话的人，也有打完电话走掉的人，也有新来排队的人，也有打完1分钟后没打完又重新排队的人。那这个人数的变化就相当于任务的增减。为了统计平均负载状态，每分钟统计一次，计算最近<code>1、5、15</code>分钟的平均值。
+load低并不意味着CPU的利用率低，有的人(任务)拿起电话(CPU)一直打完1分钟，这时候 cpu 使用率为100%，有的人(任务)拿起电话(CPU)一直犹豫是否要打或者在找手机号，30秒后才拨通了电话，只有后30秒是真正在打电话，这时候cpu使用率为50% ，当然实际情况可能会有偏差。</p>
 <h2 id="cpu-使用率">CPU 使用率</h2>
 <p>CPU 使用率是程序在运行期间实时占用的CPU百分比。描述的是 cpu 的繁忙情况。</p>
 <p>cpu 使用率高不一定负载高，看看下面的代码:</p>
@@ -413,6 +422,13 @@ Tasks:  <span class="m">99</span> total,   <span class="m">1</span> running,  <s
 </code></pre></td></tr></table>
 </div>
 </div><p>这个程序会一直占着 cpu ，如果是单核的，cpu 使用率为 100%，负载为1。</p>
+<h2 id="负载与使用率分析">负载与使用率分析</h2>
+<h3 id="负载高使用率低">负载高、使用率低</h3>
+<p>说明等待执行的任务很多。很可能是进程僵死了。通过命令 <code>ps -aux</code> 查看是否存在D状态的进程，该状态为不可中断的睡眠状，态。处于D状态的进程通常是在等待IO，通常是IO密集型任务，如果大量请求都集中于相同的IO设备，超出设备的响应能力，会造成任务在运行队列里堆积等待，也就是D状态的进程堆积，那么此时Load Average就会飙高。</p>
+<h3 id="利用率高负载低">利用率高、负载低</h3>
+<p>说明任务少，但是任务执行时间长，有可能是程序本身有问题，如果没有问题那么计算完成后则利用率会下降。这种场景，通常是计算密集型任务，即大量生成耗时短的计算任务。</p>
+<h3 id="使用率低负载低iops-高">使用率低、负载低、IOPS 高</h3>
+<p>通常是低频大文件读写，由于请求数量不大，所以任务都处于R状态(表示正在运行，或者处于运行队列，可以被调度运行)，负载数值反映了当前运行的任务数，不会飙升，IO设备处于满负荷工作状态，导致系统响应能力降低。</p>
 <h2 id="总结">总结</h2>
 <ul>
 <li>CPU 就是计算机的中央处理器(Central Processing Unit)，其功能主要是解释计算机指令以及处理计算机软件中的数据</li>
@@ -425,7 +441,7 @@ Tasks:  <span class="m">99</span> total,   <span class="m">1</span> running,  <s
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2020-12-16</span>
+                <span>Updated on 2020-12-17</span>
             </div>
             <div class="post-info-license"></div>
         </div>
