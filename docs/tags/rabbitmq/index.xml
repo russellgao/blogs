@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>rabbitmq - Tag - 大大很二</title>
+        <link>https://russellgao.cn/tags/rabbitmq/</link>
+        <description>rabbitmq - Tag - 大大很二</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Wed, 16 Dec 2020 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/tags/rabbitmq/" rel="self" type="application/rss+xml" /><item>
+    <title>消息队列原理之rabbitmq</title>
+    <link>https://russellgao.cn/mq-rabbitmq/</link>
+    <pubDate>Wed, 16 Dec 2020 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/mq-rabbitmq/</guid>
+    <description><![CDATA[导读  谈起消息队列，我们的脑海可能会不由自主的冒出这么几个关键词，解耦、异步化、消峰、广播等，消息队列的种类也很多，如 rabbitmq、rocketmq、activemq、kafka等还有各个云厂商提供的消息队列。 它们都有各种的特点和使用场景，所以这个系列的文章主要谈各个消息的原理，目前规划了两篇文章，rabbitmq 和 kafka ，其他的暂时还没有用到，还没有深究。
+这篇主要介绍 rabbitmq 的原理和基于 golang 如何使用。]]></description>
+</item></channel>
+</rss>
