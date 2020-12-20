@@ -4,14 +4,7 @@
         <link>https://russellgao.cn/posts/</link>
         <description>All Posts | 大大很二</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
-            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Thu, 17 Dec 2020 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/posts/" rel="self" type="application/rss+xml" /><item>
-    <title>消息队列原理之kafka</title>
-    <link>https://russellgao.cn/mq-kafka/</link>
-    <pubDate>Thu, 17 Dec 2020 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://russellgao.cn/mq-kafka/</guid>
-    <description><![CDATA[消息队列原理之kafka]]></description>
-</item><item>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Wed, 16 Dec 2020 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/posts/" rel="self" type="application/rss+xml" /><item>
     <title>消息队列原理之rabbitmq</title>
     <link>https://russellgao.cn/mq-rabbitmq/</link>
     <pubDate>Wed, 16 Dec 2020 00:00:00 &#43;0000</pubDate>
@@ -79,5 +72,12 @@
     <author>Author</author>
     <guid>https://russellgao.cn/oracle-golang/</guid>
     <description><![CDATA[导读 这篇文章主要介绍如何利用 golang 操作 oracle 数据库，包括基本的增删改查，本地 oracle 环境搭建，以及如何在 docker 中运行。 oracle client 镜像构建并不容易，花了很长时间去踩坑，文中提供了已经构建好的基础镜像，可以直接使用，这里贡献给大家。]]></description>
+</item><item>
+    <title>openresty 配置文件 （二）</title>
+    <link>https://russellgao.cn/openresty-server/</link>
+    <pubDate>Mon, 23 Nov 2020 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/openresty-server/</guid>
+    <description><![CDATA[导读  这篇是继上一篇 openresty 配置文件 （一） 介绍了 openresty 全局配置之后，介绍 openresty server 配置，server 的配置一般单独放在 conf.]]></description>
 </item></channel>
 </rss>

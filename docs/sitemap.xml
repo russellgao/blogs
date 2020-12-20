@@ -2,12 +2,10 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://russellgao.cn/tags/kafka/</loc><lastmod>2020-12-16T22:54:17&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://russellgao.cn/posts/</loc><lastmod>2020-12-20T23:01:57&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://russellgao.cn/tags/rabbitmq/</loc><lastmod>2020-12-20T23:01:57&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://russellgao.cn/tags/</loc><lastmod>2020-12-20T23:01:57&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://russellgao.cn/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/</loc><lastmod>2020-12-20T23:01:57&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://russellgao.cn/mq-kafka/</loc><lastmod>2020-12-16T22:54:17&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://russellgao.cn/tags/rabbitmq/</loc><lastmod>2020-12-20T23:01:57&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://russellgao.cn/mq-rabbitmq/</loc><lastmod>2020-12-20T23:01:57&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://russellgao.cn/tags/cpu/</loc><lastmod>2020-12-17T21:17:29&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://russellgao.cn/tags/linux/</loc><lastmod>2020-12-17T21:17:29&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
