@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/russellgao.cn\/mq-rabbitmq\/"
-        },"genre": "posts","keywords": "rabbitmq, 消息队列","wordcount":  12 ,
+        },"genre": "posts","keywords": "rabbitmq, 消息队列","wordcount":  1531 ,
         "url": "https:\/\/russellgao.cn\/mq-rabbitmq\/","datePublished": "2020-12-16T00:00:00+00:00","dateModified": "2020-12-16T22:54:17+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -118,8 +118,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">消息队列原理之rabbitmq</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-12-16">2020-12-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;12 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;One minute&nbsp;<span id="/mq-rabbitmq/" class="leancloud_visitors" data-flag-title="消息队列原理之rabbitmq">
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-12-16">2020-12-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1531 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;8 minutes&nbsp;<span id="/mq-rabbitmq/" class="leancloud_visitors" data-flag-title="消息队列原理之rabbitmq">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;views
                     </span>&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="true">
@@ -130,6 +130,17 @@
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
     <li><a href="#导读">导读</a></li>
+    <li><a href="#介绍">介绍</a></li>
+    <li><a href="#架构">架构</a></li>
+    <li><a href="#用法golang">用法（golang）</a>
+      <ul>
+        <li><a href="#direct">direct</a></li>
+        <li><a href="#fanout">fanout</a></li>
+        <li><a href="#topic">topic</a></li>
+        <li><a href="#headers">headers</a></li>
+      </ul>
+    </li>
+    <li><a href="#参考">参考</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="导读">导读</h2>
@@ -138,6 +149,651 @@
 它们都有各种的特点和使用场景，所以这个系列的文章主要谈各个消息的原理，目前规划了两篇文章，rabbitmq 和 kafka ，其他的暂时还没有用到，还没有深究。</p>
 <p>这篇主要介绍 rabbitmq 的原理和基于 golang 如何使用。</p>
 </blockquote>
+<h2 id="介绍">介绍</h2>
+<p>RabbitMQ 是一个由 Erlang 开发的 AMQP(Advanced Message Queuing Protocol，高级消息队列协议)的开源实现，用于在分布式系统中存储转发消息，在易用性、扩展性、高可用性等方面表现不俗。支持多种客户端语言。</p>
+<h2 id="架构">架构</h2>
+<blockquote>
+<p>整体架构对照下面的图说明</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-arch.svg"
+        data-srcset="https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-arch.svg, https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-arch.svg 1.5x, https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-arch.svg 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-arch.svg"
+        title="https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-arch.svg" /></p>
+<p>先看看图片上各个名次的解释:</p>
+<ul>
+<li>Broker:它提供一种传输服务，它的角色就是维护一条从生产者到消费者的路线，保证数据能按照指定的方式进行传输，简单来说就是消息队列服务器实体。</li>
+<li>Connection: 客户端与 <code>Rabbitmq Broker</code> 直接的 <code>TCP</code> 连接，通常一个客户端与 Broker 之间只需要一个连接即可。</li>
+<li>Channel: 消息通道，在客户端的每个连接里，可建立多个channel，最好每个线程都用独立的Channel，后续的对 <code>Queue</code> 和 <code>Exchange</code> 的操作都是在 Channel 中完成的。</li>
+<li>Producer: 消息生产者，通过和 <code>Broker</code> 建立 Connection 和 Channel ，向 Exchange 发送消息。</li>
+<li>Consumer: 消息消费者，通过和 <code>Broker</code> 建立 Connection 和 Channel，从 Queue 中消费消息。</li>
+<li>Exchange: 消息交换机，按照一定的策略把 Producer 生产的消息投递到 Queue 中，等待消费者消费。</li>
+<li>Queue: 消息队列载体，每个消息都会被投入到一个或多个队列。</li>
+<li>Vhost: 虚拟主机，一个broker里可以开设多个vhost，用作权限分离，把不同的系统使用的rabbitmq区分开，共用一个消息队列服务器，但看上去就像各自在用不用的rabbitmq服务器一样。</li>
+<li>Binding：绑定，它的作用就是把exchange和queue按照路由规则绑定起来，这样RabbitMQ就知道如何正确地将消息路由到指定的Queue了。</li>
+<li>RoutingKey：路由关键字，生产者在将消息发送给Exchange的时候，一般会指定一个routing key，来指定这个消息的路由规则，而这个routing key需要与Exchange Type及binding key联合使用才能最终生效。</li>
+</ul>
+<blockquote>
+<p>这里面比较难理解的概念是 <code>RoutingKey</code>,<code>Exchange</code>,<code>Binding</code> ，消费发送时不会直接发送给 <code>Queue</code> ,而是先发送给 <code>Exchange</code>，由 <code>Exchange</code> 按照一定的规则投递到与它绑定的 <code>Queue</code> 中，那这个规则是什么呢?
+规则就与 <code>Exchange</code> 的 Type、<code>Binding</code>、<code>RoutingKey</code> 相关，<code>Exchange</code> 支持的类型有 4 种，<code>direct,fanout,topic,headers</code>,含义如下:</p>
+<ul>
+<li>direct: <code>Queue</code> 和 <code>Exchange</code> 在绑定时需要指定一个 <code>key</code>, 我们称为 <code>Bindkey</code>。<code>Producer</code> 往 <code>Exchange</code> 发送消息时，也需要指定一个 <code>key</code> ，这个 <code>key</code> 就是 <code>Routekey</code>。这种模式下 Exchange 会把消息投递给 <code>Routekey</code> 和 <code>Bindkey</code> 相同的队列</li>
+<li>fanout: 类似于广播的方式，会把消息投递给和 Exchange 绑定的所有队列，不需要检查 <code>Routekey</code> 和 <code>Bindkey</code> 。</li>
+<li>topic: 类似于组播的方式，这种模式下 <code>Bingkey</code> 支持模糊匹配，<code>*</code> 代表匹配<strong>一个任意词组</strong>，<code>#</code>代表匹配<strong>0个或多个词组</strong>。如 Producer 产生一条 RouteKey 为 <code>benz.car</code> 的消息，
+同时这个 Exchange 绑定了3组队列（<strong>请注意是3组不是3个，意思是Exchange可以和同一个Queue进行多次绑定，通过Bindkey 的不同，它们之间是多对多的关系</strong>），Bindkey 分别为: <code>car</code> ,<code>*.car</code> ,<code>benz.car</code> ,那么会把这个消息投递到 <code>*.car</code>、<code>benz.car</code> 对应的 <code>Queue</code> 中。</li>
+<li>headers: 这个类型 <code>Routekey</code> 和 <code>Bindkey</code> 的匹配规则来路由消息，而是根据发送的消息内容中的 <code>headers</code> 属性进行匹配。</li>
+</ul>
+</blockquote>
+<p>对照上面图和名次解释应该比较清晰明了了，下面我们通过几个例子说明如何使用。</p>
+<h2 id="用法golang">用法（golang）</h2>
+<h3 id="direct">direct</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-exchange.jpg"
+        data-srcset="https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-exchange.jpg, https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-exchange.jpg 1.5x, https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-exchange.jpg 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-exchange.jpg"
+        title="https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-exchange.jpg" /></p>
+<p>先看看 Rabbitmq 默认的 exchange ，其中第一个(AMQP default) 是默认的，默认绑定了所有的 <code>Queue</code> ，会把消息投递到 Routekey 对应的队列中，即： <code>Routekey==QueueName</code> 。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+	<span class="s">&#34;fmt&#34;</span>
+	<span class="s">&#34;github.com/streadway/amqp&#34;</span>
+	<span class="s">&#34;log&#34;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span> <span class="kt">error</span><span class="p">,</span> <span class="nx">msg</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">log</span><span class="p">.</span><span class="nf">Fatalf</span><span class="p">(</span><span class="s">&#34;%s: %s&#34;</span><span class="p">,</span> <span class="nx">msg</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">url</span> <span class="p">=</span> <span class="s">&#34;amqp://username:password@ip:port&#34;</span>
+
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">conn</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">amqp</span><span class="p">.</span><span class="nf">Dial</span><span class="p">(</span><span class="nx">url</span><span class="p">)</span>
+	<span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to connect to RabbitMQ&#34;</span><span class="p">)</span>
+	<span class="k">defer</span> <span class="nx">conn</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
+
+	<span class="nx">channel</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">conn</span><span class="p">.</span><span class="nf">Channel</span><span class="p">()</span>
+	<span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to open a Channel&#34;</span><span class="p">)</span>
+	<span class="k">defer</span> <span class="nx">channel</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
+
+	<span class="nx">queueNameCar</span> <span class="o">:=</span> <span class="s">&#34;car&#34;</span>
+	<span class="k">if</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">channel</span><span class="p">.</span><span class="nf">QueueDeclare</span><span class="p">(</span><span class="nx">queueNameCar</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to decare Queue&#34;</span><span class="p">)</span>
+	<span class="p">}</span>
+
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">channel</span><span class="p">.</span><span class="nf">Publish</span><span class="p">(</span><span class="s">&#34;&#34;</span><span class="p">,</span> <span class="nx">queueNameCar</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">amqp</span><span class="p">.</span><span class="nx">Publishing</span><span class="p">{</span><span class="nx">ContentType</span><span class="p">:</span> <span class="s">&#34;text/plain&#34;</span><span class="p">,</span> <span class="nx">Body</span><span class="p">:</span> <span class="p">[]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&#34;test car&#34;</span><span class="p">)});</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to publish message&#34;</span><span class="p">)</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>这里是一个完整的 Demo， 后面只会提供<code>main() 函数</code>的示例代码，其他的和这里这里类似。</li>
+<li>申明了一个名称为 <code>car</code> 的消息队列，并没有做任何的绑定，往 <code>defalut exchange</code> 发送一条消息，routekey 为 <code>car</code> ,可以看到和队列名相同。</li>
+<li>为了方便演示，结果以图片的方式展现，可以看到这里有 <code>car</code> 的队列，并且有一条消息。
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-queue-1.jpg"
+        data-srcset="https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-queue-1.jpg, https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-queue-1.jpg 1.5x, https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-queue-1.jpg 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-queue-1.jpg"
+        title="https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-queue-1.jpg" /></li>
+</ul>
+<blockquote>
+<p>在创建队列有几个参数可以关注一下
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-queue-2.jpg"
+        data-srcset="https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-queue-2.jpg, https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-queue-2.jpg 1.5x, https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-queue-2.jpg 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-queue-2.jpg"
+        title="https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-queue-2.jpg" /></p>
+<ul>
+<li>Durability： 持久化，是否将队列持久化到磁盘，当选择持久化时当 rabbitmq 重启了，这个队列还在，否则当重启了之后这个队列就没有了，需要重新创建，这个需要设计程序时考虑到。</li>
+<li>Auto delete: 当其中一个消费者已经完成之后，会删除这个队列并断开与其他的消费者的连接。</li>
+<li>Arguments：
+<ul>
+<li>x-message-ttl: 消息的过期时间，发布到队列中的消息在被丢弃之前可以存活多久。</li>
+<li>x-expires: 队列的过期时间，一个队列在多长时间内未使用会被自动删除。</li>
+<li>x-max-length: 队列的长度，最多剋容纳多少条消息。</li>
+<li>x-max-length-bytes: 队列最大可以包含多大的消息。</li>
+<li>x-dead-letter-exchange: 当消息过期或者被客户端<code>reject</code> 之后应该重新投递到那个<code>exchange</code> ，类似与一个<code>producer</code>发送消息时选择<code>exchange</code></li>
+<li>x-dead-letter-routing-key: 当消息过期或者被客户端<code>reject</code> 之后重新投递时的 <code>Routekey</code>，类似与一个<code>producer</code>发送消息时设置<code>routekey</code>，默认是原消息的 <code>routekey</code></li>
+<li>x-max-priority: 消息的优先级设置，设置可以支持的最大优先级，如设置为<code>10</code>,则可以在发送消息设置优先级，可以根据优先级处理消息，默认为空，当为空时则不支持优先级</li>
+<li>x-queue-mode: 将队列设置为懒惰模式，尽可能多地将消息保留在磁盘上，以减少RAM的使用量；如果不设置，队列将保留内存中的缓存，以尽可能快地传递消息。</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<p>我们自己创建一个 direct 类型的 exchange 并绑定一些队列看看是什么效果。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">conn</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">amqp</span><span class="p">.</span><span class="nf">Dial</span><span class="p">(</span><span class="nx">url</span><span class="p">)</span>
+	<span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to connect to RabbitMQ&#34;</span><span class="p">)</span>
+	<span class="k">defer</span> <span class="nx">conn</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
+
+	<span class="nx">channel</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">conn</span><span class="p">.</span><span class="nf">Channel</span><span class="p">()</span>
+	<span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to open a Channel&#34;</span><span class="p">)</span>
+	<span class="k">defer</span> <span class="nx">channel</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
+
+	<span class="nx">directExchangeNameCar</span> <span class="o">:=</span> <span class="s">&#34;direct.car&#34;</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">channel</span><span class="p">.</span><span class="nf">ExchangeDeclare</span><span class="p">(</span><span class="nx">directExchangeNameCar</span><span class="p">,</span> <span class="s">&#34;direct&#34;</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to decalare exchange&#34;</span><span class="p">)</span>
+	<span class="p">}</span>
+
+	<span class="nx">queueNameCar</span> <span class="o">:=</span> <span class="s">&#34;car&#34;</span>
+	<span class="nx">queueNameBigCar</span> <span class="o">:=</span> <span class="s">&#34;big-car&#34;</span>
+	<span class="nx">queueNameMiddleCar</span> <span class="o">:=</span> <span class="s">&#34;middle-car&#34;</span>
+	<span class="nx">queueNameSmallCar</span> <span class="o">:=</span> <span class="s">&#34;small-car&#34;</span>
+	<span class="nx">channel</span><span class="p">.</span><span class="nf">QueueDeclare</span><span class="p">(</span><span class="nx">queueNameCar</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span><span class="p">)</span>
+	<span class="nx">channel</span><span class="p">.</span><span class="nf">QueueDeclare</span><span class="p">(</span><span class="nx">queueNameBigCar</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span><span class="p">)</span>
+	<span class="nx">channel</span><span class="p">.</span><span class="nf">QueueDeclare</span><span class="p">(</span><span class="nx">queueNameMiddleCar</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span><span class="p">)</span>
+	<span class="nx">channel</span><span class="p">.</span><span class="nf">QueueDeclare</span><span class="p">(</span><span class="nx">queueNameSmallCar</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span><span class="p">)</span>
+
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">channel</span><span class="p">.</span><span class="nf">QueueBind</span><span class="p">(</span><span class="nx">queueNameCar</span><span class="p">,</span> <span class="s">&#34;car&#34;</span><span class="p">,</span> <span class="nx">directExchangeNameCar</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to bind queue to exchange&#34;</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">channel</span><span class="p">.</span><span class="nf">QueueBind</span><span class="p">(</span><span class="nx">queueNameBigCar</span><span class="p">,</span> <span class="s">&#34;car&#34;</span><span class="p">,</span> <span class="nx">directExchangeNameCar</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to bind queue to exchange&#34;</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">channel</span><span class="p">.</span><span class="nf">QueueBind</span><span class="p">(</span><span class="nx">queueNameBigCar</span><span class="p">,</span> <span class="s">&#34;big.car&#34;</span><span class="p">,</span> <span class="nx">directExchangeNameCar</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to bind queue to exchange&#34;</span><span class="p">)</span>
+	<span class="p">}</span>
+
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">channel</span><span class="p">.</span><span class="nf">QueueBind</span><span class="p">(</span><span class="nx">queueNameMiddleCar</span><span class="p">,</span> <span class="s">&#34;car&#34;</span><span class="p">,</span> <span class="nx">directExchangeNameCar</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to bind queue to exchange&#34;</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">channel</span><span class="p">.</span><span class="nf">QueueBind</span><span class="p">(</span><span class="nx">queueNameMiddleCar</span><span class="p">,</span> <span class="s">&#34;middler.car&#34;</span><span class="p">,</span> <span class="nx">directExchangeNameCar</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to bind queue to exchange&#34;</span><span class="p">)</span>
+	<span class="p">}</span>
+
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">channel</span><span class="p">.</span><span class="nf">QueueBind</span><span class="p">(</span><span class="nx">queueNameSmallCar</span><span class="p">,</span> <span class="s">&#34;car&#34;</span><span class="p">,</span> <span class="nx">directExchangeNameCar</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to bind queue to exchange&#34;</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">channel</span><span class="p">.</span><span class="nf">QueueBind</span><span class="p">(</span><span class="nx">queueNameSmallCar</span><span class="p">,</span> <span class="s">&#34;small.car&#34;</span><span class="p">,</span> <span class="nx">directExchangeNameCar</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to bind queue to exchange&#34;</span><span class="p">)</span>
+	<span class="p">}</span>
+
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">channel</span><span class="p">.</span><span class="nf">Publish</span><span class="p">(</span><span class="nx">directExchangeNameCar</span><span class="p">,</span> <span class="s">&#34;car&#34;</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">amqp</span><span class="p">.</span><span class="nx">Publishing</span><span class="p">{</span><span class="nx">ContentType</span><span class="p">:</span> <span class="s">&#34;text/plain&#34;</span><span class="p">,</span> <span class="nx">Body</span><span class="p">:</span> <span class="p">[]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&#34;test car&#34;</span><span class="p">)});</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to publish message&#34;</span><span class="p">)</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>代码中申明了 1 一个 <code>Exchange</code> ，4个 <code>Queue</code>，7个 <code>Binding</code> ,其中一个 <code>Binding</code> 详情如下:
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-queue-4.jpg"
+        data-srcset="https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-queue-4.jpg, https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-queue-4.jpg 1.5x, https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-queue-4.jpg 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-queue-4.jpg"
+        title="https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-queue-4.jpg" /></li>
+<li>可以看到向这个 Exchange 中发消息，Routekey 为 <code>car</code> ,匹配的队列有个，那么这4个队列中都应该有消息才对
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-queue-3.jpg"
+        data-srcset="https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-queue-3.jpg, https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-queue-3.jpg 1.5x, https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-queue-3.jpg 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-queue-3.jpg"
+        title="https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-queue-3.jpg" />
+和我们的设想是一直</li>
+</ul>
+<blockquote>
+<p><code>Queue</code> 的创建上面已经讲过了，这里有 <code>Exchange</code> 的创建，那么再看看创建 <code>Exchange</code> 有哪些参数
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-exchange-1.jpg"
+        data-srcset="https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-exchange-1.jpg, https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-exchange-1.jpg 1.5x, https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-exchange-1.jpg 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-exchange-1.jpg"
+        title="https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-exchange-1.jpg" /></p>
+<ul>
+<li>Type: 类型，上面已经涉及到了</li>
+<li>Durability: 持久化</li>
+<li>Auto delete: 是否自动删除，如果为yes 则当其中队列完成 <code>unbind</code> 操作，则其他的 <code>queue</code> 或者 <code>exchange</code> 也会 unbind 并且删除这个 <code>exchange</code> 。</li>
+<li>Internal: 如果为yes ，则客户端不能直接往这个 exchange 上发送消息，只能用作和 <code>exchange</code> 绑定。</li>
+</ul>
+</blockquote>
+<h3 id="fanout">fanout</h3>
+<p>fanout 工作方式类似于广播，看看下面的代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">conn</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">amqp</span><span class="p">.</span><span class="nf">Dial</span><span class="p">(</span><span class="nx">url</span><span class="p">)</span>
+	<span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to connect to RabbitMQ&#34;</span><span class="p">)</span>
+	<span class="k">defer</span> <span class="nx">conn</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
+
+	<span class="nx">channel</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">conn</span><span class="p">.</span><span class="nf">Channel</span><span class="p">()</span>
+	<span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to open a Channel&#34;</span><span class="p">)</span>
+	<span class="k">defer</span> <span class="nx">channel</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
+
+	<span class="nx">fanoutExchangeNameCar</span> <span class="o">:=</span> <span class="s">&#34;fanout.car&#34;</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">channel</span><span class="p">.</span><span class="nf">ExchangeDeclare</span><span class="p">(</span><span class="nx">fanoutExchangeNameCar</span><span class="p">,</span> <span class="s">&#34;fanout&#34;</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to decalare exchange&#34;</span><span class="p">)</span>
+	<span class="p">}</span>
+
+	<span class="nx">queueNameCar</span> <span class="o">:=</span> <span class="s">&#34;car&#34;</span>
+	<span class="nx">queueNameBigCar</span> <span class="o">:=</span> <span class="s">&#34;big-car&#34;</span>
+	<span class="nx">queueNameMiddleCar</span> <span class="o">:=</span> <span class="s">&#34;middle-car&#34;</span>
+	<span class="nx">queueNameSmallCar</span> <span class="o">:=</span> <span class="s">&#34;small-car&#34;</span>
+	<span class="nx">channel</span><span class="p">.</span><span class="nf">QueueDeclare</span><span class="p">(</span><span class="nx">queueNameCar</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span><span class="p">)</span>
+	<span class="nx">channel</span><span class="p">.</span><span class="nf">QueueDeclare</span><span class="p">(</span><span class="nx">queueNameBigCar</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span><span class="p">)</span>
+	<span class="nx">channel</span><span class="p">.</span><span class="nf">QueueDeclare</span><span class="p">(</span><span class="nx">queueNameMiddleCar</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span><span class="p">)</span>
+	<span class="nx">channel</span><span class="p">.</span><span class="nf">QueueDeclare</span><span class="p">(</span><span class="nx">queueNameSmallCar</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span><span class="p">)</span>
+
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">channel</span><span class="p">.</span><span class="nf">QueueBind</span><span class="p">(</span><span class="nx">queueNameCar</span><span class="p">,</span> <span class="s">&#34;car&#34;</span><span class="p">,</span> <span class="nx">fanoutExchangeNameCar</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to bind queue to exchange&#34;</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">channel</span><span class="p">.</span><span class="nf">QueueBind</span><span class="p">(</span><span class="nx">queueNameBigCar</span><span class="p">,</span> <span class="s">&#34;car&#34;</span><span class="p">,</span> <span class="nx">fanoutExchangeNameCar</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to bind queue to exchange&#34;</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">channel</span><span class="p">.</span><span class="nf">QueueBind</span><span class="p">(</span><span class="nx">queueNameBigCar</span><span class="p">,</span> <span class="s">&#34;big.car&#34;</span><span class="p">,</span> <span class="nx">fanoutExchangeNameCar</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to bind queue to exchange&#34;</span><span class="p">)</span>
+	<span class="p">}</span>
+
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">channel</span><span class="p">.</span><span class="nf">QueueBind</span><span class="p">(</span><span class="nx">queueNameMiddleCar</span><span class="p">,</span> <span class="s">&#34;car&#34;</span><span class="p">,</span> <span class="nx">fanoutExchangeNameCar</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to bind queue to exchange&#34;</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">channel</span><span class="p">.</span><span class="nf">QueueBind</span><span class="p">(</span><span class="nx">queueNameMiddleCar</span><span class="p">,</span> <span class="s">&#34;middler.car&#34;</span><span class="p">,</span> <span class="nx">fanoutExchangeNameCar</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to bind queue to exchange&#34;</span><span class="p">)</span>
+	<span class="p">}</span>
+
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">channel</span><span class="p">.</span><span class="nf">QueueBind</span><span class="p">(</span><span class="nx">queueNameSmallCar</span><span class="p">,</span> <span class="s">&#34;car&#34;</span><span class="p">,</span> <span class="nx">fanoutExchangeNameCar</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to bind queue to exchange&#34;</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">channel</span><span class="p">.</span><span class="nf">QueueBind</span><span class="p">(</span><span class="nx">queueNameSmallCar</span><span class="p">,</span> <span class="s">&#34;small.car&#34;</span><span class="p">,</span> <span class="nx">fanoutExchangeNameCar</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to bind queue to exchange&#34;</span><span class="p">)</span>
+	<span class="p">}</span>
+
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">channel</span><span class="p">.</span><span class="nf">Publish</span><span class="p">(</span><span class="nx">fanoutExchangeNameCar</span><span class="p">,</span> <span class="s">&#34;middle.car&#34;</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">amqp</span><span class="p">.</span><span class="nx">Publishing</span><span class="p">{</span><span class="nx">ContentType</span><span class="p">:</span> <span class="s">&#34;text/plain&#34;</span><span class="p">,</span> <span class="nx">Body</span><span class="p">:</span> <span class="p">[]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&#34;test car&#34;</span><span class="p">)});</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to publish message&#34;</span><span class="p">)</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>这个申明了一个 <code>fanout</code> 类型的 exchange ，和上面的代码类似，只有 exchange 不同。</li>
+<li>可以先在脑海中想想每个 queue 中有几条消息。</li>
+<li>向 <code>fanout.car</code> 这个 exchange 发消息指定 Routekey 为 <code>middle.car</code> ，但是由于是广播模式，所以和 routekey 是没有关系的，每个消息队列中各有一条消息。</li>
+<li>请注意有些 binding 指向的是同一个 queue ，那么会产生多条消息到相同的 queue 中，答案是否定的。producer 产生一条消息，根据一定的规则，每个队列只会收到一条(如何符合投递规则的话)。
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-queue-5.jpg"
+        data-srcset="https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-queue-5.jpg, https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-queue-5.jpg 1.5x, https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-queue-5.jpg 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-queue-5.jpg"
+        title="https://gitee.com/russellgao/blogs-image/raw/master/images/mq/rabbitmq-queue-5.jpg" /></li>
+</ul>
+<h3 id="topic">topic</h3>
+<p>topic 比较有意思了，和之前的简单粗暴的用法不一样了，先看看下面的代码，声明了一个 <code>topic</code> 类型的 <code>exchange</code>， 4个 <code>queue</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">conn</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">amqp</span><span class="p">.</span><span class="nf">Dial</span><span class="p">(</span><span class="nx">url</span><span class="p">)</span>
+	<span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to connect to RabbitMQ&#34;</span><span class="p">)</span>
+	<span class="k">defer</span> <span class="nx">conn</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
+
+	<span class="nx">channel</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">conn</span><span class="p">.</span><span class="nf">Channel</span><span class="p">()</span>
+	<span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to open a Channel&#34;</span><span class="p">)</span>
+	<span class="k">defer</span> <span class="nx">channel</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
+
+	<span class="nx">topicExchangeNameCar</span> <span class="o">:=</span> <span class="s">&#34;topic.car&#34;</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">channel</span><span class="p">.</span><span class="nf">ExchangeDeclare</span><span class="p">(</span><span class="nx">topicExchangeNameCar</span><span class="p">,</span> <span class="s">&#34;topic&#34;</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to decalare exchange&#34;</span><span class="p">)</span>
+	<span class="p">}</span>
+
+	<span class="nx">queueNameCar</span> <span class="o">:=</span> <span class="s">&#34;car&#34;</span>
+	<span class="nx">queueNameBigCar</span> <span class="o">:=</span> <span class="s">&#34;big-car&#34;</span>
+	<span class="nx">queueNameMiddleCar</span> <span class="o">:=</span> <span class="s">&#34;middle-car&#34;</span>
+	<span class="nx">queueNameSmallCar</span> <span class="o">:=</span> <span class="s">&#34;small-car&#34;</span>
+	<span class="nx">channel</span><span class="p">.</span><span class="nf">QueueDeclare</span><span class="p">(</span><span class="nx">queueNameCar</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span><span class="p">)</span>
+	<span class="nx">channel</span><span class="p">.</span><span class="nf">QueueDeclare</span><span class="p">(</span><span class="nx">queueNameBigCar</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span><span class="p">)</span>
+	<span class="nx">channel</span><span class="p">.</span><span class="nf">QueueDeclare</span><span class="p">(</span><span class="nx">queueNameMiddleCar</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span><span class="p">)</span>
+	<span class="nx">channel</span><span class="p">.</span><span class="nf">QueueDeclare</span><span class="p">(</span><span class="nx">queueNameSmallCar</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span><span class="p">)</span>
+
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">channel</span><span class="p">.</span><span class="nf">QueueBind</span><span class="p">(</span><span class="nx">queueNameCar</span><span class="p">,</span> <span class="s">&#34;car&#34;</span><span class="p">,</span> <span class="nx">topicExchangeNameCar</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to bind queue to exchange&#34;</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">channel</span><span class="p">.</span><span class="nf">QueueBind</span><span class="p">(</span><span class="nx">queueNameBigCar</span><span class="p">,</span> <span class="s">&#34;car&#34;</span><span class="p">,</span> <span class="nx">topicExchangeNameCar</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to bind queue to exchange&#34;</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">channel</span><span class="p">.</span><span class="nf">QueueBind</span><span class="p">(</span><span class="nx">queueNameBigCar</span><span class="p">,</span> <span class="s">&#34;big.car&#34;</span><span class="p">,</span> <span class="nx">topicExchangeNameCar</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to bind queue to exchange&#34;</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">channel</span><span class="p">.</span><span class="nf">QueueBind</span><span class="p">(</span><span class="nx">queueNameMiddleCar</span><span class="p">,</span> <span class="s">&#34;car&#34;</span><span class="p">,</span> <span class="nx">topicExchangeNameCar</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to bind queue to exchange&#34;</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">channel</span><span class="p">.</span><span class="nf">QueueBind</span><span class="p">(</span><span class="nx">queueNameMiddleCar</span><span class="p">,</span> <span class="s">&#34;middler.car&#34;</span><span class="p">,</span> <span class="nx">topicExchangeNameCar</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to bind queue to exchange&#34;</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">channel</span><span class="p">.</span><span class="nf">QueueBind</span><span class="p">(</span><span class="nx">queueNameSmallCar</span><span class="p">,</span> <span class="s">&#34;car&#34;</span><span class="p">,</span> <span class="nx">topicExchangeNameCar</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to bind queue to exchange&#34;</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">channel</span><span class="p">.</span><span class="nf">QueueBind</span><span class="p">(</span><span class="nx">queueNameSmallCar</span><span class="p">,</span> <span class="s">&#34;small.car&#34;</span><span class="p">,</span> <span class="nx">topicExchangeNameCar</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to bind queue to exchange&#34;</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">channel</span><span class="p">.</span><span class="nf">QueueBind</span><span class="p">(</span><span class="nx">queueNameSmallCar</span><span class="p">,</span> <span class="s">&#34;*.small.car&#34;</span><span class="p">,</span> <span class="nx">topicExchangeNameCar</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to bind queue to exchange&#34;</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">channel</span><span class="p">.</span><span class="nf">QueueBind</span><span class="p">(</span><span class="nx">queueNameSmallCar</span><span class="p">,</span> <span class="s">&#34;#.small.car&#34;</span><span class="p">,</span> <span class="nx">topicExchangeNameCar</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to bind queue to exchange&#34;</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>现在思考每个 <code>producer</code> 产生消息之后，会有哪些 <code>queue</code> 会收到消息。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go">	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">channel</span><span class="p">.</span><span class="nf">Publish</span><span class="p">(</span><span class="nx">topicExchangeNameCar</span><span class="p">,</span> <span class="s">&#34;car&#34;</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">amqp</span><span class="p">.</span><span class="nx">Publishing</span><span class="p">{</span><span class="nx">ContentType</span><span class="p">:</span> <span class="s">&#34;text/plain&#34;</span><span class="p">,</span> <span class="nx">Body</span><span class="p">:</span> <span class="p">[]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&#34;test car&#34;</span><span class="p">)});</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to publish message&#34;</span><span class="p">)</span>
+	<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>每个 queue 都会收到消息</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go">	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">channel</span><span class="p">.</span><span class="nf">Publish</span><span class="p">(</span><span class="nx">topicExchangeNameCar</span><span class="p">,</span> <span class="s">&#34;small.car&#34;</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">amqp</span><span class="p">.</span><span class="nx">Publishing</span><span class="p">{</span><span class="nx">ContentType</span><span class="p">:</span> <span class="s">&#34;text/plain&#34;</span><span class="p">,</span> <span class="nx">Body</span><span class="p">:</span> <span class="p">[]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&#34;test car&#34;</span><span class="p">)});</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to publish message&#34;</span><span class="p">)</span>
+	<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>small-car</code> 这一个队列会收到消息。
+<ul>
+<li>符合 Routekey 为 <code>small.car</code> 、<code>*.small.car</code>、<code>#.small.car</code> 的binding</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go">	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">channel</span><span class="p">.</span><span class="nf">Publish</span><span class="p">(</span><span class="nx">topicExchangeNameCar</span><span class="p">,</span> <span class="s">&#34;benz.small.car&#34;</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">amqp</span><span class="p">.</span><span class="nx">Publishing</span><span class="p">{</span><span class="nx">ContentType</span><span class="p">:</span> <span class="s">&#34;text/plain&#34;</span><span class="p">,</span> <span class="nx">Body</span><span class="p">:</span> <span class="p">[]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&#34;test car&#34;</span><span class="p">)});</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to publish message&#34;</span><span class="p">)</span>
+	<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>small-car</code> 这一个队列会收到消息。
+<ul>
+<li>符合 Routekey 为 <code>*.small.car</code>、<code>#.small.car</code> 的binding</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go">	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">channel</span><span class="p">.</span><span class="nf">Publish</span><span class="p">(</span><span class="nx">topicExchangeNameCar</span><span class="p">,</span> <span class="s">&#34;auto.blue.benz.small.car&#34;</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">amqp</span><span class="p">.</span><span class="nx">Publishing</span><span class="p">{</span><span class="nx">ContentType</span><span class="p">:</span> <span class="s">&#34;text/plain&#34;</span><span class="p">,</span> <span class="nx">Body</span><span class="p">:</span> <span class="p">[]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&#34;test car&#34;</span><span class="p">)});</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to publish message&#34;</span><span class="p">)</span>
+	<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>small-car</code> 这一个队列会收到消息。
+<ul>
+<li>符合 Routekey 为 <code>#.small.car</code> 的binding</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go">	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">channel</span><span class="p">.</span><span class="nf">Publish</span><span class="p">(</span><span class="nx">topicExchangeNameCar</span><span class="p">,</span> <span class="s">&#34;bike&#34;</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">amqp</span><span class="p">.</span><span class="nx">Publishing</span><span class="p">{</span><span class="nx">ContentType</span><span class="p">:</span> <span class="s">&#34;text/plain&#34;</span><span class="p">,</span> <span class="nx">Body</span><span class="p">:</span> <span class="p">[]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&#34;test car&#34;</span><span class="p">)});</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nf">handlerError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to publish message&#34;</span><span class="p">)</span>
+	<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>都不会收到消息，没有符合的 routekey 。</li>
+</ul>
+<h3 id="headers">headers</h3>
+<p>这种类型很少有实际的应用场景。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://www.rabbitmq.com/documentation.html">https://www.rabbitmq.com/documentation.html</a></li>
+</ul>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
