@@ -115,6 +115,11 @@
         alt="https://gitee.com/russellgao/blogs-image/raw/master/images/profile.jpeg?s=240&amp;d=mp"
         title="https://gitee.com/russellgao/blogs-image/raw/master/images/profile.jpeg?s=240&amp;d=mp" /></a></div><h1 class="home-title">好记性不如烂笔头</h1><h2 class="home-subtitle"><div id="id-1" class="typeit"></div></h2><div class="links"><a href="https://github.com/russellgao/blogs" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github-alt fa-fw"></i></a><a href="mailto:1060745366@qq.com" title="Email" rel=" me"><i class="far fa-envelope fa-fw"></i></a><a href="/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw"></i></a></div></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/mq-kafka/">消息队列原理之kafka</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span>&nbsp;<span class="post-publish">published on <time datetime="2020-12-17">2020-12-17</time></span></div><div class="content">消息队列原理之kafka</div><div class="post-footer">
+        <a href="/mq-kafka/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/kafka/">kafka</a>,&nbsp;<a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/">消息队列</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/mq-rabbitmq/">消息队列原理之rabbitmq</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span>&nbsp;<span class="post-publish">published on <time datetime="2020-12-16">2020-12-16</time></span></div><div class="content">导读  谈起消息队列，我们的脑海可能会不由自主的冒出这么几个关键词，解耦、异步化、消峰、广播等，消息队列的种类也很多，如 rabbitmq、rocketmq、activemq、kafka等还有各个云厂商提供的消息队列。 它们都有各种的特点和使用场景，所以这个系列的文章主要谈各个消息的原理，目前规划了两篇文章，rabbitmq 和 kafka ，其他的暂时还没有用到，还没有深究。
 这篇主要介绍 rabbitmq 的原理和基于 golang 如何使用。</div><div class="post-footer">
@@ -220,12 +225,6 @@ nginx.conf 中主要配置全局配置，配置好之后一般很少改动。</d
  ELK 指的是由 Elasticsearch + Logstash + Kibana 组成的日志采集、存储、展示为一体的日志解决方案，简称 &ldquo;ELK Stack&rdquo;。ELK Stack 还包含 Beats（如Filebeat、Metricbeat、Heartbeat等）、Kafka等成员，是目前主流的一种日志解决方案。</div><div class="post-footer">
         <a href="/elk/">Read More</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/kubernetes/">kubernetes</a>,&nbsp;<a href="/tags/istio/">istio</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/defer/">细谈 Golang 中那些设计优美的细节-defer</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span>&nbsp;<span class="post-publish">published on <time datetime="2020-11-08">2020-11-08</time></span></div><div class="content">背景 在学习和使用 Go 的过程中发现，Go 在语言层面的设计有很多有趣的地方，所以准备用一个系列来细数这些有趣的地方。写这个系列一是为了加深自己的理解，二是愿意分享，分享 Go 中有趣的设计细节。每篇都会通过一个例子讲述一个细节，感兴趣的话可以关注一下哟！
-Go 介绍 Go（又称 Golang）是 Google 的 Robert Griesemer，Rob Pike 及 Ken Thompson 开发的一种静态强类型、编译型语言。Go 语言语法与 C 相近，但功能上有：内存安全，GC（垃圾回收），结构形态及 CSP-style 并发计算。</div><div class="post-footer">
-        <a href="/defer/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/golang/">golang</a>,&nbsp;<a href="/tags/defer/">defer</a></div></div>
 </article><ul class="pagination"><li class="page-item active">
                     <span class="page-link">
                         <a href="/">1</a>
