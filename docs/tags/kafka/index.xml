@@ -10,6 +10,7 @@
     <pubDate>Thu, 17 Dec 2020 00:00:00 &#43;0000</pubDate>
     <author>Author</author>
     <guid>https://russellgao.cn/mq-kafka/</guid>
-    <description><![CDATA[消息队列原理之kafka]]></description>
+    <description><![CDATA[导读  本文消息队列系列第二篇，上一篇讲述的是 Rabbitmq ，这篇主要介绍 Kafka 的原理与使用。
+Kafka 是一个快速、可扩展的、高吞吐的、可容错的分布式“发布-订阅”消息系统， 使用 Scala 与 Java 语言编写，能够将消息从一个端点传递到另一个端点。 较之传统的消息中间件（例如 ActiveMQ、RabbitMQ），Kafka 具有高吞吐量、内置分区、支持消息副本和高容错的特性，非常适合大规模消息处理应用程序。]]></description>
 </item></channel>
 </rss>
