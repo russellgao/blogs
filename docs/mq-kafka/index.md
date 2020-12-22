@@ -232,5 +232,657 @@ Record 中包含 Key 与 Value，Value 才是我们真正的消息本身，而 K
 
 如果一直未收到 Kafka 的 Ack，则认为消息发送 失败，会自动重发消息。该方式会出现消息重复接收的情况。
 
+### 消费者消费过程解析
+生产者将消息发送到 Topitc 中，消费者即可对其进行消费，其消费过程如下：
+
+- Consumer 向 Broker 提交连接请求，其所连接上的 Broker 都会向其发送Broker Controller 的通信 URL，即配置文件中的 Listeners 地址。
+- 当 Consumer 指定了要消费的 Topic 后，会向 Broker Controller 发送消费请求。
+- Broker Controller 会为 Consumer 分配一个或几个 Partition Leader，并将该 Partition 的当前 Offset 发送给 Consumer。
+- Consumer 会按照 Broker Controller 分配的 Partition 对其中的消息进行消费。
+- 当 Consumer 消费完该条消息后，Consumer 会向 Broker 发送一个消息已经被消费反馈，即该消息的 Offset。
+- 在 Broker 接收到 Consumer 的 Offset 后，会更新相应的 __consumer_offset 中。
+- 以上过程会一直重复，知道消费者停止请求消费。
+- Consumer 可以重置 Offset，从而可以灵活消费存储在 Broker 上的消息。
+
+### Partition Leader 选举范围
+当 Leader 宕机后，Broker Controller 会从 ISR 中挑选一个 Follower 成为新的 Leader。
+
+如果 ISR 中没有其他副本怎么办？可以通过 unclean.leader.election.enable 的值来设置 Leader 选举范围。
+
+False：必须等到 ISR 列表中所有的副本都活过来才进行新的选举。该策略可靠性有保证，但可用性低。
+
+True：在 ISR 列表中没有副本的情况下，可以选择任意一个没有宕机的主机作为新的 Leader，该策略可用性高，但可靠性没有保证。
+
+### 重复消费问题的解决方案
+同一个 Consumer 重复消费：当 Consumer 由于消费能力低而引发了消费超时，则可能会形成重复消费。
+
+在某数据刚好消费完毕，但是正准备提交 Offset 时候，消费时间超时，则 Broker 认为这条消息未消费成功。这时就会产生重复消费问题。其解决方案：延长 Offset 提交时间。
+
+不同的 Consumer 重复消费：当 Consumer 消费了消息，但还没有提交 Offset 时宕机，则这些已经被消费过的消息会被重复消费。其解决方案：将自动提交改为手动提交。
+
+### 从架构设计上解决 Kafka 重复消费的问题
+我们在设计程序的时候，比如考虑到网络故障等一些异常的情况，我们都会设置消息的重试次数，可能还有其他可能出现消息重复，那我们应该如何解决呢？下面提供三个方案：
+
+#### 保存并查询
+给每个消息都设置一个独一无二的 uuid，所有的消息，我们都要存一个 uuid。
+
+我们在消费消息的时候，首先去持久化系统中查询一下看这个看是否以前消费过，如没有消费过，在进行消费，如果已经消费过，丢弃就好了。
+
+下图表明了这种方案：
+
+![](https://gitee.com/russellgao/blogs-image/raw/master/images/mq/kafka-7.png)
+
+#### 利用幂等
+幂等（Idempotence）在数学上是这样定义的，如果一个函数 f(x) 满足：f(f(x)) = f(x)，则函数 f(x) 满足幂等性。
+
+这个概念被拓展到计算机领域，被用来描述一个操作、方法或者服务。一个幂等操作的特点是，其任意多次执行所产生的影响均与一次执行的影响相同。
+
+一个幂等的方法，使用同样的参数，对它进行多次调用和一次调用，对系统产生的影响是一样的。所以，对于幂等的方法，不用担心重复执行会对系统造成任何改变。
+
+我们举个例子来说明一下。在不考虑并发的情况下，“将 X 老师的账户余额设置为 100 万元”，执行一次后对系统的影响是，X 老师的账户余额变成了 100 万元。只要提供的参数 100 万元不变，那即使再执行多少次，X 老师的账户余额始终都是 100 万元，不会变化，这个操作就是一个幂等的操作。
+
+再举一个例子，“将 X 老师的余额加 100 万元”，这个操作它就不是幂等的，每执行一次，账户余额就会增加 100 万元，执行多次和执行一次对系统的影响（也就是账户的余额）是不一样的。
+
+所以，通过这两个例子，我们可以想到如果系统消费消息的业务逻辑具备幂等性，那就不用担心消息重复的问题了，因为同一条消息，消费一次和消费多次对系统的影响是完全一样的。也就可以认为，消费多次等于消费一次。
+
+那么，如何实现幂等操作呢？最好的方式就是，从业务逻辑设计上入手，将消费的业务逻辑设计成具备幂等性的操作。
+
+但是，不是所有的业务都能设计成天然幂等的，这里就需要一些方法和技巧来实现幂等。
+
+下面我们介绍一种常用的方法：利用数据库的唯一约束实现幂等。
+
+例如，我们刚刚提到的那个不具备幂等特性的转账的例子：将 X 老师的账户余额加 100 万元。在这个例子中，我们可以通过改造业务逻辑，让它具备幂等性。
+
+首先，我们可以限定，对于每个转账单每个账户只可以执行一次变更操作，在分布式系统中，这个限制实现的方法非常多，最简单的是我们在数据库中建一张转账流水表。
+
+这个表有三个字段：转账单 ID、账户 ID 和变更金额，然后给转账单 ID 和账户 ID 这两个字段联合起来创建一个唯一约束，这样对于相同的转账单 ID 和账户 ID，表里至多只能存在一条记录。
+
+这样，我们消费消息的逻辑可以变为：“在转账流水表中增加一条转账记录，然后再根据转账记录，异步操作更新用户余额即可。”
+
+在转账流水表增加一条转账记录这个操作中，由于我们在这个表中预先定义了“账户 ID 转账单 ID”的唯一约束，对于同一个转账单同一个账户只能插入一条记录，后续重复的插入操作都会失败，这样就实现了一个幂等的操作。
+
+![](https://gitee.com/russellgao/blogs-image/raw/master/images/mq/kafka-8.png)
+
+#### 设置前提条件
+为更新的数据设置前置条件另外一种实现幂等的思路是，给数据变更设置一个前置条件，如果满足条件就更新数据，否则拒绝更新数据，在更新数据的时候，同时变更前置条件中需要判断的数据。
+
+这样，重复执行这个操作时，由于第一次更新数据的时候已经变更了前置条件中需要判断的数据，不满足前置条件，则不会重复执行更新数据操作。
+
+比如，刚刚我们说过，“将 X 老师的账户的余额增加 100 万元”这个操作并不满足幂等性，我们可以把这个操作加上一个前置条件，变为：“如果 X 老师的账户当前的余额为 500 万元，将余额加 100 万元”，这个操作就具备了幂等性。
+
+对应到消息队列中的使用时，可以在发消息时在消息体中带上当前的余额，在消费的时候进行判断数据库中，当前余额是否与消息中的余额相等，只有相等才执行变更操作。
+
+但是，如果我们要更新的数据不是数值，或者我们要做一个比较复杂的更新操作怎么办？用什么作为前置判断条件呢？
+
+更加通用的方法是，给你的数据增加一个版本号属性，每次更数据前，比较当前数据的版本号是否和消息中的版本号一致，如果不一致就拒绝更新数据，更新数据的同时将版本号 +1，一样可以实现幂等。
+
+![](https://gitee.com/russellgao/blogs-image/raw/master/images/mq/kafka-9.png)
+
+我们在工作中，为了保证环境的高可用，防止单点，Kafka 都是以集群的方式出现的，下面就带领大家一起搭建一套 Kafka 集群环境。
+
+我们在官网下载 Kafka，下载地址为：http://kafka.apache.org/downloads，下载我们需要的版本，推荐使用稳定的版本。
+
+## 搭建集群
+下载并解压：
+```shell script
+cd /usr/local/src
+wget http://mirrors.tuna.tsinghua.edu.cn/apache/kafka/2.4.0/kafka_2.11-2.4.0.tgz
+mkdir /data/servers
+tar xzvf kafka_2.11-2.4.0.tgz -C /data/servers/
+cd /data/servers/kafka_2.11-2.4.0
+```
+
+修改配置文件：
+
+```shell script
+确保每个机器上的 id 不一样
+ broker.id=0
+  配置服务端的监控地址
+ listeners=PLAINTEXT://192.168.51.128:9092
+  Kafka 日志目录
+ log.dirs=/data/servers/kafka_2.11-2.4.0/logs
+ #Kafka 设置的 partitons 的个数
+ num.partitions=1
+
+  ZooKeeper 的连接地址，如果有自己的 ZooKeeper 集群，请直接使用自己搭建的 ZooKeeper 集群
+ zookeeper.connect=192.168.51.128:2181
+```
+因为我自己是本机做实验，所有使用的是一个主机的不同端口，在线上，就是不同的机器，大家参考即可。
+
+我们这里使用 Kafka 的 ZooKeeper，只启动一个节点，但是正真的生产过程中，是需要 ZooKeeper 集群，自己搭建就好，后期我们也会出 ZooKeeper 的教程，大家请关注就好了。
+
+拷贝 3 份配置文件：
+```shell script
+#创建对应的日志目录
+mkdir -p /data/servers/kafka_2.11-2.4.0/logs/9092
+mkdir -p /data/servers/kafka_2.11-2.4.0/logs/9093
+mkdir -p /data/servers/kafka_2.11-2.4.0/logs/9094
+
+#拷贝三份配置文件
+cp server.properties server_9092.properties 
+cp server.properties server_9093.properties 
+cp server.properties server_9094.properties
+```
+
+修改不同端口对应的文件：
+```shell script
+#9092 的 id 为 0，9093 的 id 为 1，9094 的 id 为 2
+ broker.id=0
+# 配置服务端的监控地址，在不通的配置文件中写入不同的端口
+ listeners=PLAINTEXT://192.168.51.128:9092
+# Kafka 日志目录，目录也是对应不同的端口
+ log.dirs=/data/servers/kafka_2.11-2.4.0/logs/9092
+# Kafka 设置的 partitons 的个数
+ num.partitions=1
+# ZooKeeper 的连接地址，如果有自己的 ZooKeeper 集群，请直接使用自己搭建的 ZooKeeper 集群
+ zookeeper.connect=192.168.51.128:2181
+```
+
+修改 ZooKeeper 的配置文件：
+```shell script
+dataDir=/data/servers/zookeeper
+server.1=192.168.51.128:2888:3888
+```
+
+然后创建 ZooKeeper 的 myid 文件：
+```shell script
+echo "1"> /data/servers/zookeeper/myid
+```
+
+启动 ZooKeeper：
+
+使用 Kafka 内置的 ZooKeeper：
+```shell script
+cd /data/servers/kafka_2.11-2.4.0/bin
+zookeeper-server-start.sh -daemon ../config/zookeeper.properties 
+netstat -anp |grep 2181
+```
+
+启动 Kafka：
+```shell script
+./kafka-server-start.sh -daemon ../config/server_9092.properties   
+./kafka-server-start.sh -daemon ../config/server_9093.properties   
+./kafka-server-start.sh -daemon ../config/server_9094.properties
+```
+
+## Kafka 的操作
+### topic
+我们先来看一下创建 Topic 常用的参数吧：
+
+- --create：创建 topic
+- --delete：删除 topic
+- --alter：修改 topic 的名字或者 partition 个数
+- --list：查看 topic
+- --describe：查看 topic 的详细信息
+- --topic <String: topic>：指定 topic 的名字
+- --zookeeper <String: hosts>：指定 Zookeeper 的连接地址参数提示并不赞成这样使用（DEPRECATED, The connection string for the zookeeper connection in the form host:port. Multiple hosts can be given to allow fail-over.）
+- --bootstrap-server <String: server to connect to>：指定 Kafka 的连接地址，推荐使用这个，参数的提示信息显示（REQUIRED: The Kafka server to connect to. In case of providing this, a direct Zookeeper connection won't be required.）。
+- --replication-factor <Integer: replication factor>：对于每个 Partiton 的备份个数。（The replication factor for each partition in the topic being created. If not supplied, defaults to the cluster default.）
+- --partitions <Integer: # of partitions>：指定该 topic 的分区的个数。
+
+示例：
+```shell script
+cd /data/servers/kafka_2.11-2.4.0/bin
+# 创建 topic  test1
+kafka-topics.sh --create --bootstrap-server=192.168.51.128:9092,10.231.128.96:9093,192.168.51.128:9094 --replication-factor 1 --partitions 1 --topic test1
+# 创建 topic test2
+kafka-topics.sh --create --bootstrap-server=192.168.51.128:9092,10.231.128.96:9093,192.168.51.128:9094 --replication-factor 1 --partitions 1 --topic test2
+# 查看 topic
+kafka-topics.sh --list --bootstrap-server=192.168.51.128:9092,10.231.128.96:9093,192.168.51.128:9094
+```
+
+自动创建 Topic
+
+我们在工作中，如果我们不想去管理 Topic，可以通过 Kafka 的配置文件来管理。
+
+我们可以让 Kafka 自动创建 Topic，需要在我们的 Kafka 配置文件中加入如下配置文件：
+```shell script
+auto.create.topics.enable=true
+
+```
+
+如果删除 Topic 想达到物理删除的目的，也是需要配置的：
+```shell script
+delete.topic.enable=true
+
+```
+
+### 发送消息
+他们可以通过客户端的命令生产消息，先来看看 kafka-console-producer.sh 常用的几个参数吧：
+
+- --topic <String: topic>：指定 topic
+- --timeout <Integer: timeout_ms>：超时时间
+- --sync：异步发送消息
+- --broker-list <String: broker-list>：官网提示：REQUIRED: The broker list string in the form HOST1:PORT1,HOST2:PORT2.
+
+这个参数是必须的：
+
+```shell script
+kafka-console-producer.sh --broker-list 192.168.51.128:9092,192.168.51.128:9093,192.168.51.128:9094 --topic test1
+```
+
+### 消费消息
+我们也还是先来看看 kafka-console-consumer.sh 的参数吧：
+
+- --topic <String: topic>：指定 topic
+- --group <String: consumer group id>：指定消费者组
+- --from-beginning：指定从开始进行消费, 如果不指定, 就从当前进行消费
+- --bootstrap-server：Kafka 的连接地址‍‍
+
+### Kafka 的日志
+Kafka 的日志分两种：
+
+- 第一种日志是我们的 Kafka 的启动日志，就是我们排查问题，查看报错信息的日志。
+- 第二种日志就是我们的数据日志，Kafka 是我们的数据是以日志的形式存在存盘中的，我们第二种所说的日志就是我们的 Partiton 与 Segment。
+
+
+那我们就来说说备份和分区吧：我们创建一个分区，一个备份，那么 test 就应该在三台机器上或者三个数据目录只有一个 test-0。（分区的下标是从 0 开始的）
+
+如果我们创建 N 个分区，我们就会在三个服务器上发现，test_0-n，如果我们创建 M 个备份，我们就会在发现，test_0 到 test_n 每一个都是 M 个。
+
+
+```shell script
+kafka-console-consumer.sh --bootstrap-server 192.168.51.128:9092,192.168.51.128:9093,192.168.51.128:9094 --topic test1 ---beginning
+```
+
+## Kafka API
+使用 Kafka 原生的 API
+
+### 消费者自动提交
+定义自己的生产者：
+```java
+import org.apache.kafka.clients.producer.Callback;
+import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.clients.producer.RecordMetadata;
+
+import java.util.Properties;
+
+/**
+ * @ClassName MyKafkaProducer
+ * @Description TODO
+ * @Author lingxiangxiang
+ * @Date 3:37 PM
+ * @Version 1.0
+ **/
+public class MyKafkaProducer {
+    private org.apache.kafka.clients.producer.KafkaProducer<Integer, String> producer;
+
+    public MyKafkaProducer() {
+        Properties properties = new Properties();
+        properties.put("bootstrap.servers", "192.168.51.128:9092,192.168.51.128:9093,192.168.51.128:9094");
+        properties.put("key.serializer", "org.apache.kafka.common.serialization.IntegerSerializer");
+        properties.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+        // 设置批量发送
+        properties.put("batch.size", 16384);
+        // 批量发送的等待时间 50ms, 超过 50ms, 不足批量大小也发送
+        properties.put("linger.ms", 50);
+        this.producer = new org.apache.kafka.clients.producer.KafkaProducer<Integer, String>(properties);
+    }
+
+    public boolean sendMsg() {
+        boolean result = true;
+        try {
+            // 正常发送, test2 是 topic, 0 代表的是分区, 1 代表的是 key, hello world 是发送的消息内容
+            final ProducerRecord<Integer, String> record = new ProducerRecord<Integer, String>("test2", 0, 1, "hello world");
+            producer.send(record);
+            // 有回调函数的调用
+            producer.send(record, new Callback() {
+                @Override
+                public void onCompletion(RecordMetadata recordMetadata, Exception e) {
+                    System.out.println(recordMetadata.topic());
+                    System.out.println(recordMetadata.partition());
+                    System.out.println(recordMetadata.offset());
+                }
+            });
+          // 自己定义一个类
+            producer.send(record, new MyCallback(record));
+        } catch (Exception e) {
+            result = false;
+        }
+        return result;
+    }
+}
+```
+定义生产者发送成功的回调函数：
+
+```java
+import org.apache.kafka.clients.producer.Callback;
+import org.apache.kafka.clients.producer.RecordMetadata;
+
+/**
+ * @ClassName MyCallback
+ * @Description TODO
+ * @Author lingxiangxiang
+ * @Date 3:51 PM
+ * @Version 1.0
+ **/
+public class MyCallback implements Callback {
+    private Object msg;
+
+    public MyCallback(Object msg) {
+        this.msg = msg;
+    }
+
+    @Override
+    public void onCompletion(RecordMetadata metadata, Exception e) {
+        System.out.println("topic = " + metadata.topic());
+        System.out.println("partiton = " + metadata.partition());
+        System.out.println("offset = " + metadata.offset());
+        System.out.println(msg);
+    }
+}
+```
+生产者测试类：在生产者测试类中，自己遇到一个坑，就是最后自己没有加 sleep，就是怎么检查自己的代码都没有问题，但是最后就是没法发送成功消息，最后加了一个 sleep 就可以了。
+
+因为主函数 main 已经执行完退出，但是消息并没有发送完成，需要进行等待一下。当然，你在生产环境中可能不会遇到这样问题，呵呵！
+
+代码如下：
+```java
+import static java.lang.Thread.sleep;
+
+/**
+ * @ClassName MyKafkaProducerTest
+ * @Description TODO
+ * @Author lingxiangxiang
+ * @Date 3:46 PM
+ * @Version 1.0
+ **/
+public class MyKafkaProducerTest {
+    public static void main(String[] args) throws InterruptedException {
+        MyKafkaProducer producer = new MyKafkaProducer();
+        boolean result = producer.sendMsg();
+        System.out.println("send msg " + result);
+        sleep(1000);
+    }
+}
+```
+
+消费者类：
+```java
+import kafka.utils.ShutdownableThread;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.apache.kafka.clients.consumer.KafkaConsumer;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Properties;
+
+/**
+ * @ClassName MyKafkaConsumer
+ * @Description TODO
+ * @Author lingxiangxiang
+ * @Date 4:12 PM
+ * @Version 1.0
+ **/
+public class MyKafkaConsumer extends ShutdownableThread {
+
+    private KafkaConsumer<Integer, String> consumer;
+
+    public MyKafkaConsumer() {
+        super("KafkaConsumerTest", false);
+        Properties properties = new Properties();
+        properties.put("bootstrap.servers", "192.168.51.128:9092,192.168.51.128:9093,192.168.51.128:9094");
+        properties.put("group.id", "mygroup");
+        properties.put("enable.auto.commit", "true");
+        properties.put("auto.commit.interval.ms", "1000");
+        properties.put("session.timeout.ms", "30000");
+        properties.put("heartbeat.interval.ms", "10000");
+        properties.put("auto.offset.reset", "earliest");
+        properties.put("key.deserializer", "org.apache.kafka.common.serialization.IntegerDeserializer");
+        properties.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+        this.consumer = new KafkaConsumer<Integer, String>(properties);
+    }
+
+    @Override
+    public void doWork() {
+        consumer.subscribe(Arrays.asList("test2"));
+        ConsumerRecords<Integer, String>records = consumer.poll(1000);
+        for (ConsumerRecord record : records) {
+            System.out.println("topic = " + record.topic());
+            System.out.println("partition = " + record.partition());
+            System.out.println("key = " + record.key());
+            System.out.println("value = " + record.value());
+        }
+    }
+}
+```
+消费者的测试类：
+```java
+/**
+ * @ClassName MyConsumerTest
+ * @Description TODO
+ * @Author lingxiangxiang
+ * @Date 4:23 PM
+ * @Version 1.0
+ **/
+public class MyConsumerTest {
+    public static void main(String[] args) {
+        MyKafkaConsumer consumer = new MyKafkaConsumer();
+        consumer.start();
+        System.out.println("==================");
+    }
+}
+```
+
+### 消费者同步手动提交
+前面的消费者都是以自动提交 Offset 的方式对 Broker 中的消息进行消费的，但自动提交 可能会出现消息重复消费的情况。
+
+所以在生产环境下，很多时候需要对 Offset 进行手动提交， 以解决重复消费的问题。
+
+手动提交又可以划分为同步提交、异步提交，同异步联合提交。这些提交方式仅仅是 doWork() 方法不相同，其构造器是相同的。
+
+所以下面首先在前面消费者类的基础上进行构造器的修改，然后再分别实现三种不同的提交方式。
+
+同步提交方式是，消费者向 Broker 提交 Offset 后等待 Broker 成功响应。若没有收到响应，则会重新提交，直到获取到响应。
+
+而在这个等待过程中，消费者是阻塞的。其严重影响了消费者的吞吐量。
+
+修改前面的 MyKafkaConsumer.java, 主要修改下面的配置：
+```java
+import kafka.utils.ShutdownableThread;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.apache.kafka.clients.consumer.KafkaConsumer;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Properties;
+
+/**
+ * @ClassName MyKafkaConsumer
+ * @Description TODO
+ * @Author lingxiangxiang
+ * @Date 4:12 PM
+ * @Version 1.0
+ **/
+public class MyKafkaConsumer extends ShutdownableThread {
+
+    private KafkaConsumer<Integer, String> consumer;
+
+    public MyKafkaConsumer() {
+        super("KafkaConsumerTest", false);
+        Properties properties = new Properties();
+        properties.put("bootstrap.servers", "192.168.51.128:9092,192.168.51.128:9093,192.168.51.128:9094");
+        properties.put("group.id", "mygroup");
+      // 这里要修改成手动提交
+        properties.put("enable.auto.commit", "false");
+        // properties.put("auto.commit.interval.ms", "1000");
+        properties.put("session.timeout.ms", "30000");
+        properties.put("heartbeat.interval.ms", "10000");
+        properties.put("auto.offset.reset", "earliest");
+        properties.put("key.deserializer", "org.apache.kafka.common.serialization.IntegerDeserializer");
+        properties.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+        this.consumer = new KafkaConsumer<Integer, String>(properties);
+    }
+    @Override
+    public void doWork() {
+        consumer.subscribe(Arrays.asList("test2"));
+        ConsumerRecords<Integer, String>records = consumer.poll(1000);
+        for (ConsumerRecord record : records) {
+            System.out.println("topic = " + record.topic());
+            System.out.println("partition = " + record.partition());
+            System.out.println("key = " + record.key());
+            System.out.println("value = " + record.value());
+
+          //手动同步提交
+          consumer.commitSync();
+        }
+
+    }
+}
+```
+
+### 消费者异步手工提交
+手动同步提交方式需要等待 Broker 的成功响应，效率太低，影响消费者的吞吐量。
+
+异步提交方式是，消费者向 Broker 提交 Offset 后不用等待成功响应，所以其增加了消费者的吞吐量。
+
+```java
+import kafka.utils.ShutdownableThread;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.apache.kafka.clients.consumer.KafkaConsumer;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Properties;
+
+/**
+ * @ClassName MyKafkaConsumer
+ * @Description TODO
+ * @Author lingxiangxiang
+ * @Date 4:12 PM
+ * @Version 1.0
+ **/
+public class MyKafkaConsumer extends ShutdownableThread {
+
+    private KafkaConsumer<Integer, String> consumer;
+
+    public MyKafkaConsumer() {
+        super("KafkaConsumerTest", false);
+        Properties properties = new Properties();
+        properties.put("bootstrap.servers", "192.168.51.128:9092,192.168.51.128:9093,192.168.51.128:9094");
+        properties.put("group.id", "mygroup");
+      // 这里要修改成手动提交
+        properties.put("enable.auto.commit", "false");
+        // properties.put("auto.commit.interval.ms", "1000");
+        properties.put("session.timeout.ms", "30000");
+        properties.put("heartbeat.interval.ms", "10000");
+        properties.put("auto.offset.reset", "earliest");
+        properties.put("key.deserializer", "org.apache.kafka.common.serialization.IntegerDeserializer");
+        properties.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+        this.consumer = new KafkaConsumer<Integer, String>(properties);
+    }
+
+    @Override
+    public void doWork() {
+        consumer.subscribe(Arrays.asList("test2"));
+        ConsumerRecords<Integer, String>records = consumer.poll(1000);
+        for (ConsumerRecord record : records) {
+            System.out.println("topic = " + record.topic());
+            System.out.println("partition = " + record.partition());
+            System.out.println("key = " + record.key());
+            System.out.println("value = " + record.value());
+
+          //手动同步提交
+          // consumer.commitSync();
+          //手动异步提交
+          // consumer.commitAsync();
+          // 带回调公共的手动异步提交
+          consumer.commitAsync((offsets, e) -> {
+            if(e != null) {
+              System.out.println("提交次数, offsets = " + offsets);
+              System.out.println("exception = " + e);
+            }
+          });
+        }
+    }
+}
+```
+
+### Spring Boot 使用 Kafka
+现在大家的开发过程中，很多都用的是 Spring Boot 的项目，直接启动了，如果还是用原生的 API，就是有点 Low 了啊，那 Kafka 是如何和 Spring Boot 进行联合的呢？
+
+Maven 配置：
+```maven
+<!-- https://mvnrepository.com/artifact/org.apache.kafka/kafka-clients -->
+    <dependency>
+      <groupId>org.apache.kafka</groupId>
+      <artifactId>kafka-clients</artifactId>
+      <version>2.1.1</version>
+    </dependency>
+```
+添加配置文件，在 application.properties 中加入如下配置信息：
+
+Kafka 连接地址：
+
+```
+spring.kafka.bootstrap-servers = 192.168.51.128:9092,10.231.128.96:9093,192.168.51.128:9094
+```
+
+生产者：
+
+```
+spring.kafka.producer.acks = 0
+spring.kafka.producer.key-serializer = org.apache.kafka.common.serialization.StringSerializer
+spring.kafka.producer.value-serializer = org.apache.kafka.common.serialization.StringSerializer
+spring.kafka.producer.retries = 3
+spring.kafka.producer.batch-size = 4096
+spring.kafka.producer.buffer-memory = 33554432
+spring.kafka.producer.compression-type = gzip
+```
+消费者：
+```
+spring.kafka.consumer.group-id = mygroup
+spring.kafka.consumer.auto-commit-interval = 5000
+spring.kafka.consumer.heartbeat-interval = 3000
+spring.kafka.consumer.key-deserializer = org.apache.kafka.common.serialization.StringDeserializer
+spring.kafka.consumer.value-deserializer = org.apache.kafka.common.serialization.StringDeserializer
+spring.kafka.consumer.auto-offset-reset = earliest
+spring.kafka.consumer.enable-auto-commit = true
+# listenner, 标识消费者监听的个数
+spring.kafka.listener.concurrency = 8
+# topic的名字
+kafka.topic1 = topic1
+```
+
+生产者：
+```java
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.core.KafkaTemplate;
+
+@Service
+@Slf4j
+public class MyKafkaProducerServiceImpl implements MyKafkaProducerService {
+        @Resource
+    private KafkaTemplate<String, String> kafkaTemplate;
+        // 读取配置文件
+    @Value("${kafka.topic1}")
+    private String topic;
+
+    @Override
+    public void sendKafka() {
+      kafkaTemplate.send(topic, "hell world");
+    }
+}
+```
+消费者：
+
+```java
+@Component
+@Slf4j
+public class MyKafkaConsumer {
+  @KafkaListener(topics = "${kafka.topic1}")
+    public void listen(ConsumerRecord<?, ?> record) {
+        Optional<?> kafkaMessage = Optional.ofNullable(record.value());
+        if (kafkaMessage.isPresent()) {
+            log.info("----------------- record =" + record);
+            log.info("------------------ message =" + kafkaMessage.get());
+}
+```
+
 ## 参考
 本文系转载 [https://mp.weixin.qq.com/s/R1en4V0Tlwlpt102BjotoA](https://mp.weixin.qq.com/s/R1en4V0Tlwlpt102BjotoA)
