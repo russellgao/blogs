@@ -25,3 +25,8 @@
 ## 转载说明
 如需转载，请加注原文出处。
 
+## 随笔记录
+- https://github.com/russellgao/blog
+- https://github.com/russellgao/blogs
+- https://github.com/russellgao/algorithm
+
