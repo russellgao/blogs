@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://russellgao.cn/design-principle/" />
 <meta property="og:image" content="https://russellgao.cn/images/profile.jpg"/>
 <meta property="article:published_time" content="2021-01-19T00:00:00+00:00" />
-<meta property="article:modified_time" content="2021-01-20T08:40:40+08:00" /><meta property="og:site_name" content="大大很二" />
+<meta property="article:modified_time" content="2021-01-20T08:45:45+08:00" /><meta property="og:site_name" content="大大很二" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://russellgao.cn/images/profile.jpg"/>
 
@@ -27,8 +27,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/russellgao.cn\/design-principle\/"
-        },"genre": "posts","keywords": "设计模式","wordcount":  129 ,
-        "url": "https:\/\/russellgao.cn\/design-principle\/","datePublished": "2021-01-19T00:00:00+00:00","dateModified": "2021-01-20T08:40:40+08:00","publisher": {
+        },"genre": "posts","keywords": "设计模式","wordcount":  140 ,
+        "url": "https:\/\/russellgao.cn\/design-principle\/","datePublished": "2021-01-19T00:00:00+00:00","dateModified": "2021-01-20T08:45:45+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -118,7 +118,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">设计模式六大原则</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-01-19">2021-01-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;129 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-01-19">2021-01-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;140 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;One minute&nbsp;<span id="/design-principle/" class="leancloud_visitors" data-flag-title="设计模式六大原则">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;views
                     </span>&nbsp;</div>
@@ -132,12 +132,12 @@
     <li><a href="#导读">导读</a></li>
     <li><a href="#六大原则">六大原则</a>
       <ul>
-        <li><a href="#单一职责原则">单一职责原则</a></li>
-        <li><a href="#开放封闭原则">开放封闭原则</a></li>
-        <li><a href="#里式替换原则">里式替换原则</a></li>
-        <li><a href="#迪米特原则最少知识原则">迪米特原则(最少知识原则)</a></li>
-        <li><a href="#接口隔离原则">接口隔离原则</a></li>
-        <li><a href="#依赖倒置原则">依赖倒置原则</a></li>
+        <li><a href="#单一职责原则single-responsibility-principle">单一职责原则（Single Responsibility Principle）</a></li>
+        <li><a href="#开放封闭原则open-closed-principle">开放封闭原则（Open-Closed Principle）</a></li>
+        <li><a href="#里式替换原则liskov-substitution-principle">里式替换原则（Liskov Substitution Principle）</a></li>
+        <li><a href="#迪米特原则最少知识原则law-of--demeter">迪米特原则(最少知识原则)（Law of  Demeter）</a></li>
+        <li><a href="#接口隔离原则interface--segregation-principle">接口隔离原则（Interface  Segregation Principle）</a></li>
+        <li><a href="#依赖倒置原则dependence-inversion-principle">依赖倒置原则（Dependence Inversion Principle）</a></li>
       </ul>
     </li>
     <li><a href="#总结">总结</a></li>
@@ -148,18 +148,18 @@
 <p>重温设计模式的原则</p>
 </blockquote>
 <h2 id="六大原则">六大原则</h2>
-<h3 id="单一职责原则">单一职责原则</h3>
+<h3 id="单一职责原则single-responsibility-principle">单一职责原则（Single Responsibility Principle）</h3>
 <blockquote>
 <p>There should never be more than one reason for a class to change.</p>
 <p>就一个类而言， 应该仅有一个引起它变化的原因。</p>
 </blockquote>
-<h3 id="开放封闭原则">开放封闭原则</h3>
+<h3 id="开放封闭原则open-closed-principle">开放封闭原则（Open-Closed Principle）</h3>
 <blockquote>
 <p>Software entities like classes,modules and functions should be open for extension but closed for modifications.</p>
 <p>类、模块、函数等应该是可以拓展的，但是不可修改。</p>
 </blockquote>
 <p>开闭原则指导我们，当软件需要变化时，应该尽量通过拓展的方式来实现变化，而不是通过修改已有代码来实现。这里的“应该尽量”4个字说明OCP原则并不是说绝对不可以修改原始类的。当我们嗅到原来的代码“腐化气味”时，应该尽早地重构，以便使代码恢复到正常的“进化”过程，而不是通过集成等方式添加新的实现，这会导致类型的膨胀以及历史遗留代码的冗余。因此，在开发过程中需要自己结合具体情况进行考量，是通过修改旧代码还是通过继承使得软件系统更稳定、更灵活，在保证去除“代码腐化”的同时，也保证原有模块的正确性。</p>
-<h3 id="里式替换原则">里式替换原则</h3>
+<h3 id="里式替换原则liskov-substitution-principle">里式替换原则（Liskov Substitution Principle）</h3>
 <blockquote>
 <p>Functions that use pointers or references to base classes must be able to use objects of derived classes without knowing it.</p>
 <p>所有引用基类的地方必须能透明地使用其子类的对象。</p>
@@ -176,12 +176,12 @@
 <li>可能造成子类代码的冗余、灵活性降低，因为子类必须拥有弗雷的属性和方法。</li>
 </ul>
 <p>开闭原则和里氏替换原则往往是生死相依、不离不弃的，通过里氏替换来达到对扩展的开发，对修改的关闭效果。</p>
-<h3 id="迪米特原则最少知识原则">迪米特原则(最少知识原则)</h3>
+<h3 id="迪米特原则最少知识原则law-of--demeter">迪米特原则(最少知识原则)（Law of  Demeter）</h3>
 <blockquote>
 <p>Only talk to you immediate friends.</p>
 <p>一个软件实体应当尽可能少地与其他实体发生相互作用。</p>
 </blockquote>
-<h3 id="接口隔离原则">接口隔离原则</h3>
+<h3 id="接口隔离原则interface--segregation-principle">接口隔离原则（Interface  Segregation Principle）</h3>
 <blockquote>
 <p>The dependency of one class to another one should depend on the smallest possible interface.</p>
 <p>一个类对另一个类的依赖应该建立在最小的接口上。</p>
@@ -192,7 +192,7 @@
 <li>为依赖接口的类定制服务，只暴露给调用的类需要的方法，它不需要的方法则隐蔽起来。只有专注得为一个模块提供定制服务，才能建立最小的依赖关系。</li>
 <li>提高内聚，减少对外交互。接口方法尽量少用public修饰。接口是对外的承诺，承诺越少对系统开发越有利，变更风险也会越少。</li>
 </ul>
-<h3 id="依赖倒置原则">依赖倒置原则</h3>
+<h3 id="依赖倒置原则dependence-inversion-principle">依赖倒置原则（Dependence Inversion Principle）</h3>
 <blockquote>
 <p>High level modules should not depends upon low level modules.Both should depend upon abstractions.Abstractions should not depend upon details.Details should depend upon abstractions.</p>
 <p>高层模块不应该依赖于低层模块，两者都应该依赖于抽象。抽象不应该依赖于细节，细节应该依赖于抽象。</p>

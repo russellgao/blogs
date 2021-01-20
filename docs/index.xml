@@ -13,7 +13,7 @@
     <author>Author</author>
     <guid>https://russellgao.cn/design-principle/</guid>
     <description><![CDATA[导读  重温设计模式的原则
- 六大原则 单一职责原则  There should never be more than one reason for a class to change.]]></description>
+ 六大原则 单一职责原则（Single Responsibility Principle）  There should never be more than one reason for a class to change.]]></description>
 </item><item>
     <title>消息队列原理之kafka</title>
     <link>https://russellgao.cn/mq-kafka/</link>

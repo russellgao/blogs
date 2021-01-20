@@ -6,19 +6,19 @@
 >
 
 ## 六大原则
-### 单一职责原则
+### 单一职责原则（Single Responsibility Principle）
 > There should never be more than one reason for a class to change.
 >
 > 就一个类而言， 应该仅有一个引起它变化的原因。
 
-### 开放封闭原则
+### 开放封闭原则（Open-Closed Principle）
 > Software entities like classes,modules and functions should be open for extension but closed for modifications.
 >
 > 类、模块、函数等应该是可以拓展的，但是不可修改。
 
 开闭原则指导我们，当软件需要变化时，应该尽量通过拓展的方式来实现变化，而不是通过修改已有代码来实现。这里的“应该尽量”4个字说明OCP原则并不是说绝对不可以修改原始类的。当我们嗅到原来的代码“腐化气味”时，应该尽早地重构，以便使代码恢复到正常的“进化”过程，而不是通过集成等方式添加新的实现，这会导致类型的膨胀以及历史遗留代码的冗余。因此，在开发过程中需要自己结合具体情况进行考量，是通过修改旧代码还是通过继承使得软件系统更稳定、更灵活，在保证去除“代码腐化”的同时，也保证原有模块的正确性。
 
-### 里式替换原则
+### 里式替换原则（Liskov Substitution Principle）
 > Functions that use pointers or references to base classes must be able to use objects of derived classes without knowing it.
 >
 > 所有引用基类的地方必须能透明地使用其子类的对象。
@@ -37,12 +37,12 @@
 开闭原则和里氏替换原则往往是生死相依、不离不弃的，通过里氏替换来达到对扩展的开发，对修改的关闭效果。
 
 
-### 迪米特原则(最少知识原则)
+### 迪米特原则(最少知识原则)（Law of  Demeter）
 > Only talk to you immediate friends.
 >
 > 一个软件实体应当尽可能少地与其他实体发生相互作用。
 
-### 接口隔离原则
+### 接口隔离原则（Interface  Segregation Principle）
 > The dependency of one class to another one should depend on the smallest possible interface.
 >
 > 一个类对另一个类的依赖应该建立在最小的接口上。
@@ -53,9 +53,7 @@
 - 为依赖接口的类定制服务，只暴露给调用的类需要的方法，它不需要的方法则隐蔽起来。只有专注得为一个模块提供定制服务，才能建立最小的依赖关系。
 - 提高内聚，减少对外交互。接口方法尽量少用public修饰。接口是对外的承诺，承诺越少对系统开发越有利，变更风险也会越少。
 
-
-
-### 依赖倒置原则
+### 依赖倒置原则（Dependence Inversion Principle）
 > High level modules should not depends upon low level modules.Both should depend upon abstractions.Abstractions should not depend upon details.Details should depend upon abstractions.
 >
 > 高层模块不应该依赖于低层模块，两者都应该依赖于抽象。抽象不应该依赖于细节，细节应该依赖于抽象。
