@@ -133,6 +133,12 @@ kubectl -n $namespace get po xxx -o wide/json/yaml
 kubectl -n monitoring get po prometheus-0 -o yaml
 ```
 
+### 通过 go-template 进行查看
+```shell script
+kubectl get pods -l app=hostnames \
+    -o go-template='{{range .items}}{{.status.podIP}}{{"\n"}}{{end}}'
+```
+
 ### 查看某个 pod 的某个字段信息
 如果我们只想知道 pod 的 hostIP 或者其他的 一些字段， 可以通过 `-o jsonpath` or `-o template` or `-o go-template`
 
