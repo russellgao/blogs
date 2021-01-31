@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://russellgao.cn/kubectl-command/" />
 <meta property="og:image" content="https://russellgao.cn/images/profile.jpg"/>
 <meta property="article:published_time" content="2020-11-20T00:00:00+00:00" />
-<meta property="article:modified_time" content="2020-12-15T13:59:25+08:00" /><meta property="og:site_name" content="大大很二" />
+<meta property="article:modified_time" content="2021-01-22T15:15:14+08:00" /><meta property="og:site_name" content="大大很二" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://russellgao.cn/images/profile.jpg"/>
 
@@ -27,8 +27,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/russellgao.cn\/kubectl-command\/"
-        },"genre": "posts","keywords": "kubernetes, kubectl, cli","wordcount":  1338 ,
-        "url": "https:\/\/russellgao.cn\/kubectl-command\/","datePublished": "2020-11-20T00:00:00+00:00","dateModified": "2020-12-15T13:59:25+08:00","publisher": {
+        },"genre": "posts","keywords": "kubernetes, kubectl, cli","wordcount":  1352 ,
+        "url": "https:\/\/russellgao.cn\/kubectl-command\/","datePublished": "2020-11-20T00:00:00+00:00","dateModified": "2021-01-22T15:15:14+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -118,7 +118,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">kubectl 常用命令</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-20">2020-11-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1338 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-20">2020-11-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1352 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;7 minutes&nbsp;<span id="/kubectl-command/" class="leancloud_visitors" data-flag-title="kubectl 常用命令">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;views
                     </span>&nbsp;</div>
@@ -136,6 +136,7 @@
         <li><a href="#查看某个-namespace-下所有的pod">查看某个 namespace 下，所有的pod</a></li>
         <li><a href="#查看所有namespace-的pod">查看所有namespace 的pod</a></li>
         <li><a href="#查看某个具体的-pod-信息-以-widejsonyaml-的格式输出">查看某个具体的 pod 信息 ，以 wide、json、yaml 的格式输出</a></li>
+        <li><a href="#通过-go-template-进行查看">通过 go-template 进行查看</a></li>
         <li><a href="#查看某个-pod-的某个字段信息">查看某个 pod 的某个字段信息</a></li>
         <li><a href="#通过标签选择查看-pod">通过标签选择查看 pod</a></li>
         <li><a href="#查看某个node-上部署的所有-pod">查看某个node 上部署的所有 pod</a></li>
@@ -382,6 +383,17 @@ kubectl get po -A
 <pre class="chroma"><code class="language-shell" data-lang="shell">kubectl -n <span class="nv">$namespace</span> get po xxx -o wide/json/yaml
 <span class="c1"># 如 查看 monitoring 下的 prometheus-0 pod 信息，并以yaml 形式输出。</span>
 kubectl -n monitoring get po prometheus-0 -o yaml
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="通过-go-template-进行查看">通过 go-template 进行查看</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kubectl get pods -l <span class="nv">app</span><span class="o">=</span>hostnames <span class="se">\
+</span><span class="se"></span>    -o go-template<span class="o">=</span><span class="s1">&#39;{{range .items}}{{.status.podIP}}{{&#34;\n&#34;}}{{end}}&#39;</span>
 </code></pre></td></tr></table>
 </div>
 </div><h3 id="查看某个-pod-的某个字段信息">查看某个 pod 的某个字段信息</h3>
@@ -753,7 +765,7 @@ kubectl -n monitor patch deployment prometheus -p <span class="se">\
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2020-12-15</span>
+                <span>Updated on 2021-01-22</span>
             </div>
             <div class="post-info-license"></div>
         </div>

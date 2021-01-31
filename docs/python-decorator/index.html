@@ -5,35 +5,35 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>Python 中的迭代器与生成器 - 大大很二</title><meta name="Description" content="Python 中的迭代器与生成器"><meta property="og:title" content="Python 中的迭代器与生成器" />
-<meta property="og:description" content="Python 中的迭代器与生成器" />
+        <title>Python 中的装饰器 - 大大很二</title><meta name="Description" content="Python 中的装饰器"><meta property="og:title" content="Python 中的装饰器" />
+<meta property="og:description" content="Python 中的装饰器" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://russellgao.cn/python-iter/" />
+<meta property="og:url" content="https://russellgao.cn/python-decorator/" />
 <meta property="og:image" content="https://russellgao.cn/images/profile.jpg"/>
-<meta property="article:published_time" content="2020-12-07T18:32:00+00:00" />
+<meta property="article:published_time" content="2021-01-30T10:32:00+00:00" />
 <meta property="article:modified_time" content="2021-01-31T10:50:20+08:00" /><meta property="og:site_name" content="大大很二" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://russellgao.cn/images/profile.jpg"/>
 
-<meta name="twitter:title" content="Python 中的迭代器与生成器"/>
-<meta name="twitter:description" content="Python 中的迭代器与生成器"/>
+<meta name="twitter:title" content="Python 中的装饰器"/>
+<meta name="twitter:description" content="Python 中的装饰器"/>
 <meta name="application-name" content="russellgao">
-<meta name="apple-mobile-web-app-title" content="russellgao"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://gitee.com/russellgao/blogs-image/raw/master/images/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://russellgao.cn/python-iter/" /><link rel="prev" href="https://russellgao.cn/concurrent/" /><link rel="next" href="https://russellgao.cn/python-decorator/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+<meta name="apple-mobile-web-app-title" content="russellgao"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://gitee.com/russellgao/blogs-image/raw/master/images/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://russellgao.cn/python-decorator/" /><link rel="prev" href="https://russellgao.cn/python-iter/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "Python 中的迭代器与生成器",
+        "headline": "Python 中的装饰器",
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/russellgao.cn\/python-iter\/"
-        },"genre": "posts","keywords": "python, 迭代器, 生成器","wordcount":  339 ,
-        "url": "https:\/\/russellgao.cn\/python-iter\/","datePublished": "2020-12-07T18:32:00+00:00","dateModified": "2021-01-31T10:50:20+08:00","publisher": {
+            "@id": "https:\/\/russellgao.cn\/python-decorator\/"
+        },"genre": "posts","keywords": "python, 装饰器","wordcount":  183 ,
+        "url": "https:\/\/russellgao.cn\/python-decorator\/","datePublished": "2021-01-30T10:32:00+00:00","dateModified": "2021-01-31T10:50:20+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
                 "name": "russellgao"
-            },"description": "Python 中的迭代器与生成器"
+            },"description": "Python 中的装饰器"
     }
     </script></head>
     <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
@@ -116,10 +116,10 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">Contents</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animated flipInX">Python 中的迭代器与生成器</h1><div class="post-meta">
+        </div><article class="page single"><h1 class="single-title animated flipInX">Python 中的装饰器</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-12-07">2020-12-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;339 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;2 minutes&nbsp;<span id="/python-iter/" class="leancloud_visitors" data-flag-title="Python 中的迭代器与生成器">
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-01-30">2021-01-30</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;183 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;One minute&nbsp;<span id="/python-decorator/" class="leancloud_visitors" data-flag-title="Python 中的装饰器">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;views
                     </span>&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="true">
@@ -130,64 +130,26 @@
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
     <li><a href="#导读">导读</a></li>
-    <li><a href="#可迭代对象">可迭代对象</a></li>
-    <li><a href="#迭代器">迭代器</a>
+    <li><a href="#什么是装饰器">什么是装饰器</a></li>
+    <li><a href="#装饰器有哪些类型">装饰器有哪些类型</a>
       <ul>
-        <li><a href="#迭代器模式">迭代器模式</a></li>
+        <li><a href="#无参装饰器">无参装饰器</a></li>
+        <li><a href="#有参装饰器">有参装饰器</a></li>
       </ul>
     </li>
-    <li><a href="#生成器">生成器</a>
-      <ul>
-        <li><a href="#yield">yield</a></li>
-        <li><a href="#-生成器">() 生成器</a></li>
-      </ul>
-    </li>
-    <li><a href="#特别说明">特别说明</a></li>
-    <li><a href="#总结">总结</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="导读">导读</h2>
 <blockquote>
-<p>这篇文章主要介绍了 python 当中的迭代器与生成器，在涉及到大数据量的场景应该考虑使用迭代器与生成器。</p>
+<p>这篇文章主要介绍了 python 当中的装饰器。</p>
 </blockquote>
-<h2 id="可迭代对象">可迭代对象</h2>
-<p>如果一个对象实现了 <code>__iter__</code> 方法，那么我们就称它是一个可迭代对象。如果没有实现 <code>__iter__</code> 而实现了
-<code>__getitem__</code> 方法，并且其参数是从0开始索引的，这种对象也是可迭代的，比如说序列。</p>
-<p>使用 <code>iter</code> 内置函数可以获取迭代器的对象，当解释器需要迭代对象时，会自动调用 <code>item(x)</code> ：</p>
-<ul>
-<li>如果对象实现了 <code>__iter__</code> 方法，获取一个迭代器</li>
-<li>如果没有实现 <code>__iter__</code> ，但是实现了 <code>__getitem__</code> ，python 会创建一个迭代器，尝试从索引0开始获取元素</li>
-<li>如果获取失败，则抛出 <code>TypeError</code></li>
-</ul>
-<p>标准序列都实现了 <code>__iter__</code> 方法，所以标准序列都是可迭代对象。如 list,dict,set,tuple。</p>
-<blockquote>
-<ul>
-<li>只有实现了 <code>__iter__</code> 方法的对象能通过子类测试<code>issubclass(Object,abc.Itertor)</code></li>
-<li>检查对象能否迭代最标准的方法是调用 <code>iter()</code> 函数，因为 <code>iter()</code> 会考虑到实现 <code>__getitem__</code> 方法的部分可迭代对象。</li>
-</ul>
-</blockquote>
-<h2 id="迭代器">迭代器</h2>
-<p>迭代器主要用于从集合中取出元素，那么是什么迭代器呢?</p>
-<blockquote>
-<p>实现了 <code>next</code> 方法的可迭代对象就是迭代器。</p>
-</blockquote>
-<ul>
-<li><code>next</code> 返回下一个可用的元素，当没有元素时抛出 <code>StopIteration</code> 异常。</li>
-<li><code>__iter__</code> ，迭代器本身。</li>
-</ul>
-<p>到这里应该可以看出「可迭代对象」与 「迭代器」的区别了，就是在于有没有实现<code>next</code> 方法 。</p>
-<p>检查对象是不是一个迭代器 ：<code>isinstance(object,abc.Iterator)</code> 。</p>
-<h3 id="迭代器模式">迭代器模式</h3>
-<blockquote>
-<p>按需一次获取一个数据项。</p>
-</blockquote>
-<p>迭代器模式的用途有：</p>
-<ul>
-<li>访问一个聚合对象而无需暴露它的内部结构</li>
-<li>支持对聚合对象的多种遍历</li>
-<li>为遍历不同的聚合结构提供一个统一的接口</li>
-</ul>
-<p>说了这么多，那么除了标准序列之外，如何自定义一个迭代器呢，看看下面的代码：</p>
+<h2 id="什么是装饰器">什么是装饰器</h2>
+<p>装饰器可以理解为函数的函数，想想这么一种场景，要计算每个函数的执行时间，一种解决方法是在每个函数中做个计时，就可以拿到执行时间，
+但是这样会有大量的冗余代码，显然是不可取的，这时候装饰器就派上用场了。</p>
+<p>下面直接看代码，代码比文字更有说服力。</p>
+<h2 id="装饰器有哪些类型">装饰器有哪些类型</h2>
+<h3 id="无参装饰器">无参装饰器</h3>
+<p>装饰器本身没有任务参数，通过 <code>@</code> 直接使用即可。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -215,96 +177,37 @@
 </span><span class="lnt">23
 </span><span class="lnt">24
 </span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Books</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">books</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">books</span> <span class="o">=</span> <span class="n">books</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&#34;,&#34;</span><span class="p">)</span>
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="ch">#!/usr/bin/env python</span>
 
-    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">BookIterator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">books</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 
+<span class="k">def</span> <span class="nf">timet</span><span class="p">(</span><span class="n">func</span><span class="p">)</span> <span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;otter=====&#34;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">inner</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="p">:</span>
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&#34;inner====&#34;</span><span class="p">)</span>
+        <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">end_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&#34;total cost {}&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">inner</span>
 
-<span class="k">class</span> <span class="nc">BookIterator</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">books</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">books</span> <span class="o">=</span> <span class="n">books</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="nd">@timet</span>
+<span class="k">def</span> <span class="nf">p_p1</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span><span class="n">a2</span><span class="p">,</span><span class="n">a3</span> <span class="o">=</span> <span class="s2">&#34;pkfjf&#34;</span><span class="p">)</span> <span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;=====&#34;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">a1</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">a2</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">a3</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;======&#34;</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">try</span> <span class="p">:</span>
-            <span class="n">book</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">books</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
-        <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">StopIteration</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">return</span> <span class="n">book</span>
-
-    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span>
-
-<span class="n">books</span> <span class="o">=</span> <span class="n">Books</span><span class="p">(</span><span class="s2">&#34;python,golang,vue,kubernetes,istio&#34;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">books</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">book</span> <span class="ow">in</span> <span class="n">books</span> <span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">book</span><span class="p">)</span>
+<span class="n">p_p1</span><span class="p">(</span><span class="s2">&#34;a1111111&#34;</span><span class="p">,</span><span class="s2">&#34;a22222&#34;</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="生成器">生成器</h2>
-<p>生成器是一种特殊的迭代器，这种迭代器更加优雅，不需要像上面一样写 <code>__iter__</code> 和 <code>next</code> 方法了，只需要一个 <code>yield</code> 关键字即可。</p>
-<p>生成器有两种方法用:</p>
-<ul>
-<li>yield</li>
-<li><code>()</code> 生成</li>
-</ul>
-<h3 id="yield">yield</h3>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">gen</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="p">:</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="p">:</span>
-        <span class="k">yield</span> <span class="n">i</span> <span class="o">*</span> <span class="mi">2</span>
-
-<span class="n">g1</span> <span class="o">=</span> <span class="n">gen</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-</code></pre></td></tr></table>
-</div>
-</div><h3 id="-生成器">() 生成器</h3>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">l1</span> <span class="o">=</span> <span class="p">[</span> <span class="n">i</span> <span class="o">*</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="p">]</span>
-<span class="n">g1</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
-
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">g1</span> <span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-
-<span class="k">print</span><span class="p">(</span><span class="n">l1</span><span class="p">)</span>
-</code></pre></td></tr></table>
-</div>
-</div><ul>
-<li>l1 是一个列表推导式</li>
-<li>g1 是一个生成器</li>
-<li>两者的区别是 g1 生成器采用懒加载的方式，不会一次把数据加载到内存中</li>
-</ul>
-<blockquote>
-<p>生成器的好处不用把数据全部加载到内存中，访问到的时候在计算出来。例如有 100w 的数据集，但是只需要访问前 100 个，是不是生成器就很有用了。</p>
-</blockquote>
-<h2 id="特别说明">特别说明</h2>
-<p>上述写法为 <code>python2</code> 的写法，<code>python3</code> 略有不同，python3 中 next 方法对应的为 <code>__next__</code> ，如上面的 <code>Books</code> 例子对应的写法为:</p>
+</div><h3 id="有参装饰器">有参装饰器</h3>
+<p>装饰器本身还有参数，在使用时可以传参控制。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -337,50 +240,47 @@
 </span><span class="lnt">28
 </span><span class="lnt">29
 </span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python">
-<span class="k">class</span> <span class="nc">Books</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">books</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">books</span> <span class="o">=</span> <span class="n">books</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&#34;,&#34;</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">BookIterator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">books</span><span class="p">)</span>
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 
 
-<span class="k">class</span> <span class="nc">BookIterator</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">books</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">books</span> <span class="o">=</span> <span class="n">books</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">def</span> <span class="nf">timet</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;装饰器参数 =====&#34;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">item_a</span> <span class="ow">in</span> <span class="n">args</span> <span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">item_a</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">item_k</span> <span class="p">,</span><span class="n">item_v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">item_k</span><span class="p">,</span><span class="n">item_v</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;装饰器参数------&#34;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__next__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">try</span> <span class="p">:</span>
-            <span class="n">book</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">books</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
-        <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">StopIteration</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">return</span> <span class="n">book</span>
+    <span class="k">def</span> <span class="nf">outter</span><span class="p">(</span><span class="n">func</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&#34;otter=====&#34;</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">inner</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="p">:</span>
+            <span class="n">start_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&#34;inner====&#34;</span><span class="p">)</span>
+            <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="n">end_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&#34;total cost {}&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">inner</span>
+    <span class="k">return</span> <span class="n">outter</span>
 
-    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span>
+<span class="nd">@timet</span><span class="p">(</span><span class="s2">&#34;p1&#34;</span><span class="p">,</span><span class="s2">&#34;p2&#34;</span><span class="p">,</span><span class="n">p3</span><span class="o">=</span><span class="s2">&#34;oirei&#34;</span><span class="p">,</span><span class="n">p4</span><span class="o">=</span><span class="s2">&#34;uryhd&#34;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">p_p1</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span><span class="n">a2</span><span class="p">,</span><span class="n">a3</span> <span class="o">=</span> <span class="s2">&#34;pkfjf&#34;</span><span class="p">)</span> <span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;=====&#34;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">a1</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">a2</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">a3</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;======&#34;</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
 
-<span class="n">books</span> <span class="o">=</span> <span class="n">Books</span><span class="p">(</span><span class="s2">&#34;python,golang,vue,kubernetes,istio&#34;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">books</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">book</span> <span class="ow">in</span> <span class="n">books</span> <span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">book</span><span class="p">)</span>
-
+<span class="n">p_p1</span><span class="p">(</span><span class="s2">&#34;a1111111&#34;</span><span class="p">,</span><span class="s2">&#34;a22222&#34;</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="总结">总结</h2>
-<blockquote>
-<ul>
-<li>任何对象只要实现了 <code>__iter__</code> 方法就是一个可迭代对象</li>
-<li>任何对象只要实现了 <code>__iter__</code> 和 <code>next</code> 方法就是一个迭代器</li>
-<li>生成器是一个特殊的迭代器，可以通过 <code>yield</code> 和 <code>()</code> 的方式生成</li>
-<li>在数据量大的时候使用会有奇效</li>
-</ul>
-</blockquote>
-</div><div class="post-footer" id="post-footer">
+</div></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
@@ -390,23 +290,22 @@
         </div>
         <div class="post-info-line">
             <div class="post-info-md"><span>
-                            <a class="link-to-markdown" href="/python-iter/index.md" target="_blank">Read Markdown</a>
+                            <a class="link-to-markdown" href="/python-decorator/index.md" target="_blank">Read Markdown</a>
                         </span></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://russellgao.cn/python-iter/" data-title="Python 中的迭代器与生成器" data-hashtags="python,迭代器,生成器"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://russellgao.cn/python-iter/" data-hashtag="python"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="Share on WhatsApp" data-sharer="whatsapp" data-url="https://russellgao.cn/python-iter/" data-title="Python 中的迭代器与生成器" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://russellgao.cn/python-iter/" data-title="Python 中的迭代器与生成器"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://russellgao.cn/python-iter/" data-title="Python 中的迭代器与生成器"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="Share on Myspace" data-sharer="myspace" data-url="https://russellgao.cn/python-iter/" data-title="Python 中的迭代器与生成器" data-description="Python 中的迭代器与生成器"><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="Share on Blogger" data-sharer="blogger" data-url="https://russellgao.cn/python-iter/" data-title="Python 中的迭代器与生成器" data-description="Python 中的迭代器与生成器"><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="Share on Evernote" data-sharer="evernote" data-url="https://russellgao.cn/python-iter/" data-title="Python 中的迭代器与生成器"><i class="fab fa-evernote fa-fw"></i></a></span>
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://russellgao.cn/python-decorator/" data-title="Python 中的装饰器" data-hashtags="python,装饰器"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://russellgao.cn/python-decorator/" data-hashtag="python"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="Share on WhatsApp" data-sharer="whatsapp" data-url="https://russellgao.cn/python-decorator/" data-title="Python 中的装饰器" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://russellgao.cn/python-decorator/" data-title="Python 中的装饰器"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://russellgao.cn/python-decorator/" data-title="Python 中的装饰器"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="Share on Myspace" data-sharer="myspace" data-url="https://russellgao.cn/python-decorator/" data-title="Python 中的装饰器" data-description="Python 中的装饰器"><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="Share on Blogger" data-sharer="blogger" data-url="https://russellgao.cn/python-decorator/" data-title="Python 中的装饰器" data-description="Python 中的装饰器"><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="Share on Evernote" data-sharer="evernote" data-url="https://russellgao.cn/python-decorator/" data-title="Python 中的装饰器"><i class="fab fa-evernote fa-fw"></i></a></span>
             </div>
         </div>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/python/">python</a>,&nbsp;<a href="/tags/%E8%BF%AD%E4%BB%A3%E5%99%A8/">迭代器</a>,&nbsp;<a href="/tags/%E7%94%9F%E6%88%90%E5%99%A8/">生成器</a></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/python/">python</a>,&nbsp;<a href="/tags/%E8%A3%85%E9%A5%B0%E5%99%A8/">装饰器</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="/concurrent/" class="prev" rel="prev" title="python中的多线程与多进程（二）"><i class="fas fa-angle-left fa-fw"></i>python中的多线程与多进程（二）</a>
-            <a href="/python-decorator/" class="next" rel="next" title="Python 中的装饰器">Python 中的装饰器<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="/python-iter/" class="prev" rel="prev" title="Python 中的迭代器与生成器"><i class="fas fa-angle-left fa-fw"></i>Python 中的迭代器与生成器</a></div>
 </div>
 <div id="comments"><div id="valine" class="comment"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
