@@ -13,6 +13,17 @@
     
     
     <item>
+      <title>Python 中的装饰器</title>
+      <link>https://russellgao.cn/python/python-decorator/</link>
+      <pubDate>Sat, 30 Jan 2021 10:32:00 +0000</pubDate>
+      <author>1060745366@qq.com (高维宗(russellgao))</author>
+      <guid>https://russellgao.cn/python/python-decorator/</guid>
+      <description>导读  这篇文章主要介绍了 python 当中的装饰器。
+ 什么是装饰器 装饰器可以理解为函数的函数，想想这么一种场景，要计算每个函数的执行时间，一种解决方法是在每个函数中做个计时，就可以拿到执行时间， 但是这样会有大量的冗余代码，显然是不可取的，这时候装饰器就派上用场了。
+下面直接看代码，代码比文字更有说服力。</description>
+    </item>
+    
+    <item>
       <title>Python 中的迭代器与生成器</title>
       <link>https://russellgao.cn/python/python-iter/</link>
       <pubDate>Mon, 07 Dec 2020 18:32:00 +0000</pubDate>
