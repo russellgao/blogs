@@ -4,7 +4,7 @@ description = "kubernetes Service 原理剖析"
 date = "2021-01-21"
 aliases = ["kubernetes Service 原理剖析"]
 author = "russellgao"
-draft = false
+draft = true
 tags = [
     "kubernetes",
     "service" ,
