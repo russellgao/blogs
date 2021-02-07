@@ -541,3 +541,5 @@ The connection to the server localhost:8080 was refused - did you specify the ri
 
 ## 总结
 本篇介绍了 kind(kubernetes in docker) 的基本用法，可以在本地快速构建起kubernetes 环境，适合新人快速入门、调试k8s 相关组件，测试operator 等。
+
+
