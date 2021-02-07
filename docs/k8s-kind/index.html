@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>在本地如何玩转kubernetes? - kind - 大大很二</title><meta name="Description" content="在本地如何玩转kubernetes? - kind"><meta property="og:title" content="在本地如何玩转kubernetes? - kind" />
+<meta property="og:description" content="在本地如何玩转kubernetes? - kind" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://russellgao.cn/k8s-kind/" />
+<meta property="og:image" content="https://russellgao.cn/images/profile.jpg"/>
+<meta property="article:published_time" content="2021-02-06T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-02-06T00:00:00+00:00" /><meta property="og:site_name" content="大大很二" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://russellgao.cn/images/profile.jpg"/>
+
+<meta name="twitter:title" content="在本地如何玩转kubernetes? - kind"/>
+<meta name="twitter:description" content="在本地如何玩转kubernetes? - kind"/>
+<meta name="application-name" content="russellgao">
+<meta name="apple-mobile-web-app-title" content="russellgao"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://gitee.com/russellgao/blogs-image/raw/master/images/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://russellgao.cn/k8s-kind/" /><link rel="prev" href="https://russellgao.cn/pod-create/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "在本地如何玩转kubernetes? - kind",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/russellgao.cn\/k8s-kind\/"
+        },"genre": "posts","keywords": "kubernetes, kind","wordcount":  2066 ,
+        "url": "https:\/\/russellgao.cn\/k8s-kind\/","datePublished": "2021-02-06T00:00:00+00:00","dateModified": "2021-02-06T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "russellgao"
+            },"description": "在本地如何玩转kubernetes? - kind"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="大大很二"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png"
+        data-srcset="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png, https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png 1.5x, https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png"
+        title="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png" />大大很二</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/"> 首页 </a><a class="menu-item" href="/golang/"> Golang </a><a class="menu-item" href="/kubernetes/"> Kubernetes </a><a class="menu-item" href="/servicemesh/"> ServiceMesh </a><a class="menu-item" href="/python/"> Python </a><a class="menu-item" href="/devops/"> Devops </a><a class="menu-item" href="/argorithm/"> 算法 </a><a class="menu-item" href="/opensrouce/"> 开源项目 </a><a class="menu-item" href="/ai/"> 人工智能 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="大大很二"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png"
+        data-srcset="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png, https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png 1.5x, https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png"
+        title="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png" />大大很二</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/" title="">首页</a><a class="menu-item" href="/golang/" title="">Golang</a><a class="menu-item" href="/kubernetes/" title="">Kubernetes</a><a class="menu-item" href="/servicemesh/" title="">ServiceMesh</a><a class="menu-item" href="/python/" title="">Python</a><a class="menu-item" href="/devops/" title="">Devops</a><a class="menu-item" href="/argorithm/" title="">算法</a><a class="menu-item" href="/opensrouce/" title="">开源项目</a><a class="menu-item" href="/ai/" title="">人工智能</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">在本地如何玩转kubernetes? - kind</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-02-06">2021-02-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;2066 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;10 minutes&nbsp;<span id="/k8s-kind/" class="leancloud_visitors" data-flag-title="在本地如何玩转kubernetes? - kind">
+                        <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;views
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#导读">导读</a></li>
+    <li><a href="#kind-参考资料">kind 参考资料</a></li>
+    <li><a href="#安装">安装</a>
+      <ul>
+        <li><a href="#有-golang-环境">有 golang 环境</a></li>
+        <li><a href="#无-golang-环境">无 golang 环境</a></li>
+      </ul>
+    </li>
+    <li><a href="#基本命令">基本命令</a></li>
+    <li><a href="#创建-kubernetes-集群">创建 kubernetes 集群</a></li>
+    <li><a href="#使用集群">使用集群</a></li>
+    <li><a href="#环境清理">环境清理</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="导读">导读</h2>
+<blockquote>
+<p>kubernetes 现在已经走进了大众的视野，很多同学都对此比较好奇，从其他渠道或多或少都了解了一些，但是苦于kubernetes环境，不能身临其境的感受，
+毕竟如果完整搭建一套kubernetes环境是需要资源的。 今天介绍一款工具（<strong>kind</strong>），让大家可以本地也可以构建起 kubernetes 环境，愉快的在本地玩转 kubernetes。</p>
+<p>kind 全称 是 kubernetes in docker ，把 kubernetes 控制面的组件全部运行在一个docker 容器中，在本地通过 <code>127.0.0.1</code> 进行通信。这种玩法只能在本地体验，
+不可用于生成环境，特别适用于新人在本地体验、开发 kubernetes 相关组件时在本地进行调试等，如开始 operator 时可以在 kind 进行调试 。</p>
+<p>详细用法可以参考官方文档。</p>
+</blockquote>
+<h2 id="kind-参考资料">kind 参考资料</h2>
+<ul>
+<li>官网: <a href="https://kind.sigs.k8s.io/">https://kind.sigs.k8s.io/</a></li>
+<li>官方文档: <a href="https://kind.sigs.k8s.io/docs/user/quick-start/">https://kind.sigs.k8s.io/docs/user/quick-start/</a></li>
+<li>github : <a href="https://github.com/kubernetes-sigs/kind">https://github.com/kubernetes-sigs/kind</a></li>
+</ul>
+<h2 id="安装">安装</h2>
+<h3 id="有-golang-环境">有 golang 环境</h3>
+<p>如果有 golang 环境，可以通过如下命令安装 :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">GO111MODULE</span><span class="o">=</span><span class="s2">&#34;on&#34;</span> go get sigs.k8s.io/kind@v0.10.0
+</code></pre></td></tr></table>
+</div>
+</div><p>如果下载的比较慢可以设置代理，增加一个环境变量即可:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">GOPROXY</span><span class="o">=</span><span class="s2">&#34;https://goproxy.cn&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="无-golang-环境">无 golang 环境</h3>
+<p>Linux :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.10.0/kind-linux-amd64
+chmod +x ./kind
+mv ./kind /some-dir-in-your-PATH/kind
+</code></pre></td></tr></table>
+</div>
+</div><p>Mac (homebrew)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">brew install kind
+</code></pre></td></tr></table>
+</div>
+</div><p>或者 :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.10.0/kind-darwin-amd64
+
+</code></pre></td></tr></table>
+</div>
+</div><p>Windows:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">curl.exe -Lo kind-windows-amd64.exe https://kind.sigs.k8s.io/dl/v0.10.0/kind-windows-amd64
+Move-Item .<span class="se">\k</span>ind-windows-amd64.exe c:<span class="se">\s</span>ome-dir-in-your-PATH<span class="se">\k</span>ind.exe
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="基本命令">基本命令</h2>
+<p>通过 <code>kind --help </code> 看看支持哪些命令</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kind --help 
+kind creates and manages <span class="nb">local</span> Kubernetes clusters using Docker container <span class="s1">&#39;nodes&#39;</span>
+
+Usage:
+  kind <span class="o">[</span>command<span class="o">]</span>
+
+Available Commands:
+  build       Build one of <span class="o">[</span>node-image<span class="o">]</span>
+  completion  Output shell completion code <span class="k">for</span> the specified shell <span class="o">(</span>bash, zsh or fish<span class="o">)</span>
+  create      Creates one of <span class="o">[</span>cluster<span class="o">]</span>
+  delete      Deletes one of <span class="o">[</span>cluster<span class="o">]</span>
+  <span class="nb">export</span>      Exports one of <span class="o">[</span>kubeconfig, logs<span class="o">]</span>
+  get         Gets one of <span class="o">[</span>clusters, nodes, kubeconfig<span class="o">]</span>
+  <span class="nb">help</span>        Help about any <span class="nb">command</span>
+  load        Loads images into nodes
+  version     Prints the kind CLI version
+
+Flags:
+  -h, --help              <span class="nb">help</span> <span class="k">for</span> kind
+      --loglevel string   DEPRECATED: see -v instead
+  -q, --quiet             silence all stderr output
+  -v, --verbosity int32   info log verbosity
+      --version           version <span class="k">for</span> kind
+
+Use <span class="s2">&#34;kind [command] --help&#34;</span> <span class="k">for</span> more information about a command.
+</code></pre></td></tr></table>
+</div>
+</div><p>可以看出支持3种类型的命令，cluster 相关、image 相关、通用命令 。</p>
+<ul>
+<li>cluster 相关的有 create, delete 等，主要用于创建和删除 kubernetes 集群。</li>
+<li>image 相关的有 build， load 等，主要用于本地调试时，本地可以 build镜像直接load 到集群中，而不需要推送到镜像仓库再通过集群去 pull 。</li>
+<li>通用命令如 get ，version 等。</li>
+</ul>
+<p>kind &ndash;version</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kind --version
+kind version 0.9.0
+</code></pre></td></tr></table>
+</div>
+</div><p>本篇文章以 <code>kind 0.9.0 </code> 进行介绍 。下面是比较精彩的部分，仔细看哦 👀</p>
+<h2 id="创建-kubernetes-集群">创建 kubernetes 集群</h2>
+<p>创建一个 kubernetes 集群 ：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kind create cluster
+Creating cluster <span class="s2">&#34;kind&#34;</span> ...
+ ✓ Ensuring node image <span class="o">(</span>kindest/node:v1.19.1<span class="o">)</span> 🖼
+ ✓ Preparing nodes 📦  
+ ✓ Writing configuration 📜 
+ ✓ Starting control-plane 🕹️ 
+ ✓ Installing CNI 🔌 
+ ✓ Installing StorageClass 💾 
+Set kubectl context to <span class="s2">&#34;kind-kind&#34;</span>
+You can now use your cluster with:
+
+kubectl cluster-info --context kind-kind
+
+Thanks <span class="k">for</span> using kind! 😊
+</code></pre></td></tr></table>
+</div>
+</div><p>一条命令就已经启动好了一个集群 ，可以通过 <code>kind get clusters</code> 查看已经创建的集群。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kind get clusters
+kind
+</code></pre></td></tr></table>
+</div>
+</div><p>既然是 kubernetes in docker ，那就看看启动了哪些容器 :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">docker ps -a 
+CONTAINER ID        IMAGE                                    COMMAND                  CREATED             STATUS              PORTS                                      NAMES
+fdb88a476bb0        kindest/node:v1.19.1                     <span class="s2">&#34;/usr/local/bin/entr…&#34;</span>   <span class="m">3</span> minutes ago       Up <span class="m">2</span> minutes        127.0.0.1:43111-&gt;6443/tcp                  kind-control-plane
+</code></pre></td></tr></table>
+</div>
+</div><p>可以看到有一个控制面的容器启动了，进到容器中看看都有什么</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ ~<span class="o">]</span><span class="c1"># docker exec -it kind-control-plane bash</span> 
+root@kind-control-plane:/# 
+root@kind-control-plane:/# 
+root@kind-control-plane:/# ps -ef 
+UID          PID    PPID  C STIME TTY          TIME CMD
+root           <span class="m">1</span>       <span class="m">0</span>  <span class="m">0</span> 02:49 ?        00:00:00 /sbin/init
+root         <span class="m">126</span>       <span class="m">1</span>  <span class="m">0</span> 02:49 ?        00:00:00 /lib/systemd/systemd-journald
+root         <span class="m">145</span>       <span class="m">1</span>  <span class="m">1</span> 02:49 ?        00:00:06 /usr/local/bin/containerd
+root         <span class="m">257</span>       <span class="m">1</span>  <span class="m">0</span> 02:49 ?        00:00:00 /usr/local/bin/containerd-shim-runc-v2 -namespace k8s.io -id c1a5e2c868b9a744f4f78a85a8d660950bb76103a38e7
+root         <span class="m">271</span>       <span class="m">1</span>  <span class="m">0</span> 02:49 ?        00:00:00 /usr/local/bin/containerd-shim-runc-v2 -namespace k8s.io -id 3549ecade28e2dccbad5ed15a4cd2b6e6a886cd3e10ab
+root         <span class="m">297</span>       <span class="m">1</span>  <span class="m">0</span> 02:49 ?        00:00:00 /usr/local/bin/containerd-shim-runc-v2 -namespace k8s.io -id 379ed27442f35696d488dd5a63cc61dc474bfa9bd08a9
+root         <span class="m">335</span>       <span class="m">1</span>  <span class="m">0</span> 02:49 ?        00:00:00 /usr/local/bin/containerd-shim-runc-v2 -namespace k8s.io -id e4eae33bf489c617c7133ada7dbd92129f3f817cb74b7
+root         <span class="m">343</span>     <span class="m">271</span>  <span class="m">0</span> 02:49 ?        00:00:00 /pause
+root         <span class="m">360</span>     <span class="m">257</span>  <span class="m">0</span> 02:49 ?        00:00:00 /pause
+root         <span class="m">365</span>     <span class="m">297</span>  <span class="m">0</span> 02:49 ?        00:00:00 /pause
+root         <span class="m">377</span>     <span class="m">335</span>  <span class="m">0</span> 02:49 ?        00:00:00 /pause
+root         <span class="m">443</span>     <span class="m">335</span>  <span class="m">0</span> 02:49 ?        00:00:01 kube-scheduler --authentication-kubeconfig<span class="o">=</span>/etc/kubernetes/scheduler.conf --authorization-kubeconfig<span class="o">=</span>/etc/
+root         <span class="m">468</span>     <span class="m">297</span>  <span class="m">4</span> 02:49 ?        00:00:17 kube-apiserver --advertise-address<span class="o">=</span>172.18.0.2 --allow-privileged<span class="o">=</span><span class="nb">true</span> --authorization-mode<span class="o">=</span>Node,RBAC --cli
+root         <span class="m">496</span>     <span class="m">271</span>  <span class="m">1</span> 02:49 ?        00:00:05 kube-controller-manager --allocate-node-cidrs<span class="o">=</span><span class="nb">true</span> --authentication-kubeconfig<span class="o">=</span>/etc/kubernetes/controller-
+root         <span class="m">540</span>     <span class="m">257</span>  <span class="m">1</span> 02:49 ?        00:00:05 etcd --advertise-client-urls<span class="o">=</span>https://172.18.0.2:2379 --cert-file<span class="o">=</span>/etc/kubernetes/pki/etcd/server.crt --cli
+root         <span class="m">580</span>       <span class="m">1</span>  <span class="m">1</span> 02:49 ?        00:00:06 /usr/bin/kubelet --bootstrap-kubeconfig<span class="o">=</span>/etc/kubernetes/bootstrap-kubelet.conf --kubeconfig<span class="o">=</span>/etc/kubernete
+root         <span class="m">673</span>       <span class="m">1</span>  <span class="m">0</span> 02:50 ?        00:00:00 /usr/local/bin/containerd-shim-runc-v2 -namespace k8s.io -id b0965a6f77f58c46cfe7b30dd84ddf4bc37516ba60e6e
+root         <span class="m">695</span>     <span class="m">673</span>  <span class="m">0</span> 02:50 ?        00:00:00 /pause
+root         <span class="m">709</span>       <span class="m">1</span>  <span class="m">0</span> 02:50 ?        00:00:00 /usr/local/bin/containerd-shim-runc-v2 -namespace k8s.io -id aedf0f1fd02baf1cf2b253ad11e33e396d97cc7c53114
+root         <span class="m">738</span>     <span class="m">709</span>  <span class="m">0</span> 02:50 ?        00:00:00 /pause
+root         <span class="m">789</span>     <span class="m">673</span>  <span class="m">0</span> 02:50 ?        00:00:00 /usr/local/bin/kube-proxy --config<span class="o">=</span>/var/lib/kube-proxy/config.conf --hostname-override<span class="o">=</span>kind-control-plane
+root         <span class="m">798</span>     <span class="m">709</span>  <span class="m">0</span> 02:50 ?        00:00:00 /bin/kindnetd
+root        <span class="m">1011</span>       <span class="m">1</span>  <span class="m">0</span> 02:50 ?        00:00:00 /usr/local/bin/containerd-shim-runc-v2 -namespace k8s.io -id aa554aa998c3091a70eacbc3e4a2f275a1e680a585d69
+root        <span class="m">1024</span>       <span class="m">1</span>  <span class="m">0</span> 02:50 ?        00:00:00 /usr/local/bin/containerd-shim-runc-v2 -namespace k8s.io -id 7373488f811fc5d638c2b3f5f79d953573e30a42ff52f
+root        <span class="m">1048</span>       <span class="m">1</span>  <span class="m">0</span> 02:50 ?        00:00:00 /usr/local/bin/containerd-shim-runc-v2 -namespace k8s.io -id 5ab6c3ef1715623e2c28fbfdecd5f4e6e2616fc20a387
+root        <span class="m">1079</span>    <span class="m">1011</span>  <span class="m">0</span> 02:50 ?        00:00:00 /pause
+root        <span class="m">1088</span>    <span class="m">1024</span>  <span class="m">0</span> 02:50 ?        00:00:00 /pause
+root        <span class="m">1095</span>    <span class="m">1048</span>  <span class="m">0</span> 02:50 ?        00:00:00 /pause
+root        <span class="m">1152</span>    <span class="m">1011</span>  <span class="m">0</span> 02:50 ?        00:00:00 /coredns -conf /etc/coredns/Corefile
+root        <span class="m">1196</span>    <span class="m">1024</span>  <span class="m">0</span> 02:50 ?        00:00:00 /coredns -conf /etc/coredns/Corefile
+root        <span class="m">1205</span>    <span class="m">1048</span>  <span class="m">0</span> 02:50 ?        00:00:00 local-path-provisioner --debug start --helper-image k8s.gcr.io/build-image/debian-base:v2.1.0 --config /et
+root        <span class="m">1961</span>       <span class="m">0</span>  <span class="m">0</span> 02:56 pts/1    00:00:00 bash
+root        <span class="m">1969</span>    <span class="m">1961</span>  <span class="m">0</span> 02:56 pts/1    00:00:00 ps -ef
+root@kind-control-plane:/# 
+</code></pre></td></tr></table>
+</div>
+</div><p>可以看到容器中有很多进程，仔细梳理一下看看有什么组件</p>
+<ul>
+<li>kube-apiserver &hellip; : api-server 组件，是操作资源的入口并且提供认证、授权、权限控制、API注册和服务发现的机制</li>
+<li>kube-scheduler &hellip; : scheduler 组件，负责资源的调度以及根据预先设定的调度策略将pod调度到合适的节点上</li>
+<li>kube-controller-manager &hellip; : controller-manager 组件，负责管理集群的状态，如异常发现、自动扩容和滚动更新等</li>
+<li>etcd &hellip; : etcd 组件，主要用于存储 kubernetes 的数据</li>
+<li>/usr/bin/kubelet &hellip; : kubelet组件， 负责管理容器的生命周期、数据卷以及网络（CNI）</li>
+<li>/usr/local/bin/kube-proxy &hellip; : kube-proxy 组件: 负责服务发现和集群Service的负载均衡</li>
+<li>/coredns &hellip; : dns 组件，负责集群内部的域名解析</li>
+<li>/usr/local/bin/containerd &hellip; : kubernetes 的 CRI（容器运行时）的具体实现，创建具体 pod 以来这个组件</li>
+<li>/pause : pod 的 跟容器，创建 pod 时先创建出这个容器，pod 的网络配置等就是配置到此容器中，后续其他容器会共享这个容器的网络</li>
+<li>/usr/local/bin/containerd-shim-runc-v2 &hellip; : 真正的容器，后续启动的pod 都是以这种形式启动</li>
+</ul>
+<p>可以看到这个容器中包含了 kubernetes 中所有控制面的组件和数据面的组件，是一个 all in one 的 集群。</p>
+<p>这个容器的详细配置可以通过 <code>docker inspect kind-control-plane </code> 查看。</p>
+<h2 id="使用集群">使用集群</h2>
+<p>关于 kubernetes 的使用已经有很多文章来介绍了，所以这里不作为重点介绍，简单演示一下。可以通过 api 或者 kubectl 与kuberntes 进行交互，
+这里选择用 kubectl 进行演示。</p>
+<blockquote>
+<p>如果本地没有 kubectl 需要进行安装，安装文档参见： <a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/">https://kubernetes.io/docs/tasks/tools/install-kubectl/</a></p>
+<p>kubectl 的基本用法可以参考我之前的文章 ：<a href="https://russellgao.cn/kubectl-command/" target="_blank" rel="noopener noreffer">kubectl 常用命令</a></p>
+</blockquote>
+<p>以 部署 logstash 为例，我们会创建如下资源 ：</p>
+<ul>
+<li>Namespace</li>
+<li>Deployment</li>
+<li>Configmap</li>
+<li>Hpa</li>
+<li>Service</li>
+</ul>
+<p>具体的 yaml 文件如下 :</p>
+<p>cat logstash.yaml</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml">---<span class="w">
+</span><span class="w"></span><span class="c"># setting Namespace</span><span class="w">
+</span><span class="w"></span><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>v1<span class="w">
+</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>Namespace<span class="w">
+</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>logging<span class="w">
+</span><span class="w">
+</span><span class="w"></span>---<span class="w">
+</span><span class="w"></span><span class="c"># setting ConfigMap</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>ConfigMap<span class="w">
+</span><span class="w"></span><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>v1<span class="w">
+</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>logstash-conf<span class="w">
+</span><span class="w">  </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>logging<span class="w">
+</span><span class="w"></span><span class="k">data</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">logstash.conf</span><span class="p">:</span><span class="w"> </span><span class="sd">|
+</span><span class="sd">    input {</span><span class="w">
+</span><span class="w">        </span>http<span class="w"> </span>{<span class="w">
+</span><span class="w">            </span>host<span class="w"> </span>=&gt;<span class="w"> </span><span class="s2">&#34;0.0.0.0&#34;</span><span class="w"> </span><span class="c"># default: 0.0.0.0</span><span class="w">
+</span><span class="w">            </span><span class="k">port =&gt; 8080 # default</span><span class="p">:</span><span class="w"> </span><span class="m">8080</span><span class="w">
+</span><span class="w">            </span>response_headers<span class="w"> </span>=&gt;<span class="w"> </span>{<span class="w">
+</span><span class="w">                </span><span class="s2">&#34;Content-Type&#34;</span><span class="w"> </span>=&gt;<span class="w"> </span><span class="s2">&#34;text/plain&#34;</span><span class="w">
+</span><span class="w">                </span><span class="s2">&#34;Access-Control-Allow-Origin&#34;</span><span class="w"> </span>=&gt;<span class="w"> </span><span class="s2">&#34;*&#34;</span><span class="w">
+</span><span class="w">                </span><span class="s2">&#34;Access-Control-Allow-Methods&#34;</span><span class="w"> </span>=&gt;<span class="w"> </span><span class="s2">&#34;GET, POST, DELETE, PUT&#34;</span><span class="w">
+</span><span class="w">                </span><span class="s2">&#34;Access-Control-Allow-Headers&#34;</span><span class="w"> </span>=&gt;<span class="w"> </span><span class="s2">&#34;authorization, content-type&#34;</span><span class="w">
+</span><span class="w">                </span><span class="s2">&#34;Access-Control-Allow-Credentials&#34;</span><span class="w"> </span>=&gt;<span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">            </span>}<span class="w">
+</span><span class="w">        </span>}<span class="w">
+</span><span class="w">    </span>}<span class="w">
+</span><span class="w">    </span>output<span class="w"> </span>{<span class="w">
+</span><span class="w">         </span>stdout<span class="w"> </span>{<span class="w">
+</span><span class="w">            </span>codec<span class="w"> </span>=&gt;<span class="w"> </span>rubydebug<span class="w">
+</span><span class="w">        </span>}<span class="w">
+</span><span class="w">    </span>}<span class="w">
+</span><span class="w">
+</span><span class="w"></span>---<span class="w">
+</span><span class="w"></span><span class="c"># setting Depolyment</span><span class="w">
+</span><span class="w"></span><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>apps/v1<span class="w">
+</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>Deployment<span class="w">
+</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>logstash<span class="w">
+</span><span class="w">  </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>logging<span class="w">
+</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">  </span><span class="k">selector</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">matchLabels</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">app</span><span class="p">:</span><span class="w"> </span>logstash<span class="w">
+</span><span class="w">  </span><span class="k">template</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">labels</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="k">app</span><span class="p">:</span><span class="w"> </span>logstash<span class="w">
+</span><span class="w">    </span><span class="k">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">volumes</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>config<span class="w">
+</span><span class="w">        </span><span class="k">configMap</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>logstash-conf<span class="w">
+</span><span class="w">      </span><span class="k">hostname</span><span class="p">:</span><span class="w"> </span>logstash<span class="w">
+</span><span class="w">      </span><span class="k">containers</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>logstash<span class="w">
+</span><span class="w">          </span><span class="k">image</span><span class="p">:</span><span class="w"> </span>russellgao/logstash<span class="p">:</span><span class="m">7.2.0</span><span class="w">
+</span><span class="w">          </span><span class="k">args</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+</span><span class="w">            </span><span class="s2">&#34;-f&#34;</span><span class="p">,</span><span class="s2">&#34;/usr/share/logstash/pipeline/logstash.conf&#34;</span><span class="p">,</span><span class="w">
+</span><span class="w">          </span><span class="p">]</span><span class="w">
+</span><span class="w">          </span><span class="k">imagePullPolicy</span><span class="p">:</span><span class="w"> </span>IfNotPresent<span class="w">
+</span><span class="w">          </span><span class="k">volumeMounts</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>config<span class="w">
+</span><span class="w">            </span><span class="k">mountPath</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;/usr/share/logstash/pipeline/logstash.conf&#34;</span><span class="w">
+</span><span class="w">            </span><span class="k">readOnly</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">            </span><span class="k">subPath</span><span class="p">:</span><span class="w"> </span>logstash.conf<span class="w">
+</span><span class="w">          </span><span class="k">resources</span><span class="p">:</span><span class="w">
+</span><span class="w">            </span><span class="k">requests</span><span class="p">:</span><span class="w">
+</span><span class="w">              </span><span class="k">cpu</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">              </span><span class="k">memory</span><span class="p">:</span><span class="w"> </span>2048Mi<span class="w">
+</span><span class="w">            </span><span class="k">limits</span><span class="p">:</span><span class="w">
+</span><span class="w">              </span><span class="k">cpu</span><span class="p">:</span><span class="w"> </span><span class="m">3</span><span class="w">
+</span><span class="w">              </span><span class="k">memory</span><span class="p">:</span><span class="w"> </span>3072Mi<span class="w">
+</span><span class="w">          </span><span class="k">readinessProbe</span><span class="p">:</span><span class="w">
+</span><span class="w">            </span><span class="k">tcpSocket</span><span class="p">:</span><span class="w">
+</span><span class="w">              </span><span class="k">port</span><span class="p">:</span><span class="w"> </span><span class="m">8080</span><span class="w">
+</span><span class="w">            </span><span class="k">initialDelaySeconds</span><span class="p">:</span><span class="w"> </span><span class="m">5</span><span class="w">
+</span><span class="w">            </span><span class="k">periodSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">10</span><span class="w">
+</span><span class="w">          </span><span class="k">livenessProbe</span><span class="p">:</span><span class="w">
+</span><span class="w">            </span><span class="k">tcpSocket</span><span class="p">:</span><span class="w">
+</span><span class="w">              </span><span class="k">port</span><span class="p">:</span><span class="w"> </span><span class="m">8080</span><span class="w">
+</span><span class="w">            </span><span class="k">initialDelaySeconds</span><span class="p">:</span><span class="w"> </span><span class="m">15</span><span class="w">
+</span><span class="w">            </span><span class="k">periodSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">20</span><span class="w">
+</span><span class="w">            </span><span class="k">timeoutSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">15</span><span class="w">
+</span><span class="w">      </span><span class="k">imagePullSecrets</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>harbor<span class="w">
+</span><span class="w">
+</span><span class="w"></span>---<span class="w">
+</span><span class="w"></span><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>autoscaling/v2beta1<span class="w">
+</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>HorizontalPodAutoscaler<span class="w">
+</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>logstash-hpa<span class="w">
+</span><span class="w">  </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>logging<span class="w">
+</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">scaleTargetRef</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>apps/v1beta2<span class="w">
+</span><span class="w">    </span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>Deployment<span class="w">
+</span><span class="w">    </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>logstash<span class="w">
+</span><span class="w">  </span><span class="k">minReplicas</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">  </span><span class="k">maxReplicas</span><span class="p">:</span><span class="w"> </span><span class="m">10</span><span class="w">
+</span><span class="w">  </span><span class="k">metrics</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="k">type</span><span class="p">:</span><span class="w"> </span>Resource<span class="w">
+</span><span class="w">    </span><span class="k">resource</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>cpu<span class="w">
+</span><span class="w">      </span><span class="k">targetAverageUtilization</span><span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span>---<span class="w">
+</span><span class="w"></span><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>v1<span class="w">
+</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>Service<span class="w">
+</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>logstash-custerip<span class="w">
+</span><span class="w">  </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>logging<span class="w">
+</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">selector</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">app</span><span class="p">:</span><span class="w"> </span>logstash<span class="w">
+</span><span class="w">  </span><span class="k">type</span><span class="p">:</span><span class="w"> </span>ClusterIP<span class="w">
+</span><span class="w">  </span><span class="k">ports</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;port&#39;</span><span class="w">
+</span><span class="w">      </span><span class="k">protocol</span><span class="p">:</span><span class="w"> </span>TCP<span class="w">
+</span><span class="w">      </span><span class="k">port</span><span class="p">:</span><span class="w"> </span><span class="m">8080</span><span class="w">
+</span><span class="w">      </span><span class="k">targetPort</span><span class="p">:</span><span class="w"> </span><span class="m">8080</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>执行 <code>kubectl apply -f logstash.yaml</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kubectl apply -f logstash.yaml 
+namespace/logging created
+configmap/logstash-conf created
+deployment.apps/logstash created
+horizontalpodautoscaler.autoscaling/logstash-hpa created
+service/logstash-custerip created
+</code></pre></td></tr></table>
+</div>
+</div><p>可以看到具体的资源已经被创建出来，下面来观察具体的资源 :</p>
+<p>查看 ConfigMap :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kubectl -n logging get configmap
+NAME            DATA   AGE
+logstash-conf   <span class="m">1</span>      4m
+</code></pre></td></tr></table>
+</div>
+</div><p>查看 Deployment :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kubectl -n logging get deployment 
+NAME       READY   UP-TO-DATE   AVAILABLE   AGE
+logstash   1/1     <span class="m">1</span>            <span class="m">1</span>           4m
+</code></pre></td></tr></table>
+</div>
+</div><p>查看 Pod :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kubectl -n logging get po -owide
+NAME                        READY   STATUS    RESTARTS   AGE   IP           NODE                 NOMINATED NODE   READINESS GATES
+logstash-64d58c4b98-nqk4v   1/1     Running   <span class="m">0</span>          93s   10.244.0.9   kind-control-plane   &lt;none&gt;           &lt;none&gt;
+</code></pre></td></tr></table>
+</div>
+</div><p>这里需要注意的是 Pod 所在的 <code>node</code> 是 <code>kind-control-plane</code> ，而非本机，说明 kubernetes node 就是这个容器，在本地 curl <code>10.244.0.9:8080</code>
+这个地址是不通，说明是在集群外， 进到容器内再 curl 就是通的 ：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">curl 10.244.0.9:8080 -v
+* About to connect<span class="o">()</span> to 10.244.0.9 port <span class="m">8080</span> <span class="o">(</span><span class="c1">#0)</span>
+*   Trying 10.244.0.9...
+^C
+<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ k8s<span class="o">]</span># 
+<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ k8s<span class="o">]</span># 
+<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ k8s<span class="o">]</span><span class="c1"># docker exec -it kind-control-plane bash</span> 
+root@kind-control-plane:/# curl 10.244.0.9:8080 -v 
+*   Trying 10.244.0.9:8080...
+* TCP_NODELAY <span class="nb">set</span>
+* Connected to 10.244.0.9 <span class="o">(</span>10.244.0.9<span class="o">)</span> port <span class="m">8080</span> <span class="o">(</span><span class="c1">#0)</span>
+&gt; GET / HTTP/1.1
+&gt; Host: 10.244.0.9:8080
+&gt; User-Agent: curl/7.68.0
+&gt; Accept: */*
+&gt; 
+* Mark bundle as not supporting multiuse
+&lt; HTTP/1.1 <span class="m">200</span> OK
+&lt; Access-Control-Allow-Origin: *
+&lt; Access-Control-Allow-Methods: GET, POST, DELETE, PUT
+&lt; Access-Control-Allow-Headers: authorization, content-type
+&lt; Access-Control-Allow-Credentials: <span class="nb">true</span>
+&lt; content-length: <span class="m">2</span>
+&lt; content-type: text/plain
+&lt; 
+* Connection <span class="c1">#0 to host 10.244.0.9 left intact</span>
+okroot@kind-control-plane:/# 
+
+</code></pre></td></tr></table>
+</div>
+</div><p>查看 service :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"> kubectl -n logging get  svc
+NAME                TYPE        CLUSTER-IP      EXTERNAL-IP   PORT<span class="o">(</span>S<span class="o">)</span>    AGE
+logstash-custerip   ClusterIP   10.96.234.144   &lt;none&gt;        8080/TCP   5m
+</code></pre></td></tr></table>
+</div>
+</div><p>pod 和 service 的原理是一样的，通过 <code>CLUSTER-IP</code> 访问只能在容器内进行访问。</p>
+<p>在 pod 内进行访问</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ k8s<span class="o">]</span><span class="c1"># kubectl -n logging exec -it logstash-64d58c4b98-nqk4v bash</span> 
+bash-4.2$ curl 10.96.234.144:8080 -v
+* About to connect<span class="o">()</span> to 10.96.234.144 port <span class="m">8080</span> <span class="o">(</span><span class="c1">#0)</span>
+*   Trying 10.96.234.144...
+* Connected to 10.96.234.144 <span class="o">(</span>10.96.234.144<span class="o">)</span> port <span class="m">8080</span> <span class="o">(</span><span class="c1">#0)</span>
+&gt; GET / HTTP/1.1
+&gt; User-Agent: curl/7.29.0
+&gt; Host: 10.96.234.144:8080
+&gt; Accept: */*
+&gt; 
+&lt; HTTP/1.1 <span class="m">200</span> OK
+&lt; Access-Control-Allow-Origin: *
+&lt; Access-Control-Allow-Methods: GET, POST, DELETE, PUT
+&lt; Access-Control-Allow-Headers: authorization, content-type
+&lt; Access-Control-Allow-Credentials: <span class="nb">true</span>
+&lt; content-length: <span class="m">2</span>
+&lt; content-type: text/plain
+&lt; 
+* Connection <span class="c1">#0 to host 10.96.234.144 left intact</span>
+okbash-4.2$
+bash-4.2$ curl logstash-custerip:8080 -v
+* About to connect<span class="o">()</span> to logstash-custerip port <span class="m">8080</span> <span class="o">(</span><span class="c1">#0)</span>
+*   Trying 10.96.234.144...
+* Connected to logstash-custerip <span class="o">(</span>10.96.234.144<span class="o">)</span> port <span class="m">8080</span> <span class="o">(</span><span class="c1">#0)</span>
+&gt; GET / HTTP/1.1
+&gt; User-Agent: curl/7.29.0
+&gt; Host: logstash-custerip:8080
+&gt; Accept: */*
+&gt; 
+&lt; HTTP/1.1 <span class="m">200</span> OK
+&lt; Access-Control-Allow-Origin: *
+&lt; Access-Control-Allow-Methods: GET, POST, DELETE, PUT
+&lt; Access-Control-Allow-Headers: authorization, content-type
+&lt; Access-Control-Allow-Credentials: <span class="nb">true</span>
+&lt; content-length: <span class="m">2</span>
+&lt; content-type: text/plain
+&lt; 
+* Connection <span class="c1">#0 to host logstash-custerip left intact</span>
+okbash-4.2$ 
+</code></pre></td></tr></table>
+</div>
+</div><p>查看 hpa :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kubectl -n logging get hpa
+NAME           REFERENCE             TARGETS         MINPODS   MAXPODS   REPLICAS   AGE
+logstash-hpa   Deployment/logstash   &lt;unknown&gt;/80%   <span class="m">1</span>         <span class="m">10</span>        <span class="m">1</span>          5m
+</code></pre></td></tr></table>
+</div>
+</div><p>演示就到这里，可以看到和真正的 kubernetes 使用并无两样。那么这里还有一个问题，启动的这个 pod 是如何运行的呢 ？</p>
+<p>再次进到控制面的容器内看看 :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">root@kind-control-plane:/# ps -ef 
+UID          PID    PPID  C STIME TTY          TIME CMD
+root           <span class="m">1</span>       <span class="m">0</span>  <span class="m">0</span> 02:49 ?        00:00:00 /sbin/init
+root         <span class="m">126</span>       <span class="m">1</span>  <span class="m">0</span> 02:49 ?        00:00:00 /lib/systemd/systemd-journald
+root         <span class="m">145</span>       <span class="m">1</span>  <span class="m">0</span> 02:49 ?        00:01:12 /usr/local/bin/containerd
+root         <span class="m">257</span>       <span class="m">1</span>  <span class="m">0</span> 02:49 ?        00:00:03 /usr/local/bin/containerd-shim-runc-v2 -namespace k8s.io -id c1a5e2c868b9a744f4f78a85a8d660950bb76103a38e7
+root         <span class="m">271</span>       <span class="m">1</span>  <span class="m">0</span> 02:49 ?        00:00:03 /usr/local/bin/containerd-shim-runc-v2 -namespace k8s.io -id 3549ecade28e2dccbad5ed15a4cd2b6e6a886cd3e10ab
+root         <span class="m">297</span>       <span class="m">1</span>  <span class="m">0</span> 02:49 ?        00:00:02 /usr/local/bin/containerd-shim-runc-v2 -namespace k8s.io -id 379ed27442f35696d488dd5a63cc61dc474bfa9bd08a9
+root         <span class="m">335</span>       <span class="m">1</span>  <span class="m">0</span> 02:49 ?        00:00:02 /usr/local/bin/containerd-shim-runc-v2 -namespace k8s.io -id e4eae33bf489c617c7133ada7dbd92129f3f817cb74b7
+root         <span class="m">343</span>     <span class="m">271</span>  <span class="m">0</span> 02:49 ?        00:00:00 /pause
+root         <span class="m">360</span>     <span class="m">257</span>  <span class="m">0</span> 02:49 ?        00:00:00 /pause
+root         <span class="m">365</span>     <span class="m">297</span>  <span class="m">0</span> 02:49 ?        00:00:00 /pause
+root         <span class="m">377</span>     <span class="m">335</span>  <span class="m">0</span> 02:49 ?        00:00:00 /pause
+root         <span class="m">443</span>     <span class="m">335</span>  <span class="m">0</span> 02:49 ?        00:00:43 kube-scheduler --authentication-kubeconfig<span class="o">=</span>/etc/kubernetes/scheduler.conf --authorization-kubeconfig<span class="o">=</span>/etc/
+root         <span class="m">468</span>     <span class="m">297</span>  <span class="m">3</span> 02:49 ?        00:09:25 kube-apiserver --advertise-address<span class="o">=</span>172.18.0.2 --allow-privileged<span class="o">=</span><span class="nb">true</span> --authorization-mode<span class="o">=</span>Node,RBAC --cli
+root         <span class="m">496</span>     <span class="m">271</span>  <span class="m">0</span> 02:49 ?        00:02:53 kube-controller-manager --allocate-node-cidrs<span class="o">=</span><span class="nb">true</span> --authentication-kubeconfig<span class="o">=</span>/etc/kubernetes/controller-
+root         <span class="m">540</span>     <span class="m">257</span>  <span class="m">1</span> 02:49 ?        00:03:33 etcd --advertise-client-urls<span class="o">=</span>https://172.18.0.2:2379 --cert-file<span class="o">=</span>/etc/kubernetes/pki/etcd/server.crt --cli
+root         <span class="m">580</span>       <span class="m">1</span>  <span class="m">1</span> 02:49 ?        00:05:07 /usr/bin/kubelet --bootstrap-kubeconfig<span class="o">=</span>/etc/kubernetes/bootstrap-kubelet.conf --kubeconfig<span class="o">=</span>/etc/kubernete
+root         <span class="m">673</span>       <span class="m">1</span>  <span class="m">0</span> 02:50 ?        00:00:02 /usr/local/bin/containerd-shim-runc-v2 -namespace k8s.io -id b0965a6f77f58c46cfe7b30dd84ddf4bc37516ba60e6e
+root         <span class="m">695</span>     <span class="m">673</span>  <span class="m">0</span> 02:50 ?        00:00:00 /pause
+root         <span class="m">709</span>       <span class="m">1</span>  <span class="m">0</span> 02:50 ?        00:00:03 /usr/local/bin/containerd-shim-runc-v2 -namespace k8s.io -id aedf0f1fd02baf1cf2b253ad11e33e396d97cc7c53114
+root         <span class="m">738</span>     <span class="m">709</span>  <span class="m">0</span> 02:50 ?        00:00:00 /pause
+root         <span class="m">789</span>     <span class="m">673</span>  <span class="m">0</span> 02:50 ?        00:00:01 /usr/local/bin/kube-proxy --config<span class="o">=</span>/var/lib/kube-proxy/config.conf --hostname-override<span class="o">=</span>kind-control-plane
+root         <span class="m">798</span>     <span class="m">709</span>  <span class="m">0</span> 02:50 ?        00:00:02 /bin/kindnetd
+root        <span class="m">1011</span>       <span class="m">1</span>  <span class="m">0</span> 02:50 ?        00:00:02 /usr/local/bin/containerd-shim-runc-v2 -namespace k8s.io -id aa554aa998c3091a70eacbc3e4a2f275a1e680a585d69
+root        <span class="m">1024</span>       <span class="m">1</span>  <span class="m">0</span> 02:50 ?        00:00:03 /usr/local/bin/containerd-shim-runc-v2 -namespace k8s.io -id 7373488f811fc5d638c2b3f5f79d953573e30a42ff52f
+root        <span class="m">1048</span>       <span class="m">1</span>  <span class="m">0</span> 02:50 ?        00:00:03 /usr/local/bin/containerd-shim-runc-v2 -namespace k8s.io -id 5ab6c3ef1715623e2c28fbfdecd5f4e6e2616fc20a387
+root        <span class="m">1079</span>    <span class="m">1011</span>  <span class="m">0</span> 02:50 ?        00:00:00 /pause
+root        <span class="m">1088</span>    <span class="m">1024</span>  <span class="m">0</span> 02:50 ?        00:00:00 /pause
+root        <span class="m">1095</span>    <span class="m">1048</span>  <span class="m">0</span> 02:50 ?        00:00:00 /pause
+root        <span class="m">1152</span>    <span class="m">1011</span>  <span class="m">0</span> 02:50 ?        00:00:35 /coredns -conf /etc/coredns/Corefile
+root        <span class="m">1196</span>    <span class="m">1024</span>  <span class="m">0</span> 02:50 ?        00:00:35 /coredns -conf /etc/coredns/Corefile
+root        <span class="m">1205</span>    <span class="m">1048</span>  <span class="m">0</span> 02:50 ?        00:00:13 local-path-provisioner --debug start --helper-image k8s.gcr.io/build-image/debian-base:v2.1.0 --config /et
+root        <span class="m">1961</span>       <span class="m">0</span>  <span class="m">0</span> 02:56 pts/1    00:00:00 bash
+root       <span class="m">34093</span>       <span class="m">1</span>  <span class="m">0</span> 07:27 ?        00:00:00 /usr/local/bin/containerd-shim-runc-v2 -namespace k8s.io -id 438c08255ede5fb7fa93b37bcbe51807d2fa5e507122b
+root       <span class="m">34115</span>   <span class="m">34093</span>  <span class="m">0</span> 07:27 ?        00:00:00 /pause
+<span class="m">1000</span>       <span class="m">34151</span>   <span class="m">34093</span>  <span class="m">6</span> 07:27 ?        00:01:05 /bin/java -Xms2g -Xmx2g -XX:+UseConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction<span class="o">=</span><span class="m">75</span> -XX:+UseCMSInitiatin
+root       <span class="m">36423</span>       <span class="m">0</span>  <span class="m">0</span> 07:43 pts/2    00:00:00 bash
+root       <span class="m">36540</span>   <span class="m">36423</span>  <span class="m">0</span> 07:44 pts/2    00:00:00 ps -ef
+</code></pre></td></tr></table>
+</div>
+</div><p>可以看到 STIME 是 07:27 的就是刚刚启动 logstash 相关的进程，通过 containerd-shim-runc-v2 启动的 logstash 进程，/pause 为 pod的根容器。</p>
+<h2 id="环境清理">环境清理</h2>
+<p>在本地体验完或者测试完成之后，为了节省资源，可以把刚刚启动的集群进行删除，下次需要时再创建即可 。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kind delete cluster
+Deleting cluster <span class="s2">&#34;kind&#34;</span> ...
+<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ k8s<span class="o">]</span><span class="c1"># docker ps -a</span>
+CONTAINER ID        IMAGE                                    COMMAND                  CREATED             STATUS              PORTS                                      NAMES
+4ec800c3ec10        russellgao/openresty:1.17.8.2-5-alpine   <span class="s2">&#34;/usr/local/openrest…&#34;</span>   <span class="m">8</span> weeks ago         Up <span class="m">7</span> days           0.0.0.0:80-&gt;80/tcp, 0.0.0.0:443-&gt;443/tcp   openresty-app-1
+<span class="o">[</span>root@iZuf685opgs9oyozju9i2bZ k8s<span class="o">]</span><span class="c1"># kubectl -n logging get po</span> 
+The connection to the server localhost:8080 was refused - did you specify the right host or port?
+</code></pre></td></tr></table>
+</div>
+</div><p>通过上面的命令可以看出 :</p>
+<ul>
+<li>当执行 <code>kind delete cluster</code> 命令之后会把控制面的容器(kind-control-plane) 删除</li>
+<li>当再次执行 kubectl 命令是已经无法找到对应的 api-server地址，可以查看 .kube/config 文件，发现已经删除了关于集群的配置信息。</li>
+</ul>
+<h2 id="总结">总结</h2>
+<p>本篇介绍了 kind(kubernetes in docker) 的基本用法，可以在本地快速构建起kubernetes 环境，适合新人快速入门、调试k8s 相关组件，测试operator 等。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2021-02-06</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/k8s-kind/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://russellgao.cn/k8s-kind/" data-title="在本地如何玩转kubernetes? - kind" data-hashtags="kubernetes,kind"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://russellgao.cn/k8s-kind/" data-hashtag="kubernetes"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="Share on WhatsApp" data-sharer="whatsapp" data-url="https://russellgao.cn/k8s-kind/" data-title="在本地如何玩转kubernetes? - kind" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://russellgao.cn/k8s-kind/" data-title="在本地如何玩转kubernetes? - kind"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://russellgao.cn/k8s-kind/" data-title="在本地如何玩转kubernetes? - kind"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="Share on Myspace" data-sharer="myspace" data-url="https://russellgao.cn/k8s-kind/" data-title="在本地如何玩转kubernetes? - kind" data-description="在本地如何玩转kubernetes? - kind"><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="Share on Blogger" data-sharer="blogger" data-url="https://russellgao.cn/k8s-kind/" data-title="在本地如何玩转kubernetes? - kind" data-description="在本地如何玩转kubernetes? - kind"><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="Share on Evernote" data-sharer="evernote" data-url="https://russellgao.cn/k8s-kind/" data-title="在本地如何玩转kubernetes? - kind"><i class="fab fa-evernote fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/kubernetes/">kubernetes</a>,&nbsp;<a href="/tags/kind/">kind</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/pod-create/" class="prev" rel="prev" title="kubernetes 中 pod 是如何启动的呢"><i class="fas fa-angle-left fa-fw"></i>kubernetes 中 pod 是如何启动的呢</a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/russellgao" target="_blank">高维宗(russellgao)</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href="http://beian.miit.gov.cn/" target="_blank">沪ICP备2020034038号</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><script type="text/javascript" src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.fill%2CArray.prototype.find%2CArray.from%2CIntersectionObserver%2CMath.sign%2CObject.assign%2CPromise%2CObject.entries%2CElement.prototype.closest%2CrequestAnimationFrame%2CCustomEvent%2Chtml5shiv%2CObject.values%2Cfetch%2CElement.prototype.after"></script><script type="text/javascript" src="/lib/object-fit-images/ofi.min.js"></script><script type="text/javascript" src="/lib/valine/Valine.min.js"></script><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/twemoji/twemoji.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10},"comment":{"valine":{"appId":"UPHfC2syBI9Pu5vyncYfvYX5-9Nh9j0Va","appKey":"MBiG6UopXrWQR41mzt7jtq8o","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"en","pageSize":10,"placeholder":"Your comment ...","recordIP":true,"serverURLs":"https://uphfc2sy.lc-cn-e1-shared.com","visitor":true}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"},"twemoji":true};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

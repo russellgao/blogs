@@ -7,6 +7,14 @@
             <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster>
             <atom:link href="https://russellgao.cn/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>在本地如何玩转kubernetes? - kind</title>
+    <link>https://russellgao.cn/k8s-kind/</link>
+    <pubDate>Sat, 06 Feb 2021 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/k8s-kind/</guid>
+    <description><![CDATA[导读  kubernetes 现在已经走进了大众的视野，很多同学都对此比较好奇，从其他渠道或多或少都了解了一些，但是苦于kubernetes环境，不能身临其境的感受， 毕竟如果完整搭建一套kubernetes环境是需要资源的。 今天介绍一款工具（kind），让大家可以本地也可以构建起 kubernetes 环境，愉快的在本地玩转 kubernetes。
+kind 全称 是 kubernetes in docker ，把 kubernetes 控制面的组件全部运行在一个docker 容器中，在本地通过 127.]]></description>
+</item><item>
     <title>Python 中的装饰器</title>
     <link>https://russellgao.cn/python-decorator/</link>
     <pubDate>Sat, 30 Jan 2021 10:32:00 &#43;0000</pubDate>
@@ -76,13 +84,5 @@ Kafka 是一个快速、可扩展的、高吞吐的、可容错的分布式“�
     <author>Author</author>
     <guid>https://russellgao.cn/docker-storage/</guid>
     <description><![CDATA[导读  提起 docker 大家应该耳熟能详，如使用 docker 所带来的持续集成、版本控制、可移植性、隔离性、安全性等诸多好处。docker 的使用也很方便，但是其内部原理是什么样的？都有哪些组件？之间是如何相互协作的呢？这是 docker 系列文章，每篇讲解一个知识点，可以更好的消化。 这篇谈谈 docker 的存储驱动。受限作者水平，如有不对之处，欢迎批评之处。]]></description>
-</item><item>
-    <title>OSCHINA 搬迁申明</title>
-    <link>https://russellgao.cn/oschina-blog/</link>
-    <pubDate>Mon, 30 Nov 2020 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://russellgao.cn/oschina-blog/</guid>
-    <description><![CDATA[导读  我的博客即将同步至 OSCHINA 社区，这是我的 OSCHINA ID：russellgao，邀请大家一同入驻：https://www.oschina.net/sharing-plan/apply
- ]]></description>
 </item></channel>
 </rss>
