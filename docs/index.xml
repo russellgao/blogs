@@ -7,6 +7,14 @@
             <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster>
             <atom:link href="https://russellgao.cn/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>交叉打印</title>
+    <link>https://russellgao.cn/go-goroutine-print/</link>
+    <pubDate>Thu, 18 Feb 2021 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/go-goroutine-print/</guid>
+    <description><![CDATA[交叉打印 数字和字母交叉打印，打印两个字母，接着打印一个数字，再接着打印两个字母，一直从 a 打印到 z，以字母结束。输出示例：
+1  a b 1 c d 2 .]]></description>
+</item><item>
     <title>在本地如何玩转kubernetes? - kind</title>
     <link>https://russellgao.cn/k8s-kind/</link>
     <pubDate>Sat, 06 Feb 2021 00:00:00 &#43;0000</pubDate>
@@ -77,12 +85,5 @@ Kafka 是一个快速、可扩展的、高吞吐的、可容错的分布式“�
     <guid>https://russellgao.cn/python-iter/</guid>
     <description><![CDATA[导读  这篇文章主要介绍了 python 当中的迭代器与生成器，在涉及到大数据量的场景应该考虑使用迭代器与生成器。
  可迭代对象 如果一个对象实现了 __iter__ 方法，那么我们就称它是一个可迭代对象。如果没有实现 __iter__ 而实现了 __getitem__ 方法，并且其参数是从0开始索引的，这种对象也是可迭代的，比如说序列。]]></description>
-</item><item>
-    <title>docker 原理之存储驱动</title>
-    <link>https://russellgao.cn/docker-storage/</link>
-    <pubDate>Sat, 05 Dec 2020 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://russellgao.cn/docker-storage/</guid>
-    <description><![CDATA[导读  提起 docker 大家应该耳熟能详，如使用 docker 所带来的持续集成、版本控制、可移植性、隔离性、安全性等诸多好处。docker 的使用也很方便，但是其内部原理是什么样的？都有哪些组件？之间是如何相互协作的呢？这是 docker 系列文章，每篇讲解一个知识点，可以更好的消化。 这篇谈谈 docker 的存储驱动。受限作者水平，如有不对之处，欢迎批评之处。]]></description>
 </item></channel>
 </rss>
