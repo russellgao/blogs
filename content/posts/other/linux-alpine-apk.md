@@ -8,7 +8,8 @@ draft = false
 tags = [
     "linux",
     "alpine",
-    "apk"
+    "apk" ,
+    "docker"
 ]
 +++
 
