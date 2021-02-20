@@ -22,6 +22,7 @@ tags = [
 ## 在容器内执行 docker 命令
 在 docker 容器执行 docker 命令，如启动新的容器，需要把主机的 docker sock 套接字映射到容器内 。 具体方法为: 
 ```shell script
+# 宿主机上执行
 docker run -v /usr/bin/docker:/bin/docker \
   -v /var/run/docker.sock:/var/run/docker.sock \
    xxx
@@ -30,21 +31,25 @@ docker run -v /usr/bin/docker:/bin/docker \
 ## error while loading shared libraries: libltdl.so.7
 如果执行 docker 命令报错如下:
 ```shell script
+# 容器内执行 docker 命令， 如 docker --help
 error while loading shared libraries: libltdl.so.7: cannot open shared object file: No such file or directory
 ```
 
 说明缺少对应的依赖库，安装方法为 :
 ```shell script
+# 容器内执行
 apk add --no-cache libltdl
 ```
 
 如果是 Centos 容器:
 ```shell script
+# 容器内执行
 yum install libtool-ltdl -y
 ```
 
 如果是 Ubantu 容器:
 ```shell script
+# 容器内执行
 sudo apt-get update
 sudo apt-get install libltdl-dev
 ```
@@ -53,6 +58,7 @@ sudo apt-get install libltdl-dev
 如果安装 `libltdl` 时报错如下：
 
 ```shell script
+# 容器内执行
 apk add --no-cache libltdl 
 fetch http://mirrors.ustc.edu.cn/alpine/v3.4/main/x86_64/APKINDEX.tar.gz
 fetch http://mirrors.ustc.edu.cn/alpine/v3.4/community/x86_64/APKINDEX.tar.gz
@@ -61,6 +67,7 @@ fetch http://mirrors.ustc.edu.cn/alpine/v3.4/community/x86_64/APKINDEX.tar.gz
 
 说明没有安装成功，需要继续定位错误。这时候可以执行 `apk update` 更新一下本地索引 :
 ```shell script
+# 容器内执行
 apk update
 fetch http://mirrors.ustc.edu.cn/alpine/v3.4/main/x86_64/APKINDEX.tar.gz
 ERROR: http://mirrors.ustc.edu.cn/alpine/v3.4/main: Bad file descriptor
@@ -73,12 +80,14 @@ WARNING: Ignoring APKINDEX.6a82a2a6.tar.gz: Bad file descriptor
 
 可以看到又报错了，这个错误说明文件描述符有问题 ，解决方法删除本地缓存目录并重新创建即可 :
 ```shell script
+# 容器内执行
 rm -fr /var/cache/apk
 mkdir -p mkdir /var/cache/apk
 ```
 
 这时候再执行 `apk update ` 就可以了
 ```shell script
+# 容器内执行
 apk update -v 
 fetch http://mirrors.ustc.edu.cn/alpine/v3.4/main/x86_64/APKINDEX.tar.gz
 fetch http://mirrors.ustc.edu.cn/alpine/v3.4/community/x86_64/APKINDEX.tar.gz
@@ -89,6 +98,7 @@ OK: 5984 distinct packages available
 
 再次执行 `apk add --no-cache libltdl` 如果还是报错则可以执行 `apk fix` 进行修复 :
 ```shell script
+# 容器内执行
 apk fix  
 (1/2) Reinstalling busybox (1.24.2-r14)
 Executing busybox-1.24.2-r14.post-upgrade
@@ -102,6 +112,7 @@ bash-4.3# apk fix  -v
 ```
 从上面的信息可以看出，在 `fix` 阶段 fix `glibc-bin` 失败了，那就需要手动删除再重新安装了。
 ```shell script
+# 容器内执行
 apk del  glibc-bin 
 World updated, but the following packages are not removed due to:
   glibc-bin: glibc-i18n
@@ -112,6 +123,7 @@ World updated, but the following packages are not removed due to:
 可以如果要删除 `glibc-bin ` 需要先删除 `glibc-i18n` 
 
 ```shell script
+# 容器内执行
 apk del  glibc-i18n 
 (1/2) Purging glibc-i18n (2.25-r0)
 (2/2) Purging glibc-bin (2.25-r0)
@@ -122,12 +134,14 @@ apk del  glibc-bin
 
 这时候重新 `fix` :
 ```shell script
+# 容器内执行
 apk fix  -v
 OK: 54 packages, 256 dirs, 6543 files, 151 MiB
 ```
 
 再次安装 `libltdl `
 ```shell script
+# 容器内执行
 apk add -v --no-cache libltdl 
 fetch http://mirrors.ustc.edu.cn/alpine/v3.4/main/x86_64/APKINDEX.tar.gz
 fetch http://mirrors.ustc.edu.cn/alpine/v3.4/community/x86_64/APKINDEX.tar.gz
