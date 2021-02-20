@@ -59,7 +59,7 @@ fetch http://mirrors.ustc.edu.cn/alpine/v3.4/community/x86_64/APKINDEX.tar.gz
 2 errors; 50 MiB in 38 packages
 ```
 
-说明没有安装成功，需要继续定位错误方法。这时候可以执行 `apk update` 更新一下本地索引 :
+说明没有安装成功，需要继续定位错误。这时候可以执行 `apk update` 更新一下本地索引 :
 ```shell script
 apk update
 fetch http://mirrors.ustc.edu.cn/alpine/v3.4/main/x86_64/APKINDEX.tar.gz
