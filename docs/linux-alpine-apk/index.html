@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://russellgao.cn/linux-alpine-apk/" />
 <meta property="og:image" content="https://russellgao.cn/images/profile.jpg"/>
 <meta property="article:published_time" content="2021-02-19T00:00:00+00:00" />
-<meta property="article:modified_time" content="2021-02-20T22:09:07+08:00" /><meta property="og:site_name" content="大大很二" />
+<meta property="article:modified_time" content="2021-02-20T22:17:42+08:00" /><meta property="og:site_name" content="大大很二" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://russellgao.cn/images/profile.jpg"/>
 
@@ -27,8 +27,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/russellgao.cn\/linux-alpine-apk\/"
-        },"genre": "posts","keywords": "linux, alpine, apk, docker","wordcount":  378 ,
-        "url": "https:\/\/russellgao.cn\/linux-alpine-apk\/","datePublished": "2021-02-19T00:00:00+00:00","dateModified": "2021-02-20T22:09:07+08:00","publisher": {
+        },"genre": "posts","keywords": "linux, alpine, apk, docker","wordcount":  425 ,
+        "url": "https:\/\/russellgao.cn\/linux-alpine-apk\/","datePublished": "2021-02-19T00:00:00+00:00","dateModified": "2021-02-20T22:17:42+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -118,7 +118,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Alpine 容器内安装命令时遇到坑</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-02-19">2021-02-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;378 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-02-19">2021-02-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;425 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;2 minutes&nbsp;<span id="/linux-alpine-apk/" class="leancloud_visitors" data-flag-title="Alpine 容器内安装命令时遇到坑">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;views
                     </span>&nbsp;</div>
@@ -148,9 +148,11 @@
 <pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
+</span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">docker run -v /usr/bin/docker:/bin/docker <span class="se">\
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 宿主机上执行</span>
+docker run -v /usr/bin/docker:/bin/docker <span class="se">\
 </span><span class="se"></span>  -v /var/run/docker.sock:/var/run/docker.sock <span class="se">\
 </span><span class="se"></span>   xxx
 </code></pre></td></tr></table>
@@ -160,27 +162,33 @@
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">error <span class="k">while</span> loading shared libraries: libltdl.so.7: cannot open shared object file: No such file or directory
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 容器内执行 docker 命令， 如 docker --help</span>
+error <span class="k">while</span> loading shared libraries: libltdl.so.7: cannot open shared object file: No such file or directory
 </code></pre></td></tr></table>
 </div>
 </div><p>说明缺少对应的依赖库，安装方法为 :</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">apk add --no-cache libltdl
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 容器内执行</span>
+apk add --no-cache libltdl
 </code></pre></td></tr></table>
 </div>
 </div><p>如果是 Centos 容器:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">yum install libtool-ltdl -y
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 容器内执行</span>
+yum install libtool-ltdl -y
 </code></pre></td></tr></table>
 </div>
 </div><p>如果是 Ubantu 容器:</p>
@@ -188,9 +196,11 @@
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
+</span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">sudo apt-get update
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 容器内执行</span>
+sudo apt-get update
 sudo apt-get install libltdl-dev
 </code></pre></td></tr></table>
 </div>
@@ -202,15 +212,17 @@ sudo apt-get install libltdl-dev
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
+</span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">apk add --no-cache libltdl 
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 容器内执行</span>
+apk add --no-cache libltdl 
 fetch http://mirrors.ustc.edu.cn/alpine/v3.4/main/x86_64/APKINDEX.tar.gz
 fetch http://mirrors.ustc.edu.cn/alpine/v3.4/community/x86_64/APKINDEX.tar.gz
 <span class="m">2</span> errors<span class="p">;</span> <span class="m">50</span> MiB in <span class="m">38</span> packages
 </code></pre></td></tr></table>
 </div>
-</div><p>说明没有安装成功，需要继续定位错误方法。这时候可以执行 <code>apk update</code> 更新一下本地索引 :</p>
+</div><p>说明没有安装成功，需要继续定位错误。这时候可以执行 <code>apk update</code> 更新一下本地索引 :</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -221,9 +233,11 @@ fetch http://mirrors.ustc.edu.cn/alpine/v3.4/community/x86_64/APKINDEX.tar.gz
 </span><span class="lnt">6
 </span><span class="lnt">7
 </span><span class="lnt">8
+</span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">apk update
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 容器内执行</span>
+apk update
 fetch http://mirrors.ustc.edu.cn/alpine/v3.4/main/x86_64/APKINDEX.tar.gz
 ERROR: http://mirrors.ustc.edu.cn/alpine/v3.4/main: Bad file descriptor
 WARNING: Ignoring APKINDEX.0d9a6724.tar.gz: Bad file descriptor
@@ -238,9 +252,11 @@ WARNING: Ignoring APKINDEX.6a82a2a6.tar.gz: Bad file descriptor
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
+</span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">rm -fr /var/cache/apk
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 容器内执行</span>
+rm -fr /var/cache/apk
 mkdir -p mkdir /var/cache/apk
 </code></pre></td></tr></table>
 </div>
@@ -253,9 +269,11 @@ mkdir -p mkdir /var/cache/apk
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span><span class="lnt">6
+</span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">apk update -v 
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 容器内执行</span>
+apk update -v 
 fetch http://mirrors.ustc.edu.cn/alpine/v3.4/main/x86_64/APKINDEX.tar.gz
 fetch http://mirrors.ustc.edu.cn/alpine/v3.4/community/x86_64/APKINDEX.tar.gz
 v3.4.6-316-g63ea6d0 <span class="o">[</span>http://mirrors.ustc.edu.cn/alpine/v3.4/main<span class="o">]</span>
@@ -276,9 +294,11 @@ OK: <span class="m">5984</span> distinct packages available
 </span><span class="lnt"> 8
 </span><span class="lnt"> 9
 </span><span class="lnt">10
+</span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">apk fix  
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 容器内执行</span>
+apk fix  
 <span class="o">(</span>1/2<span class="o">)</span> Reinstalling busybox <span class="o">(</span>1.24.2-r14<span class="o">)</span>
 Executing busybox-1.24.2-r14.post-upgrade
 <span class="o">(</span>2/2<span class="o">)</span> <span class="o">[</span>APK unavailable, skipped<span class="o">]</span> Reinstalling glibc-bin <span class="o">(</span>2.25-r0<span class="o">)</span>
@@ -298,9 +318,11 @@ bash-4.3# apk fix  -v
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
+</span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">apk del  glibc-bin 
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 容器内执行</span>
+apk del  glibc-bin 
 World updated, but the following packages are not removed due to:
   glibc-bin: glibc-i18n
 
@@ -316,9 +338,11 @@ World updated, but the following packages are not removed due to:
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span><span class="lnt">6
+</span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">apk del  glibc-i18n 
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 容器内执行</span>
+apk del  glibc-i18n 
 <span class="o">(</span>1/2<span class="o">)</span> Purging glibc-i18n <span class="o">(</span>2.25-r0<span class="o">)</span>
 <span class="o">(</span>2/2<span class="o">)</span> Purging glibc-bin <span class="o">(</span>2.25-r0<span class="o">)</span>
 OK: <span class="m">151</span> MiB in <span class="m">54</span> packages
@@ -331,9 +355,11 @@ apk del  glibc-bin
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
+</span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">apk fix  -v
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 容器内执行</span>
+apk fix  -v
 OK: <span class="m">54</span> packages, <span class="m">256</span> dirs, <span class="m">6543</span> files, <span class="m">151</span> MiB
 </code></pre></td></tr></table>
 </div>
@@ -344,9 +370,11 @@ OK: <span class="m">54</span> packages, <span class="m">256</span> dirs, <span c
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
+</span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">apk add -v --no-cache libltdl 
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 容器内执行</span>
+apk add -v --no-cache libltdl 
 fetch http://mirrors.ustc.edu.cn/alpine/v3.4/main/x86_64/APKINDEX.tar.gz
 fetch http://mirrors.ustc.edu.cn/alpine/v3.4/community/x86_64/APKINDEX.tar.gz
 OK: <span class="m">54</span> packages, <span class="m">256</span> dirs, <span class="m">6543</span> files, <span class="m">151</span> MiB
