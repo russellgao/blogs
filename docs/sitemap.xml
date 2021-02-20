@@ -2,12 +2,13 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://russellgao.cn/tags/alpine/</loc><lastmod>2021-02-19T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://russellgao.cn/linux-alpine-apk/</loc><lastmod>2021-02-19T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://russellgao.cn/tags/apk/</loc><lastmod>2021-02-19T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://russellgao.cn/tags/linux/</loc><lastmod>2021-02-19T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://russellgao.cn/posts/</loc><lastmod>2021-02-19T20:08:23&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://russellgao.cn/tags/</loc><lastmod>2021-02-19T20:09:33&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://russellgao.cn/tags/alpine/</loc><lastmod>2021-02-20T22:09:07&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://russellgao.cn/linux-alpine-apk/</loc><lastmod>2021-02-20T22:09:07&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://russellgao.cn/tags/apk/</loc><lastmod>2021-02-20T22:09:07&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://russellgao.cn/tags/docker/</loc><lastmod>2021-02-20T22:09:07&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://russellgao.cn/tags/linux/</loc><lastmod>2021-02-20T22:09:07&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://russellgao.cn/posts/</loc><lastmod>2021-02-20T22:09:07&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://russellgao.cn/tags/</loc><lastmod>2021-02-20T22:09:07&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://russellgao.cn/tags/go/</loc><lastmod>2021-02-19T20:09:33&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://russellgao.cn/tags/goroutine/</loc><lastmod>2021-02-19T20:09:33&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://russellgao.cn/argorithm/go-goroutine-print/</loc><lastmod>2021-02-19T20:09:33&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
@@ -33,7 +34,6 @@
             <loc>https://russellgao.cn/tags/cli/</loc><lastmod>2021-01-22T15:15:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
             <loc>https://russellgao.cn/tags/git/</loc><lastmod>2020-12-15T13:59:25&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://russellgao.cn/git-command/</loc><lastmod>2020-12-15T13:59:25&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://russellgao.cn/tags/docker/</loc><lastmod>2020-12-13T10:51:26&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://russellgao.cn/docker-local-storage/</loc><lastmod>2020-12-13T10:51:26&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://russellgao.cn/tags/%E5%AD%98%E5%82%A8/</loc><lastmod>2020-12-13T10:51:26&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://russellgao.cn/python-iter/</loc><lastmod>2021-01-31T10:50:20&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url><url>
