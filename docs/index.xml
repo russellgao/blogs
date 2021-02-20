@@ -7,6 +7,15 @@
             <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster>
             <atom:link href="https://russellgao.cn/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Alpine 容器内安装命令时遇到坑</title>
+    <link>https://russellgao.cn/linux-alpine-apk/</link>
+    <pubDate>Fri, 19 Feb 2021 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/linux-alpine-apk/</guid>
+    <description><![CDATA[导读  记录在 Alpine 容器内安装命令时遇到的一些问题，本篇文章会持续更新。
+问题背景是在docker 容器内执行 docker 命令，执行时发现缺少某些依赖包，在安装依赖包时遇到一些难以解决的问题。
+ 在容器内执行 docker 命令 在 docker 容器执行 docker 命令，如启动新的容器，需要把主机的 docker sock 套接字映射到容器内 。 具体方法为:]]></description>
+</item><item>
     <title>交叉打印</title>
     <link>https://russellgao.cn/go-goroutine-print/</link>
     <pubDate>Thu, 18 Feb 2021 00:00:00 &#43;0000</pubDate>
@@ -77,13 +86,5 @@ Kafka 是一个快速、可扩展的、高吞吐的、可容错的分布式“�
     <author>Author</author>
     <guid>https://russellgao.cn/docker-local-storage/</guid>
     <description><![CDATA[导读  在前面的文章docker 原理之存储驱动中简单的介绍了 Docker 的存储驱动，这篇文章接着讲存储，目前的 docker 版本中默认的是 overlay2 ，所以这篇文章就以 overlay2 为例带大家看看，在我们执行 docker build ，docker pull，docker run 等命令时本地存储有何变化。]]></description>
-</item><item>
-    <title>Python 中的迭代器与生成器</title>
-    <link>https://russellgao.cn/python-iter/</link>
-    <pubDate>Mon, 07 Dec 2020 18:32:00 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://russellgao.cn/python-iter/</guid>
-    <description><![CDATA[导读  这篇文章主要介绍了 python 当中的迭代器与生成器，在涉及到大数据量的场景应该考虑使用迭代器与生成器。
- 可迭代对象 如果一个对象实现了 __iter__ 方法，那么我们就称它是一个可迭代对象。如果没有实现 __iter__ 而实现了 __getitem__ 方法，并且其参数是从0开始索引的，这种对象也是可迭代的，比如说序列。]]></description>
 </item></channel>
 </rss>

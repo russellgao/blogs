@@ -4,7 +4,16 @@
         <link>https://russellgao.cn/posts/</link>
         <description>All Posts | 大大很二</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
-            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Thu, 18 Feb 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Fri, 19 Feb 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Alpine 容器内安装命令时遇到坑</title>
+    <link>https://russellgao.cn/linux-alpine-apk/</link>
+    <pubDate>Fri, 19 Feb 2021 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/linux-alpine-apk/</guid>
+    <description><![CDATA[导读  记录在 Alpine 容器内安装命令时遇到的一些问题，本篇文章会持续更新。
+问题背景是在docker 容器内执行 docker 命令，执行时发现缺少某些依赖包，在安装依赖包时遇到一些难以解决的问题。
+ 在容器内执行 docker 命令 在 docker 容器执行 docker 命令，如启动新的容器，需要把主机的 docker sock 套接字映射到容器内 。 具体方法为:]]></description>
+</item><item>
     <title>设计模式六大原则</title>
     <link>https://russellgao.cn/design-principle/</link>
     <pubDate>Tue, 19 Jan 2021 00:00:00 &#43;0000</pubDate>
@@ -74,12 +83,5 @@ Kafka 是一个快速、可扩展的、高吞吐的、可容错的分布式“�
     <description><![CDATA[导读  Harbor 是为企业用户设计的容器镜像仓库开源项目，包括了权限管理(RBAC)、LDAP、审计、安全漏洞扫描、镜像验真、管理界面、自我注册、HA 等企业必需的功能，同时针对中国用户的特点，设计镜像复制和中文支持等功能。
 在使用的过程会有 GC 的需求，可以想象下这几种场景:
  在 CI 的过程，同一个版本（SNAPSHOT/latest）编译很多次，只有最后一次产生的才有 tag ，那么之前的产生 blob 去哪了，或者还有用吗 ？ 镜像的生命周期已经结束，需要从仓库中删除，应该怎么操作？要知道在 Harbor 界面上删除只是标记删除，并不会释放存储空间。  Harbor / Docker 官方已经提供比较完善的 GC 方案，可以解决 80% 的问题，但是 GC 的过程中还可能出现一些奇怪的现象，本文主要记录在 Harbor GC 过程中踩过的坑。]]></description>
-</item><item>
-    <title>细谈 Golang 中那些设计优美的细节-GMP</title>
-    <link>https://russellgao.cn/golang-gmp/</link>
-    <pubDate>Fri, 27 Nov 2020 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://russellgao.cn/golang-gmp/</guid>
-    <description><![CDATA[导读  这是 Golang 系列第二篇，这篇主要谈谈 Golang 的调度模型-GMP，我们知道 Golang 在并发方面有绝对优势，现在就让我们来揭开 它神秘的面纱。]]></description>
 </item></channel>
 </rss>

@@ -1,0 +1,17 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>alpine - Tag - 大大很二</title>
+        <link>https://russellgao.cn/tags/alpine/</link>
+        <description>alpine - Tag - 大大很二</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Fri, 19 Feb 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/tags/alpine/" rel="self" type="application/rss+xml" /><item>
+    <title>Alpine 容器内安装命令时遇到坑</title>
+    <link>https://russellgao.cn/linux-alpine-apk/</link>
+    <pubDate>Fri, 19 Feb 2021 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/linux-alpine-apk/</guid>
+    <description><![CDATA[导读  记录在 Alpine 容器内安装命令时遇到的一些问题，本篇文章会持续更新。
+问题背景是在docker 容器内执行 docker 命令，执行时发现缺少某些依赖包，在安装依赖包时遇到一些难以解决的问题。
+ 在容器内执行 docker 命令 在 docker 容器执行 docker 命令，如启动新的容器，需要把主机的 docker sock 套接字映射到容器内 。 具体方法为:]]></description>
+</item></channel>
+</rss>
