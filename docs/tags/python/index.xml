@@ -4,7 +4,14 @@
         <link>https://russellgao.cn/tags/python/</link>
         <description>python - Tag - 大大很二</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
-            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Sat, 30 Jan 2021 10:32:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/tags/python/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Tue, 02 Mar 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/tags/python/" rel="self" type="application/rss+xml" /><item>
+    <title>如何利用python优化解析xml文件</title>
+    <link>https://russellgao.cn/python-maven-enforcer-plugins/</link>
+    <pubDate>Tue, 02 Mar 2021 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/python-maven-enforcer-plugins/</guid>
+    <description><![CDATA[导读  本篇文章意在演示如何利用 python 解析 xml 文件。这篇文章的引出背景是，在程序开发过程中，一贯坚持的做法是「约定优于配置」， 但怎么取检测有没有按照约定去做的，以 maven 为例，maven 提供了 maven-enforcer-plugin 插件，可以用这个插件定制一系列 规则。所以我们需要做的就是用 python 在 pom 文件中插入 maven-enforcer-plugin 的配置 。]]></description>
+</item><item>
     <title>Python 中的装饰器</title>
     <link>https://russellgao.cn/python-decorator/</link>
     <pubDate>Sat, 30 Jan 2021 10:32:00 &#43;0000</pubDate>
@@ -80,13 +87,6 @@
     <pubDate>Thu, 09 Jul 2020 18:32:00 &#43;0000</pubDate>
     <author>Author</author>
     <guid>https://russellgao.cn/oracle/</guid>
-    <description><![CDATA[安装库 1 2  pip3 install sqlalchemy pip3 install cx_Oracle   安装客户端 oracle 客户端下载页面: https://www.]]></description>
-</item><item>
-    <title>如何利用 python 操纵 oracle</title>
-    <link>https://russellgao.cn/python/oracle/</link>
-    <pubDate>Thu, 09 Jul 2020 18:32:00 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://russellgao.cn/python/oracle/</guid>
     <description><![CDATA[安装库 1 2  pip3 install sqlalchemy pip3 install cx_Oracle   安装客户端 oracle 客户端下载页面: https://www.]]></description>
 </item></channel>
 </rss>

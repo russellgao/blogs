@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>如何利用python优化解析xml文件 - 大大很二</title><meta name="Description" content="如何利用python优化解析xml文件"><meta property="og:title" content="如何利用python优化解析xml文件" />
+<meta property="og:description" content="如何利用python优化解析xml文件" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://russellgao.cn/python-maven-enforcer-plugins/" />
+<meta property="og:image" content="https://russellgao.cn/images/profile.jpg"/>
+<meta property="article:published_time" content="2021-03-02T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-03-03T20:40:22+08:00" /><meta property="og:site_name" content="大大很二" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://russellgao.cn/images/profile.jpg"/>
+
+<meta name="twitter:title" content="如何利用python优化解析xml文件"/>
+<meta name="twitter:description" content="如何利用python优化解析xml文件"/>
+<meta name="application-name" content="russellgao">
+<meta name="apple-mobile-web-app-title" content="russellgao"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://gitee.com/russellgao/blogs-image/raw/master/images/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://russellgao.cn/python-maven-enforcer-plugins/" /><link rel="prev" href="https://russellgao.cn/python-decorator/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "如何利用python优化解析xml文件",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/russellgao.cn\/python-maven-enforcer-plugins\/"
+        },"genre": "posts","keywords": "python, xml, pom, maven","wordcount":  674 ,
+        "url": "https:\/\/russellgao.cn\/python-maven-enforcer-plugins\/","datePublished": "2021-03-02T00:00:00+00:00","dateModified": "2021-03-03T20:40:22+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "russellgao"
+            },"description": "如何利用python优化解析xml文件"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="大大很二"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png"
+        data-srcset="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png, https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png 1.5x, https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png"
+        title="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png" />大大很二</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/"> 首页 </a><a class="menu-item" href="/golang/"> Golang </a><a class="menu-item" href="/kubernetes/"> Kubernetes </a><a class="menu-item" href="/servicemesh/"> ServiceMesh </a><a class="menu-item" href="/python/"> Python </a><a class="menu-item" href="/devops/"> Devops </a><a class="menu-item" href="/argorithm/"> 算法 </a><a class="menu-item" href="/opensrouce/"> 开源项目 </a><a class="menu-item" href="/ai/"> 人工智能 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="大大很二"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png"
+        data-srcset="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png, https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png 1.5x, https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png"
+        title="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png" />大大很二</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/" title="">首页</a><a class="menu-item" href="/golang/" title="">Golang</a><a class="menu-item" href="/kubernetes/" title="">Kubernetes</a><a class="menu-item" href="/servicemesh/" title="">ServiceMesh</a><a class="menu-item" href="/python/" title="">Python</a><a class="menu-item" href="/devops/" title="">Devops</a><a class="menu-item" href="/argorithm/" title="">算法</a><a class="menu-item" href="/opensrouce/" title="">开源项目</a><a class="menu-item" href="/ai/" title="">人工智能</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">如何利用python优化解析xml文件</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-03-02">2021-03-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;674 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;4 minutes&nbsp;<span id="/python-maven-enforcer-plugins/" class="leancloud_visitors" data-flag-title="如何利用python优化解析xml文件">
+                        <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;views
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#导读">导读</a></li>
+    <li><a href="#目标">目标</a></li>
+    <li><a href="#解析">解析</a></li>
+    <li><a href="#扩展">扩展</a>
+      <ul>
+        <li><a href="#maven-enforcer-plugin-常用规则">maven-enforcer-plugin 常用规则</a></li>
+        <li><a href="#xmletreeelementtree-的其他用法">xml.etree.ElementTree 的其他用法</a></li>
+      </ul>
+    </li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="导读">导读</h2>
+<blockquote>
+<p>本篇文章意在演示如何利用 python 解析 xml 文件。这篇文章的引出背景是，在程序开发过程中，一贯坚持的做法是「约定优于配置」，
+但怎么取检测有没有按照约定去做的，以 maven 为例，maven 提供了 <code>maven-enforcer-plugin</code> 插件，可以用这个插件定制一系列
+规则。所以我们需要做的就是用 python 在 pom 文件中插入 <code>maven-enforcer-plugin</code> 的配置 。</p>
+<p>python 环境: 3.8</p>
+</blockquote>
+<h2 id="目标">目标</h2>
+<p>拿到一个 pom.xml 文件之后，python 实现对其插入 <code>maven-enforcer-plugin</code> ，然后进行 <code>mvn validate</code> 。
+pom.xml 选取以开源项目 arthas 为例 : <a href="https://raw.githubusercontent.com/alibaba/arthas/master/pom.xml" target="_blank" rel="noopener noreffer">https://raw.githubusercontent.com/alibaba/arthas/master/pom.xml</a></p>
+<p>maven-enforcer-plugin 配置如下 :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;plugin&gt;</span>
+<span class="nt">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="nt">&lt;/groupId&gt;</span>
+<span class="nt">&lt;artifactId&gt;</span>maven-enforcer-plugin<span class="nt">&lt;/artifactId&gt;</span>
+<span class="nt">&lt;version&gt;</span>3.0.0-M3<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;executions&gt;</span>
+  <span class="nt">&lt;execution&gt;</span>
+    <span class="nt">&lt;id&gt;</span>enforce-no-snapshots<span class="nt">&lt;/id&gt;</span>
+    <span class="nt">&lt;goals&gt;</span>
+      <span class="nt">&lt;goal&gt;</span>enforce<span class="nt">&lt;/goal&gt;</span>
+    <span class="nt">&lt;/goals&gt;</span>
+    <span class="nt">&lt;configuration&gt;</span>
+      <span class="nt">&lt;rules&gt;</span>
+        <span class="nt">&lt;requireReleaseDeps&gt;</span>
+          <span class="nt">&lt;message&gt;</span>No Snapshots Allowed!<span class="nt">&lt;/message&gt;</span>
+        <span class="nt">&lt;/requireReleaseDeps&gt;</span>
+      <span class="nt">&lt;/rules&gt;</span>
+      <span class="nt">&lt;fail&gt;</span>true<span class="nt">&lt;/fail&gt;</span>
+    <span class="nt">&lt;/configuration&gt;</span>
+  <span class="nt">&lt;/execution&gt;</span>
+<span class="nt">&lt;/executions&gt;</span>
+<span class="nt">&lt;/plugin&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>需要实现的就是 <code>maven-enforcer-plugin</code> 的内容集成到 pom.xml 文件中。接下来主要介绍如何用 python 自动化的实现。</p>
+<h2 id="解析">解析</h2>
+<p>解析主要用到了 <code>xml</code> 库进行解析，详细用法可以参考 <a href="https://docs.python.org/zh-cn/3/library/xml.etree.elementtree.html" target="_blank" rel="noopener noreffer">官方文档</a></p>
+<p>加载数据:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">xml.etree.ElementTree</span> <span class="kn">as</span> <span class="nn">ET</span>
+<span class="n">tree</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s1">&#39;pom.xml&#39;</span><span class="p">)</span>
+<span class="n">root</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>或者</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">xml.etree.ElementTree</span> <span class="kn">as</span> <span class="nn">ET</span>
+<span class="n">tree</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;pom.xml&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+<span class="n">root</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>迭代子节点:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">root</span> <span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span>
+
+<span class="c1">### 输出如下: </span>
+<span class="p">{</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">maven</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">POM</span><span class="o">/</span><span class="mf">4.0</span><span class="o">.</span><span class="mi">0</span><span class="p">}</span><span class="n">modelVersion</span>
+<span class="p">{</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">maven</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">POM</span><span class="o">/</span><span class="mf">4.0</span><span class="o">.</span><span class="mi">0</span><span class="p">}</span><span class="n">parent</span>
+<span class="p">{</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">maven</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">POM</span><span class="o">/</span><span class="mf">4.0</span><span class="o">.</span><span class="mi">0</span><span class="p">}</span><span class="n">licenses</span>
+<span class="p">{</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">maven</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">POM</span><span class="o">/</span><span class="mf">4.0</span><span class="o">.</span><span class="mi">0</span><span class="p">}</span><span class="n">scm</span>
+<span class="p">{</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">maven</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">POM</span><span class="o">/</span><span class="mf">4.0</span><span class="o">.</span><span class="mi">0</span><span class="p">}</span><span class="n">developers</span>
+<span class="p">{</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">maven</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">POM</span><span class="o">/</span><span class="mf">4.0</span><span class="o">.</span><span class="mi">0</span><span class="p">}</span><span class="n">groupId</span>
+<span class="p">{</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">maven</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">POM</span><span class="o">/</span><span class="mf">4.0</span><span class="o">.</span><span class="mi">0</span><span class="p">}</span><span class="n">artifactId</span>
+<span class="p">{</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">maven</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">POM</span><span class="o">/</span><span class="mf">4.0</span><span class="o">.</span><span class="mi">0</span><span class="p">}</span><span class="n">version</span>
+<span class="p">{</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">maven</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">POM</span><span class="o">/</span><span class="mf">4.0</span><span class="o">.</span><span class="mi">0</span><span class="p">}</span><span class="n">packaging</span>
+<span class="p">{</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">maven</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">POM</span><span class="o">/</span><span class="mf">4.0</span><span class="o">.</span><span class="mi">0</span><span class="p">}</span><span class="n">name</span>
+<span class="p">{</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">maven</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">POM</span><span class="o">/</span><span class="mf">4.0</span><span class="o">.</span><span class="mi">0</span><span class="p">}</span><span class="n">description</span>
+<span class="p">{</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">maven</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">POM</span><span class="o">/</span><span class="mf">4.0</span><span class="o">.</span><span class="mi">0</span><span class="p">}</span><span class="n">url</span>
+<span class="p">{</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">maven</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">POM</span><span class="o">/</span><span class="mf">4.0</span><span class="o">.</span><span class="mi">0</span><span class="p">}</span><span class="n">modules</span>
+<span class="p">{</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">maven</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">POM</span><span class="o">/</span><span class="mf">4.0</span><span class="o">.</span><span class="mi">0</span><span class="p">}</span><span class="n">profiles</span>
+<span class="p">{</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">maven</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">POM</span><span class="o">/</span><span class="mf">4.0</span><span class="o">.</span><span class="mi">0</span><span class="p">}</span><span class="n">properties</span>
+<span class="p">{</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">maven</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">POM</span><span class="o">/</span><span class="mf">4.0</span><span class="o">.</span><span class="mi">0</span><span class="p">}</span><span class="n">dependencyManagement</span>
+<span class="p">{</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">maven</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">POM</span><span class="o">/</span><span class="mf">4.0</span><span class="o">.</span><span class="mi">0</span><span class="p">}</span><span class="n">build</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>可以到看到前面多了一段 <code>{http://maven.apache.org/POM/4.0.0}</code> ，这是什么情况？</p>
+<p>原来这个 pom 文件是带了namespace :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">&#34;http://maven.apache.org/POM/4.0.0&#34;</span> <span class="na">xmlns:xsi=</span><span class="s">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span> <span class="na">xsi:schemaLocation=</span><span class="s">&#34;http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd&#34;</span><span class="nt">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>xmlns 指定 namespace 为 : <code>http://maven.apache.org/POM/4.0.0</code> ，所以我们后续寻找子节点时需要带上 namespace 。</p>
+<p>查找子节点(子元素): ET 提供 <code>findall()</code> 和 <code>find()</code> 方法可以找出 xml 中的子元素，其中 ：</p>
+<ul>
+<li>findall 仅查找当前元素的直接子元素中带有指定标签的元素</li>
+<li>找带有特定标签的 第一个 子级，然后可以用 Element.text 访问元素的文本内容。 Element.text 访问元素的属性</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nv">build_node</span> <span class="o">=</span> root.find<span class="o">(</span><span class="s1">&#39;%sbuild&#39;</span> % pomNamespace<span class="o">)</span>
+<span class="nv">plugins_node</span> <span class="o">=</span> build_node.find<span class="o">(</span><span class="s1">&#39;{}plugins&#39;</span>.format<span class="o">(</span>pomNamespace<span class="o">))</span>
+<span class="nv">plugins_node_all</span> <span class="o">=</span> plugins_node.findall<span class="o">(</span><span class="s1">&#39;{}plugin&#39;</span>.format<span class="o">(</span>pomNamespace<span class="o">))</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>新增一个节点:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">build_plugin_node</span><span class="p">(</span><span class="n">e</span><span class="p">:</span> <span class="n">ET</span><span class="o">.</span><span class="n">Element</span><span class="p">,</span> <span class="n">namespace</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="s2">&#34;&#34;&#34;
+</span><span class="s2">    新增子元素
+</span><span class="s2">    :param e: 父节点
+</span><span class="s2">    :param namespace: namespace
+</span><span class="s2">    :return: 
+</span><span class="s2">    &#34;&#34;&#34;</span>
+    <span class="n">node</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="s1">&#39;{}plugin&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">namespace</span><span class="p">))</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s2">&#34;{}groupId&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">namespace</span><span class="p">))</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;org.apache.maven.plugins&#39;</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s2">&#34;{}artifactId&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">namespace</span><span class="p">))</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;maven-enforcer-plugin&#39;</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s2">&#34;{}version&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">namespace</span><span class="p">))</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;3.0.0-M3&#39;</span>
+    <span class="n">_n4</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s2">&#34;{}executions&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">namespace</span><span class="p">))</span>
+    <span class="n">_e</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">_n4</span><span class="p">,</span> <span class="s1">&#39;{}execution&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">namespace</span><span class="p">))</span>
+    <span class="n">_e_id</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">_e</span><span class="p">,</span> <span class="s2">&#34;{}id&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">namespace</span><span class="p">))</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;enforce-versions&#39;</span>
+    <span class="n">_e_phase</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">_e</span><span class="p">,</span> <span class="s2">&#34;{}phase&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">namespace</span><span class="p">))</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;validate&#39;</span>
+    <span class="n">_e_goals</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">_e</span><span class="p">,</span> <span class="s2">&#34;{}goals&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">namespace</span><span class="p">))</span>
+    <span class="n">_e_cfg</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">_e</span><span class="p">,</span> <span class="s2">&#34;{}configuration&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">namespace</span><span class="p">))</span>
+    <span class="n">_e_rules</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">_e_cfg</span><span class="p">,</span> <span class="s2">&#34;{}rules&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">namespace</span><span class="p">))</span>
+    <span class="n">_e_fail</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">_e_cfg</span><span class="p">,</span> <span class="s2">&#34;{}fail&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">namespace</span><span class="p">))</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;true&#39;</span>
+    <span class="n">_e_requireReleaseDeps</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">_e_rules</span><span class="p">,</span> <span class="s2">&#34;{}requireReleaseDeps&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">namespace</span><span class="p">))</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">_e_requireReleaseDeps</span><span class="p">,</span> <span class="s1">&#39;{}message&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">namespace</span><span class="p">))</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;No Snapshots Allowed!&#39;</span>
+    <span class="n">_e_excludes</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">_e_requireReleaseDeps</span><span class="p">,</span> <span class="s2">&#34;{}excludes&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">namespace</span><span class="p">))</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">_e_excludes</span><span class="p">,</span> <span class="s1">&#39;{}exclude&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">namespace</span><span class="p">))</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;${project.groupId}:*&#39;</span>
+    <span class="n">_e_goal</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">_e_goals</span><span class="p">,</span> <span class="s2">&#34;{}goal&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">namespace</span><span class="p">))</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;enforce&#39;</span>
+<span class="n">build_plugin_node</span><span class="p">(</span><span class="n">plugins_node</span><span class="p">,</span> <span class="n">pomNamespace</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>把修改后写到 新的文件 :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">tree</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;pom-new.xml&#39;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>写到文件大家会惊奇的发现好像不太对哎:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;ns0:plugin&gt;</span>
+    <span class="nt">&lt;ns0:groupId&gt;</span>org.apache.maven.plugins<span class="nt">&lt;/ns0:groupId&gt;</span>
+    <span class="nt">&lt;ns0:artifactId&gt;</span>maven-enforcer-plugin<span class="nt">&lt;/ns0:artifactId&gt;</span>
+    <span class="nt">&lt;ns0:version&gt;</span>3.0.0-M3<span class="nt">&lt;/ns0:version&gt;</span>
+    <span class="nt">&lt;ns0:executions&gt;</span>
+        <span class="nt">&lt;ns0:execution&gt;</span>
+            <span class="nt">&lt;ns0:id&gt;</span>enforce-versions<span class="nt">&lt;/ns0:id&gt;</span>
+            <span class="nt">&lt;ns0:phase&gt;</span>validate<span class="nt">&lt;/ns0:phase&gt;</span>
+            <span class="nt">&lt;ns0:goals&gt;</span>
+                <span class="nt">&lt;ns0:goal&gt;</span>enforce<span class="nt">&lt;/ns0:goal&gt;</span>
+            <span class="nt">&lt;/ns0:goals&gt;</span>
+            <span class="nt">&lt;ns0:configuration&gt;</span>
+                <span class="nt">&lt;ns0:rules&gt;</span>
+                    <span class="nt">&lt;ns0:requireReleaseDeps&gt;</span>
+                        <span class="nt">&lt;ns0:message&gt;</span>No Snapshots Allowed!<span class="nt">&lt;/ns0:message&gt;</span>
+                        <span class="nt">&lt;ns0:excludes&gt;</span>
+                            <span class="nt">&lt;ns0:exclude&gt;</span>${project.groupId}:*<span class="nt">&lt;/ns0:exclude&gt;</span>
+                        <span class="nt">&lt;/ns0:excludes&gt;</span>
+                    <span class="nt">&lt;/ns0:requireReleaseDeps&gt;</span>
+                <span class="nt">&lt;/ns0:rules&gt;</span>
+                <span class="nt">&lt;ns0:fail&gt;</span>true<span class="nt">&lt;/ns0:fail&gt;</span>
+            <span class="nt">&lt;/ns0:configuration&gt;</span>
+        <span class="nt">&lt;/ns0:execution&gt;</span>
+    <span class="nt">&lt;/ns0:executions&gt;</span>
+<span class="nt">&lt;/ns0:plugin&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>为啥会多 <code>ns0</code> ? 还是因为 namespace 的原因，需要注册一下namespace :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">ns_name</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+<span class="n">ns_value</span> <span class="o">=</span> <span class="s2">&#34;http://maven.apache.org/POM/4.0.0&#34;</span>
+<span class="n">ET</span><span class="o">.</span><span class="n">register_namespace</span><span class="p">(</span><span class="n">ns_name</span><span class="p">,</span> <span class="n">ns_value</span><span class="p">)</span>
+<span class="n">tree</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;pom-new.xml&#39;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这时才会得到满意的结果。</p>
+<p>整体的脚本如下 :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># !/usr/bin/env python</span>
+
+<span class="kn">import</span> <span class="nn">xml.etree.ElementTree</span> <span class="kn">as</span> <span class="nn">ET</span>
+
+<span class="k">def</span> <span class="nf">build_plugin_node</span><span class="p">(</span><span class="n">e</span><span class="p">:</span> <span class="n">ET</span><span class="o">.</span><span class="n">Element</span><span class="p">,</span> <span class="n">namespace</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="s2">&#34;&#34;&#34;
+</span><span class="s2">    新增子元素
+</span><span class="s2">    :param e: 父节点
+</span><span class="s2">    :param namespace: namespace
+</span><span class="s2">    :return:
+</span><span class="s2">    &#34;&#34;&#34;</span>
+    <span class="n">node</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="s1">&#39;{}plugin&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">namespace</span><span class="p">))</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s2">&#34;{}groupId&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">namespace</span><span class="p">))</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;org.apache.maven.plugins&#39;</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s2">&#34;{}artifactId&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">namespace</span><span class="p">))</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;maven-enforcer-plugin&#39;</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s2">&#34;{}version&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">namespace</span><span class="p">))</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;3.0.0-M3&#39;</span>
+    <span class="n">_n4</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s2">&#34;{}executions&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">namespace</span><span class="p">))</span>
+    <span class="n">_e</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">_n4</span><span class="p">,</span> <span class="s1">&#39;{}execution&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">namespace</span><span class="p">))</span>
+    <span class="n">_e_id</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">_e</span><span class="p">,</span> <span class="s2">&#34;{}id&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">namespace</span><span class="p">))</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;enforce-versions&#39;</span>
+    <span class="n">_e_phase</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">_e</span><span class="p">,</span> <span class="s2">&#34;{}phase&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">namespace</span><span class="p">))</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;validate&#39;</span>
+    <span class="n">_e_goals</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">_e</span><span class="p">,</span> <span class="s2">&#34;{}goals&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">namespace</span><span class="p">))</span>
+    <span class="n">_e_cfg</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">_e</span><span class="p">,</span> <span class="s2">&#34;{}configuration&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">namespace</span><span class="p">))</span>
+    <span class="n">_e_rules</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">_e_cfg</span><span class="p">,</span> <span class="s2">&#34;{}rules&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">namespace</span><span class="p">))</span>
+    <span class="n">_e_fail</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">_e_cfg</span><span class="p">,</span> <span class="s2">&#34;{}fail&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">namespace</span><span class="p">))</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;true&#39;</span>
+    <span class="n">_e_requireReleaseDeps</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">_e_rules</span><span class="p">,</span> <span class="s2">&#34;{}requireReleaseDeps&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">namespace</span><span class="p">))</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">_e_requireReleaseDeps</span><span class="p">,</span> <span class="s1">&#39;{}message&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">namespace</span><span class="p">))</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;No Snapshots Allowed!&#39;</span>
+    <span class="n">_e_excludes</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">_e_requireReleaseDeps</span><span class="p">,</span> <span class="s2">&#34;{}excludes&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">namespace</span><span class="p">))</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">_e_excludes</span><span class="p">,</span> <span class="s1">&#39;{}exclude&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">namespace</span><span class="p">))</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;${project.groupId}:*&#39;</span>
+    <span class="n">_e_goal</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">_e_goals</span><span class="p">,</span> <span class="s2">&#34;{}goal&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">namespace</span><span class="p">))</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;enforce&#39;</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="p">:</span>
+    <span class="n">pomNamespace</span> <span class="o">=</span> <span class="s1">&#39;{http://maven.apache.org/POM/4.0.0}&#39;</span>
+    <span class="n">ns_name</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+    <span class="n">ns_value</span> <span class="o">=</span> <span class="s2">&#34;http://maven.apache.org/POM/4.0.0&#34;</span>
+    <span class="n">ET</span><span class="o">.</span><span class="n">register_namespace</span><span class="p">(</span><span class="n">ns_name</span><span class="p">,</span> <span class="n">ns_value</span><span class="p">)</span>
+    <span class="n">tree</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s1">&#39;pom.xml&#39;</span><span class="p">)</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span>
+    <span class="n">build_node</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">build&#39;</span> <span class="o">%</span> <span class="n">pomNamespace</span><span class="p">)</span>
+    <span class="n">plugins_node</span> <span class="o">=</span> <span class="n">build_node</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;{}plugins&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pomNamespace</span><span class="p">))</span>
+    <span class="n">build_plugin_node</span><span class="p">(</span><span class="n">plugins_node</span><span class="p">,</span> <span class="n">pomNamespace</span><span class="p">)</span>
+    <span class="n">tree</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;pom-new.xml&#39;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span> <span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>得到了新的文件 <code>pom-new.xml</code> 之后就可以愉快的调用 maven 命令进行检查了 ,如 :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">mvn validate -f pom-new.xml
+</code></pre></td></tr></table>
+</div>
+</div><p>这个流程常用于 <code>CI</code> 过程中，可以帮助检查开发人员有没有遵守相关代码规范。</p>
+<h2 id="扩展">扩展</h2>
+<h3 id="maven-enforcer-plugin-常用规则">maven-enforcer-plugin 常用规则</h3>
+<p>官方提供的常用规则参考： <a href="http://maven.apache.org/enforcer/enforcer-rules/index.html" target="_blank" rel="noopener noreffer">http://maven.apache.org/enforcer/enforcer-rules/index.html</a></p>
+<ul>
+<li>是否在 relase 版本中依赖了 SNAPSHOT 版本</li>
+<li>java version</li>
+<li>maven version</li>
+<li>检查环境变量</li>
+<li>&hellip;.</li>
+</ul>
+<h3 id="xmletreeelementtree-的其他用法">xml.etree.ElementTree 的其他用法</h3>
+<p>修改元素文本字段</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">plugins_node</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;plugins-test&#39;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>给元素增加属性:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">plugins_node</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;k1&#39;</span><span class="p">,</span> <span class="s1">&#39;v1&#39;</span><span class="p">)</span>
+<span class="n">plugins_node</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;k2&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">plugins_node</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;k3&#39;</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>删除元素 :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">modelVersion</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;{}modelVersion&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pomNamespace</span><span class="p">))</span>
+<span class="n">root</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">modelVersion</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://docs.python.org/zh-cn/3/library/xml.etree.elementtree.html">https://docs.python.org/zh-cn/3/library/xml.etree.elementtree.html</a></li>
+<li><a href="http://maven.apache.org/enforcer/enforcer-rules/index.html">http://maven.apache.org/enforcer/enforcer-rules/index.html</a></li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2021-03-03</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/python-maven-enforcer-plugins/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://russellgao.cn/python-maven-enforcer-plugins/" data-title="如何利用python优化解析xml文件" data-hashtags="python,xml,pom,maven"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://russellgao.cn/python-maven-enforcer-plugins/" data-hashtag="python"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="Share on WhatsApp" data-sharer="whatsapp" data-url="https://russellgao.cn/python-maven-enforcer-plugins/" data-title="如何利用python优化解析xml文件" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://russellgao.cn/python-maven-enforcer-plugins/" data-title="如何利用python优化解析xml文件"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://russellgao.cn/python-maven-enforcer-plugins/" data-title="如何利用python优化解析xml文件"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="Share on Myspace" data-sharer="myspace" data-url="https://russellgao.cn/python-maven-enforcer-plugins/" data-title="如何利用python优化解析xml文件" data-description="如何利用python优化解析xml文件"><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="Share on Blogger" data-sharer="blogger" data-url="https://russellgao.cn/python-maven-enforcer-plugins/" data-title="如何利用python优化解析xml文件" data-description="如何利用python优化解析xml文件"><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="Share on Evernote" data-sharer="evernote" data-url="https://russellgao.cn/python-maven-enforcer-plugins/" data-title="如何利用python优化解析xml文件"><i class="fab fa-evernote fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/python/">python</a>,&nbsp;<a href="/tags/xml/">xml</a>,&nbsp;<a href="/tags/pom/">pom</a>,&nbsp;<a href="/tags/maven/">maven</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/python-decorator/" class="prev" rel="prev" title="Python 中的装饰器"><i class="fas fa-angle-left fa-fw"></i>Python 中的装饰器</a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/russellgao" target="_blank">高维宗(russellgao)</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href="http://beian.miit.gov.cn/" target="_blank">沪ICP备2020034038号</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><script type="text/javascript" src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.fill%2CArray.prototype.find%2CArray.from%2CIntersectionObserver%2CMath.sign%2CObject.assign%2CPromise%2CObject.entries%2CElement.prototype.closest%2CrequestAnimationFrame%2CCustomEvent%2Chtml5shiv%2CObject.values%2Cfetch%2CElement.prototype.after"></script><script type="text/javascript" src="/lib/object-fit-images/ofi.min.js"></script><script type="text/javascript" src="/lib/valine/Valine.min.js"></script><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/twemoji/twemoji.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10},"comment":{"valine":{"appId":"UPHfC2syBI9Pu5vyncYfvYX5-9Nh9j0Va","appKey":"MBiG6UopXrWQR41mzt7jtq8o","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"en","pageSize":10,"placeholder":"Your comment ...","recordIP":true,"serverURLs":"https://uphfc2sy.lc-cn-e1-shared.com","visitor":true}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"},"twemoji":true};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

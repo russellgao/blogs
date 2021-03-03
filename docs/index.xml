@@ -7,6 +7,13 @@
             <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster>
             <atom:link href="https://russellgao.cn/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>如何利用python优化解析xml文件</title>
+    <link>https://russellgao.cn/python-maven-enforcer-plugins/</link>
+    <pubDate>Tue, 02 Mar 2021 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/python-maven-enforcer-plugins/</guid>
+    <description><![CDATA[导读  本篇文章意在演示如何利用 python 解析 xml 文件。这篇文章的引出背景是，在程序开发过程中，一贯坚持的做法是「约定优于配置」， 但怎么取检测有没有按照约定去做的，以 maven 为例，maven 提供了 maven-enforcer-plugin 插件，可以用这个插件定制一系列 规则。所以我们需要做的就是用 python 在 pom 文件中插入 maven-enforcer-plugin 的配置 。]]></description>
+</item><item>
     <title>Alpine 容器内安装命令时遇到坑</title>
     <link>https://russellgao.cn/linux-alpine-apk/</link>
     <pubDate>Fri, 19 Feb 2021 00:00:00 &#43;0000</pubDate>
@@ -79,12 +86,5 @@ Kafka 是一个快速、可扩展的、高吞吐的、可容错的分布式“�
     <guid>https://russellgao.cn/git-command/</guid>
     <description><![CDATA[导读  这篇文章主要记录了 git 的一些常用命令，后续会持续补充更新。
  常用命令 检出代码 1  git clone url -b git_branch   查看分支 1  git branch -a   创建分支 1  git branch xxx   删除本地分支 1  git branch -d xxxxx   检出分支 1  git checkout git_branch   拉取代码 1  git pull   把修改文件提交到缓冲区 1  git add &lt;filename&gt;   本地提交 1  git commit -m &#34;代码提交信息&#34;   推送代码 1 2  git push origin local_branch:remote_branch 例 : git push origin release/release:release/release   合并代码 1  git merge origin/remote   cherry pick 1  git cherry-pick commit_id   跟踪 1 2  git branch --set-upstream-to=remote_branch local_branch 例 git branch --set-upstream-to=origin/release/release release/release   丢弃本地修改 1 2  git checkout -- file 例 git checkout -- test.]]></description>
-</item><item>
-    <title>docker 原理之本地存储</title>
-    <link>https://russellgao.cn/docker-local-storage/</link>
-    <pubDate>Wed, 09 Dec 2020 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://russellgao.cn/docker-local-storage/</guid>
-    <description><![CDATA[导读  在前面的文章docker 原理之存储驱动中简单的介绍了 Docker 的存储驱动，这篇文章接着讲存储，目前的 docker 版本中默认的是 overlay2 ，所以这篇文章就以 overlay2 为例带大家看看，在我们执行 docker build ，docker pull，docker run 等命令时本地存储有何变化。]]></description>
 </item></channel>
 </rss>
