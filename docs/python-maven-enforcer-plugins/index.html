@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://russellgao.cn/python-maven-enforcer-plugins/" />
 <meta property="og:image" content="https://russellgao.cn/images/profile.jpg"/>
 <meta property="article:published_time" content="2021-03-02T00:00:00+00:00" />
-<meta property="article:modified_time" content="2021-03-03T20:40:22+08:00" /><meta property="og:site_name" content="大大很二" />
+<meta property="article:modified_time" content="2021-03-03T20:44:54+08:00" /><meta property="og:site_name" content="大大很二" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://russellgao.cn/images/profile.jpg"/>
 
@@ -27,8 +27,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/russellgao.cn\/python-maven-enforcer-plugins\/"
-        },"genre": "posts","keywords": "python, xml, pom, maven","wordcount":  674 ,
-        "url": "https:\/\/russellgao.cn\/python-maven-enforcer-plugins\/","datePublished": "2021-03-02T00:00:00+00:00","dateModified": "2021-03-03T20:40:22+08:00","publisher": {
+        },"genre": "posts","keywords": "python, xml, pom, maven","wordcount":  677 ,
+        "url": "https:\/\/russellgao.cn\/python-maven-enforcer-plugins\/","datePublished": "2021-03-02T00:00:00+00:00","dateModified": "2021-03-03T20:44:54+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -118,7 +118,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">如何利用python优化解析xml文件</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-03-02">2021-03-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;674 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-03-02">2021-03-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;677 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;4 minutes&nbsp;<span id="/python-maven-enforcer-plugins/" class="leancloud_visitors" data-flag-title="如何利用python优化解析xml文件">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;views
                     </span>&nbsp;</div>
@@ -147,6 +147,7 @@
 但怎么取检测有没有按照约定去做的，以 maven 为例，maven 提供了 <code>maven-enforcer-plugin</code> 插件，可以用这个插件定制一系列
 规则。所以我们需要做的就是用 python 在 pom 文件中插入 <code>maven-enforcer-plugin</code> 的配置 。</p>
 <p>python 环境: 3.8</p>
+<p>本文首发于 <a href="https://russellgao.cn/python-maven-enforcer-plugins/" target="_blank" rel="noopener noreffer">https://russellgao.cn/python-maven-enforcer-plugins/</a> ,转载请注明原文出处。</p>
 </blockquote>
 <h2 id="目标">目标</h2>
 <p>拿到一个 pom.xml 文件之后，python 实现对其插入 <code>maven-enforcer-plugin</code> ，然后进行 <code>mvn validate</code> 。
