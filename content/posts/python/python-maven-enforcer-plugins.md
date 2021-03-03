@@ -19,6 +19,8 @@ tags = [
 >规则。所以我们需要做的就是用 python 在 pom 文件中插入 `maven-enforcer-plugin` 的配置 。
 >
 > python 环境: 3.8
+> 
+> 本文首发于 [https://russellgao.cn/python-maven-enforcer-plugins/](https://russellgao.cn/python-maven-enforcer-plugins/) ,转载请注明原文出处。
 
 ## 目标
 拿到一个 pom.xml 文件之后，python 实现对其插入 `maven-enforcer-plugin` ，然后进行 `mvn validate` 。
