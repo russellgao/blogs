@@ -4,7 +4,15 @@
         <link>https://russellgao.cn/posts/</link>
         <description>All Posts | 大大很二</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
-            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Tue, 02 Mar 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Sun, 11 Apr 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Apollo(阿波罗)docker部署记录</title>
+    <link>https://russellgao.cn/apollo-deploy-docker/</link>
+    <pubDate>Sun, 11 Apr 2021 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/apollo-deploy-docker/</guid>
+    <description><![CDATA[导读  本文记录根据 Apollo 官方文档部署 Apollo 的过程，值得参考的地方是其中踩的坑。
+假设你对 Apollo 有一定的了解，所以对 Apollo 本身不会做太多的介绍，文档可参考 : https://ctripcorp.]]></description>
+</item><item>
     <title>Alpine 容器内安装命令时遇到坑</title>
     <link>https://russellgao.cn/linux-alpine-apk/</link>
     <pubDate>Fri, 19 Feb 2021 00:00:00 &#43;0000</pubDate>
@@ -74,14 +82,5 @@ Kafka 是一个快速、可扩展的、高吞吐的、可容错的分布式“�
     <guid>https://russellgao.cn/oschina-blog/</guid>
     <description><![CDATA[导读  我的博客即将同步至 OSCHINA 社区，这是我的 OSCHINA ID：russellgao，邀请大家一同入驻：https://www.oschina.net/sharing-plan/apply
  ]]></description>
-</item><item>
-    <title>harbor gc 时遇到的坑</title>
-    <link>https://russellgao.cn/harbor-gc/</link>
-    <pubDate>Sun, 29 Nov 2020 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://russellgao.cn/harbor-gc/</guid>
-    <description><![CDATA[导读  Harbor 是为企业用户设计的容器镜像仓库开源项目，包括了权限管理(RBAC)、LDAP、审计、安全漏洞扫描、镜像验真、管理界面、自我注册、HA 等企业必需的功能，同时针对中国用户的特点，设计镜像复制和中文支持等功能。
-在使用的过程会有 GC 的需求，可以想象下这几种场景:
- 在 CI 的过程，同一个版本（SNAPSHOT/latest）编译很多次，只有最后一次产生的才有 tag ，那么之前的产生 blob 去哪了，或者还有用吗 ？ 镜像的生命周期已经结束，需要从仓库中删除，应该怎么操作？要知道在 Harbor 界面上删除只是标记删除，并不会释放存储空间。  Harbor / Docker 官方已经提供比较完善的 GC 方案，可以解决 80% 的问题，但是 GC 的过程中还可能出现一些奇怪的现象，本文主要记录在 Harbor GC 过程中踩过的坑。]]></description>
 </item></channel>
 </rss>
