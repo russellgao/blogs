@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://russellgao.cn/kubectl-command/" />
 <meta property="og:image" content="https://russellgao.cn/images/profile.jpg"/>
 <meta property="article:published_time" content="2020-11-20T00:00:00+00:00" />
-<meta property="article:modified_time" content="2021-01-22T15:15:14+08:00" /><meta property="og:site_name" content="大大很二" />
+<meta property="article:modified_time" content="2021-04-14T15:22:09+08:00" /><meta property="og:site_name" content="大大很二" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://russellgao.cn/images/profile.jpg"/>
 
@@ -27,8 +27,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/russellgao.cn\/kubectl-command\/"
-        },"genre": "posts","keywords": "kubernetes, kubectl, cli","wordcount":  1352 ,
-        "url": "https:\/\/russellgao.cn\/kubectl-command\/","datePublished": "2020-11-20T00:00:00+00:00","dateModified": "2021-01-22T15:15:14+08:00","publisher": {
+        },"genre": "posts","keywords": "kubernetes, kubectl, cli","wordcount":  1686 ,
+        "url": "https:\/\/russellgao.cn\/kubectl-command\/","datePublished": "2020-11-20T00:00:00+00:00","dateModified": "2021-04-14T15:22:09+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -118,8 +118,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">kubectl 常用命令</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-20">2020-11-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1352 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;7 minutes&nbsp;<span id="/kubectl-command/" class="leancloud_visitors" data-flag-title="kubectl 常用命令">
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-20">2020-11-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1686 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;8 minutes&nbsp;<span id="/kubectl-command/" class="leancloud_visitors" data-flag-title="kubectl 常用命令">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;views
                     </span>&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="true">
@@ -167,6 +167,7 @@
         <li><a href="#滚动更新">滚动更新</a></li>
       </ul>
     </li>
+    <li><a href="#查看文档">查看文档</a></li>
     <li><a href="#总结">总结</a></li>
     <li><a href="#参考">参考</a></li>
   </ul>
@@ -753,6 +754,147 @@ kubectl -n monitor patch deployment prometheus -p <span class="se">\
 </span><span class="se"></span>  <span class="s2">&#34;{\&#34;spec\&#34;:{\&#34;template\&#34;:{\&#34;metadata\&#34;:{\&#34;annotations\&#34;:{\&#34;test_date\&#34;:\&#34;`date +&#39;%s&#39;`\&#34;}}}}}&#34;</span>
 </code></pre></td></tr></table>
 </div>
+</div><h2 id="查看文档">查看文档</h2>
+<p>当对 k8s 中的资源不熟悉可以通过 <code>explain</code> 命令进行查看，比如对 查看 <code>pod</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kubectl explain pod
+KIND:     Pod
+VERSION:  v1
+
+DESCRIPTION:
+     Pod is a collection of containers that can run on a host. This resource is
+     created by clients and scheduled onto hosts.
+
+FIELDS:
+   apiVersion	&lt;string&gt;
+     APIVersion defines the versioned schema of this representation of an
+     object. Servers should convert recognized schemas to the latest internal
+     value, and may reject unrecognized values. More info:
+     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+
+   kind	&lt;string&gt;
+     Kind is a string value representing the REST resource this object
+     represents. Servers may infer this from the endpoint the client submits
+     requests to. Cannot be updated. In CamelCase. More info:
+     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+
+   metadata	&lt;Object&gt;
+     Standard object<span class="err">&#39;</span>s metadata. More info:
+     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+
+   spec	&lt;Object&gt;
+     Specification of the desired behavior of the pod. More info:
+     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+
+   status	&lt;Object&gt;
+     Most recently observed status of the pod. This data may not be up to date.
+     Populated by the system. Read-only. More info:
+     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+</code></pre></td></tr></table>
+</div>
+</div><p>查看 pod.spec</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">kubectl explain pod.spec
+KIND:     Pod
+VERSION:  v1
+
+RESOURCE: spec &lt;Object&gt;
+
+DESCRIPTION:
+     Specification of the desired behavior of the pod. More info:
+     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+
+     PodSpec is a description of a pod.
+
+FIELDS:
+   activeDeadlineSeconds	&lt;integer&gt;
+     Optional duration in seconds the pod may be active on the node relative to
+     StartTime before the system will actively try to mark it failed and <span class="nb">kill</span>
+     associated containers. Value must be a positive integer.
+
+   affinity	&lt;Object&gt;
+     If specified, the pod<span class="err">&#39;</span>s scheduling constraints
+
+   automountServiceAccountToken	&lt;boolean&gt;
+     AutomountServiceAccountToken indicates whether a service account token
+     should be automatically mounted.
+
+   containers	&lt;<span class="o">[]</span>Object&gt; -required-
+     List of containers belonging to the pod. Containers cannot currently be
+     added or removed. There must be at least one container in a Pod. Cannot be
+     updated.
+...
+</code></pre></td></tr></table>
+</div>
 </div><h2 id="总结">总结</h2>
 <p>这篇文章介绍了 kubectl 的基本用法，常见场景中的一些操作，如果有其他场景可以通过 <code>kubectl --help</code> 和 <code>kubectl command --help</code> 查看帮助文档。
 如有不正确之处欢迎指正。</p>
@@ -765,7 +907,7 @@ kubectl -n monitor patch deployment prometheus -p <span class="se">\
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2021-01-22</span>
+                <span>Updated on 2021-04-14</span>
             </div>
             <div class="post-info-license"></div>
         </div>

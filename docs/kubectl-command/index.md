@@ -341,6 +341,80 @@ kubectl -n monitor patch deployment prometheus -p \
   "{\"spec\":{\"template\":{\"metadata\":{\"annotations\":{\"test_date\":\"`date +'%s'`\"}}}}}"
 ```
 
+## 查看文档
+当对 k8s 中的资源不熟悉可以通过 `explain` 命令进行查看，比如对 查看 `pod` 
+```shell script
+kubectl explain pod
+KIND:     Pod
+VERSION:  v1
+
+DESCRIPTION:
+     Pod is a collection of containers that can run on a host. This resource is
+     created by clients and scheduled onto hosts.
+
+FIELDS:
+   apiVersion	<string>
+     APIVersion defines the versioned schema of this representation of an
+     object. Servers should convert recognized schemas to the latest internal
+     value, and may reject unrecognized values. More info:
+     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+
+   kind	<string>
+     Kind is a string value representing the REST resource this object
+     represents. Servers may infer this from the endpoint the client submits
+     requests to. Cannot be updated. In CamelCase. More info:
+     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+
+   metadata	<Object>
+     Standard object's metadata. More info:
+     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+
+   spec	<Object>
+     Specification of the desired behavior of the pod. More info:
+     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+
+   status	<Object>
+     Most recently observed status of the pod. This data may not be up to date.
+     Populated by the system. Read-only. More info:
+     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+```
+
+查看 pod.spec
+ 
+```shell script
+kubectl explain pod.spec
+KIND:     Pod
+VERSION:  v1
+
+RESOURCE: spec <Object>
+
+DESCRIPTION:
+     Specification of the desired behavior of the pod. More info:
+     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+
+     PodSpec is a description of a pod.
+
+FIELDS:
+   activeDeadlineSeconds	<integer>
+     Optional duration in seconds the pod may be active on the node relative to
+     StartTime before the system will actively try to mark it failed and kill
+     associated containers. Value must be a positive integer.
+
+   affinity	<Object>
+     If specified, the pod's scheduling constraints
+
+   automountServiceAccountToken	<boolean>
+     AutomountServiceAccountToken indicates whether a service account token
+     should be automatically mounted.
+
+   containers	<[]Object> -required-
+     List of containers belonging to the pod. Containers cannot currently be
+     added or removed. There must be at least one container in a Pod. Cannot be
+     updated.
+...
+```
+
+
 ## 总结
 这篇文章介绍了 kubectl 的基本用法，常见场景中的一些操作，如果有其他场景可以通过 `kubectl --help` 和 `kubectl command --help` 查看帮助文档。
 如有不正确之处欢迎指正。
