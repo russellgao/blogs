@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>yum - Tag - 大大很二</title>
+        <link>https://russellgao.cn/tags/yum/</link>
+        <description>yum - Tag - 大大很二</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Wed, 14 Apr 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/tags/yum/" rel="self" type="application/rss+xml" /><item>
+    <title>yum 踩坑记录</title>
+    <link>https://russellgao.cn/yum-error/</link>
+    <pubDate>Wed, 14 Apr 2021 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/yum-error/</guid>
+    <description><![CDATA[导读  yum 在使用过程中会遇到一些奇奇怪怪的问题，这里主要记录遇到的问题已经如何修复。这篇文档会持续更新。
+ 踩坑1 在执行 yum 命令时报如下错误，不管执行任何命令都一样，如 yum list , yum search ,yum install]]></description>
+</item></channel>
+</rss>

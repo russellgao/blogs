@@ -7,6 +7,14 @@
             <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster>
             <atom:link href="https://russellgao.cn/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>yum 踩坑记录</title>
+    <link>https://russellgao.cn/yum-error/</link>
+    <pubDate>Wed, 14 Apr 2021 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/yum-error/</guid>
+    <description><![CDATA[导读  yum 在使用过程中会遇到一些奇奇怪怪的问题，这里主要记录遇到的问题已经如何修复。这篇文档会持续更新。
+ 踩坑1 在执行 yum 命令时报如下错误，不管执行任何命令都一样，如 yum list , yum search ,yum install]]></description>
+</item><item>
     <title>Apollo(阿波罗)docker部署记录</title>
     <link>https://russellgao.cn/apollo-deploy-docker/</link>
     <pubDate>Sun, 11 Apr 2021 00:00:00 &#43;0000</pubDate>
@@ -79,12 +87,5 @@ Kafka 是一个快速、可扩展的、高吞吐的、可容错的分布式“�
     <guid>https://russellgao.cn/mq-rabbitmq/</guid>
     <description><![CDATA[导读  谈起消息队列，我们的脑海可能会不由自主的冒出这么几个关键词，解耦、异步化、消峰、广播等，消息队列的种类也很多，如 rabbitmq、rocketmq、activemq、kafka等还有各个云厂商提供的消息队列。 它们都有各种的特点和使用场景，所以这个系列的文章主要谈各个消息的原理，目前规划了两篇文章，rabbitmq 和 kafka ，其他的暂时还没有用到，还没有深究。
 这篇主要介绍 rabbitmq 的原理和基于 golang 如何使用。]]></description>
-</item><item>
-    <title>深入浅出的聊聊 cpu 负载与使用率</title>
-    <link>https://russellgao.cn/cpu/</link>
-    <pubDate>Tue, 15 Dec 2020 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://russellgao.cn/cpu/</guid>
-    <description><![CDATA[导读  在定位性能问题时，一个绕不开的话题就是 CPU ，会觉得 CPU 不够用了，或者是瓶颈了，那么怎么来确定是 CPU 的问题呢？衡量 CPU 的指标有两个，CPU 负载(load average) 和 使用率，这两者有什么关系和区别呢？ 这篇文章带大家深层次的了解一下 CPU 。]]></description>
 </item></channel>
 </rss>

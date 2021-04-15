@@ -4,7 +4,15 @@
         <link>https://russellgao.cn/posts/</link>
         <description>All Posts | 大大很二</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
-            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Sun, 11 Apr 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Wed, 14 Apr 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>yum 踩坑记录</title>
+    <link>https://russellgao.cn/yum-error/</link>
+    <pubDate>Wed, 14 Apr 2021 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/yum-error/</guid>
+    <description><![CDATA[导读  yum 在使用过程中会遇到一些奇奇怪怪的问题，这里主要记录遇到的问题已经如何修复。这篇文档会持续更新。
+ 踩坑1 在执行 yum 命令时报如下错误，不管执行任何命令都一样，如 yum list , yum search ,yum install]]></description>
+</item><item>
     <title>Apollo(阿波罗)docker部署记录</title>
     <link>https://russellgao.cn/apollo-deploy-docker/</link>
     <pubDate>Sun, 11 Apr 2021 00:00:00 &#43;0000</pubDate>
@@ -74,13 +82,5 @@ Kafka 是一个快速、可扩展的、高吞吐的、可容错的分布式“�
     <author>Author</author>
     <guid>https://russellgao.cn/docker-storage/</guid>
     <description><![CDATA[导读  提起 docker 大家应该耳熟能详，如使用 docker 所带来的持续集成、版本控制、可移植性、隔离性、安全性等诸多好处。docker 的使用也很方便，但是其内部原理是什么样的？都有哪些组件？之间是如何相互协作的呢？这是 docker 系列文章，每篇讲解一个知识点，可以更好的消化。 这篇谈谈 docker 的存储驱动。受限作者水平，如有不对之处，欢迎批评之处。]]></description>
-</item><item>
-    <title>OSCHINA 搬迁申明</title>
-    <link>https://russellgao.cn/oschina-blog/</link>
-    <pubDate>Mon, 30 Nov 2020 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://russellgao.cn/oschina-blog/</guid>
-    <description><![CDATA[导读  我的博客即将同步至 OSCHINA 社区，这是我的 OSCHINA ID：russellgao，邀请大家一同入驻：https://www.oschina.net/sharing-plan/apply
- ]]></description>
 </item></channel>
 </rss>
