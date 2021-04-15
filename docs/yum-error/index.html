@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://russellgao.cn/yum-error/" />
 <meta property="og:image" content="https://russellgao.cn/images/profile.jpg"/>
 <meta property="article:published_time" content="2021-04-14T00:00:00+00:00" />
-<meta property="article:modified_time" content="2021-04-15T13:55:36+08:00" /><meta property="og:site_name" content="大大很二" />
+<meta property="article:modified_time" content="2021-04-15T13:58:58+08:00" /><meta property="og:site_name" content="大大很二" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://russellgao.cn/images/profile.jpg"/>
 
@@ -27,8 +27,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/russellgao.cn\/yum-error\/"
-        },"genre": "posts","keywords": "linux, yum","wordcount":  150 ,
-        "url": "https:\/\/russellgao.cn\/yum-error\/","datePublished": "2021-04-14T00:00:00+00:00","dateModified": "2021-04-15T13:55:36+08:00","publisher": {
+        },"genre": "posts","keywords": "linux, yum","wordcount":  432 ,
+        "url": "https:\/\/russellgao.cn\/yum-error\/","datePublished": "2021-04-14T00:00:00+00:00","dateModified": "2021-04-15T13:58:58+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -118,8 +118,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">yum 踩坑记录</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-04-14">2021-04-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;150 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;One minute&nbsp;<span id="/yum-error/" class="leancloud_visitors" data-flag-title="yum 踩坑记录">
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-04-14">2021-04-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;432 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;3 minutes&nbsp;<span id="/yum-error/" class="leancloud_visitors" data-flag-title="yum 踩坑记录">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;views
                     </span>&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="true">
@@ -221,7 +221,102 @@ yum makecache
 </code></pre></td></tr></table>
 </div>
 </div><p>至此问题即可得到解决。</p>
-</div><div class="post-footer" id="post-footer">
+<p>样例如下 :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@russellgao ~]# yum --help
+错误：rpmdb: BDB0113 Thread/process 25958/140293357061952 failed: BDB1507 Thread died in Berkeley DB library
+错误：db5 错误(-30973) 来自 dbenv-&gt;failchk：BDB0087 DB_RUNRECOVERY: Fatal error, run database recovery
+错误：无法使用 db5 -  (-30973) 打开 Packages 索引
+错误：无法从 /var/lib/rpm 打开软件包数据库
+CRITICAL:yum.main:
+
+Error: rpmdb open failed
+[root@russellgao ~]# ll /var/lib/rpm/__db.*
+-rw-r--r-- 1 root root  311296 4月  14 13:50 /var/lib/rpm/__db.001
+-rw-r--r-- 1 root root   90112 4月  14 13:50 /var/lib/rpm/__db.002
+-rw-r--r-- 1 root root 1318912 4月  14 13:50 /var/lib/rpm/__db.003
+[root@russellgao ~]# rm -fr /var/lib/rpm/__db.*
+[root@russellgao ~]# rpm --rebuilddb
+[root@russellgao ~]# yum clean all
+已加载插件：fastestmirror
+Repodata is over 2 weeks old. Install yum-cron? Or run: yum makecache fast
+正在清理软件源： base epel extras updates
+Cleaning up list of fastest mirrors
+[root@russellgao ~]# yum makecache
+已加载插件：fastestmirror
+Determining fastest mirrors
+base                                                                                                                                  | 3.6 kB  00:00:00     
+epel                                                                                                                                  | 4.7 kB  00:00:00     
+extras                                                                                                                                | 2.9 kB  00:00:00     
+updates                                                                                                                               | 2.9 kB  00:00:00     
+(1/16): base/7/x86_64/group_gz                                                                                                        | 153 kB  00:00:00     
+(2/16): base/7/x86_64/filelists_db                                                                                                    | 7.2 MB  00:00:00     
+(3/16): base/7/x86_64/other_db                                                                                                        | 2.6 MB  00:00:00     
+(4/16): base/7/x86_64/primary_db                                                                                                      | 6.1 MB  00:00:00     
+(5/16): epel/x86_64/group_gz                                                                                                          |  96 kB  00:00:00     
+(6/16): epel/x86_64/updateinfo                                                                                                        | 1.0 MB  00:00:00     
+(7/16): epel/x86_64/prestodelta                                                                                                       | 1.5 kB  00:00:00     
+(8/16): epel/x86_64/primary_db                                                                                                        | 6.9 MB  00:00:00     
+(9/16): epel/x86_64/filelists_db                                                                                                      |  12 MB  00:00:00     
+(10/16): epel/x86_64/other_db                                                                                                         | 3.3 MB  00:00:00     
+(11/16): extras/7/x86_64/filelists_db                                                                                                 | 230 kB  00:00:00     
+(12/16): extras/7/x86_64/other_db                                                                                                     | 138 kB  00:00:00     
+(13/16): extras/7/x86_64/primary_db                                                                                                   | 232 kB  00:00:00     
+(14/16): updates/7/x86_64/filelists_db                                                                                                | 4.2 MB  00:00:00     
+(15/16): updates/7/x86_64/other_db                                                                                                    | 555 kB  00:00:00     
+(16/16): updates/7/x86_64/primary_db                                                                                                  | 7.1 MB  00:00:00     
+元数据缓存已建立
+
+</code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
