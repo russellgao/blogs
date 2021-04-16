@@ -5,6 +5,14 @@
         <description>All Posts | 大大很二</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
             <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><atom:link href="https://russellgao.cn/posts/python/" rel="self" type="application/rss+xml" /><item>
+    <title>python-gitlab 库详解</title>
+    <link>https://russellgao.cn/python-gitlab/</link>
+    <pubDate>Mon, 12 Apr 2021 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/python-gitlab/</guid>
+    <description><![CDATA[导读  本文主要讲解如何用 python-gitlab 操作 gitlab。官方文档参考: https://python-gitlab.readthedocs.io/en/stable/index.html 。
+本文实验的 python 环境: 2.]]></description>
+</item><item>
     <title>如何利用python优化解析xml文件</title>
     <link>https://russellgao.cn/python-maven-enforcer-plugins/</link>
     <pubDate>Tue, 02 Mar 2021 00:00:00 &#43;0000</pubDate>

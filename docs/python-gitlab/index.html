@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>python-gitlab 库详解 - 大大很二</title><meta name="Description" content="python-gitlab 库详解"><meta property="og:title" content="python-gitlab 库详解" />
+<meta property="og:description" content="python-gitlab 库详解" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://russellgao.cn/python-gitlab/" />
+<meta property="og:image" content="https://russellgao.cn/images/profile.jpg"/>
+<meta property="article:published_time" content="2021-04-12T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-04-16T10:13:16+08:00" /><meta property="og:site_name" content="大大很二" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://russellgao.cn/images/profile.jpg"/>
+
+<meta name="twitter:title" content="python-gitlab 库详解"/>
+<meta name="twitter:description" content="python-gitlab 库详解"/>
+<meta name="application-name" content="russellgao">
+<meta name="apple-mobile-web-app-title" content="russellgao"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://gitee.com/russellgao/blogs-image/raw/master/images/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://russellgao.cn/python-gitlab/" /><link rel="prev" href="https://russellgao.cn/python-maven-enforcer-plugins/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "python-gitlab 库详解",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/russellgao.cn\/python-gitlab\/"
+        },"genre": "posts","keywords": "gitlab, python","wordcount":  1564 ,
+        "url": "https:\/\/russellgao.cn\/python-gitlab\/","datePublished": "2021-04-12T00:00:00+00:00","dateModified": "2021-04-16T10:13:16+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "russellgao"
+            },"description": "python-gitlab 库详解"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="大大很二"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png"
+        data-srcset="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png, https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png 1.5x, https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png"
+        title="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png" />大大很二</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/"> 首页 </a><a class="menu-item" href="/golang/"> Golang </a><a class="menu-item" href="/kubernetes/"> Kubernetes </a><a class="menu-item" href="/servicemesh/"> ServiceMesh </a><a class="menu-item" href="/python/"> Python </a><a class="menu-item" href="/devops/"> Devops </a><a class="menu-item" href="/argorithm/"> 算法 </a><a class="menu-item" href="/opensrouce/"> 开源项目 </a><a class="menu-item" href="/ai/"> 人工智能 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="大大很二"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png"
+        data-srcset="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png, https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png 1.5x, https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png"
+        title="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png" />大大很二</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/" title="">首页</a><a class="menu-item" href="/golang/" title="">Golang</a><a class="menu-item" href="/kubernetes/" title="">Kubernetes</a><a class="menu-item" href="/servicemesh/" title="">ServiceMesh</a><a class="menu-item" href="/python/" title="">Python</a><a class="menu-item" href="/devops/" title="">Devops</a><a class="menu-item" href="/argorithm/" title="">算法</a><a class="menu-item" href="/opensrouce/" title="">开源项目</a><a class="menu-item" href="/ai/" title="">人工智能</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">python-gitlab 库详解</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-04-12">2021-04-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1564 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;8 minutes&nbsp;<span id="/python-gitlab/" class="leancloud_visitors" data-flag-title="python-gitlab 库详解">
+                        <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;views
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#导读">导读</a></li>
+    <li><a href="#安装">安装</a>
+      <ul>
+        <li><a href="#pip-安装">pip 安装</a></li>
+        <li><a href="#源码安装">源码安装</a></li>
+      </ul>
+    </li>
+    <li><a href="#用法">用法</a>
+      <ul>
+        <li><a href="#cli-用法">CLI 用法</a></li>
+        <li><a href="#编程用法">编程用法</a>
+          <ul>
+            <li><a href="#基本用法">基本用法</a></li>
+            <li><a href="#函数封装例子">函数封装例子</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#源码解析">源码解析</a></li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="导读">导读</h2>
+<blockquote>
+<p>本文主要讲解如何用 <code>python-gitlab</code> 操作 gitlab。官方文档参考: <a href="https://python-gitlab.readthedocs.io/en/stable/index.html" target="_blank" rel="noopener noreffer">https://python-gitlab.readthedocs.io/en/stable/index.html</a> 。</p>
+<p>本文实验的 python 环境: 2.7.15</p>
+</blockquote>
+<h2 id="安装">安装</h2>
+<p>首先需要安装 <code>python-gitlab</code> 库</p>
+<h3 id="pip-安装">pip 安装</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">sudo pip install --upgrade python-gitlab
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="源码安装">源码安装</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">git clone https://github.com/python-gitlab/python-gitlab
+<span class="nb">cd</span> python-gitlab
+sudo python setup.py install
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="用法">用法</h2>
+<h3 id="cli-用法">CLI 用法</h3>
+<p>首先需要对环境进行配置才能使用 cli ，需要提供一个配置文件，指明 gitlab server 信息以及连接参数，配置文件格式为 <code>INI</code> ,样例如下:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[global]
+default = somewhere
+ssl_verify = true
+timeout = 5
+
+[somewhere]
+url = https://some.whe.re
+private_token = vTbFeqJYCY3sibBP7BZM
+api_version = 4
+
+[elsewhere]
+url = http://else.whe.re:8080
+private_token = CkqsjqcQSFH5FQKDccu4
+timeout = 1
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>其中 <code>global</code> 部分是必须提供的，主要是连接 gitlab 的参数</li>
+<li>其他部分是可选，当没有配置时默认用的是 default</li>
+<li>使用过程中可以通过 <code>-g</code> 指定具体使用的是那一节，如 <code>gitlab -g somewhere project list </code></li>
+</ul>
+<p>本文使用的配置文件如下 :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[global]
+ssl_verify = true
+timeout = 5
+
+[gitlab]
+url = https://gitlab-russellgo.cn
+private_token = xxxxxx
+api_version = 4
+</code></pre></td></tr></table>
+</div>
+</div><p>配置文件可以通过以下几种方法生效 :</p>
+<ul>
+<li>通过环境变量配置 <code>PYTHON_GITLAB_CFG</code></li>
+<li>放在系统配置下 <code>/etc/python-gitlab.cfg</code></li>
+<li>放在当前用户 home 目录下 <code>~/.python-gitlab.cfg</code></li>
+<li>通过命令行指定 <code>-c</code> 或者 <code>--config-file</code></li>
+</ul>
+<p>本文的配置文件放在了 home 下。</p>
+<p>当配置好了环境就可以愉快的使用了</p>
+<ul>
+<li>列出所有的 project （分页返回）
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 上面定义了一个 gitlab 的组，所以执行时可以通过 -g 指定</span>
+gitlab -g gitlab project list
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>列出所有的 project
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">gitlab -g gitlab project list --all
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<p>试到这里有个疑问，怎么知道 <code>gitlab</code> 目前支持哪些命令呢</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">gitlab -g gitlab 
+<span class="c1"># 以下是输出</span>
+usage: gitlab <span class="o">[</span>-h<span class="o">]</span> <span class="o">[</span>--version<span class="o">]</span> <span class="o">[</span>-v<span class="o">]</span> <span class="o">[</span>-d<span class="o">]</span> <span class="o">[</span>-c CONFIG_FILE<span class="o">]</span> <span class="o">[</span>-g GITLAB<span class="o">]</span>
+              <span class="o">[</span>-o <span class="o">{</span>json,legacy,yaml<span class="o">}]</span> <span class="o">[</span>-f FIELDS<span class="o">]</span>
+              <span class="o">{</span>application-settings,audit-event,broadcast-message,current-user,current-user-email,current-user-gp-gkey,current-user-key,current-user-status,deploy-key,dockerfile,event,feature,geo-node,gitignore,gitlabciyml,group,group-access-request,group-badge,group-board,group-board-list,group-cluster,group-custom-attribute,group-epic,group-epic-issue,group-epic-resource-label-event,group-issue,group-label,group-member,group-merge-request,group-milestone,group-notification-settings,group-project,group-subgroup,group-variable,hook,issue,l-da-pgroup,license,merge-request,namespace,notification-settings,pages-domain,project,project-access-request,project-additional-statistics,project-approval,project-approval-rule,project-badge,project-board,project-board-list,project-branch,project-cluster,project-commit,project-commit-comment,project-commit-discussion,project-commit-discussion-note,project-commit-status,project-custom-attribute,project-deployment,project-environment,project-event,project-export,project-file,project-fork,project-hook,project-import,project-issue,project-issue-award-emoji,project-issue-discussion,project-issue-discussion-note,project-issue-link,project-issue-note,project-issue-note-award-emoji,project-issue-resource-label-event,project-issues-statistics,project-job,project-key,project-label,project-member,project-merge-request,project-merge-request-approval,project-merge-request-award-emoji,project-merge-request-diff,project-merge-request-discussion,project-merge-request-discussion-note,project-merge-request-note,project-merge-request-note-award-emoji,project-merge-request-resource-label-event,project-milestone,project-note,project-notification-settings,project-pages-domain,project-pipeline,project-pipeline-job,project-pipeline-schedule,project-pipeline-schedule-variable,project-pipeline-variable,project-protected-branch,project-protected-tag,project-push-rules,project-registry-repository,project-registry-tag,project-release,project-runner,project-service,project-snippet,project-snippet-award-emoji,project-snippet-discussion,project-snippet-discussion-note,project-snippet-note,project-snippet-note-award-emoji,project-tag,project-trigger,project-user,project-variable,project-wiki,runner,runner-job,snippet,todo,user,user-activities,user-custom-attribute,user-email,user-event,user-gp-gkey,user-impersonation-token,user-key,user-project,user-status<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这样可以列出当前 gitlab 支持的资源，知道了支持的资源，那有怎么知道某种资源支持哪些操作的，以 project 为例，</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">gitlab -g gitlab project 
+<span class="c1"># 以下是输出</span>
+usage: gitlab project <span class="o">[</span>-h<span class="o">]</span>
+                      <span class="o">{</span>list,get,create,update,delete,repository-blob,repository-contributors,delete-merged-branches,share,archive,repository-compare,create-fork-relation,languages,mirror-pull,unarchive,star,search,artifact,trigger-pipeline,repository-archive,delete-fork-relation,repository-raw-blob,repository-tree,unstar,housekeeping,unshare,upload,snapshot,update-submodule,transfer-project<span class="o">}</span>
+                      ...
+gitlab project: error: too few arguments
+</code></pre></td></tr></table>
+</div>
+</div><p>这样就可以知道 <code>gitlab</code> 支持对何种资源做哪些操作，再通过 <code>--help</code> 就可以知道具体的参数，如</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">gitlab -g gitlab project list  --help 
+<span class="c1"># 以下是输出</span>
+usage: gitlab project list <span class="o">[</span>-h<span class="o">]</span> <span class="o">[</span>--sudo SUDO<span class="o">]</span> <span class="o">[</span>--search SEARCH<span class="o">]</span>
+                           <span class="o">[</span>--owned OWNED<span class="o">]</span> <span class="o">[</span>--starred STARRED<span class="o">]</span>
+                           <span class="o">[</span>--archived ARCHIVED<span class="o">]</span> <span class="o">[</span>--visibility VISIBILITY<span class="o">]</span>
+                           <span class="o">[</span>--order-by ORDER_BY<span class="o">]</span> <span class="o">[</span>--sort SORT<span class="o">]</span>
+                           <span class="o">[</span>--simple SIMPLE<span class="o">]</span> <span class="o">[</span>--membership MEMBERSHIP<span class="o">]</span>
+                           <span class="o">[</span>--statistics STATISTICS<span class="o">]</span>
+                           <span class="o">[</span>--with-issues-enabled WITH_ISSUES_ENABLED<span class="o">]</span>
+                           <span class="o">[</span>--with-merge-requests-enabled WITH_MERGE_REQUESTS_ENABLED<span class="o">]</span>
+                           <span class="o">[</span>--with-custom-attributes WITH_CUSTOM_ATTRIBUTES<span class="o">]</span>
+                           <span class="o">[</span>--page PAGE<span class="o">]</span> <span class="o">[</span>--per-page PER_PAGE<span class="o">]</span> <span class="o">[</span>--all<span class="o">]</span>
+
+optional arguments:
+  -h, --help            show this <span class="nb">help</span> message and <span class="nb">exit</span>
+  --sudo SUDO
+  --search SEARCH
+  --owned OWNED
+  --starred STARRED
+  --archived ARCHIVED
+  --visibility VISIBILITY
+  --order-by ORDER_BY
+  --sort SORT
+  --simple SIMPLE
+  --membership MEMBERSHIP
+  --statistics STATISTICS
+  --with-issues-enabled WITH_ISSUES_ENABLED
+  --with-merge-requests-enabled WITH_MERGE_REQUESTS_ENABLED
+  --with-custom-attributes WITH_CUSTOM_ATTRIBUTES
+  --page PAGE
+  --per-page PER_PAGE
+  --all
+
+</code></pre></td></tr></table>
+</div>
+</div><p>这样就可以很方便的对 <code>gitlab</code> 进行操作了。</p>
+<h3 id="编程用法">编程用法</h3>
+<p>除了通过命令行操作 gitlab 之外，还可以用编程的方式进行集成，一个常见的场景，要从 gitlab 中下载某个文件</p>
+<h4 id="基本用法">基本用法</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># coding=utf-8</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+
+<span class="kn">import</span> <span class="nn">gitlab</span>
+
+<span class="c1"># 实例化一个 gitlab 对象</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s2">&#34;https://gitlab.russellgao.cn&#34;</span>
+<span class="n">private_token</span> <span class="o">=</span> <span class="s2">&#34;xxxxxxxx&#34;</span>
+<span class="n">gl</span> <span class="o">=</span> <span class="n">gitlab</span><span class="o">.</span><span class="n">Gitlab</span><span class="p">(</span><span class="s1">&#39;https://gitlab.russellgao.cn&#39;</span><span class="p">,</span> <span class="n">private_token</span><span class="o">=</span><span class="n">private_token</span><span class="p">)</span>
+
+<span class="c1"># 列出所有的项目</span>
+<span class="n">projects</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">project</span> <span class="ow">in</span> <span class="n">projects</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">project</span><span class="p">)</span>
+
+<span class="c1"># 获取 group id 是 2 的 list</span>
+<span class="n">group</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">project</span> <span class="ow">in</span> <span class="n">group</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">list</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">project</span><span class="p">)</span>
+
+<span class="c1"># 创建一个用户</span>
+<span class="n">user_data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;email&#39;</span><span class="p">:</span> <span class="s1">&#39;jen@foo.com&#39;</span><span class="p">,</span> <span class="s1">&#39;username&#39;</span><span class="p">:</span> <span class="s1">&#39;jen&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Jen&#39;</span><span class="p">}</span>
+<span class="n">user</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">users</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">user_data</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+
+<span class="c1"># 列出 create 和 update 时需要的参数</span>
+<span class="c1"># get_create_attrs() 创建时需要的参数</span>
+<span class="c1"># get_update_attrs() 更新时需要的参数</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">gl</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">get_create_attrs</span><span class="p">())</span>
+<span class="p">((</span><span class="s1">&#39;name&#39;</span><span class="p">,),</span> <span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">,</span> <span class="s1">&#39;namespace_id&#39;</span><span class="p">,</span> <span class="o">...</span><span class="p">))</span>
+
+<span class="c1"># 返回的是两个元组， 第一个 必选的参数，第二个是可选的参数</span>
+
+<span class="c1"># 获取 对象的属性 ，如 project</span>
+<span class="n">project</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">project</span><span class="o">.</span><span class="n">attributes</span><span class="p">)</span>
+
+<span class="c1"># 有些对象提供了 gitlab 相关的资源属性</span>
+<span class="n">project</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">issues</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">issues</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+
+<span class="c1"># python-gitlab 允许向 gitlab 发送任何数据，当发送非法数据或者缺少相关参数时会抛出异常</span>
+
+<span class="n">gl</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">list</span><span class="p">(</span><span class="n">sort</span><span class="o">=</span><span class="s1">&#39;invalid value&#39;</span><span class="p">)</span>
+<span class="c1"># ...</span>
+<span class="c1"># GitlabListError: 400: sort does not have a valid value</span>
+
+<span class="c1"># 通过 query_parameters 进行传参 当参数和python 关键字冲突时</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">user_activities</span><span class="o">.</span><span class="n">list</span><span class="p">(</span><span class="n">from</span><span class="o">=</span><span class="s1">&#39;2019-01-01&#39;</span><span class="p">)</span>  <span class="c1">## invalid</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">user_activities</span><span class="o">.</span><span class="n">list</span><span class="p">(</span><span class="n">query_parameters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;from&#39;</span><span class="p">:</span> <span class="s1">&#39;2019-01-01&#39;</span><span class="p">})</span>  <span class="c1"># OK</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="函数封装例子">函数封装例子</h4>
+<p>通过 gitlab raw url 进行下载文件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">download_gitlab_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">private_token</span><span class="p">)</span> <span class="p">:</span>
+    <span class="s2">&#34;&#34;&#34;
+</span><span class="s2">    从 gitlab 上下载文件
+</span><span class="s2">
+</span><span class="s2">    :param url: gitlab raw url
+</span><span class="s2">    :param filename: 保存到本地的文件名称
+</span><span class="s2">    :param private_token:
+</span><span class="s2">    :return:
+</span><span class="s2">    &#34;&#34;&#34;</span>
+    <span class="kn">import</span> <span class="nn">gitlab</span>
+    <span class="kn">import</span> <span class="nn">codecs</span>
+
+    <span class="k">def</span> <span class="nf">writeLinesToFile</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">lines</span><span class="p">,</span> <span class="n">append</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">append</span> <span class="o">==</span> <span class="bp">True</span><span class="p">):</span>
+            <span class="n">file_mode</span> <span class="o">=</span> <span class="s2">&#34;a&#34;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">file_mode</span> <span class="o">=</span> <span class="s2">&#34;w&#34;</span>
+        <span class="n">encoding</span> <span class="o">=</span> <span class="n">encoding</span> <span class="ow">or</span> <span class="s1">&#39;utf-8&#39;</span>
+        <span class="k">with</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">file_mode</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="nb">unicode</span><span class="p">(</span><span class="n">line</span><span class="p">),</span> <span class="nb">file</span><span class="o">=</span><span class="n">fp</span><span class="p">)</span>
+
+    <span class="n">url_patterns</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&#34;/&#34;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">url_patterns</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">8</span> <span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&#34;url: `{}` 参数不合法，以 / 分隔之后长度必须大于8&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">url</span><span class="p">))</span>
+    <span class="n">baseurl</span> <span class="o">=</span> <span class="s2">&#34;{}//{}&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">url_patterns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">url_patterns</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="n">namespace</span> <span class="o">=</span> <span class="n">url_patterns</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">project_name</span> <span class="o">=</span> <span class="n">url_patterns</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+    <span class="n">branch</span> <span class="o">=</span> <span class="n">url_patterns</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+    <span class="n">url_filename</span> <span class="o">=</span> <span class="s2">&#34;/&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">url_patterns</span><span class="p">[</span><span class="mi">7</span><span class="p">:])</span>
+    <span class="k">if</span> <span class="n">url_patterns</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;-&#34;</span> <span class="p">:</span>
+        <span class="n">branch</span> <span class="o">=</span> <span class="n">url_patterns</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span>
+        <span class="n">url_filename</span> <span class="o">=</span> <span class="s2">&#34;/&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">url_patterns</span><span class="p">[</span><span class="mi">8</span><span class="p">:])</span>
+
+    <span class="n">gl</span> <span class="o">=</span> <span class="n">gitlab</span><span class="o">.</span><span class="n">Gitlab</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">baseurl</span><span class="p">),</span> <span class="n">private_token</span><span class="p">)</span>
+    <span class="n">projects</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">projects</span><span class="o">.</span><span class="n">list</span><span class="p">(</span><span class="n">search</span><span class="o">=</span><span class="n">project_name</span><span class="p">)</span>
+    <span class="n">projects</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">namespace</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;full_path&#34;</span><span class="p">)</span> <span class="o">==</span> <span class="n">namespace</span><span class="p">,</span> <span class="n">projects</span> <span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">projects</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&#34;根据url 没有找到相应的 project ,请检查当前用户是否有权限或者 url 是否正确 &#34;</span><span class="p">)</span>
+    <span class="n">project</span> <span class="o">=</span> <span class="n">projects</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">raw_content</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">raw</span><span class="p">(</span><span class="n">file_path</span><span class="o">=</span><span class="n">url_filename</span><span class="p">,</span> <span class="n">ref</span><span class="o">=</span><span class="n">branch</span><span class="p">)</span>
+    <span class="n">writeLinesToFile</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="p">[</span><span class="n">raw_content</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">raw_content</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="源码解析">源码解析</h2>
+<p>源码地址: <a href="https://github.com/python-gitlab/python-gitlab/" target="_blank" rel="noopener noreffer">https://github.com/python-gitlab/python-gitlab/</a></p>
+<p>从 <a href="https://sourcegraph.com/github.com/python-gitlab/python-gitlab/-/blob/setup.py#L31:5" target="_blank" rel="noopener noreffer">setup.py#L31:5</a> 中可以看出</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">setuptools</span> <span class="kn">import</span> <span class="n">setup</span>
+<span class="kn">from</span> <span class="nn">setuptools</span> <span class="kn">import</span> <span class="n">find_packages</span>
+<span class="o">...</span>
+<span class="n">setup</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&#34;python-gitlab&#34;</span><span class="p">,</span>
+    <span class="o">...</span>
+    <span class="n">entry_points</span><span class="o">=</span><span class="p">{</span><span class="s2">&#34;console_scripts&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;gitlab = gitlab.cli:main&#34;</span><span class="p">]},</span>
+    <span class="o">....</span>
+<span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>python-gitlab 采用 setuptools 进行打包，打成的包有两个作用:</p>
+<ul>
+<li>当作 python 库使用 （默认）</li>
+<li><code>entry_points={&quot;console_scripts&quot;: [&quot;gitlab = gitlab.cli:main&quot;]}</code> 说明可以当作 cli 使用，指令是 <code>gitlab</code> ，真正调用的是 <code>gitlab.cli:main</code> 函数</li>
+</ul>
+<p>在看一下 <code>cli.py</code> 这个入口文件，从入口文件可以看到 <a href="https://sourcegraph.com/github.com/python-gitlab/python-gitlab/-/blob/gitlab/cli.py#L182:14" target="_blank" rel="noopener noreffer">cli.py#L182:14</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="kn">import</span> <span class="nn">gitlab.v4.cli</span>
+<span class="o">...</span>
+    <span class="c1"># 可以跳转到这个函数中查看</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">_get_base_parser</span><span class="p">(</span><span class="n">add_help</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="o">...</span>
+
+<span class="k">def</span> <span class="nf">_get_base_parser</span><span class="p">(</span><span class="n">add_help</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">:</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+        <span class="n">add_help</span><span class="o">=</span><span class="n">add_help</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&#34;GitLab API Command Line Interface&#34;</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&#34;--version&#34;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&#34;Display the version.&#34;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&#34;store_true&#34;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&#34;-v&#34;</span><span class="p">,</span>
+        <span class="s2">&#34;--verbose&#34;</span><span class="p">,</span>
+        <span class="s2">&#34;--fancy&#34;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&#34;Verbose mode (legacy format only)&#34;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&#34;store_true&#34;</span><span class="p">,</span>
+    <span class="p">)</span>
+<span class="o">...</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这里可以 cli 解析库用的是 <code>argparse</code> 做命令行参数的解析 。</p>
+<p>通过 <code>GitlabCLI</code> class <a href="https://sourcegraph.com/github.com/python-gitlab/python-gitlab/-/blob/gitlab/v4/cli.py#L29:7" target="_blank" rel="noopener noreffer">cli.py#L29:7</a> 可以看出</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">GitlabCLI</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gl</span><span class="p">,</span> <span class="n">what</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cls_name</span> <span class="o">=</span> <span class="n">cli</span><span class="o">.</span><span class="n">what_to_cls</span><span class="p">(</span><span class="n">what</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cls</span> <span class="o">=</span> <span class="n">gitlab</span><span class="o">.</span><span class="n">v4</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">cls_name</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">what</span> <span class="o">=</span> <span class="n">what</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&#34;-&#34;</span><span class="p">,</span> <span class="s2">&#34;_&#34;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">action</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gl</span> <span class="o">=</span> <span class="n">gl</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="n">args</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mgr_cls</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">gitlab</span><span class="o">.</span><span class="n">v4</span><span class="o">.</span><span class="n">objects</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cls</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="s2">&#34;Manager&#34;</span><span class="p">)</span>
+        <span class="c1"># We could do something smart, like splitting the manager name to find</span>
+        <span class="c1"># parents, build the chain of managers to get to the final object.</span>
+        <span class="c1"># Instead we do something ugly and efficient: interpolate variables in</span>
+        <span class="c1"># the class _path attribute, and replace the value with the result.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mgr_cls</span><span class="o">.</span><span class="n">_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mgr_cls</span><span class="o">.</span><span class="n">_path</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mgr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mgr_cls</span><span class="p">(</span><span class="n">gl</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mgr_cls</span><span class="o">.</span><span class="n">_types</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">attr_name</span><span class="p">,</span> <span class="n">type_cls</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">mgr_cls</span><span class="o">.</span><span class="n">_types</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">attr_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="n">obj</span> <span class="o">=</span> <span class="n">type_cls</span><span class="p">()</span>
+                    <span class="n">obj</span><span class="o">.</span><span class="n">set_from_cli</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="n">attr_name</span><span class="p">])</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="n">attr_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>cli 基本格式为 <code>gitlab what action args</code> ,即上面 <code>cli</code> 章节提到的 <code>gitlab 支持的资源 做什么操作 这个操作对应的参数</code></p>
+<p>通过走读 <code>client.py</code> <a href="https://sourcegraph.com/github.com/python-gitlab/python-gitlab/-/blob/gitlab/client.py#L446:9" target="_blank" rel="noopener noreffer">client.py#L446:9</a>
+这个文件可以看到</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">http_request</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">verb</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">query_data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+        <span class="n">post_data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+        <span class="n">streamed</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+        <span class="n">files</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">requests</span><span class="o">.</span><span class="n">Response</span><span class="p">:</span>
+        <span class="s2">&#34;&#34;&#34;Make an HTTP request to the Gitlab server.
+</span><span class="s2">
+</span><span class="s2">        Args:
+</span><span class="s2">            verb (str): The HTTP method to call (&#39;get&#39;, &#39;post&#39;, &#39;put&#39;,
+</span><span class="s2">                        &#39;delete&#39;)
+</span><span class="s2">            path (str): Path or full URL to query (&#39;/projects&#39; or
+</span><span class="s2">                        &#39;http://whatever/v4/api/projecs&#39;)
+</span><span class="s2">            query_data (dict): Data to send as query parameters
+</span><span class="s2">            post_data (dict): Data to send in the body (will be converted to
+</span><span class="s2">                              json)
+</span><span class="s2">            streamed (bool): Whether the data should be streamed
+</span><span class="s2">            files (dict): The files to send to the server
+</span><span class="s2">            **kwargs: Extra options to send to the server (e.g. sudo)
+</span><span class="s2">
+</span><span class="s2">        Returns:
+</span><span class="s2">            A requests result object.
+</span><span class="s2">
+</span><span class="s2">        Raises:
+</span><span class="s2">            GitlabHttpError: When the return code is not 2xx
+</span><span class="s2">        &#34;&#34;&#34;</span>
+        <span class="n">query_data</span> <span class="o">=</span> <span class="n">query_data</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_url</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+        <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">utils</span><span class="o">.</span><span class="n">copy_dict</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">query_data</span><span class="p">)</span>
+
+        <span class="c1"># Deal with kwargs: by default a user uses kwargs to send data to the</span>
+        <span class="c1"># gitlab server, but this generates problems (python keyword conflicts</span>
+        <span class="c1"># and python-gitlab/gitlab conflicts).</span>
+        <span class="c1"># So we provide a `query_parameters` key: if it&#39;s there we use its dict</span>
+        <span class="c1"># value as arguments for the gitlab server, and ignore the other</span>
+        <span class="c1"># arguments, except pagination ones (per_page and page)</span>
+        <span class="k">if</span> <span class="s2">&#34;query_parameters&#34;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="n">utils</span><span class="o">.</span><span class="n">copy_dict</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&#34;query_parameters&#34;</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&#34;per_page&#34;</span><span class="p">,</span> <span class="s2">&#34;page&#34;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+                    <span class="n">params</span><span class="p">[</span><span class="n">arg</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="n">arg</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">utils</span><span class="o">.</span><span class="n">copy_dict</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="n">opts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_session_opts</span><span class="p">(</span><span class="n">content_type</span><span class="o">=</span><span class="s2">&#34;application/json&#34;</span><span class="p">)</span>
+
+        <span class="n">verify</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&#34;verify&#34;</span><span class="p">)</span>
+        <span class="n">timeout</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&#34;timeout&#34;</span><span class="p">)</span>
+        <span class="c1"># If timeout was passed into kwargs, allow it to override the default</span>
+        <span class="n">timeout</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;timeout&#34;</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span>
+
+        <span class="c1"># We need to deal with json vs. data when uploading files</span>
+        <span class="k">if</span> <span class="n">files</span><span class="p">:</span>
+            <span class="n">json</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="k">if</span> <span class="n">post_data</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">post_data</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">post_data</span><span class="p">[</span><span class="s2">&#34;file&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="n">files</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;file&#34;</span><span class="p">)</span>
+            <span class="n">post_data</span><span class="p">[</span><span class="s2">&#34;avatar&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="n">files</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;avatar&#34;</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">MultipartEncoder</span><span class="p">(</span><span class="n">post_data</span><span class="p">)</span>
+            <span class="n">opts</span><span class="p">[</span><span class="s2">&#34;headers&#34;</span><span class="p">][</span><span class="s2">&#34;Content-type&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">content_type</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">json</span> <span class="o">=</span> <span class="n">post_data</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="c1"># Requests assumes that `.` should not be encoded as %2E and will make</span>
+        <span class="c1"># changes to urls using this encoding. Using a prepped request we can</span>
+        <span class="c1"># get the desired behavior.</span>
+        <span class="c1"># The Requests behavior is right but it seems that web servers don&#39;t</span>
+        <span class="c1"># always agree with this decision (this is the case with a default</span>
+        <span class="c1"># gitlab installation)</span>
+        <span class="n">req</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">verb</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">json</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="o">**</span><span class="n">opts</span><span class="p">)</span>
+        <span class="n">prepped</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">prepare_request</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+        <span class="n">prepped</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">sanitized_url</span><span class="p">(</span><span class="n">prepped</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">settings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">merge_environment_settings</span><span class="p">(</span>
+            <span class="n">prepped</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="p">{},</span> <span class="n">streamed</span><span class="p">,</span> <span class="n">verify</span><span class="p">,</span> <span class="bp">None</span>
+        <span class="p">)</span>
+
+        <span class="c1"># obey the rate limit by default</span>
+        <span class="n">obey_rate_limit</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;obey_rate_limit&#34;</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+        <span class="c1"># do not retry transient errors by default</span>
+        <span class="n">retry_transient_errors</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;retry_transient_errors&#34;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+
+        <span class="c1"># set max_retries to 10 by default, disable by setting it to -1</span>
+        <span class="n">max_retries</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;max_retries&#34;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="n">cur_retries</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="o">...</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>通过对 requests 和 gitlab server 进行通信和数据交换 。</p>
+<p>总体而言 ， <code>python-gitlab</code> 提供了 <a href="https://sourcegraph.com/github.com/python-gitlab/python-gitlab/-/blob/gitlab/client.py#L58:9" target="_blank" rel="noopener noreffer">Gitlab</a>
+和 <a href="https://sourcegraph.com/github.com/python-gitlab/python-gitlab/-/blob/gitlab/v4/cli.py#L29:7" target="_blank" rel="noopener noreffer">GitlabCLI</a> 两个对象给到客户端使用，提供了一系列的封装，通过 <code>requests</code> 库和 gitlab server 进行通信 。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://python-gitlab.readthedocs.io/en/stable/index.html">https://python-gitlab.readthedocs.io/en/stable/index.html</a></li>
+<li><a href="https://github.com/python-gitlab/python-gitlab/">https://github.com/python-gitlab/python-gitlab/</a></li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2021-04-16</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/python-gitlab/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://russellgao.cn/python-gitlab/" data-title="python-gitlab 库详解" data-hashtags="gitlab,python"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://russellgao.cn/python-gitlab/" data-hashtag="gitlab"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="Share on WhatsApp" data-sharer="whatsapp" data-url="https://russellgao.cn/python-gitlab/" data-title="python-gitlab 库详解" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://russellgao.cn/python-gitlab/" data-title="python-gitlab 库详解"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://russellgao.cn/python-gitlab/" data-title="python-gitlab 库详解"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="Share on Myspace" data-sharer="myspace" data-url="https://russellgao.cn/python-gitlab/" data-title="python-gitlab 库详解" data-description="python-gitlab 库详解"><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="Share on Blogger" data-sharer="blogger" data-url="https://russellgao.cn/python-gitlab/" data-title="python-gitlab 库详解" data-description="python-gitlab 库详解"><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="Share on Evernote" data-sharer="evernote" data-url="https://russellgao.cn/python-gitlab/" data-title="python-gitlab 库详解"><i class="fab fa-evernote fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/gitlab/">gitlab</a>,&nbsp;<a href="/tags/python/">python</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/python-maven-enforcer-plugins/" class="prev" rel="prev" title="如何利用python优化解析xml文件"><i class="fas fa-angle-left fa-fw"></i>如何利用python优化解析xml文件</a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/russellgao" target="_blank">高维宗(russellgao)</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href="http://beian.miit.gov.cn/" target="_blank">沪ICP备2020034038号</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><script type="text/javascript" src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.fill%2CArray.prototype.find%2CArray.from%2CIntersectionObserver%2CMath.sign%2CObject.assign%2CPromise%2CObject.entries%2CElement.prototype.closest%2CrequestAnimationFrame%2CCustomEvent%2Chtml5shiv%2CObject.values%2Cfetch%2CElement.prototype.after"></script><script type="text/javascript" src="/lib/object-fit-images/ofi.min.js"></script><script type="text/javascript" src="/lib/valine/Valine.min.js"></script><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/twemoji/twemoji.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10},"comment":{"valine":{"appId":"UPHfC2syBI9Pu5vyncYfvYX5-9Nh9j0Va","appKey":"MBiG6UopXrWQR41mzt7jtq8o","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"en","pageSize":10,"placeholder":"Your comment ...","recordIP":true,"serverURLs":"https://uphfc2sy.lc-cn-e1-shared.com","visitor":true}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"},"twemoji":true};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
