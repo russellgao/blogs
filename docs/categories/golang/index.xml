@@ -1,0 +1,30 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>golang - Category - 大大很二</title>
+        <link>https://russellgao.cn/categories/golang/</link>
+        <description>golang - Category - 大大很二</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Fri, 27 Nov 2020 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/categories/golang/" rel="self" type="application/rss+xml" /><item>
+    <title>细谈 Golang 中那些设计优美的细节-GMP</title>
+    <link>https://russellgao.cn/golang-gmp/</link>
+    <pubDate>Fri, 27 Nov 2020 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/golang-gmp/</guid>
+    <description><![CDATA[导读  这是 Golang 系列第二篇，这篇主要谈谈 Golang 的调度模型-GMP，我们知道 Golang 在并发方面有绝对优势，现在就让我们来揭开 它神秘的面纱。]]></description>
+</item><item>
+    <title>如何利用 golang 操纵 oracle</title>
+    <link>https://russellgao.cn/oracle-golang/</link>
+    <pubDate>Wed, 25 Nov 2020 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/oracle-golang/</guid>
+    <description><![CDATA[导读 这篇文章主要介绍如何利用 golang 操作 oracle 数据库，包括基本的增删改查，本地 oracle 环境搭建，以及如何在 docker 中运行。 oracle client 镜像构建并不容易，花了很长时间去踩坑，文中提供了已经构建好的基础镜像，可以直接使用，这里贡献给大家。]]></description>
+</item><item>
+    <title>细谈 Golang 中那些设计优美的细节-defer</title>
+    <link>https://russellgao.cn/defer/</link>
+    <pubDate>Sun, 08 Nov 2020 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/defer/</guid>
+    <description><![CDATA[背景 在学习和使用 Go 的过程中发现，Go 在语言层面的设计有很多有趣的地方，所以准备用一个系列来细数这些有趣的地方。写这个系列一是为了加深自己的理解，二是愿意分享，分享 Go 中有趣的设计细节。每篇都会通过一个例子讲述一个细节，感兴趣的话可以关注一下哟！
+Go 介绍 Go（又称 Golang）是 Google 的 Robert Griesemer，Rob Pike 及 Ken Thompson 开发的一种静态强类型、编译型语言。Go 语言语法与 C 相近，但功能上有：内存安全，GC（垃圾回收），结构形态及 CSP-style 并发计算。]]></description>
+</item></channel>
+</rss>

@@ -4,7 +4,15 @@
         <link>https://russellgao.cn/posts/</link>
         <description>All Posts | 大大很二</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
-            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Wed, 14 Apr 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Sat, 08 May 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>CUE是何方神圣?</title>
+    <link>https://russellgao.cn/cue-intro/</link>
+    <pubDate>Sat, 08 May 2021 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/cue-intro/</guid>
+    <description><![CDATA[导读  本片文章主要介绍 CUE 的基本概念，CUE 是什么以及可以做些什么，通过一些 demo 演示了基本的用法，适合小白入门阅读。
+ 什么是CUE C(Configure：配置) , U(Unify：统一) , E(Execute：执行) 。]]></description>
+</item><item>
     <title>yum 踩坑记录</title>
     <link>https://russellgao.cn/yum-error/</link>
     <pubDate>Wed, 14 Apr 2021 00:00:00 &#43;0000</pubDate>
@@ -75,12 +83,5 @@ Kafka 是一个快速、可扩展的、高吞吐的、可容错的分布式“�
     <author>Author</author>
     <guid>https://russellgao.cn/docker-local-storage/</guid>
     <description><![CDATA[导读  在前面的文章docker 原理之存储驱动中简单的介绍了 Docker 的存储驱动，这篇文章接着讲存储，目前的 docker 版本中默认的是 overlay2 ，所以这篇文章就以 overlay2 为例带大家看看，在我们执行 docker build ，docker pull，docker run 等命令时本地存储有何变化。]]></description>
-</item><item>
-    <title>docker 原理之存储驱动</title>
-    <link>https://russellgao.cn/docker-storage/</link>
-    <pubDate>Sat, 05 Dec 2020 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://russellgao.cn/docker-storage/</guid>
-    <description><![CDATA[导读  提起 docker 大家应该耳熟能详，如使用 docker 所带来的持续集成、版本控制、可移植性、隔离性、安全性等诸多好处。docker 的使用也很方便，但是其内部原理是什么样的？都有哪些组件？之间是如何相互协作的呢？这是 docker 系列文章，每篇讲解一个知识点，可以更好的消化。 这篇谈谈 docker 的存储驱动。受限作者水平，如有不对之处，欢迎批评之处。]]></description>
 </item></channel>
 </rss>

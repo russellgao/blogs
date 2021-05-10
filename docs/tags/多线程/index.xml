@@ -6,14 +6,6 @@
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
             <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Thu, 18 Feb 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" rel="self" type="application/rss+xml" /><item>
     <title>交叉打印</title>
-    <link>https://russellgao.cn/argorithm/go-goroutine-print/</link>
-    <pubDate>Thu, 18 Feb 2021 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://russellgao.cn/argorithm/go-goroutine-print/</guid>
-    <description><![CDATA[交叉打印 数字和字母交叉打印，打印两个字母，接着打印一个数字，再接着打印两个字母，一直从 a 打印到 z，以字母结束。输出示例：
-1  a b 1 c d 2 .]]></description>
-</item><item>
-    <title>交叉打印</title>
     <link>https://russellgao.cn/go-goroutine-print/</link>
     <pubDate>Thu, 18 Feb 2021 00:00:00 &#43;0000</pubDate>
     <author>Author</author>
@@ -29,29 +21,11 @@
     <description><![CDATA[导读  在上一篇&ldquo;python中的多线程与多进程(一)中介绍了进程、线程的概念、基本用法和在 python 中使用遇到的一些坑， 这在一篇中会介绍一些高级的用法，当然更多的是遇到的坑，换言之这是一片避坑指南。
  concurrent.futures 我们都知道在 python 中，多线程的标准库是使用 threading , 如 ：]]></description>
 </item><item>
-    <title>python中的多线程与多进程（二）</title>
-    <link>https://russellgao.cn/python/concurrent/</link>
-    <pubDate>Wed, 18 Nov 2020 22:32:00 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://russellgao.cn/python/concurrent/</guid>
-    <description><![CDATA[导读  在上一篇&ldquo;python中的多线程与多进程(一)中介绍了进程、线程的概念、基本用法和在 python 中使用遇到的一些坑， 这在一篇中会介绍一些高级的用法，当然更多的是遇到的坑，换言之这是一片避坑指南。
- concurrent.futures 我们都知道在 python 中，多线程的标准库是使用 threading , 如 ：]]></description>
-</item><item>
     <title>python中的多线程与多进程（一）</title>
     <link>https://russellgao.cn/multithread/</link>
     <pubDate>Mon, 16 Nov 2020 22:32:00 &#43;0000</pubDate>
     <author>Author</author>
     <guid>https://russellgao.cn/multithread/</guid>
-    <description><![CDATA[导读 在编码的过程，多线程、多进程、并发、并行这些概念肯定不止一次的出现在我们面前。概念理解是一回事，但是能真正用好又是另一回事。不同的编程语言，并发编程难易程度相差还是很大的，正好这几天梳理了他们之间的关系与区别，分享给大家。（基于自己的理解谈谈，如果不对欢迎指出）
- 灵魂拷问：什么是线程？什么是进程？
- 进程 进程是资源分配的最小单位。
-线程 线程是 cpu 调度的最小调度。线程又分为内核线程，用户线程。]]></description>
-</item><item>
-    <title>python中的多线程与多进程（一）</title>
-    <link>https://russellgao.cn/python/multithread/</link>
-    <pubDate>Mon, 16 Nov 2020 22:32:00 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://russellgao.cn/python/multithread/</guid>
     <description><![CDATA[导读 在编码的过程，多线程、多进程、并发、并行这些概念肯定不止一次的出现在我们面前。概念理解是一回事，但是能真正用好又是另一回事。不同的编程语言，并发编程难易程度相差还是很大的，正好这几天梳理了他们之间的关系与区别，分享给大家。（基于自己的理解谈谈，如果不对欢迎指出）
  灵魂拷问：什么是线程？什么是进程？
  进程 进程是资源分配的最小单位。

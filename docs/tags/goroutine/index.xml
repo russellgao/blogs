@@ -6,14 +6,6 @@
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
             <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Thu, 18 Feb 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/tags/goroutine/" rel="self" type="application/rss+xml" /><item>
     <title>交叉打印</title>
-    <link>https://russellgao.cn/argorithm/go-goroutine-print/</link>
-    <pubDate>Thu, 18 Feb 2021 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://russellgao.cn/argorithm/go-goroutine-print/</guid>
-    <description><![CDATA[交叉打印 数字和字母交叉打印，打印两个字母，接着打印一个数字，再接着打印两个字母，一直从 a 打印到 z，以字母结束。输出示例：
-1  a b 1 c d 2 .]]></description>
-</item><item>
-    <title>交叉打印</title>
     <link>https://russellgao.cn/go-goroutine-print/</link>
     <pubDate>Thu, 18 Feb 2021 00:00:00 &#43;0000</pubDate>
     <author>Author</author>

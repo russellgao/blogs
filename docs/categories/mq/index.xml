@@ -1,0 +1,24 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>mq - Category - 大大很二</title>
+        <link>https://russellgao.cn/categories/mq/</link>
+        <description>mq - Category - 大大很二</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Thu, 17 Dec 2020 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/categories/mq/" rel="self" type="application/rss+xml" /><item>
+    <title>消息队列原理之kafka</title>
+    <link>https://russellgao.cn/mq-kafka/</link>
+    <pubDate>Thu, 17 Dec 2020 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/mq-kafka/</guid>
+    <description><![CDATA[导读  本文消息队列系列第二篇，上一篇讲述的是 Rabbitmq ，这篇主要介绍 Kafka 的原理与使用。
+Kafka 是一个快速、可扩展的、高吞吐的、可容错的分布式“发布-订阅”消息系统， 使用 Scala 与 Java 语言编写，能够将消息从一个端点传递到另一个端点。 较之传统的消息中间件（例如 ActiveMQ、RabbitMQ），Kafka 具有高吞吐量、内置分区、支持消息副本和高容错的特性，非常适合大规模消息处理应用程序。]]></description>
+</item><item>
+    <title>消息队列原理之rabbitmq</title>
+    <link>https://russellgao.cn/mq-rabbitmq/</link>
+    <pubDate>Wed, 16 Dec 2020 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/mq-rabbitmq/</guid>
+    <description><![CDATA[导读  谈起消息队列，我们的脑海可能会不由自主的冒出这么几个关键词，解耦、异步化、消峰、广播等，消息队列的种类也很多，如 rabbitmq、rocketmq、activemq、kafka等还有各个云厂商提供的消息队列。 它们都有各种的特点和使用场景，所以这个系列的文章主要谈各个消息的原理，目前规划了两篇文章，rabbitmq 和 kafka ，其他的暂时还没有用到，还没有深究。
+这篇主要介绍 rabbitmq 的原理和基于 golang 如何使用。]]></description>
+</item></channel>
+</rss>

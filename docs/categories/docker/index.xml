@@ -1,0 +1,22 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>docker - Category - 大大很二</title>
+        <link>https://russellgao.cn/categories/docker/</link>
+        <description>docker - Category - 大大很二</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Wed, 09 Dec 2020 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/categories/docker/" rel="self" type="application/rss+xml" /><item>
+    <title>docker 原理之本地存储</title>
+    <link>https://russellgao.cn/docker-local-storage/</link>
+    <pubDate>Wed, 09 Dec 2020 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/docker-local-storage/</guid>
+    <description><![CDATA[导读  在前面的文章docker 原理之存储驱动中简单的介绍了 Docker 的存储驱动，这篇文章接着讲存储，目前的 docker 版本中默认的是 overlay2 ，所以这篇文章就以 overlay2 为例带大家看看，在我们执行 docker build ，docker pull，docker run 等命令时本地存储有何变化。]]></description>
+</item><item>
+    <title>docker 原理之存储驱动</title>
+    <link>https://russellgao.cn/docker-storage/</link>
+    <pubDate>Sat, 05 Dec 2020 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/docker-storage/</guid>
+    <description><![CDATA[导读  提起 docker 大家应该耳熟能详，如使用 docker 所带来的持续集成、版本控制、可移植性、隔离性、安全性等诸多好处。docker 的使用也很方便，但是其内部原理是什么样的？都有哪些组件？之间是如何相互协作的呢？这是 docker 系列文章，每篇讲解一个知识点，可以更好的消化。 这篇谈谈 docker 的存储驱动。受限作者水平，如有不对之处，欢迎批评之处。]]></description>
+</item></channel>
+</rss>

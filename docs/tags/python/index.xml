@@ -29,15 +29,6 @@
  什么是装饰器 装饰器可以理解为函数的函数，想想这么一种场景，要计算每个函数的执行时间，一种解决方法是在每个函数中做个计时，就可以拿到执行时间， 但是这样会有大量的冗余代码，显然是不可取的，这时候装饰器就派上用场了。
 下面直接看代码，代码比文字更有说服力。]]></description>
 </item><item>
-    <title>Python 中的装饰器</title>
-    <link>https://russellgao.cn/python/python-decorator/</link>
-    <pubDate>Sat, 30 Jan 2021 10:32:00 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://russellgao.cn/python/python-decorator/</guid>
-    <description><![CDATA[导读  这篇文章主要介绍了 python 当中的装饰器。
- 什么是装饰器 装饰器可以理解为函数的函数，想想这么一种场景，要计算每个函数的执行时间，一种解决方法是在每个函数中做个计时，就可以拿到执行时间， 但是这样会有大量的冗余代码，显然是不可取的，这时候装饰器就派上用场了。
-下面直接看代码，代码比文字更有说服力。]]></description>
-</item><item>
     <title>Python 中的迭代器与生成器</title>
     <link>https://russellgao.cn/python-iter/</link>
     <pubDate>Mon, 07 Dec 2020 18:32:00 &#43;0000</pubDate>
@@ -46,27 +37,11 @@
     <description><![CDATA[导读  这篇文章主要介绍了 python 当中的迭代器与生成器，在涉及到大数据量的场景应该考虑使用迭代器与生成器。
  可迭代对象 如果一个对象实现了 __iter__ 方法，那么我们就称它是一个可迭代对象。如果没有实现 __iter__ 而实现了 __getitem__ 方法，并且其参数是从0开始索引的，这种对象也是可迭代的，比如说序列。]]></description>
 </item><item>
-    <title>Python 中的迭代器与生成器</title>
-    <link>https://russellgao.cn/python/python-iter/</link>
-    <pubDate>Mon, 07 Dec 2020 18:32:00 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://russellgao.cn/python/python-iter/</guid>
-    <description><![CDATA[导读  这篇文章主要介绍了 python 当中的迭代器与生成器，在涉及到大数量的场景应该考虑使用迭代器与生成器。
- 可迭代对象 如果一个对象实现了 __iter__ 方法，那么我们就称它是一个可迭代对象。如果没有实现 __iter__ 而实现了 __getitem__ 方法，并且其参数是从0开始索引的，这种对象也是可迭代的，比如说序列。]]></description>
-</item><item>
     <title>python中的多线程与多进程（二）</title>
     <link>https://russellgao.cn/concurrent/</link>
     <pubDate>Wed, 18 Nov 2020 22:32:00 &#43;0000</pubDate>
     <author>Author</author>
     <guid>https://russellgao.cn/concurrent/</guid>
-    <description><![CDATA[导读  在上一篇&ldquo;python中的多线程与多进程(一)中介绍了进程、线程的概念、基本用法和在 python 中使用遇到的一些坑， 这在一篇中会介绍一些高级的用法，当然更多的是遇到的坑，换言之这是一片避坑指南。
- concurrent.futures 我们都知道在 python 中，多线程的标准库是使用 threading , 如 ：]]></description>
-</item><item>
-    <title>python中的多线程与多进程（二）</title>
-    <link>https://russellgao.cn/python/concurrent/</link>
-    <pubDate>Wed, 18 Nov 2020 22:32:00 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://russellgao.cn/python/concurrent/</guid>
     <description><![CDATA[导读  在上一篇&ldquo;python中的多线程与多进程(一)中介绍了进程、线程的概念、基本用法和在 python 中使用遇到的一些坑， 这在一篇中会介绍一些高级的用法，当然更多的是遇到的坑，换言之这是一片避坑指南。
  concurrent.futures 我们都知道在 python 中，多线程的标准库是使用 threading , 如 ：]]></description>
 </item><item>
@@ -80,14 +55,11 @@
  进程 进程是资源分配的最小单位。
 线程 线程是 cpu 调度的最小调度。线程又分为内核线程，用户线程。]]></description>
 </item><item>
-    <title>python中的多线程与多进程（一）</title>
-    <link>https://russellgao.cn/python/multithread/</link>
-    <pubDate>Mon, 16 Nov 2020 22:32:00 &#43;0000</pubDate>
+    <title>如何利用 python 操纵 oracle</title>
+    <link>https://russellgao.cn/oracle/</link>
+    <pubDate>Thu, 09 Jul 2020 18:32:00 &#43;0000</pubDate>
     <author>Author</author>
-    <guid>https://russellgao.cn/python/multithread/</guid>
-    <description><![CDATA[导读 在编码的过程，多线程、多进程、并发、并行这些概念肯定不止一次的出现在我们面前。概念理解是一回事，但是能真正用好又是另一回事。不同的编程语言，并发编程难易程度相差还是很大的，正好这几天梳理了他们之间的关系与区别，分享给大家。（基于自己的理解谈谈，如果不对欢迎指出）
- 灵魂拷问：什么是线程？什么是进程？
- 进程 进程是资源分配的最小单位。
-线程 线程是 cpu 调度的最小调度。线程又分为内核线程，用户线程。]]></description>
+    <guid>https://russellgao.cn/oracle/</guid>
+    <description><![CDATA[安装库 1 2  pip3 install sqlalchemy pip3 install cx_Oracle   安装客户端 oracle 客户端下载页面: https://www.]]></description>
 </item></channel>
 </rss>

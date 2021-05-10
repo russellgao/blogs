@@ -7,6 +7,14 @@
             <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster>
             <atom:link href="https://russellgao.cn/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>CUE是何方神圣?</title>
+    <link>https://russellgao.cn/cue-intro/</link>
+    <pubDate>Sat, 08 May 2021 00:00:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://russellgao.cn/cue-intro/</guid>
+    <description><![CDATA[导读  本片文章主要介绍 CUE 的基本概念，CUE 是什么以及可以做些什么，通过一些 demo 演示了基本的用法，适合小白入门阅读。
+ 什么是CUE C(Configure：配置) , U(Unify：统一) , E(Execute：执行) 。]]></description>
+</item><item>
     <title>yum 踩坑记录</title>
     <link>https://russellgao.cn/yum-error/</link>
     <pubDate>Wed, 14 Apr 2021 00:00:00 &#43;0000</pubDate>
@@ -79,13 +87,5 @@ kind 全称 是 kubernetes in docker ，把 kubernetes 控制面的组件全部�
     <guid>https://russellgao.cn/design-principle/</guid>
     <description><![CDATA[导读  重温设计模式的原则
  六大原则 单一职责原则（Single Responsibility Principle）  There should never be more than one reason for a class to change.]]></description>
-</item><item>
-    <title>消息队列原理之kafka</title>
-    <link>https://russellgao.cn/mq-kafka/</link>
-    <pubDate>Thu, 17 Dec 2020 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://russellgao.cn/mq-kafka/</guid>
-    <description><![CDATA[导读  本文消息队列系列第二篇，上一篇讲述的是 Rabbitmq ，这篇主要介绍 Kafka 的原理与使用。
-Kafka 是一个快速、可扩展的、高吞吐的、可容错的分布式“发布-订阅”消息系统， 使用 Scala 与 Java 语言编写，能够将消息从一个端点传递到另一个端点。 较之传统的消息中间件（例如 ActiveMQ、RabbitMQ），Kafka 具有高吞吐量、内置分区、支持消息副本和高容错的特性，非常适合大规模消息处理应用程序。]]></description>
 </item></channel>
 </rss>

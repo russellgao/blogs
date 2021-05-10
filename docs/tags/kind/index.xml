@@ -6,14 +6,6 @@
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
             <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Sat, 06 Feb 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/tags/kind/" rel="self" type="application/rss+xml" /><item>
     <title>在本地如何玩转kubernetes? - kind</title>
-    <link>https://russellgao.cn/kubernetes/k8s-kind/</link>
-    <pubDate>Sat, 06 Feb 2021 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://russellgao.cn/kubernetes/k8s-kind/</guid>
-    <description><![CDATA[导读  kubernetes 现在已经走进了大众的视野，很多同学都对此比较好奇，从其他渠道或多或少都了解了一些，但是苦于没有kubernetes环境，不能身临其境的感受， 毕竟如果完整搭建一套kubernetes环境是需要资源的。 今天介绍一款工具（kind），让大家可以本地也可以构建起 kubernetes 环境，愉快的在本地玩转 kubernetes。
-kind 全称 是 kubernetes in docker ，把 kubernetes 控制面的组件全部运行在一个docker 容器中，在本地通过 127.]]></description>
-</item><item>
-    <title>在本地如何玩转kubernetes? - kind</title>
     <link>https://russellgao.cn/k8s-kind/</link>
     <pubDate>Sat, 06 Feb 2021 00:00:00 &#43;0000</pubDate>
     <author>Author</author>

@@ -6,25 +6,11 @@
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
             <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Tue, 24 Nov 2020 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/tags/kubectl/" rel="self" type="application/rss+xml" /><item>
     <title>kubernetes 中 pod 是如何启动的呢</title>
-    <link>https://russellgao.cn/kubernetes/pod-create/</link>
-    <pubDate>Tue, 24 Nov 2020 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://russellgao.cn/kubernetes/pod-create/</guid>
-    <description><![CDATA[导读  Pod 应该算是 kubernetes 的基本盘，Pod 是 kubernetes 的最小调度单位，我这里有个问题，说通过 kubectl apply -f  创建一个 Pod ，从执行到 Pod 正常运行 kubernetes 做了什么事情呢？都有哪些组件参与呢？这篇文档主要讲述从提交 Pod 的创建请求到 Pod 的正常运行的这个过程追踪。]]></description>
-</item><item>
-    <title>kubernetes 中 pod 是如何启动的呢</title>
     <link>https://russellgao.cn/pod-create/</link>
     <pubDate>Tue, 24 Nov 2020 00:00:00 &#43;0000</pubDate>
     <author>Author</author>
     <guid>https://russellgao.cn/pod-create/</guid>
     <description><![CDATA[导读  Pod 应该算是 kubernetes 的基本盘，Pod 是 kubernetes 的最小调度单位，我这里有个问题，说通过 kubectl apply -f  创建一个 Pod ，从执行到 Pod 正常运行 kubernetes 做了什么事情呢？都有哪些组件参与呢？这篇文档主要讲述从提交 Pod 的创建请求到 Pod 的正常运行的这个过程追踪。]]></description>
-</item><item>
-    <title>kubectl 常用命令</title>
-    <link>https://russellgao.cn/kubernetes/kubectl-command/</link>
-    <pubDate>Fri, 20 Nov 2020 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://russellgao.cn/kubernetes/kubectl-command/</guid>
-    <description><![CDATA[导读  kubectl 应该是每个接触 kubernetes 的人都会接触的一个组件，它带给我们强大的命令行体验，本篇文章就是介绍 kubectl 中的一些常用命令，在结合一些具体的使用场景说说如何利用 kubectl 实现。好记性不如烂笔头，在这里尽可能全的罗列，方便后续 用的时候查找。如果能帮到您就收藏起来吧(😄)。]]></description>
 </item><item>
     <title>kubectl 常用命令</title>
     <link>https://russellgao.cn/kubectl-command/</link>
