@@ -11,6 +11,11 @@ tags = [
     "server" ,
     "location"
 ]
+
+categories = [
+    "openresty"
+]
+
 +++
 
 ## 导读

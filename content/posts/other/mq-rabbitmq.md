@@ -9,6 +9,10 @@ tags = [
     "rabbitmq",
     "消息队列"
 ]
+
+categories = [
+    "mq"
+]
 +++
 
 ## 导读

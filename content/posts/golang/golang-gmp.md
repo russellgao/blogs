@@ -10,6 +10,11 @@ tags = [
     "GMP" ,
     "调度器"
 ,]
+
+categories = [
+    "golang"
+]
+
 +++
 
 ## 导读

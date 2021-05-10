@@ -10,6 +10,11 @@ tags = [
     "kubeadm" ,
     "集群部署"
 ]
+
+categories = [
+    "kubernetes"
+]
+
 +++
 
 ## kubeadm 前置检查

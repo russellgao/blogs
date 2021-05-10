@@ -10,6 +10,11 @@ tags = [
     "oracle",
     "数据库"
 ,]
+
+categories = [
+    "python"
+]
+
 +++
 
 ## 安装库

@@ -12,6 +12,11 @@ tags = [
     "kubelet" ,
     "schedule"
 ]
+
+categories = [
+    "kubernetes"
+]
+
 +++
 
 ## 导读

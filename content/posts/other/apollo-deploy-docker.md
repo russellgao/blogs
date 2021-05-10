@@ -9,6 +9,11 @@ tags = [
     "Apollo",
     "集群部署"
 ]
+
+categories = [
+    "other"
+]
+
 +++
 
 ## 导读

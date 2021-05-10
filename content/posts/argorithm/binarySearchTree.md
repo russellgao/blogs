@@ -10,6 +10,10 @@ tags = [
     "binarySearchTree",
     "二叉搜索树"
 ,]
+categories = [
+    "argorithm"
+]
+
 +++
 
 ## 定义及特点

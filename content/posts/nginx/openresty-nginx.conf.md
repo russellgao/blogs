@@ -10,6 +10,11 @@ tags = [
     "openresty",
     "nginx.conf"
 ]
+
+categories = [
+    "openresty"
+]
+
 +++
 
 ## 导读

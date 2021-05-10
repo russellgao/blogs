@@ -9,6 +9,12 @@ tags = [
     "kubernetes",
     "istio"
 ,]
+
+categories = [
+    "istio",
+    "kubernetes",
+]
+
 +++
 
 # ELK

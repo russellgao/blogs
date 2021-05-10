@@ -9,6 +9,10 @@ tags = [
     "linux",
     "yum"
 ]
+
+categories = [
+    "linux"
+]
 +++
 
 

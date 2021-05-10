@@ -10,6 +10,11 @@ tags = [
     "goroutine",
     "go"
 ,]
+
+categories = [
+    "argorithm"
+]
+
 +++
 
 # 交叉打印

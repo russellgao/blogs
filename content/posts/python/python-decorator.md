@@ -9,6 +9,11 @@ tags = [
     "python",
     "装饰器"
 ,]
+
+categories = [
+    "python"
+]
+
 +++
 
 ## 导读

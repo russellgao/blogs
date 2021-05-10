@@ -8,6 +8,10 @@ tags = [
     "docker",
     "存储"
 ]
+categories = [
+    "docker"
+]
+
 +++
 
 ## 导读

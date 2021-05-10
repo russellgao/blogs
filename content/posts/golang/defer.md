@@ -9,6 +9,11 @@ tags = [
     "golang",
     "defer"
 ,]
+
+categories = [
+    "golang"
+]
+
 +++
 
 ## 背景

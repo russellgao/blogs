@@ -9,6 +9,10 @@ tags = [
     "markdown",
     "emoji"
 ]
+
+categories = [
+    "other"
+]
 +++
 
 ## 导读

@@ -9,6 +9,11 @@ tags = [
     "kubernetes",
     "kind" ,
 ]
+
+categories = [
+    "kubernetes"
+]
+
 +++
 
 ## 导读

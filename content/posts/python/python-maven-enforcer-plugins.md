@@ -11,6 +11,11 @@ tags = [
     "pom" ,
     "maven"
 ]
+
+categories = [
+    "python"
+]
+
 +++
 
 ## 导读

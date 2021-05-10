@@ -11,6 +11,10 @@ tags = [
     "apk" ,
     "docker"
 ]
+
+categories = [
+    "linux"
+]
 +++
 
 

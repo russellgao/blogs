@@ -7,6 +7,10 @@ draft = false
 tags = [
     "docker"
 ]
+categories = [
+    "docker"
+]
+
 +++
 
 ## 导读

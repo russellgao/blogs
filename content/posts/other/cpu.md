@@ -9,6 +9,9 @@ tags = [
     "linux",
     "cpu"
 ]
+categories = [
+    "linux"
+]
 +++
 
 ## 导读

@@ -9,6 +9,11 @@ tags = [
     "git",
     "cli"
 ]
+
+categories = [
+    "git"
+]
+
 +++
 
 ## 导读

@@ -9,6 +9,10 @@ tags = [
     "云原生",
     "harbor"
 ]
+categories = [
+    "other"
+]
+
 +++
 
 ## 导读

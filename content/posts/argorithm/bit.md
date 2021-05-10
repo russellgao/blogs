@@ -10,6 +10,11 @@ tags = [
     "位运算",
     "bit"
 ,]
+
+categories = [
+    "argorithm"
+]
+
 +++
 
 # 位运算

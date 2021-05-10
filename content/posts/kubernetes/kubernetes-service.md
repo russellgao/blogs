@@ -10,6 +10,11 @@ tags = [
     "service" ,
     "kube-proxy"
 ]
+
+categories = [
+    "kubernetes"
+]
+
 +++
 
 ## 导读

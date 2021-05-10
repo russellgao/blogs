@@ -8,6 +8,10 @@ draft = false
 tags = [
     "设计模式"
 ]
+
+categories = [
+    "other"
+]
 +++
 
 ## 导读

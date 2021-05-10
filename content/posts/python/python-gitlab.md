@@ -9,6 +9,11 @@ tags = [
     "gitlab",
     "python"
 ]
+
+categories = [
+    "python"
+]
+
 +++
 
 ## 导读

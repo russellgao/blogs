@@ -9,6 +9,11 @@ tags = [
     "kubernetes",
     "pod"
 ,]
+
+categories = [
+    "kubernetes"
+]
+
 +++
 
 ## Pod的定义文件

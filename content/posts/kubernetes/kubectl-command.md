@@ -10,6 +10,11 @@ tags = [
     "kubectl" ,
     "cli"
 ]
+
+categories = [
+    "kubernetes"
+]
+
 +++
 
 ## 导读

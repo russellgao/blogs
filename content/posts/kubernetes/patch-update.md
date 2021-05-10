@@ -11,6 +11,10 @@ tags = [
     "patch",
     "update"
 ]
+categories = [
+    "kubernetes"
+]
+
 +++
 
 ## 导读
