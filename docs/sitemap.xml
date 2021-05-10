@@ -2,14 +2,13 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://russellgao.cn/categories/</loc><lastmod>2021-05-10T13:54:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://russellgao.cn/tags/cue/</loc><lastmod>2021-05-10T13:54:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://russellgao.cn/categories/cue/</loc><lastmod>2021-05-10T13:54:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://russellgao.cn/cue-intro/</loc><lastmod>2021-05-10T13:54:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://russellgao.cn/tags/golang/</loc><lastmod>2021-05-10T13:54:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://russellgao.cn/tags/kubernetes/</loc><lastmod>2021-05-10T13:54:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://russellgao.cn/posts/</loc><lastmod>2021-05-10T13:54:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://russellgao.cn/tags/</loc><lastmod>2021-05-10T13:54:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://russellgao.cn/categories/</loc><lastmod>2021-05-10T17:19:28&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://russellgao.cn/tags/cue/</loc><lastmod>2021-05-10T17:19:28&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://russellgao.cn/categories/cue/</loc><lastmod>2021-05-10T17:19:28&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://russellgao.cn/cue-intro/</loc><lastmod>2021-05-10T17:19:28&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://russellgao.cn/tags/golang/</loc><lastmod>2021-05-10T17:19:28&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://russellgao.cn/posts/</loc><lastmod>2021-05-10T17:19:28&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://russellgao.cn/tags/</loc><lastmod>2021-05-10T17:19:28&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://russellgao.cn/tags/linux/</loc><lastmod>2021-05-10T13:54:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://russellgao.cn/categories/linux/</loc><lastmod>2021-05-10T13:54:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://russellgao.cn/tags/yum/</loc><lastmod>2021-05-10T13:54:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
@@ -36,6 +35,7 @@
             <loc>https://russellgao.cn/go-goroutine-print/</loc><lastmod>2021-05-10T13:54:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://russellgao.cn/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/</loc><lastmod>2021-05-10T13:54:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://russellgao.cn/tags/kind/</loc><lastmod>2021-05-10T13:54:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://russellgao.cn/tags/kubernetes/</loc><lastmod>2021-05-10T13:54:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://russellgao.cn/categories/kubernetes/</loc><lastmod>2021-05-10T13:54:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://russellgao.cn/k8s-kind/</loc><lastmod>2021-05-10T13:54:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://russellgao.cn/python-decorator/</loc><lastmod>2021-05-10T13:54:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
@@ -100,6 +100,7 @@
             <loc>https://russellgao.cn/categories/istio/</loc><lastmod>2021-05-10T13:54:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://russellgao.cn/elk/</loc><lastmod>2021-05-10T13:54:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://russellgao.cn/tags/defer/</loc><lastmod>2021-05-10T13:54:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://russellgao.cn/about/</loc><lastmod>2021-05-10T15:27:08&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://russellgao.cn/defer/</loc><lastmod>2021-05-10T13:54:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://russellgao.cn/oracle/</loc><lastmod>2021-05-10T13:54:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://russellgao.cn/pod%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E/</loc><lastmod>2020-06-18T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>

@@ -25,6 +25,9 @@
 ## 转载说明
 如需转载，请加注原文出处。
 
+## 读书笔记
+平时会阅读一些书籍，把读书笔记整理到了 [github](https://github.com/russellgao/reading-notes)，有兴趣者可以一起交流。
+
 ## 随笔记录
 - https://github.com/russellgao/blog
 - https://github.com/russellgao/blogs

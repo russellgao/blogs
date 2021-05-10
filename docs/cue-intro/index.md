@@ -476,6 +476,8 @@ outer: [string]: inner: int
 }
 ```
 
+## 总结
+这里简单的介绍了什么是CUE以及基本用法，可以和 JSON、YAML 等工具进行对比理解。后面的文档会介绍 kubernetes 是如何使用 CUE 工具的。
 
 ## 参考
 - https://cuelang.org/docs/tutorials/tour/intro/

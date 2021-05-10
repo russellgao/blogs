@@ -4,15 +4,7 @@
         <link>https://russellgao.cn/tags/kubernetes/</link>
         <description>kubernetes - Tag - 大大很二</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
-            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Sat, 08 May 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/tags/kubernetes/" rel="self" type="application/rss+xml" /><item>
-    <title>CUE是何方神圣?</title>
-    <link>https://russellgao.cn/cue-intro/</link>
-    <pubDate>Sat, 08 May 2021 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://russellgao.cn/cue-intro/</guid>
-    <description><![CDATA[导读  本片文章主要介绍 CUE 的基本概念，CUE 是什么以及可以做些什么，通过一些 demo 演示了基本的用法，适合小白入门阅读。
- 什么是CUE C(Configure：配置) , U(Unify：统一) , E(Execute：执行) 。]]></description>
-</item><item>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Sat, 06 Feb 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/tags/kubernetes/" rel="self" type="application/rss+xml" /><item>
     <title>在本地如何玩转kubernetes? - kind</title>
     <link>https://russellgao.cn/k8s-kind/</link>
     <pubDate>Sat, 06 Feb 2021 00:00:00 &#43;0000</pubDate>
