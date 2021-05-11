@@ -4,7 +4,14 @@
         <link>https://russellgao.cn/categories/kubernetes/</link>
         <description>kubernetes - 分类 - 大大很二</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
-            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Sat, 06 Feb 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/categories/kubernetes/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Mon, 10 May 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/categories/kubernetes/" rel="self" type="application/rss+xml" /><item>
+    <title>CUE 是如何在 Kubernetes 中使用的</title>
+    <link>https://russellgao.cn/cue-kubernetes/</link>
+    <pubDate>Mon, 10 May 2021 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://russellgao.cn/cue-kubernetes/</guid>
+    <description><![CDATA[导读  本文是基于上一篇 CUE是何方神圣 基本介绍后，结合 kubernetes ，看看 kubernetes 是如何使用 CUE 的，内容主要来自 官方教程 。]]></description>
+</item><item>
     <title>在本地如何玩转kubernetes? - kind</title>
     <link>https://russellgao.cn/k8s-kind/</link>
     <pubDate>Sat, 06 Feb 2021 00:00:00 &#43;0000</pubDate>

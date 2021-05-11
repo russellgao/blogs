@@ -4,7 +4,14 @@
         <link>https://russellgao.cn/posts/</link>
         <description>所有文章 | 大大很二</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
-            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Sat, 08 May 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Mon, 10 May 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>CUE 是如何在 Kubernetes 中使用的</title>
+    <link>https://russellgao.cn/cue-kubernetes/</link>
+    <pubDate>Mon, 10 May 2021 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://russellgao.cn/cue-kubernetes/</guid>
+    <description><![CDATA[导读  本文是基于上一篇 CUE是何方神圣 基本介绍后，结合 kubernetes ，看看 kubernetes 是如何使用 CUE 的，内容主要来自 官方教程 。]]></description>
+</item><item>
     <title>CUE是何方神圣?</title>
     <link>https://russellgao.cn/cue-intro/</link>
     <pubDate>Sat, 08 May 2021 00:00:00 &#43;0000</pubDate>
@@ -76,12 +83,5 @@ Kafka 是一个快速、可扩展的、高吞吐的、可容错的分布式“�
     <guid>https://russellgao.cn/git-command/</guid>
     <description><![CDATA[导读  这篇文章主要记录了 git 的一些常用命令，后续会持续补充更新。
  常用命令 检出代码 1  git clone url -b git_branch   查看分支 1  git branch -a   创建分支 1  git branch xxx   删除本地分支 1  git branch -d xxxxx   检出分支 1  git checkout git_branch   拉取代码 1  git pull   把修改文件提交到缓冲区 1  git add &lt;filename&gt;   本地提交 1  git commit -m &#34;代码提交信息&#34;   推送代码 1 2  git push origin local_branch:remote_branch 例 : git push origin release/release:release/release   合并代码 1  git merge origin/remote   cherry pick 1  git cherry-pick commit_id   跟踪 1 2  git branch --set-upstream-to=remote_branch local_branch 例 git branch --set-upstream-to=origin/release/release release/release   丢弃本地修改 1 2  git checkout -- file 例 git checkout -- test.]]></description>
-</item><item>
-    <title>docker 原理之本地存储</title>
-    <link>https://russellgao.cn/docker-local-storage/</link>
-    <pubDate>Wed, 09 Dec 2020 00:00:00 &#43;0000</pubDate>
-    <author>作者</author>
-    <guid>https://russellgao.cn/docker-local-storage/</guid>
-    <description><![CDATA[导读  在前面的文章docker 原理之存储驱动中简单的介绍了 Docker 的存储驱动，这篇文章接着讲存储，目前的 docker 版本中默认的是 overlay2 ，所以这篇文章就以 overlay2 为例带大家看看，在我们执行 docker build ，docker pull，docker run 等命令时本地存储有何变化。]]></description>
 </item></channel>
 </rss>

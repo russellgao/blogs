@@ -5,35 +5,35 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>关于我 - 大大很二</title><meta name="Description" content="about-me"><meta property="og:title" content="关于我" />
-<meta property="og:description" content="about-me" />
+        <title>CUE 是如何在 Kubernetes 中使用的 - 大大很二</title><meta name="Description" content="用技术改变世界"><meta property="og:title" content="CUE 是如何在 Kubernetes 中使用的" />
+<meta property="og:description" content="导读  本文是基于上一篇 CUE是何方神圣 基本介绍后，结合 kubernetes ，看看 kubernetes 是如何使用 CUE 的，内容主要来自 官方教程 。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://russellgao.cn/about/" /><meta property="og:image" content="https://russellgao.cn/images/profile.jpg"/><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2020-11-08T00:00:00&#43;00:00" />
+<meta property="og:url" content="https://russellgao.cn/cue-kubernetes/" /><meta property="og:image" content="https://russellgao.cn/images/profile.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-05-10T00:00:00&#43;00:00" />
 <meta property="article:modified_time" content="2021-05-11T14:18:56&#43;08:00" /><meta property="og:site_name" content="大大很二" />
 
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://russellgao.cn/images/profile.jpg"/>
 
-<meta name="twitter:title" content="关于我"/>
-<meta name="twitter:description" content="about-me"/>
+<meta name="twitter:title" content="CUE 是如何在 Kubernetes 中使用的"/>
+<meta name="twitter:description" content="导读  本文是基于上一篇 CUE是何方神圣 基本介绍后，结合 kubernetes ，看看 kubernetes 是如何使用 CUE 的，内容主要来自 官方教程 。"/>
 <meta name="application-name" content="russellgao">
-<meta name="apple-mobile-web-app-title" content="russellgao"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://gitee.com/russellgao/blogs-image/raw/master/images/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://russellgao.cn/about/" /><link rel="prev" href="https://russellgao.cn/defer/" /><link rel="next" href="https://russellgao.cn/elk/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+<meta name="apple-mobile-web-app-title" content="russellgao"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://gitee.com/russellgao/blogs-image/raw/master/images/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://russellgao.cn/cue-kubernetes/" /><link rel="prev" href="https://russellgao.cn/cue-intro/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "关于我",
+        "headline": "CUE 是如何在 Kubernetes 中使用的",
         "inLanguage": "zh-cn",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/russellgao.cn\/about\/"
-        },"genre": "posts","wordcount":  26 ,
-        "url": "https:\/\/russellgao.cn\/about\/","datePublished": "2020-11-08T00:00:00+00:00","dateModified": "2021-05-11T14:18:56+08:00","publisher": {
+            "@id": "https:\/\/russellgao.cn\/cue-kubernetes\/"
+        },"genre": "posts","keywords": "kubernetes, cue","wordcount":  15 ,
+        "url": "https:\/\/russellgao.cn\/cue-kubernetes\/","datePublished": "2021-05-10T00:00:00+00:00","dateModified": "2021-05-11T14:18:56+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
                 "name": "russellgao"
-            },"description": "about-me"
+            },"description": ""
     }
     </script></head>
     <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
@@ -51,7 +51,7 @@
         title="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png" /><span id="id-1" class="typeit"></span></a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/"> 首页 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item active" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+            <div class="menu-inner"><a class="menu-item" href="/"> 首页 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
                         <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
                             <i class="fas fa-search fa-fw"></i>
@@ -116,73 +116,27 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animated flipInX">关于我</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-08">2020-11-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 26 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;<span id="/about/" class="leancloud_visitors" data-flag-title="关于我">
+        </div><article class="page single"><h1 class="single-title animated flipInX">CUE 是如何在 Kubernetes 中使用的</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/cue/"><i class="far fa-folder fa-fw"></i>cue</a>&nbsp;<a href="/categories/kubernetes/"><i class="far fa-folder fa-fw"></i>kubernetes</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-05-10">2021-05-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 15 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;<span id="/cue-kubernetes/" class="leancloud_visitors" data-flag-title="CUE 是如何在 Kubernetes 中使用的">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
-        </div><div class="featured-image"><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://gitee.com/russellgao/blogs-image/raw/master/images/about/climb.jpeg"
-        data-srcset="https://gitee.com/russellgao/blogs-image/raw/master/images/about/climb.jpeg, https://gitee.com/russellgao/blogs-image/raw/master/images/about/climb.jpeg 1.5x, https://gitee.com/russellgao/blogs-image/raw/master/images/about/climb.jpeg 2x"
-        data-sizes="auto"
-        alt="https://gitee.com/russellgao/blogs-image/raw/master/images/about/climb.jpeg"
-        title="about-me" /></div><div class="details toc" id="toc-static"  kept="true">
+        </div><div class="details toc" id="toc-static"  kept="true">
                 <div class="details-summary toc-title">
                     <span>目录</span>
                     <span><i class="details-icon fas fa-angle-right"></i></span>
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ol>
-    <li><a href="#简介">简介</a></li>
-    <li><a href="#关注领域">关注领域</a></li>
-    <li><a href="#个人公众号">个人公众号</a></li>
-    <li><a href="#投稿">投稿</a>
-      <ol>
-        <li><a href="#投稿指南">投稿指南</a></li>
-      </ol>
-    </li>
-    <li><a href="#原创申明">原创申明</a></li>
-    <li><a href="#转载说明">转载说明</a></li>
-    <li><a href="#读书笔记">读书笔记</a></li>
-    <li><a href="#随笔记录">随笔记录</a></li>
+    <li><a href="#导读">导读</a></li>
   </ol>
 </nav></div>
-            </div><div class="content" id="content"><h2 id="简介">简介</h2>
-<p>高维宗（russellgao），现就职于上海海鼎信息工程股份有限公司，担任运维开发经理。</p>
-<h2 id="关注领域">关注领域</h2>
-<p>专注于devops，aiops，golong，python，kubernetes，servicemesh，云原生，算法等领域，热衷于参与开源软件和开源社区。</p>
-<h2 id="个人公众号">个人公众号</h2>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.jpg"
-        data-srcset="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.jpg, https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.jpg 1.5x, https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.jpg 2x"
-        data-sizes="auto"
-        alt="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.jpg"
-        title="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.jpg" /></p>
-<h2 id="投稿">投稿</h2>
-<p>如果有好的文章需要分享也可以投稿给作者哟！</p>
-<h3 id="投稿指南">投稿指南</h3>
-<ul>
-<li>文章须为原创的技术文章</li>
-<li>须包含作者的姓名，公司头衔和简要介绍</li>
-<li>须通过在 github 提交 <a href="https://github.com/russellgao/blogs/pulls" target="_blank" rel="noopener noreffer">PR</a> 的方式提供</li>
-</ul>
-<h2 id="原创申明">原创申明</h2>
-<p>本博客上的所有文档均为原创，在写入过程中不免参考其他人优秀的文章，一般都会在文末申明参考的文章，如有侵犯到您的权益请联系作者第一时间修改。</p>
-<h2 id="转载说明">转载说明</h2>
-<p>如需转载，请加注原文出处。</p>
-<h2 id="读书笔记">读书笔记</h2>
-<p>平时会阅读一些书籍，把读书笔记整理到了 <a href="https://github.com/russellgao/reading-notes" target="_blank" rel="noopener noreffer">github</a>，有兴趣者可以一起交流。</p>
-<h2 id="随笔记录">随笔记录</h2>
-<ul>
-<li><a href="https://github.com/russellgao/blog">https://github.com/russellgao/blog</a></li>
-<li><a href="https://github.com/russellgao/blogs">https://github.com/russellgao/blogs</a></li>
-<li><a href="https://github.com/russellgao/algorithm">https://github.com/russellgao/algorithm</a></li>
-</ul>
+            </div><div class="content" id="content"><h2 id="导读">导读</h2>
+<blockquote>
+<p>本文是基于上一篇 <a href="https://russellgao.cn/cue-intro/" target="_blank" rel="noopener noreffer">CUE是何方神圣</a> 基本介绍后，结合 kubernetes ，看看 kubernetes 是如何使用 CUE 的，内容主要来自 <a href="https://github.com/cuelang/cue/tree/master/doc/tutorial/kubernetes" target="_blank" rel="noopener noreffer">官方教程</a> 。</p>
+<p>希望学完本篇内容之后可以对 CUE 有一个感性的认知。</p>
+</blockquote>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
@@ -193,23 +147,22 @@
         </div>
         <div class="post-info-line">
             <div class="post-info-md"><span>
-                            <a class="link-to-markdown" href="/about/index.md" target="_blank">阅读原始文档</a>
+                            <a class="link-to-markdown" href="/cue-kubernetes/index.md" target="_blank">阅读原始文档</a>
                         </span></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://russellgao.cn/about/" data-title="关于我"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://russellgao.cn/about/"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://russellgao.cn/about/" data-title="关于我" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://russellgao.cn/about/" data-title="关于我"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://russellgao.cn/about/" data-title="关于我" data-image="https://gitee.com/russellgao/blogs-image/raw/master/images/about/climb.jpeg"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Myspace" data-sharer="myspace" data-url="https://russellgao.cn/about/" data-title="关于我" data-description="about-me"><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://russellgao.cn/about/" data-title="关于我" data-description="about-me"><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="https://russellgao.cn/about/" data-title="关于我"><i class="fab fa-evernote fa-fw"></i></a></span>
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://russellgao.cn/cue-kubernetes/" data-title="CUE 是如何在 Kubernetes 中使用的" data-hashtags="kubernetes,cue"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://russellgao.cn/cue-kubernetes/" data-hashtag="kubernetes"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://russellgao.cn/cue-kubernetes/" data-title="CUE 是如何在 Kubernetes 中使用的" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://russellgao.cn/cue-kubernetes/" data-title="CUE 是如何在 Kubernetes 中使用的"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://russellgao.cn/cue-kubernetes/" data-title="CUE 是如何在 Kubernetes 中使用的"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Myspace" data-sharer="myspace" data-url="https://russellgao.cn/cue-kubernetes/" data-title="CUE 是如何在 Kubernetes 中使用的" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://russellgao.cn/cue-kubernetes/" data-title="CUE 是如何在 Kubernetes 中使用的" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="https://russellgao.cn/cue-kubernetes/" data-title="CUE 是如何在 Kubernetes 中使用的"><i class="fab fa-evernote fa-fw"></i></a></span>
             </div>
         </div>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/kubernetes/">kubernetes</a>,&nbsp;<a href="/tags/cue/">cue</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="/defer/" class="prev" rel="prev" title="细谈 Golang 中那些设计优美的细节-defer"><i class="fas fa-angle-left fa-fw"></i>细谈 Golang 中那些设计优美的细节-defer</a>
-            <a href="/elk/" class="next" rel="next" title="istio中的ELK实践">istio中的ELK实践<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="/cue-intro/" class="prev" rel="prev" title="CUE是何方神圣?"><i class="fas fa-angle-left fa-fw"></i>CUE是何方神圣?</a></div>
 </div>
 <div id="comments"><div id="valine" class="comment"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
