@@ -8,10 +8,10 @@
         <title>kubernetes 中patch与update比较 - 大大很二</title><meta name="Description" content="kubernetes 中patch与update比较"><meta property="og:title" content="kubernetes 中patch与update比较" />
 <meta property="og:description" content="kubernetes 中patch与update比较" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://russellgao.cn/patch-update/" />
-<meta property="og:image" content="https://russellgao.cn/images/profile.jpg"/>
-<meta property="article:published_time" content="2020-11-21T00:00:00+00:00" />
-<meta property="article:modified_time" content="2021-05-10T13:54:39+08:00" /><meta property="og:site_name" content="大大很二" />
+<meta property="og:url" content="https://russellgao.cn/patch-update/" /><meta property="og:image" content="https://russellgao.cn/images/profile.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-11-21T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2021-05-10T13:54:39&#43;08:00" /><meta property="og:site_name" content="大大很二" />
+
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://russellgao.cn/images/profile.jpg"/>
 
@@ -238,7 +238,7 @@
 </div>
 </div><p>显然，这个策略并不适合我们对一些列表深层的字段做更新，更适用于大片段的覆盖更新。</p>
 <p>不过对于 labels/annotations 这些 map 类型的元素更新，merge patch 是可以单独指定 key-value 操作的，相比于 json patch 方便一些，写起来也更加直观：</p>
-<p>kubectl patch deployment/foo &ndash;type='merge&rsquo; -p &lsquo;{&ldquo;metadata&rdquo;:{&ldquo;labels&rdquo;:{&ldquo;test-key&rdquo;:&ldquo;foo&rdquo;}}}&rsquo;</p>
+<p>kubectl patch deployment/foo &ndash;type=&lsquo;merge&rsquo; -p &lsquo;{&ldquo;metadata&rdquo;:{&ldquo;labels&rdquo;:{&ldquo;test-key&rdquo;:&ldquo;foo&rdquo;}}}&rsquo;</p>
 <h3 id="strategic-merge-patch">strategic merge patch</h3>
 <p>这种 patch 策略并没有一个通用的 RFC 标准，而是 K8s 独有的，不过相比前两种而言却更为强大的。</p>
 <p>我们先从 K8s 源码看起，在 K8s 原生资源的数据结构定义中额外定义了一些的策略注解。比如以下这个截取了 podSpec 中针对 containers 列表的定义</p>
@@ -325,7 +325,7 @@
                 Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
             </noscript></div></article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.83.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
                 </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/russellgao" target="_blank">高维宗(russellgao)</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
                     <span class="icp"><a href="http://beian.miit.gov.cn/" target="_blank">沪ICP备2020034038号</a></span></div>
         </div>

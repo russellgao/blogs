@@ -8,10 +8,10 @@
         <title>pod 配置文件说明 - 大大很二</title><meta name="Description" content="pod 配置文件说明"><meta property="og:title" content="pod 配置文件说明" />
 <meta property="og:description" content="pod 配置文件说明" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://russellgao.cn/pod%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E/" />
-<meta property="og:image" content="https://russellgao.cn/images/profile.jpg"/>
-<meta property="article:published_time" content="2020-06-18T00:00:00+00:00" />
-<meta property="article:modified_time" content="2020-06-18T00:00:00+00:00" /><meta property="og:site_name" content="大大很二" />
+<meta property="og:url" content="https://russellgao.cn/pod%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E/" /><meta property="og:image" content="https://russellgao.cn/images/profile.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-06-18T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2020-06-18T00:00:00&#43;00:00" /><meta property="og:site_name" content="大大很二" />
+
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://russellgao.cn/images/profile.jpg"/>
 
@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/russellgao.cn\/pod%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E\/"
-        },"genre": "posts","keywords": "kubernetes, pod","wordcount":  365 ,
+        },"genre": "posts","keywords": "kubernetes, pod","wordcount":  375 ,
         "url": "https:\/\/russellgao.cn\/pod%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E\/","datePublished": "2020-06-18T00:00:00+00:00","dateModified": "2020-06-18T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -118,7 +118,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">pod 配置文件说明</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/kubernetes/"><i class="far fa-folder fa-fw"></i>kubernetes</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-06-18">2020-06-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 365 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-06-18">2020-06-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 375 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;<span id="/pod%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E/" class="leancloud_visitors" data-flag-title="pod 配置文件说明">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
@@ -273,139 +273,139 @@
 </span><span class="lnt">135
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>v1<span class="w">
-</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>Pod<span class="w">
-</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>string<span class="w">
-</span><span class="w">  </span><span class="k">namaspace</span><span class="p">:</span><span class="w"> </span>string<span class="w">
-</span><span class="w">  </span><span class="k">labels</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>string<span class="w">
-</span><span class="w">  </span><span class="k">annotations</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>string<span class="w">
-</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">containers</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>string<span class="w">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1</span><span class="w">
+</span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Pod</span><span class="w">
+</span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">string</span><span class="w">
+</span><span class="w">  </span><span class="nt">namaspace</span><span class="p">:</span><span class="w"> </span><span class="l">string</span><span class="w">
+</span><span class="w">  </span><span class="nt">labels</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">string</span><span class="w">
+</span><span class="w">  </span><span class="nt">annotations</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">string</span><span class="w">
+</span><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">containers</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">string</span><span class="w">
 </span><span class="w">    </span><span class="c"># 使用的镜像</span><span class="w">
-</span><span class="w">    </span><span class="k">image</span><span class="p">:</span><span class="w"> </span>string<span class="w">
-</span><span class="w">    </span><span class="k">imagePullPolicy</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>Always<span class="w"> </span>|<span class="w"> </span>Never<span class="w"> </span>|<span class="w"> </span>IfNotPresent<span class="p">]</span><span class="w">
-</span><span class="w">    </span><span class="k">command</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>string<span class="p">]</span><span class="w">
-</span><span class="w">    </span><span class="k">args</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>string<span class="p">]</span><span class="w">
+</span><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">string</span><span class="w">
+</span><span class="w">    </span><span class="nt">imagePullPolicy</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="l">Always | Never | IfNotPresent]</span><span class="w">
+</span><span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="l">string]</span><span class="w">
+</span><span class="w">    </span><span class="nt">args</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="l">string]</span><span class="w">
 </span><span class="w">    </span><span class="c"># 工作目录</span><span class="w">
-</span><span class="w">    </span><span class="k">workingDir</span><span class="p">:</span><span class="w"> </span>string<span class="w">
-</span><span class="w">    </span><span class="k">volumeMounts</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>string<span class="w">
-</span><span class="w">      </span><span class="k">mountPath</span><span class="p">:</span><span class="w"> </span>string<span class="w">
-</span><span class="w">      </span><span class="k">readOnly</span><span class="p">:</span><span class="w"> </span>boolean<span class="w">
-</span><span class="w">    </span><span class="k">ports</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>string<span class="w">
-</span><span class="w">      </span><span class="k">containerPort</span><span class="p">:</span><span class="w"> </span>int<span class="w">
-</span><span class="w">      </span><span class="k">hostPort</span><span class="p">:</span><span class="w"> </span>int<span class="w">
-</span><span class="w">      </span><span class="k">protocol</span><span class="p">:</span><span class="w"> </span>string<span class="w">
-</span><span class="w">    </span><span class="k">env</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>string<span class="w">
-</span><span class="w">      </span><span class="k">value</span><span class="p">:</span><span class="w"> </span>string<span class="w">
-</span><span class="w">    </span><span class="k">resources</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">limits</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="k">cpu</span><span class="p">:</span><span class="w"> </span>string<span class="w">
-</span><span class="w">        </span><span class="k">memory</span><span class="p">:</span><span class="w"> </span>string<span class="w">
-</span><span class="w">      </span><span class="k">requests</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="k">cpu</span><span class="p">:</span><span class="w"> </span>string<span class="w">
-</span><span class="w">        </span><span class="k">memory</span><span class="p">:</span><span class="w"> </span>string<span class="w">
-</span><span class="w">    </span><span class="k">livenessProbe</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">exec</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="k">command</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>string<span class="p">]</span><span class="w">
-</span><span class="w">      </span><span class="k">httpGet</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="k">path</span><span class="p">:</span><span class="w"> </span>string<span class="w">
-</span><span class="w">        </span><span class="k">port</span><span class="p">:</span><span class="w"> </span>int<span class="w">
-</span><span class="w">        </span><span class="k">host</span><span class="p">:</span><span class="w"> </span>string<span class="w">
-</span><span class="w">        </span><span class="k">scheme</span><span class="p">:</span><span class="w"> </span>string<span class="w">
-</span><span class="w">        </span><span class="k">httpHeaders</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>string<span class="w">
-</span><span class="w">          </span><span class="k">value</span><span class="p">:</span><span class="w"> </span>string<span class="w">
-</span><span class="w">      </span><span class="k">tcpSocket</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="k">port</span><span class="p">:</span><span class="w"> </span>int<span class="w">
+</span><span class="w">    </span><span class="nt">workingDir</span><span class="p">:</span><span class="w"> </span><span class="l">string</span><span class="w">
+</span><span class="w">    </span><span class="nt">volumeMounts</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">string</span><span class="w">
+</span><span class="w">      </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l">string</span><span class="w">
+</span><span class="w">      </span><span class="nt">readOnly</span><span class="p">:</span><span class="w"> </span><span class="l">boolean</span><span class="w">
+</span><span class="w">    </span><span class="nt">ports</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">string</span><span class="w">
+</span><span class="w">      </span><span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="l">int</span><span class="w">
+</span><span class="w">      </span><span class="nt">hostPort</span><span class="p">:</span><span class="w"> </span><span class="l">int</span><span class="w">
+</span><span class="w">      </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l">string</span><span class="w">
+</span><span class="w">    </span><span class="nt">env</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">string</span><span class="w">
+</span><span class="w">      </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l">string</span><span class="w">
+</span><span class="w">    </span><span class="nt">resources</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">limits</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l">string</span><span class="w">
+</span><span class="w">        </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l">string</span><span class="w">
+</span><span class="w">      </span><span class="nt">requests</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l">string</span><span class="w">
+</span><span class="w">        </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l">string</span><span class="w">
+</span><span class="w">    </span><span class="nt">livenessProbe</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">exec</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="l">string]</span><span class="w">
+</span><span class="w">      </span><span class="nt">httpGet</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l">string</span><span class="w">
+</span><span class="w">        </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l">int</span><span class="w">
+</span><span class="w">        </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l">string</span><span class="w">
+</span><span class="w">        </span><span class="nt">scheme</span><span class="p">:</span><span class="w"> </span><span class="l">string</span><span class="w">
+</span><span class="w">        </span><span class="nt">httpHeaders</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">string</span><span class="w">
+</span><span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l">string</span><span class="w">
+</span><span class="w">      </span><span class="nt">tcpSocket</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l">int</span><span class="w">
 </span><span class="w">      </span><span class="c"># 多久之后去检查</span><span class="w">
-</span><span class="w">      </span><span class="k">initialDelaySeconds</span><span class="p">:</span><span class="w"> </span>number<span class="w">
+</span><span class="w">      </span><span class="nt">initialDelaySeconds</span><span class="p">:</span><span class="w"> </span><span class="l">number</span><span class="w">
 </span><span class="w">      </span><span class="c"># 健康检查超时时间</span><span class="w">
-</span><span class="w">      </span><span class="k">timeoutSeconds</span><span class="p">:</span><span class="w"> </span>number<span class="w">
+</span><span class="w">      </span><span class="nt">timeoutSeconds</span><span class="p">:</span><span class="w"> </span><span class="l">number</span><span class="w">
 </span><span class="w">      </span><span class="c"># 多长时间检查一次</span><span class="w">
-</span><span class="w">      </span><span class="k">periodSeconds</span><span class="p">:</span><span class="w"> </span>number<span class="w">
+</span><span class="w">      </span><span class="nt">periodSeconds</span><span class="p">:</span><span class="w"> </span><span class="l">number</span><span class="w">
 </span><span class="w">      </span><span class="c"># 成功的阀值，检查几次成功才算成功</span><span class="w">
-</span><span class="w">      </span><span class="k">successThreshold</span><span class="p">:</span><span class="w"> </span><span class="m">0</span><span class="w">
+</span><span class="w">      </span><span class="nt">successThreshold</span><span class="p">:</span><span class="w"> </span><span class="m">0</span><span class="w">
 </span><span class="w">      </span><span class="c"># 失败的阀值，检查几次失败才算失败</span><span class="w">
-</span><span class="w">      </span><span class="k">failureThreshold</span><span class="p">:</span><span class="w"> </span><span class="m">0</span><span class="w">
-</span><span class="w">    </span><span class="k">securityContext</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">failureThreshold</span><span class="p">:</span><span class="w"> </span><span class="m">0</span><span class="w">
+</span><span class="w">    </span><span class="nt">securityContext</span><span class="p">:</span><span class="w">
 </span><span class="w">    </span><span class="c"># 详细参见 pod_SecurityContext 章节</span><span class="w">
 </span><span class="w">    </span><span class="c"># securityContext 可以配置pod 或者container 级别</span><span class="w">
-</span><span class="w">      </span><span class="k">runAsUser</span><span class="p">:</span><span class="w"> </span><span class="m">1000</span><span class="w">
+</span><span class="w">      </span><span class="nt">runAsUser</span><span class="p">:</span><span class="w"> </span><span class="m">1000</span><span class="w">
 </span><span class="w">    </span><span class="c"># 运行的用户</span><span class="w">
-</span><span class="w">      </span><span class="k">runAsGroup</span><span class="p">:</span><span class="w"> </span><span class="m">3000</span><span class="w">
+</span><span class="w">      </span><span class="nt">runAsGroup</span><span class="p">:</span><span class="w"> </span><span class="m">3000</span><span class="w">
 </span><span class="w">    </span><span class="c"># 运行的用户组</span><span class="w">
-</span><span class="w">      </span><span class="k">fsGroup</span><span class="p">:</span><span class="w"> </span><span class="m">2000</span><span class="w">
-</span><span class="w">      </span><span class="k">privileged</span><span class="p">:</span><span class="w"> </span>bool<span class="w">
+</span><span class="w">      </span><span class="nt">fsGroup</span><span class="p">:</span><span class="w"> </span><span class="m">2000</span><span class="w">
+</span><span class="w">      </span><span class="nt">privileged</span><span class="p">:</span><span class="w"> </span><span class="l">bool</span><span class="w">
 </span><span class="w">    </span><span class="c"># 是否以privileged 权限运行，即这是这个进程拥有特权</span><span class="w">
-</span><span class="w">      </span><span class="k">allowPrivilegeEscalation</span><span class="p">:</span><span class="w"> </span>bool<span class="w">
+</span><span class="w">      </span><span class="nt">allowPrivilegeEscalation</span><span class="p">:</span><span class="w"> </span><span class="l">bool</span><span class="w">
 </span><span class="w">    </span><span class="c"># 控制一个进程是否能比其父进程获取更多的权限，如果一个容器以privileged权限运行或具有CAP_SYS_ADMIN权限，则AllowPrivilegeEscalation的值将总是true</span><span class="w">
-</span><span class="w">      </span><span class="k">capabilities</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="k">add</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&#34;NET_ADMIN&#34;</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;SYS_TIME&#34;</span><span class="p">,</span><span class="s2">&#34;...&#34;</span><span class="p">]</span><span class="w">
+</span><span class="w">      </span><span class="nt">capabilities</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">add</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&#34;NET_ADMIN&#34;</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;SYS_TIME&#34;</span><span class="p">,</span><span class="s2">&#34;...&#34;</span><span class="p">]</span><span class="w">
 </span><span class="w">    </span><span class="c"># 给某个特定的进程privileged权限，而不用给root用户所有的privileged权限</span><span class="w">
-</span><span class="w">    </span><span class="k">terminationMessagePath</span><span class="p">:</span><span class="w"> </span>/dev/termination-log<span class="w">
+</span><span class="w">    </span><span class="nt">terminationMessagePath</span><span class="p">:</span><span class="w"> </span><span class="l">/dev/termination-log</span><span class="w">
 </span><span class="w">    </span><span class="c"># 容器终止的日志文件</span><span class="w">
-</span><span class="w">    </span><span class="k">terminationMessagePolicy</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>File<span class="w"> </span>|<span class="w"> </span>FallbackToLogsOnError<span class="p">]</span><span class="w">
+</span><span class="w">    </span><span class="nt">terminationMessagePolicy</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="l">File | FallbackToLogsOnError]</span><span class="w">
 </span><span class="w">    </span><span class="c"># 默认为File, 容器终止消息输出到文件</span><span class="w">
-</span><span class="w">  </span><span class="k">restartPolicy</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>Always<span class="w"> </span>|<span class="w"> </span>Never<span class="w"> </span>|<span class="w"> </span>OnFailure<span class="p">]</span><span class="w">
+</span><span class="w">  </span><span class="nt">restartPolicy</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="l">Always | Never | OnFailure]</span><span class="w">
 </span><span class="w"></span><span class="c"># 重启策略，默认为 Always</span><span class="w">
-</span><span class="w">  </span><span class="k">nodeSelector</span><span class="p">:</span><span class="w"> </span>object<span class="w">
+</span><span class="w">  </span><span class="nt">nodeSelector</span><span class="p">:</span><span class="w"> </span><span class="l">object</span><span class="w">
 </span><span class="w"></span><span class="c"># 通过label 选取node</span><span class="w">
-</span><span class="w">  </span><span class="k">dnsPolicy</span><span class="p">:</span><span class="w"> </span>ClusterFirst<span class="w">
+</span><span class="w">  </span><span class="nt">dnsPolicy</span><span class="p">:</span><span class="w"> </span><span class="l">ClusterFirst</span><span class="w">
 </span><span class="w"></span><span class="c"># pod 的 dns 策略 ,可以配置如下值</span><span class="w">
 </span><span class="w"></span><span class="c"># Default : 和宿主机的DNS完全一致</span><span class="w">
 </span><span class="w"></span><span class="c"># ClusterFirst: 把集群的DNS写入到Pod的DNS配置，但是如果设置了HostNetwork=true，就会强制设置为Default</span><span class="w">
 </span><span class="w"></span><span class="c"># ClusterFirstWithHostNet: 把集群的DNS写入到Pod的DNS配置，不管是否设置HostNetwork</span><span class="w">
 </span><span class="w"></span><span class="c"># None: 忽略所有的DNS配置，一般来说，设置了None之后会自己手动再设置dnsConfig</span><span class="w">
-</span><span class="w">  </span><span class="k">enableServiceLinks</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">  </span><span class="nt">enableServiceLinks</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
 </span><span class="w"></span><span class="c"># Kubernetes支持两种查找服务的主要模式: 环境变量和DNS, 如果不需要服务环境变量, 将 `enableServiceLinks` 标志设置为 `false` 来禁用此模式</span><span class="w">
-</span><span class="w">  </span><span class="k">terminationGracePeriodSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">10</span><span class="w">
+</span><span class="w">  </span><span class="nt">terminationGracePeriodSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">10</span><span class="w">
 </span><span class="w"></span><span class="c"># 发出删除pod指令后多久之后真正的删除pod</span><span class="w">
-</span><span class="w">  </span><span class="k">serviceAccountName</span><span class="p">:</span><span class="w"> </span>jenkins<span class="w">
+</span><span class="w">  </span><span class="nt">serviceAccountName</span><span class="p">:</span><span class="w"> </span><span class="l">jenkins</span><span class="w">
 </span><span class="w"></span><span class="c"># pod 绑定的serviceAccount</span><span class="w">
-</span><span class="w">  </span><span class="k">priorityClassName</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">priorityClassName</span><span class="p">:</span><span class="w">
 </span><span class="w"></span><span class="c"># 给pod 设置优先级，参考 : https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/</span><span class="w">
-</span><span class="w">  </span><span class="k">schedulerName</span><span class="p">:</span><span class="w"> </span>default-scheduler<span class="w">
+</span><span class="w">  </span><span class="nt">schedulerName</span><span class="p">:</span><span class="w"> </span><span class="l">default-scheduler</span><span class="w">
 </span><span class="w"></span><span class="c"># 如果不配置则使用kubernetes 默认的default-scheduler，如果这个不满足要求则可以自定义一个scheduler</span><span class="w">
 </span><span class="w"></span><span class="c"># https://kubernetes.io/zh/docs/tasks/administer-cluster/configure-multiple-schedulers/</span><span class="w">
-</span><span class="w">  </span><span class="k">affinity</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">affinity</span><span class="p">:</span><span class="w">
 </span><span class="w"></span><span class="c"># 亲和性设置</span><span class="w">
-</span><span class="w">  </span><span class="k">tolerations</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="k">effect</span><span class="p">:</span><span class="w"> </span>NoExecute<span class="w">
-</span><span class="w">    </span><span class="k">key</span><span class="p">:</span><span class="w"> </span>node.kubernetes.io/not-ready<span class="w">
-</span><span class="w">    </span><span class="k">operator</span><span class="p">:</span><span class="w"> </span>Exists<span class="w">
-</span><span class="w">    </span><span class="k">tolerationSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">300</span><span class="w">
-</span><span class="w">  </span>- <span class="k">effect</span><span class="p">:</span><span class="w"> </span>NoExecute<span class="w">
-</span><span class="w">    </span><span class="k">key</span><span class="p">:</span><span class="w"> </span>node.kubernetes.io/unreachable<span class="w">
-</span><span class="w">    </span><span class="k">operator</span><span class="p">:</span><span class="w"> </span>Exists<span class="w">
-</span><span class="w">    </span><span class="k">tolerationSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">300</span><span class="w">
+</span><span class="w">  </span><span class="nt">tolerations</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">effect</span><span class="p">:</span><span class="w"> </span><span class="l">NoExecute</span><span class="w">
+</span><span class="w">    </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l">node.kubernetes.io/not-ready</span><span class="w">
+</span><span class="w">    </span><span class="nt">operator</span><span class="p">:</span><span class="w"> </span><span class="l">Exists</span><span class="w">
+</span><span class="w">    </span><span class="nt">tolerationSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">300</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">effect</span><span class="p">:</span><span class="w"> </span><span class="l">NoExecute</span><span class="w">
+</span><span class="w">    </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l">node.kubernetes.io/unreachable</span><span class="w">
+</span><span class="w">    </span><span class="nt">operator</span><span class="p">:</span><span class="w"> </span><span class="l">Exists</span><span class="w">
+</span><span class="w">    </span><span class="nt">tolerationSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">300</span><span class="w">
 </span><span class="w"></span><span class="c"># 容忍设置</span><span class="w">
-</span><span class="w">  </span><span class="k">imagePullSecrets</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>string<span class="w">
+</span><span class="w">  </span><span class="nt">imagePullSecrets</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">string</span><span class="w">
 </span><span class="w"></span><span class="c"># 镜像拉取策略</span><span class="w">
-</span><span class="w">  </span><span class="k">hostNetwork</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span><span class="w">  </span><span class="nt">hostNetwork</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
 </span><span class="w"></span><span class="c"># 是否使用主机网络，默认为false，如果为true，pod直接用主机网络，在pod中可以看到主机的网络接口</span><span class="w">
-</span><span class="w">  </span><span class="k">volumes</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>string<span class="w">
-</span><span class="w">    </span><span class="k">emptyDir</span><span class="p">:</span><span class="w"> </span>{}<span class="w">
-</span><span class="w">    </span><span class="k">hostPath</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">path</span><span class="p">:</span><span class="w"> </span>string<span class="w">
-</span><span class="w">    </span><span class="k">secret</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">secretName</span><span class="p">:</span><span class="w"> </span>string<span class="w">
-</span><span class="w">      </span><span class="k">items</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span>- <span class="k">key</span><span class="p">:</span><span class="w"> </span>string<span class="w">
-</span><span class="w">        </span><span class="k">path</span><span class="p">:</span><span class="w"> </span>string<span class="w">
-</span><span class="w">    </span><span class="k">configMap</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>string<span class="w">
-</span><span class="w">      </span><span class="k">items</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span>- <span class="k">key</span><span class="p">:</span><span class="w"> </span>string<span class="w">
-</span><span class="w">        </span><span class="k">path</span><span class="p">:</span><span class="w"> </span>string<span class="w">
+</span><span class="w">  </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">string</span><span class="w">
+</span><span class="w">    </span><span class="nt">emptyDir</span><span class="p">:</span><span class="w"> </span>{}<span class="w">
+</span><span class="w">    </span><span class="nt">hostPath</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l">string</span><span class="w">
+</span><span class="w">    </span><span class="nt">secret</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">secretName</span><span class="p">:</span><span class="w"> </span><span class="l">string</span><span class="w">
+</span><span class="w">      </span><span class="nt">items</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l">string</span><span class="w">
+</span><span class="w">        </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l">string</span><span class="w">
+</span><span class="w">    </span><span class="nt">configMap</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">string</span><span class="w">
+</span><span class="w">      </span><span class="nt">items</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l">string</span><span class="w">
+</span><span class="w">        </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l">string</span><span class="w">
 </span><span class="w"></span><span class="c"># 目录挂载</span><span class="w">
 </span><span class="w">
 </span></code></pre></td></tr></table>
@@ -541,132 +541,132 @@
 </span><span class="lnt">126
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>v1<span class="w">
-</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>Pod<span class="w">
-</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">labels</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">app</span><span class="p">:</span><span class="w"> </span>elastic-cluster<span class="w">
-</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>enode<span class="m">-0</span><span class="w">
-</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">containers</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="k">env</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>ES_JAVA_OPTS<span class="w">
-</span><span class="w">      </span><span class="k">valueFrom</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="k">configMapKeyRef</span><span class="p">:</span><span class="w">
-</span><span class="w">          </span><span class="k">key</span><span class="p">:</span><span class="w"> </span>ES_JAVA_OPTS<span class="w">
-</span><span class="w">          </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>es-config<span class="w">
-</span><span class="w">    </span><span class="k">image</span><span class="p">:</span><span class="w"> </span>elasticsearch<span class="p">:</span><span class="m">6.7.2</span><span class="w">
-</span><span class="w">    </span><span class="k">imagePullPolicy</span><span class="p">:</span><span class="w"> </span>IfNotPresent<span class="w">
-</span><span class="w">    </span><span class="k">livenessProbe</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">failureThreshold</span><span class="p">:</span><span class="w"> </span><span class="m">3</span><span class="w">
-</span><span class="w">      </span><span class="k">httpGet</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="k">path</span><span class="p">:</span><span class="w"> </span>/_cluster/health<span class="p">?</span>local=<span class="kc">true</span><span class="w">
-</span><span class="w">        </span><span class="k">port</span><span class="p">:</span><span class="w"> </span><span class="m">9200</span><span class="w">
-</span><span class="w">        </span><span class="k">scheme</span><span class="p">:</span><span class="w"> </span>HTTP<span class="w">
-</span><span class="w">      </span><span class="k">periodSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">600</span><span class="w">
-</span><span class="w">      </span><span class="k">successThreshold</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
-</span><span class="w">      </span><span class="k">timeoutSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
-</span><span class="w">    </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>elasticsearch<span class="w">
-</span><span class="w">    </span><span class="k">ports</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span>- <span class="k">containerPort</span><span class="p">:</span><span class="w"> </span><span class="m">9200</span><span class="w">
-</span><span class="w">      </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>es-http<span class="w">
-</span><span class="w">      </span><span class="k">protocol</span><span class="p">:</span><span class="w"> </span>TCP<span class="w">
-</span><span class="w">    </span>- <span class="k">containerPort</span><span class="p">:</span><span class="w"> </span><span class="m">9300</span><span class="w">
-</span><span class="w">      </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>es-transport<span class="w">
-</span><span class="w">      </span><span class="k">protocol</span><span class="p">:</span><span class="w"> </span>TCP<span class="w">
-</span><span class="w">    </span><span class="k">readinessProbe</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">failureThreshold</span><span class="p">:</span><span class="w"> </span><span class="m">3</span><span class="w">
-</span><span class="w">      </span><span class="k">httpGet</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="k">path</span><span class="p">:</span><span class="w"> </span>/_cluster/health<span class="p">?</span>local=<span class="kc">true</span><span class="w">
-</span><span class="w">        </span><span class="k">port</span><span class="p">:</span><span class="w"> </span><span class="m">9200</span><span class="w">
-</span><span class="w">        </span><span class="k">scheme</span><span class="p">:</span><span class="w"> </span>HTTP<span class="w">
-</span><span class="w">      </span><span class="k">initialDelaySeconds</span><span class="p">:</span><span class="w"> </span><span class="m">30</span><span class="w">
-</span><span class="w">      </span><span class="k">periodSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">20</span><span class="w">
-</span><span class="w">      </span><span class="k">successThreshold</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
-</span><span class="w">      </span><span class="k">timeoutSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
-</span><span class="w">    </span><span class="k">resources</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">limits</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="k">cpu</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;2&#34;</span><span class="w">
-</span><span class="w">        </span><span class="k">memory</span><span class="p">:</span><span class="w"> </span>10Gi<span class="w">
-</span><span class="w">      </span><span class="k">requests</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="k">cpu</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;1&#34;</span><span class="w">
-</span><span class="w">        </span><span class="k">memory</span><span class="p">:</span><span class="w"> </span>8Gi<span class="w">
-</span><span class="w">    </span><span class="k">securityContext</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">capabilities</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="k">add</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span>- IPC_LOCK<span class="w">
-</span><span class="w">        </span>- SYS_RESOURCE<span class="w">
-</span><span class="w">      </span><span class="k">privileged</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="w">      </span><span class="k">runAsUser</span><span class="p">:</span><span class="w"> </span><span class="m">1000</span><span class="w">
-</span><span class="w">    </span><span class="k">terminationMessagePath</span><span class="p">:</span><span class="w"> </span>/dev/termination-log<span class="w">
-</span><span class="w">    </span><span class="k">terminationMessagePolicy</span><span class="p">:</span><span class="w"> </span>File<span class="w">
-</span><span class="w">    </span><span class="k">volumeMounts</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span>- <span class="k">mountPath</span><span class="p">:</span><span class="w"> </span>/usr/share/elasticsearch/data<span class="w">
-</span><span class="w">      </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>es-data<span class="w">
-</span><span class="w">    </span>- <span class="k">mountPath</span><span class="p">:</span><span class="w"> </span>/usr/share/elasticsearch/logs<span class="w">
-</span><span class="w">      </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>es-logs<span class="w">
-</span><span class="w">    </span>- <span class="k">mountPath</span><span class="p">:</span><span class="w"> </span>/usr/share/elasticsearch/config/elasticsearch.yml<span class="w">
-</span><span class="w">      </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>elasticsearch-config<span class="w">
-</span><span class="w">      </span><span class="k">subPath</span><span class="p">:</span><span class="w"> </span>elasticsearch.yml<span class="w">
-</span><span class="w">    </span>- <span class="k">mountPath</span><span class="p">:</span><span class="w"> </span>/var/run/secrets/kubernetes.io/serviceaccount<span class="w">
-</span><span class="w">      </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>default-token-k4r6f<span class="w">
-</span><span class="w">      </span><span class="k">readOnly</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="w">  </span><span class="k">dnsPolicy</span><span class="p">:</span><span class="w"> </span>ClusterFirst<span class="w">
-</span><span class="w">  </span><span class="k">enableServiceLinks</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="w">  </span><span class="k">hostname</span><span class="p">:</span><span class="w"> </span>enode<span class="m">-0</span><span class="w">
-</span><span class="w">  </span><span class="k">initContainers</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="k">command</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span>- sysctl<span class="w">
-</span><span class="w">    </span>- -w<span class="w">
-</span><span class="w">    </span>- vm.max_map_count=<span class="m">262144</span><span class="w">
-</span><span class="w">    </span><span class="k">image</span><span class="p">:</span><span class="w"> </span>busybox<span class="w">
-</span><span class="w">    </span><span class="k">imagePullPolicy</span><span class="p">:</span><span class="w"> </span>IfNotPresent<span class="w">
-</span><span class="w">    </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>init-sysctl<span class="w">
-</span><span class="w">    </span><span class="k">resources</span><span class="p">:</span><span class="w"> </span>{}<span class="w">
-</span><span class="w">    </span><span class="k">securityContext</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">privileged</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="w">    </span><span class="k">terminationMessagePath</span><span class="p">:</span><span class="w"> </span>/dev/termination-log<span class="w">
-</span><span class="w">    </span><span class="k">terminationMessagePolicy</span><span class="p">:</span><span class="w"> </span>File<span class="w">
-</span><span class="w">    </span><span class="k">volumeMounts</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span>- <span class="k">mountPath</span><span class="p">:</span><span class="w"> </span>/var/run/secrets/kubernetes.io/serviceaccount<span class="w">
-</span><span class="w">      </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>default-token-k4r6f<span class="w">
-</span><span class="w">      </span><span class="k">readOnly</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="w">  </span><span class="k">priority</span><span class="p">:</span><span class="w"> </span><span class="m">0</span><span class="w">
-</span><span class="w">  </span><span class="k">restartPolicy</span><span class="p">:</span><span class="w"> </span>Always<span class="w">
-</span><span class="w">  </span><span class="k">schedulerName</span><span class="p">:</span><span class="w"> </span>default-scheduler<span class="w">
-</span><span class="w">  </span><span class="k">securityContext</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">fsGroup</span><span class="p">:</span><span class="w"> </span><span class="m">1000</span><span class="w">
-</span><span class="w">  </span><span class="k">serviceAccount</span><span class="p">:</span><span class="w"> </span>default<span class="w">
-</span><span class="w">  </span><span class="k">serviceAccountName</span><span class="p">:</span><span class="w"> </span>default<span class="w">
-</span><span class="w">  </span><span class="k">subdomain</span><span class="p">:</span><span class="w"> </span>elasticsearch-cluster<span class="w">
-</span><span class="w">  </span><span class="k">terminationGracePeriodSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">30</span><span class="w">
-</span><span class="w">  </span><span class="k">tolerations</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="k">effect</span><span class="p">:</span><span class="w"> </span>NoExecute<span class="w">
-</span><span class="w">    </span><span class="k">key</span><span class="p">:</span><span class="w"> </span>node.kubernetes.io/not-ready<span class="w">
-</span><span class="w">    </span><span class="k">operator</span><span class="p">:</span><span class="w"> </span>Exists<span class="w">
-</span><span class="w">    </span><span class="k">tolerationSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">300</span><span class="w">
-</span><span class="w">  </span>- <span class="k">effect</span><span class="p">:</span><span class="w"> </span>NoExecute<span class="w">
-</span><span class="w">    </span><span class="k">key</span><span class="p">:</span><span class="w"> </span>node.kubernetes.io/unreachable<span class="w">
-</span><span class="w">    </span><span class="k">operator</span><span class="p">:</span><span class="w"> </span>Exists<span class="w">
-</span><span class="w">    </span><span class="k">tolerationSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">300</span><span class="w">
-</span><span class="w">  </span><span class="k">volumes</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>es-data<span class="w">
-</span><span class="w">    </span><span class="k">persistentVolumeClaim</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">claimName</span><span class="p">:</span><span class="w"> </span>es-data-enode<span class="m">-0</span><span class="w">
-</span><span class="w">  </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>es-logs<span class="w">
-</span><span class="w">    </span><span class="k">persistentVolumeClaim</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">claimName</span><span class="p">:</span><span class="w"> </span>es-logs-enode<span class="m">-0</span><span class="w">
-</span><span class="w">  </span>- <span class="k">configMap</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">defaultMode</span><span class="p">:</span><span class="w"> </span><span class="m">420</span><span class="w">
-</span><span class="w">      </span><span class="k">items</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span>- <span class="k">key</span><span class="p">:</span><span class="w"> </span>elasticsearch.yml<span class="w">
-</span><span class="w">        </span><span class="k">path</span><span class="p">:</span><span class="w"> </span>elasticsearch.yml<span class="w">
-</span><span class="w">      </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>es-config<span class="w">
-</span><span class="w">    </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>elasticsearch-config<span class="w">
-</span><span class="w">  </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>default-token-k4r6f<span class="w">
-</span><span class="w">    </span><span class="k">secret</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">defaultMode</span><span class="p">:</span><span class="w"> </span><span class="m">420</span><span class="w">
-</span><span class="w">      </span><span class="k">secretName</span><span class="p">:</span><span class="w"> </span>default-token-k4r6f<span class="w">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1</span><span class="w">
+</span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Pod</span><span class="w">
+</span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">labels</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">elastic-cluster</span><span class="w">
+</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">enode-0</span><span class="w">
+</span><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">containers</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">env</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">ES_JAVA_OPTS</span><span class="w">
+</span><span class="w">      </span><span class="nt">valueFrom</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">configMapKeyRef</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l">ES_JAVA_OPTS</span><span class="w">
+</span><span class="w">          </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">es-config</span><span class="w">
+</span><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">elasticsearch:6.7.2</span><span class="w">
+</span><span class="w">    </span><span class="nt">imagePullPolicy</span><span class="p">:</span><span class="w"> </span><span class="l">IfNotPresent</span><span class="w">
+</span><span class="w">    </span><span class="nt">livenessProbe</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">failureThreshold</span><span class="p">:</span><span class="w"> </span><span class="m">3</span><span class="w">
+</span><span class="w">      </span><span class="nt">httpGet</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l">/_cluster/health?local=true</span><span class="w">
+</span><span class="w">        </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">9200</span><span class="w">
+</span><span class="w">        </span><span class="nt">scheme</span><span class="p">:</span><span class="w"> </span><span class="l">HTTP</span><span class="w">
+</span><span class="w">      </span><span class="nt">periodSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">600</span><span class="w">
+</span><span class="w">      </span><span class="nt">successThreshold</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">      </span><span class="nt">timeoutSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">elasticsearch</span><span class="w">
+</span><span class="w">    </span><span class="nt">ports</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="m">9200</span><span class="w">
+</span><span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">es-http</span><span class="w">
+</span><span class="w">      </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l">TCP</span><span class="w">
+</span><span class="w">    </span>- <span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="m">9300</span><span class="w">
+</span><span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">es-transport</span><span class="w">
+</span><span class="w">      </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l">TCP</span><span class="w">
+</span><span class="w">    </span><span class="nt">readinessProbe</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">failureThreshold</span><span class="p">:</span><span class="w"> </span><span class="m">3</span><span class="w">
+</span><span class="w">      </span><span class="nt">httpGet</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l">/_cluster/health?local=true</span><span class="w">
+</span><span class="w">        </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">9200</span><span class="w">
+</span><span class="w">        </span><span class="nt">scheme</span><span class="p">:</span><span class="w"> </span><span class="l">HTTP</span><span class="w">
+</span><span class="w">      </span><span class="nt">initialDelaySeconds</span><span class="p">:</span><span class="w"> </span><span class="m">30</span><span class="w">
+</span><span class="w">      </span><span class="nt">periodSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">20</span><span class="w">
+</span><span class="w">      </span><span class="nt">successThreshold</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">      </span><span class="nt">timeoutSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">    </span><span class="nt">resources</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">limits</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;2&#34;</span><span class="w">
+</span><span class="w">        </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l">10Gi</span><span class="w">
+</span><span class="w">      </span><span class="nt">requests</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;1&#34;</span><span class="w">
+</span><span class="w">        </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l">8Gi</span><span class="w">
+</span><span class="w">    </span><span class="nt">securityContext</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">capabilities</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">add</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span>- <span class="l">IPC_LOCK</span><span class="w">
+</span><span class="w">        </span>- <span class="l">SYS_RESOURCE</span><span class="w">
+</span><span class="w">      </span><span class="nt">privileged</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">      </span><span class="nt">runAsUser</span><span class="p">:</span><span class="w"> </span><span class="m">1000</span><span class="w">
+</span><span class="w">    </span><span class="nt">terminationMessagePath</span><span class="p">:</span><span class="w"> </span><span class="l">/dev/termination-log</span><span class="w">
+</span><span class="w">    </span><span class="nt">terminationMessagePolicy</span><span class="p">:</span><span class="w"> </span><span class="l">File</span><span class="w">
+</span><span class="w">    </span><span class="nt">volumeMounts</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l">/usr/share/elasticsearch/data</span><span class="w">
+</span><span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">es-data</span><span class="w">
+</span><span class="w">    </span>- <span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l">/usr/share/elasticsearch/logs</span><span class="w">
+</span><span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">es-logs</span><span class="w">
+</span><span class="w">    </span>- <span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l">/usr/share/elasticsearch/config/elasticsearch.yml</span><span class="w">
+</span><span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">elasticsearch-config</span><span class="w">
+</span><span class="w">      </span><span class="nt">subPath</span><span class="p">:</span><span class="w"> </span><span class="l">elasticsearch.yml</span><span class="w">
+</span><span class="w">    </span>- <span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l">/var/run/secrets/kubernetes.io/serviceaccount</span><span class="w">
+</span><span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">default-token-k4r6f</span><span class="w">
+</span><span class="w">      </span><span class="nt">readOnly</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">  </span><span class="nt">dnsPolicy</span><span class="p">:</span><span class="w"> </span><span class="l">ClusterFirst</span><span class="w">
+</span><span class="w">  </span><span class="nt">enableServiceLinks</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">  </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="l">enode-0</span><span class="w">
+</span><span class="w">  </span><span class="nt">initContainers</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">command</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="l">sysctl</span><span class="w">
+</span><span class="w">    </span>- -<span class="l">w</span><span class="w">
+</span><span class="w">    </span>- <span class="l">vm.max_map_count=262144</span><span class="w">
+</span><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">busybox</span><span class="w">
+</span><span class="w">    </span><span class="nt">imagePullPolicy</span><span class="p">:</span><span class="w"> </span><span class="l">IfNotPresent</span><span class="w">
+</span><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">init-sysctl</span><span class="w">
+</span><span class="w">    </span><span class="nt">resources</span><span class="p">:</span><span class="w"> </span>{}<span class="w">
+</span><span class="w">    </span><span class="nt">securityContext</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">privileged</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">    </span><span class="nt">terminationMessagePath</span><span class="p">:</span><span class="w"> </span><span class="l">/dev/termination-log</span><span class="w">
+</span><span class="w">    </span><span class="nt">terminationMessagePolicy</span><span class="p">:</span><span class="w"> </span><span class="l">File</span><span class="w">
+</span><span class="w">    </span><span class="nt">volumeMounts</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l">/var/run/secrets/kubernetes.io/serviceaccount</span><span class="w">
+</span><span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">default-token-k4r6f</span><span class="w">
+</span><span class="w">      </span><span class="nt">readOnly</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">  </span><span class="nt">priority</span><span class="p">:</span><span class="w"> </span><span class="m">0</span><span class="w">
+</span><span class="w">  </span><span class="nt">restartPolicy</span><span class="p">:</span><span class="w"> </span><span class="l">Always</span><span class="w">
+</span><span class="w">  </span><span class="nt">schedulerName</span><span class="p">:</span><span class="w"> </span><span class="l">default-scheduler</span><span class="w">
+</span><span class="w">  </span><span class="nt">securityContext</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">fsGroup</span><span class="p">:</span><span class="w"> </span><span class="m">1000</span><span class="w">
+</span><span class="w">  </span><span class="nt">serviceAccount</span><span class="p">:</span><span class="w"> </span><span class="l">default</span><span class="w">
+</span><span class="w">  </span><span class="nt">serviceAccountName</span><span class="p">:</span><span class="w"> </span><span class="l">default</span><span class="w">
+</span><span class="w">  </span><span class="nt">subdomain</span><span class="p">:</span><span class="w"> </span><span class="l">elasticsearch-cluster</span><span class="w">
+</span><span class="w">  </span><span class="nt">terminationGracePeriodSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">30</span><span class="w">
+</span><span class="w">  </span><span class="nt">tolerations</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">effect</span><span class="p">:</span><span class="w"> </span><span class="l">NoExecute</span><span class="w">
+</span><span class="w">    </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l">node.kubernetes.io/not-ready</span><span class="w">
+</span><span class="w">    </span><span class="nt">operator</span><span class="p">:</span><span class="w"> </span><span class="l">Exists</span><span class="w">
+</span><span class="w">    </span><span class="nt">tolerationSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">300</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">effect</span><span class="p">:</span><span class="w"> </span><span class="l">NoExecute</span><span class="w">
+</span><span class="w">    </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l">node.kubernetes.io/unreachable</span><span class="w">
+</span><span class="w">    </span><span class="nt">operator</span><span class="p">:</span><span class="w"> </span><span class="l">Exists</span><span class="w">
+</span><span class="w">    </span><span class="nt">tolerationSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">300</span><span class="w">
+</span><span class="w">  </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">es-data</span><span class="w">
+</span><span class="w">    </span><span class="nt">persistentVolumeClaim</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">claimName</span><span class="p">:</span><span class="w"> </span><span class="l">es-data-enode-0</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">es-logs</span><span class="w">
+</span><span class="w">    </span><span class="nt">persistentVolumeClaim</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">claimName</span><span class="p">:</span><span class="w"> </span><span class="l">es-logs-enode-0</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">configMap</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">defaultMode</span><span class="p">:</span><span class="w"> </span><span class="m">420</span><span class="w">
+</span><span class="w">      </span><span class="nt">items</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l">elasticsearch.yml</span><span class="w">
+</span><span class="w">        </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l">elasticsearch.yml</span><span class="w">
+</span><span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">es-config</span><span class="w">
+</span><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">elasticsearch-config</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">default-token-k4r6f</span><span class="w">
+</span><span class="w">    </span><span class="nt">secret</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">defaultMode</span><span class="p">:</span><span class="w"> </span><span class="m">420</span><span class="w">
+</span><span class="w">      </span><span class="nt">secretName</span><span class="p">:</span><span class="w"> </span><span class="l">default-token-k4r6f</span><span class="w">
 </span></code></pre></td></tr></table>
 </div>
 </div></div><div class="post-footer" id="post-footer">
@@ -701,7 +701,7 @@
                 Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
             </noscript></div></article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.83.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
                 </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/russellgao" target="_blank">高维宗(russellgao)</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
                     <span class="icp"><a href="http://beian.miit.gov.cn/" target="_blank">沪ICP备2020034038号</a></span></div>
         </div>

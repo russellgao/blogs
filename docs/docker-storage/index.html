@@ -8,10 +8,10 @@
         <title>docker 原理之存储驱动 - 大大很二</title><meta name="Description" content="docker 原理之存储驱动"><meta property="og:title" content="docker 原理之存储驱动" />
 <meta property="og:description" content="docker 原理之存储驱动" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://russellgao.cn/docker-storage/" />
-<meta property="og:image" content="https://russellgao.cn/images/profile.jpg"/>
-<meta property="article:published_time" content="2020-12-05T00:00:00+00:00" />
-<meta property="article:modified_time" content="2021-05-10T13:54:39+08:00" /><meta property="og:site_name" content="大大很二" />
+<meta property="og:url" content="https://russellgao.cn/docker-storage/" /><meta property="og:image" content="https://russellgao.cn/images/profile.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-12-05T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2021-05-10T13:54:39&#43;08:00" /><meta property="og:site_name" content="大大很二" />
+
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://russellgao.cn/images/profile.jpg"/>
 
@@ -266,48 +266,48 @@ Server:
 <table>
 <thead>
 <tr>
-<th align="center">存储驱动</th>
-<th align="center">特点</th>
-<th align="center">优点</th>
-<th align="center">缺点</th>
-<th align="center">适用场景</th>
+<th style="text-align:center">存储驱动</th>
+<th style="text-align:center">特点</th>
+<th style="text-align:center">优点</th>
+<th style="text-align:center">缺点</th>
+<th style="text-align:center">适用场景</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="center">AUFS</td>
-<td align="center">联合文件系统、未并入内核主线、文件级存储</td>
-<td align="center">作为docker的第一个存储驱动，已经有很长的历史，比较稳定，且在大量的生产中实践过，有较强的社区支持</td>
-<td align="center">有多层，在做写时复制操作时，如果文件比较大且存在比较低的层，可能会慢一些</td>
-<td align="center">大并发但少IO的场景</td>
+<td style="text-align:center">AUFS</td>
+<td style="text-align:center">联合文件系统、未并入内核主线、文件级存储</td>
+<td style="text-align:center">作为docker的第一个存储驱动，已经有很长的历史，比较稳定，且在大量的生产中实践过，有较强的社区支持</td>
+<td style="text-align:center">有多层，在做写时复制操作时，如果文件比较大且存在比较低的层，可能会慢一些</td>
+<td style="text-align:center">大并发但少IO的场景</td>
 </tr>
 <tr>
-<td align="center">overlayFS</td>
-<td align="center">联合文件系统、并入内核主线、文件级存储</td>
-<td align="center">只有两层</td>
-<td align="center">不管修改的内容大小都会复制整个文件，对大文件进行修改显示要比小文件消耗更多的时间</td>
-<td align="center">大并发但少IO的场景</td>
+<td style="text-align:center">overlayFS</td>
+<td style="text-align:center">联合文件系统、并入内核主线、文件级存储</td>
+<td style="text-align:center">只有两层</td>
+<td style="text-align:center">不管修改的内容大小都会复制整个文件，对大文件进行修改显示要比小文件消耗更多的时间</td>
+<td style="text-align:center">大并发但少IO的场景</td>
 </tr>
 <tr>
-<td align="center">Devicemapper</td>
-<td align="center">并入内核主线、块级存储</td>
-<td align="center">块级无论是大文件还是小文件都只复制需要修改的块，并不是整个文件</td>
-<td align="center">不支持共享存储，当有多个容器读同一个文件时，需要生成多个复本，在很多容器启停的情况下可能会导致磁盘溢出</td>
-<td align="center">适合io密集的场景</td>
+<td style="text-align:center">Devicemapper</td>
+<td style="text-align:center">并入内核主线、块级存储</td>
+<td style="text-align:center">块级无论是大文件还是小文件都只复制需要修改的块，并不是整个文件</td>
+<td style="text-align:center">不支持共享存储，当有多个容器读同一个文件时，需要生成多个复本，在很多容器启停的情况下可能会导致磁盘溢出</td>
+<td style="text-align:center">适合io密集的场景</td>
 </tr>
 <tr>
-<td align="center">Btrfs</td>
-<td align="center">并入linux内核、文件级存储</td>
-<td align="center">可以像devicemapper一样直接操作底层设备，支持动态添加设备</td>
-<td align="center">不支持共享存储，当有多个容器读同一个文件时，需要生成多个复本</td>
-<td align="center">不适合在高密度容器的paas平台上使用</td>
+<td style="text-align:center">Btrfs</td>
+<td style="text-align:center">并入linux内核、文件级存储</td>
+<td style="text-align:center">可以像devicemapper一样直接操作底层设备，支持动态添加设备</td>
+<td style="text-align:center">不支持共享存储，当有多个容器读同一个文件时，需要生成多个复本</td>
+<td style="text-align:center">不适合在高密度容器的paas平台上使用</td>
 </tr>
 <tr>
-<td align="center">ZFS</td>
-<td align="center">把所有设备集中到一个存储池中来进行管理</td>
-<td align="center">支持多个容器共享一个缓存块，适合内存大的环境</td>
-<td align="center">COW使用碎片化问题更加严重，文件在硬盘上的物理地址会变的不再连续，顺序读会变的性能比较差</td>
-<td align="center">适合paas和高密度的场景</td>
+<td style="text-align:center">ZFS</td>
+<td style="text-align:center">把所有设备集中到一个存储池中来进行管理</td>
+<td style="text-align:center">支持多个容器共享一个缓存块，适合内存大的环境</td>
+<td style="text-align:center">COW使用碎片化问题更加严重，文件在硬盘上的物理地址会变的不再连续，顺序读会变的性能比较差</td>
+<td style="text-align:center">适合paas和高密度的场景</td>
 </tr>
 </tbody>
 </table>
@@ -360,7 +360,7 @@ Server:
                 Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
             </noscript></div></article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.83.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
                 </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/russellgao" target="_blank">高维宗(russellgao)</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
                     <span class="icp"><a href="http://beian.miit.gov.cn/" target="_blank">沪ICP备2020034038号</a></span></div>
         </div>

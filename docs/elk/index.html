@@ -8,17 +8,17 @@
         <title>istio中的ELK实践 - 大大很二</title><meta name="Description" content="投稿到 servicemesh 社区的文章"><meta property="og:title" content="istio中的ELK实践" />
 <meta property="og:description" content="投稿到 servicemesh 社区的文章" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://russellgao.cn/elk/" />
-<meta property="og:image" content="https://russellgao.cn/images/profile.jpg"/>
-<meta property="article:published_time" content="2020-11-10T00:00:00+00:00" />
-<meta property="article:modified_time" content="2021-05-10T13:54:39+08:00" /><meta property="og:site_name" content="大大很二" />
+<meta property="og:url" content="https://russellgao.cn/elk/" /><meta property="og:image" content="https://russellgao.cn/images/profile.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-11-10T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2021-05-10T13:54:39&#43;08:00" /><meta property="og:site_name" content="大大很二" />
+
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://russellgao.cn/images/profile.jpg"/>
 
 <meta name="twitter:title" content="istio中的ELK实践"/>
 <meta name="twitter:description" content="投稿到 servicemesh 社区的文章"/>
 <meta name="application-name" content="russellgao">
-<meta name="apple-mobile-web-app-title" content="russellgao"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://gitee.com/russellgao/blogs-image/raw/master/images/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://russellgao.cn/elk/" /><link rel="prev" href="https://russellgao.cn/defer/" /><link rel="next" href="https://russellgao.cn/markdownemoji/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+<meta name="apple-mobile-web-app-title" content="russellgao"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://gitee.com/russellgao/blogs-image/raw/master/images/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://russellgao.cn/elk/" /><link rel="prev" href="https://russellgao.cn/about/" /><link rel="next" href="https://russellgao.cn/markdownemoji/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/russellgao.cn\/elk\/"
-        },"genre": "posts","keywords": "kubernetes, istio","wordcount":  852 ,
+        },"genre": "posts","keywords": "kubernetes, istio","wordcount":  1011 ,
         "url": "https:\/\/russellgao.cn\/elk\/","datePublished": "2020-11-10T00:00:00+00:00","dateModified": "2021-05-10T13:54:39+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -118,8 +118,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">istio中的ELK实践</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/istio/"><i class="far fa-folder fa-fw"></i>istio</a>&nbsp;<a href="/categories/kubernetes/"><i class="far fa-folder fa-fw"></i>kubernetes</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-10">2020-11-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 852 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;<span id="/elk/" class="leancloud_visitors" data-flag-title="istio中的ELK实践">
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-10">2020-11-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1011 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;<span id="/elk/" class="leancloud_visitors" data-flag-title="istio中的ELK实践">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="true">
@@ -243,19 +243,19 @@ metadata:
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>v1<span class="w">
-</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>Service<span class="w">
-</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>zookeeper-cluster<span class="w">
-</span><span class="w">  </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>logging<span class="w">
-</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">selector</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">app</span><span class="p">:</span><span class="w"> </span>zookeeper-cluster<span class="w">
-</span><span class="w">  </span><span class="k">ports</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>http<span class="w">
-</span><span class="w">      </span><span class="k">port</span><span class="p">:</span><span class="w"> </span><span class="m">2181</span><span class="w">
-</span><span class="w">      </span><span class="k">targetPort</span><span class="p">:</span><span class="w"> </span><span class="m">2181</span><span class="w">
-</span><span class="w">  </span><span class="k">type</span><span class="p">:</span><span class="w"> </span>ClusterIP<span class="w">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1</span><span class="w">
+</span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Service</span><span class="w">
+</span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">zookeeper-cluster</span><span class="w">
+</span><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">logging</span><span class="w">
+</span><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">selector</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">zookeeper-cluster</span><span class="w">
+</span><span class="w">  </span><span class="nt">ports</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">http</span><span class="w">
+</span><span class="w">      </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">2181</span><span class="w">
+</span><span class="w">      </span><span class="nt">targetPort</span><span class="p">:</span><span class="w"> </span><span class="m">2181</span><span class="w">
+</span><span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l">ClusterIP</span><span class="w">
 </span></code></pre></td></tr></table>
 </div>
 </div><ul>
@@ -277,14 +277,14 @@ metadata:
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>v1<span class="w">
-</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>ConfigMap<span class="w">
-</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>zookeeper-config<span class="w">
-</span><span class="w">  </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>logging<span class="w">
-</span><span class="w"></span><span class="k">data</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">ZOO_CONF_DIR</span><span class="p">:</span><span class="w"> </span>/conf<span class="w">
-</span><span class="w">  </span><span class="k">ZOO_PORT</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;2181&#34;</span><span class="w">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1</span><span class="w">
+</span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">ConfigMap</span><span class="w">
+</span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">zookeeper-config</span><span class="w">
+</span><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">logging</span><span class="w">
+</span><span class="w"></span><span class="nt">data</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">ZOO_CONF_DIR</span><span class="p">:</span><span class="w"> </span><span class="l">/conf</span><span class="w">
+</span><span class="w">  </span><span class="nt">ZOO_PORT</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;2181&#34;</span><span class="w">
 </span></code></pre></td></tr></table>
 </div>
 </div><ul>
@@ -344,52 +344,52 @@ metadata:
 </span><span class="lnt">46
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>apps/v1<span class="w">
-</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>StatefulSet<span class="w">
-</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w"> </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>zookeeper<span class="w">
-</span><span class="w"> </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>logging<span class="w">
-</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w"> </span><span class="k">serviceName</span><span class="p">:</span><span class="w"> </span>zookeeper-cluster<span class="w">
-</span><span class="w"> </span><span class="k">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
-</span><span class="w"> </span><span class="k">updateStrategy</span><span class="p">:</span><span class="w">
-</span><span class="w">   </span><span class="k">type</span><span class="p">:</span><span class="w"> </span>RollingUpdate<span class="w">
-</span><span class="w"> </span><span class="k">selector</span><span class="p">:</span><span class="w">
-</span><span class="w">   </span><span class="k">matchLabels</span><span class="p">:</span><span class="w">
-</span><span class="w">     </span><span class="k">app</span><span class="p">:</span><span class="w"> </span>zookeeper-cluster<span class="w">
-</span><span class="w"> </span><span class="k">template</span><span class="p">:</span><span class="w">
-</span><span class="w">   </span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">     </span><span class="k">labels</span><span class="p">:</span><span class="w">
-</span><span class="w">       </span><span class="k">app</span><span class="p">:</span><span class="w"> </span>zookeeper-cluster<span class="w">
-</span><span class="w">     </span><span class="k">annotations</span><span class="p">:</span><span class="w">
-</span><span class="w">       </span><span class="k">sidecar.istio.io/inject</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;false&#34;</span><span class="w">
-</span><span class="w">   </span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">     </span><span class="k">containers</span><span class="p">:</span><span class="w">
-</span><span class="w">       </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>zookeeper<span class="w">
-</span><span class="w">         </span><span class="k">resources</span><span class="p">:</span><span class="w">
-</span><span class="w">           </span><span class="k">requests</span><span class="p">:</span><span class="w">
-</span><span class="w">             </span><span class="k">cpu</span><span class="p">:</span><span class="w"> </span>10m<span class="w">
-</span><span class="w">             </span><span class="k">memory</span><span class="p">:</span><span class="w"> </span>100Mi<span class="w">
-</span><span class="w">           </span><span class="k">limits</span><span class="p">:</span><span class="w">
-</span><span class="w">             </span><span class="k">memory</span><span class="p">:</span><span class="w"> </span>200Mi<span class="w">
-</span><span class="w">         </span><span class="k">image</span><span class="p">:</span><span class="w"> </span>zookeeper<span class="w">
-</span><span class="w">         </span><span class="k">imagePullPolicy</span><span class="p">:</span><span class="w"> </span>IfNotPresent<span class="w">
-</span><span class="w">         </span><span class="k">envFrom</span><span class="p">:</span><span class="w">
-</span><span class="w">           </span>- <span class="k">configMapRef</span><span class="p">:</span><span class="w">
-</span><span class="w">               </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>zookeeper-config<span class="w">
-</span><span class="w">         </span><span class="k">readinessProbe</span><span class="p">:</span><span class="w">
-</span><span class="w">           </span><span class="k">tcpSocket</span><span class="p">:</span><span class="w">
-</span><span class="w">             </span><span class="k">port</span><span class="p">:</span><span class="w"> </span><span class="m">2181</span><span class="w">
-</span><span class="w">           </span><span class="k">initialDelaySeconds</span><span class="p">:</span><span class="w"> </span><span class="m">5</span><span class="w">
-</span><span class="w">           </span><span class="k">periodSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">10</span><span class="w">
-</span><span class="w">         </span><span class="k">livenessProbe</span><span class="p">:</span><span class="w">
-</span><span class="w">           </span><span class="k">tcpSocket</span><span class="p">:</span><span class="w">
-</span><span class="w">             </span><span class="k">port</span><span class="p">:</span><span class="w"> </span><span class="m">2181</span><span class="w">
-</span><span class="w">           </span><span class="k">initialDelaySeconds</span><span class="p">:</span><span class="w"> </span><span class="m">15</span><span class="w">
-</span><span class="w">           </span><span class="k">periodSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">20</span><span class="w">
-</span><span class="w">         </span><span class="k">ports</span><span class="p">:</span><span class="w">
-</span><span class="w">           </span>- <span class="k">containerPort</span><span class="p">:</span><span class="w"> </span><span class="m">2181</span><span class="w">
-</span><span class="w">             </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>zk-client<span class="w">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">apps/v1</span><span class="w">
+</span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">StatefulSet</span><span class="w">
+</span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">zookeeper</span><span class="w">
+</span><span class="w"> </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">logging</span><span class="w">
+</span><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="w"> </span><span class="nt">serviceName</span><span class="p">:</span><span class="w"> </span><span class="l">zookeeper-cluster</span><span class="w">
+</span><span class="w"> </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w"> </span><span class="nt">updateStrategy</span><span class="p">:</span><span class="w">
+</span><span class="w">   </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l">RollingUpdate</span><span class="w">
+</span><span class="w"> </span><span class="nt">selector</span><span class="p">:</span><span class="w">
+</span><span class="w">   </span><span class="nt">matchLabels</span><span class="p">:</span><span class="w">
+</span><span class="w">     </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">zookeeper-cluster</span><span class="w">
+</span><span class="w"> </span><span class="nt">template</span><span class="p">:</span><span class="w">
+</span><span class="w">   </span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">     </span><span class="nt">labels</span><span class="p">:</span><span class="w">
+</span><span class="w">       </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">zookeeper-cluster</span><span class="w">
+</span><span class="w">     </span><span class="nt">annotations</span><span class="p">:</span><span class="w">
+</span><span class="w">       </span><span class="nt">sidecar.istio.io/inject</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;false&#34;</span><span class="w">
+</span><span class="w">   </span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">     </span><span class="nt">containers</span><span class="p">:</span><span class="w">
+</span><span class="w">       </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">zookeeper</span><span class="w">
+</span><span class="w">         </span><span class="nt">resources</span><span class="p">:</span><span class="w">
+</span><span class="w">           </span><span class="nt">requests</span><span class="p">:</span><span class="w">
+</span><span class="w">             </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l">10m</span><span class="w">
+</span><span class="w">             </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l">100Mi</span><span class="w">
+</span><span class="w">           </span><span class="nt">limits</span><span class="p">:</span><span class="w">
+</span><span class="w">             </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l">200Mi</span><span class="w">
+</span><span class="w">         </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">zookeeper</span><span class="w">
+</span><span class="w">         </span><span class="nt">imagePullPolicy</span><span class="p">:</span><span class="w"> </span><span class="l">IfNotPresent</span><span class="w">
+</span><span class="w">         </span><span class="nt">envFrom</span><span class="p">:</span><span class="w">
+</span><span class="w">           </span>- <span class="nt">configMapRef</span><span class="p">:</span><span class="w">
+</span><span class="w">               </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">zookeeper-config</span><span class="w">
+</span><span class="w">         </span><span class="nt">readinessProbe</span><span class="p">:</span><span class="w">
+</span><span class="w">           </span><span class="nt">tcpSocket</span><span class="p">:</span><span class="w">
+</span><span class="w">             </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">2181</span><span class="w">
+</span><span class="w">           </span><span class="nt">initialDelaySeconds</span><span class="p">:</span><span class="w"> </span><span class="m">5</span><span class="w">
+</span><span class="w">           </span><span class="nt">periodSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">10</span><span class="w">
+</span><span class="w">         </span><span class="nt">livenessProbe</span><span class="p">:</span><span class="w">
+</span><span class="w">           </span><span class="nt">tcpSocket</span><span class="p">:</span><span class="w">
+</span><span class="w">             </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">2181</span><span class="w">
+</span><span class="w">           </span><span class="nt">initialDelaySeconds</span><span class="p">:</span><span class="w"> </span><span class="m">15</span><span class="w">
+</span><span class="w">           </span><span class="nt">periodSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">20</span><span class="w">
+</span><span class="w">         </span><span class="nt">ports</span><span class="p">:</span><span class="w">
+</span><span class="w">           </span>- <span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="m">2181</span><span class="w">
+</span><span class="w">             </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">zk-client</span><span class="w">
 </span></code></pre></td></tr></table>
 </div>
 </div></li>
@@ -430,32 +430,32 @@ metadata:
 </span><span class="lnt">26
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>v1<span class="w">
-</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>Service<span class="w">
-</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>bootstrap-kafka<span class="w">
-</span><span class="w">  </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>logging<span class="w">
-</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">clusterIP</span><span class="p">:</span><span class="w"> </span>None<span class="w">
-</span><span class="w">  </span><span class="k">ports</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="k">port</span><span class="p">:</span><span class="w"> </span><span class="m">9092</span><span class="w">
-</span><span class="w">  </span><span class="k">selector</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">app</span><span class="p">:</span><span class="w"> </span>kafka<span class="w">
-</span><span class="w">   
-</span><span class="w"></span>---<span class="w">
-</span><span class="w"></span><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>v1<span class="w">
-</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>Service<span class="w">
-</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>kafka-cluster<span class="w">
-</span><span class="w">  </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>logging<span class="w">
-</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">ports</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>http<span class="w">
-</span><span class="w">    </span><span class="k">targetPort</span><span class="p">:</span><span class="w"> </span><span class="m">9092</span><span class="w">
-</span><span class="w">    </span><span class="k">port</span><span class="p">:</span><span class="w"> </span><span class="m">9092</span><span class="w">
-</span><span class="w">  </span><span class="k">selector</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">app</span><span class="p">:</span><span class="w"> </span>kafka<span class="w">
-</span><span class="w">  </span><span class="k">type</span><span class="p">:</span><span class="w"> </span>ClusterIP<span class="w">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1</span><span class="w">
+</span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Service</span><span class="w">
+</span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">bootstrap-kafka</span><span class="w">
+</span><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">logging</span><span class="w">
+</span><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">clusterIP</span><span class="p">:</span><span class="w"> </span><span class="l">None</span><span class="w">
+</span><span class="w">  </span><span class="nt">ports</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">9092</span><span class="w">
+</span><span class="w">  </span><span class="nt">selector</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">kafka</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="nn">---</span><span class="w">
+</span><span class="w"></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1</span><span class="w">
+</span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Service</span><span class="w">
+</span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">kafka-cluster</span><span class="w">
+</span><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">logging</span><span class="w">
+</span><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">ports</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">http</span><span class="w">
+</span><span class="w">    </span><span class="nt">targetPort</span><span class="p">:</span><span class="w"> </span><span class="m">9092</span><span class="w">
+</span><span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">9092</span><span class="w">
+</span><span class="w">  </span><span class="nt">selector</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">kafka</span><span class="w">
+</span><span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l">ClusterIP</span><span class="w">
 </span></code></pre></td></tr></table>
 </div>
 </div><ul>
@@ -485,17 +485,17 @@ metadata:
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>v1<span class="w">
-</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>ConfigMap<span class="w">
-</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>kafka-config<span class="w">
-</span><span class="w">  </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>logging<span class="w">
-</span><span class="w"></span><span class="k">data</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">KAFKA_ADVERTISED_LISTENERS</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;PLAINTEXT://kafka-cluster:9092&#34;</span><span class="w">
-</span><span class="w">  </span><span class="k">KAFKA_LISTENERS</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;PLAINTEXT://0.0.0.0:9092&#34;</span><span class="w">
-</span><span class="w">  </span><span class="k">KAFKA_ZOOKEEPER_CONNECT</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;zookeeper-cluster:2181&#34;</span><span class="w">
-</span><span class="w">  </span><span class="k">KAFKA_LOG_RETENTION_HOURS</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;48&#34;</span><span class="w">
-</span><span class="w">  </span><span class="k">KAFKA_NUM_PARTITIONS</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;30&#34;</span><span class="w">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1</span><span class="w">
+</span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">ConfigMap</span><span class="w">
+</span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">kafka-config</span><span class="w">
+</span><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">logging</span><span class="w">
+</span><span class="w"></span><span class="nt">data</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">KAFKA_ADVERTISED_LISTENERS</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;PLAINTEXT://kafka-cluster:9092&#34;</span><span class="w">
+</span><span class="w">  </span><span class="nt">KAFKA_LISTENERS</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;PLAINTEXT://0.0.0.0:9092&#34;</span><span class="w">
+</span><span class="w">  </span><span class="nt">KAFKA_ZOOKEEPER_CONNECT</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;zookeeper-cluster:2181&#34;</span><span class="w">
+</span><span class="w">  </span><span class="nt">KAFKA_LOG_RETENTION_HOURS</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;48&#34;</span><span class="w">
+</span><span class="w">  </span><span class="nt">KAFKA_NUM_PARTITIONS</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;30&#34;</span><span class="w">
 </span></code></pre></td></tr></table>
 </div>
 </div><ul>
@@ -558,51 +558,51 @@ metadata:
 </span><span class="lnt">45
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>apps/v1<span class="w">
-</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>StatefulSet<span class="w">
-</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>kafka<span class="w">
-</span><span class="w">  </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>logging<span class="w">
-</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">selector</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">matchLabels</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">app</span><span class="p">:</span><span class="w"> </span>kafka<span class="w">
-</span><span class="w">  </span><span class="k">serviceName</span><span class="p">:</span><span class="w"> </span>bootstrap-kafka<span class="w">
-</span><span class="w">  </span><span class="k">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
-</span><span class="w">  </span><span class="k">template</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">labels</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="k">app</span><span class="p">:</span><span class="w"> </span>kafka<span class="w">
-</span><span class="w">      </span><span class="k">annotations</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="k">sidecar.istio.io/inject</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;false&#34;</span><span class="w">
-</span><span class="w">    </span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">containers</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>kafka-broker<span class="w">
-</span><span class="w">        </span><span class="k">image</span><span class="p">:</span><span class="w"> </span>russellgao/kafka<span class="p">:</span><span class="m">2.12-2.0.1</span><span class="w">
-</span><span class="w">        </span><span class="k">ports</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>inside<span class="w">
-</span><span class="w">          </span><span class="k">containerPort</span><span class="p">:</span><span class="w"> </span><span class="m">9092</span><span class="w">
-</span><span class="w">        </span><span class="k">resources</span><span class="p">:</span><span class="w">
-</span><span class="w">          </span><span class="k">requests</span><span class="p">:</span><span class="w">
-</span><span class="w">            </span><span class="k">cpu</span><span class="p">:</span><span class="w"> </span><span class="m">0.1</span><span class="w">
-</span><span class="w">            </span><span class="k">memory</span><span class="p">:</span><span class="w"> </span>1024Mi<span class="w">
-</span><span class="w">          </span><span class="k">limits</span><span class="p">:</span><span class="w">
-</span><span class="w">            </span><span class="k">memory</span><span class="p">:</span><span class="w"> </span>3069Mi<span class="w">
-</span><span class="w">        </span><span class="k">readinessProbe</span><span class="p">:</span><span class="w">
-</span><span class="w">          </span><span class="k">tcpSocket</span><span class="p">:</span><span class="w">
-</span><span class="w">            </span><span class="k">port</span><span class="p">:</span><span class="w"> </span><span class="m">9092</span><span class="w">
-</span><span class="w">          </span><span class="k">timeoutSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
-</span><span class="w">          </span><span class="k">initialDelaySeconds</span><span class="p">:</span><span class="w"> </span><span class="m">5</span><span class="w">
-</span><span class="w">          </span><span class="k">periodSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">10</span><span class="w">
-</span><span class="w">        </span><span class="k">livenessProbe</span><span class="p">:</span><span class="w">
-</span><span class="w">          </span><span class="k">tcpSocket</span><span class="p">:</span><span class="w">
-</span><span class="w">            </span><span class="k">port</span><span class="p">:</span><span class="w"> </span><span class="m">9092</span><span class="w">
-</span><span class="w">          </span><span class="k">timeoutSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
-</span><span class="w">          </span><span class="k">initialDelaySeconds</span><span class="p">:</span><span class="w"> </span><span class="m">15</span><span class="w">
-</span><span class="w">          </span><span class="k">periodSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">20</span><span class="w">
-</span><span class="w">        </span><span class="k">envFrom</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span>- <span class="k">configMapRef</span><span class="p">:</span><span class="w">
-</span><span class="w">            </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>kafka-config<span class="w">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">apps/v1</span><span class="w">
+</span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">StatefulSet</span><span class="w">
+</span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">kafka</span><span class="w">
+</span><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">logging</span><span class="w">
+</span><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">selector</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">kafka</span><span class="w">
+</span><span class="w">  </span><span class="nt">serviceName</span><span class="p">:</span><span class="w"> </span><span class="l">bootstrap-kafka</span><span class="w">
+</span><span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">labels</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">kafka</span><span class="w">
+</span><span class="w">      </span><span class="nt">annotations</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">sidecar.istio.io/inject</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;false&#34;</span><span class="w">
+</span><span class="w">    </span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">containers</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">kafka-broker</span><span class="w">
+</span><span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">russellgao/kafka:2.12-2.0.1</span><span class="w">
+</span><span class="w">        </span><span class="nt">ports</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">inside</span><span class="w">
+</span><span class="w">          </span><span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="m">9092</span><span class="w">
+</span><span class="w">        </span><span class="nt">resources</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">requests</span><span class="p">:</span><span class="w">
+</span><span class="w">            </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="m">0.1</span><span class="w">
+</span><span class="w">            </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l">1024Mi</span><span class="w">
+</span><span class="w">          </span><span class="nt">limits</span><span class="p">:</span><span class="w">
+</span><span class="w">            </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l">3069Mi</span><span class="w">
+</span><span class="w">        </span><span class="nt">readinessProbe</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">tcpSocket</span><span class="p">:</span><span class="w">
+</span><span class="w">            </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">9092</span><span class="w">
+</span><span class="w">          </span><span class="nt">timeoutSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">          </span><span class="nt">initialDelaySeconds</span><span class="p">:</span><span class="w"> </span><span class="m">5</span><span class="w">
+</span><span class="w">          </span><span class="nt">periodSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">10</span><span class="w">
+</span><span class="w">        </span><span class="nt">livenessProbe</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">tcpSocket</span><span class="p">:</span><span class="w">
+</span><span class="w">            </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">9092</span><span class="w">
+</span><span class="w">          </span><span class="nt">timeoutSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">          </span><span class="nt">initialDelaySeconds</span><span class="p">:</span><span class="w"> </span><span class="m">15</span><span class="w">
+</span><span class="w">          </span><span class="nt">periodSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">20</span><span class="w">
+</span><span class="w">        </span><span class="nt">envFrom</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span>- <span class="nt">configMapRef</span><span class="p">:</span><span class="w">
+</span><span class="w">            </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">kafka-config</span><span class="w">
 </span></code></pre></td></tr></table>
 </div>
 </div><ul>
@@ -673,59 +673,59 @@ metadata:
 </span><span class="lnt">53
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>v1<span class="w">
-</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>ConfigMap<span class="w">
-</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>logstash-conf<span class="w">
-</span><span class="w">  </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>logging<span class="w">
-</span><span class="w"></span><span class="k">data</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">logstash.conf</span><span class="p">:</span><span class="w"> </span><span class="sd">|
-</span><span class="sd">    input {</span><span class="w">
-</span><span class="w">        </span>http<span class="w"> </span>{<span class="w">
-</span><span class="w">            </span>host<span class="w"> </span>=&gt;<span class="w"> </span><span class="s2">&#34;0.0.0.0&#34;</span><span class="w"> </span><span class="c"># default: 0.0.0.0</span><span class="w">
-</span><span class="w">            </span><span class="k">port =&gt; 8080 # default</span><span class="p">:</span><span class="w"> </span><span class="m">8080</span><span class="w">
-</span><span class="w">            </span>user<span class="w"> </span>=&gt;<span class="w"> </span><span class="s2">&#34;logstash&#34;</span><span class="w">
-</span><span class="w">            </span>password<span class="w"> </span>=&gt;<span class="w"> </span><span class="s2">&#34;aoDJ0JVgkfNPjarn&#34;</span><span class="w">
-</span><span class="w">            </span>response_headers<span class="w"> </span>=&gt;<span class="w"> </span>{<span class="w">
-</span><span class="w">                </span><span class="s2">&#34;Content-Type&#34;</span><span class="w"> </span>=&gt;<span class="w"> </span><span class="s2">&#34;text/plain&#34;</span><span class="w">
-</span><span class="w">                </span><span class="s2">&#34;Access-Control-Allow-Origin&#34;</span><span class="w"> </span>=&gt;<span class="w"> </span><span class="s2">&#34;*&#34;</span><span class="w">
-</span><span class="w">                </span><span class="s2">&#34;Access-Control-Allow-Methods&#34;</span><span class="w"> </span>=&gt;<span class="w"> </span><span class="s2">&#34;GET, POST, DELETE, PUT&#34;</span><span class="w">
-</span><span class="w">                </span><span class="s2">&#34;Access-Control-Allow-Headers&#34;</span><span class="w"> </span>=&gt;<span class="w"> </span><span class="s2">&#34;authorization, content-type&#34;</span><span class="w">
-</span><span class="w">                </span><span class="s2">&#34;Access-Control-Allow-Credentials&#34;</span><span class="w"> </span>=&gt;<span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="w">            </span>}<span class="w">
-</span><span class="w">        </span>}<span class="w">
-</span><span class="w">        </span>kafka<span class="w">  </span>{<span class="w">
-</span><span class="w">            </span>topics<span class="w"> </span>=&gt;<span class="w"> </span><span class="s2">&#34;istio&#34;</span><span class="w">
-</span><span class="w">            </span>bootstrap_servers<span class="w"> </span>=&gt;<span class="w"> </span><span class="s2">&#34;kafka-cluster:9092&#34;</span><span class="w">
-</span><span class="w">            </span>auto_offset_reset<span class="w"> </span>=&gt;<span class="w"> </span><span class="s2">&#34;earliest&#34;</span><span class="w">
-</span><span class="w">            </span>group_id<span class="w"> </span>=&gt;<span class="w"> </span><span class="s2">&#34;istio_kafka_gr&#34;</span><span class="w">
-</span><span class="w">            </span>consumer_threads<span class="w"> </span>=&gt;<span class="w"> </span><span class="m">3</span><span class="w">
-</span><span class="w">            </span>codec<span class="w"> </span>=&gt;<span class="w"> </span><span class="s2">&#34;json&#34;</span><span class="w">
-</span><span class="w">        </span>}<span class="w">
-</span><span class="w">    </span>}<span class="w">
-</span><span class="w">    </span>filter<span class="w"> </span>{<span class="w">
-</span><span class="w">      </span>grok<span class="w"> </span>{<span class="w">
-</span><span class="w">            </span>match<span class="w"> </span>=&gt;<span class="w"> </span>{<span class="w"> </span><span class="s2">&#34;message&#34;</span><span class="w"> </span>=&gt;<span class="w"> </span><span class="s2">&#34;(?m)\[%{TIMESTAMP_ISO8601:timestamp}\] &#34;</span>%{NOTSPACE<span class="p">:</span>method}<span class="w"> </span>%{NOTSPACE<span class="p">:</span>path}<span class="w"> </span>%{NOTSPACE<span class="p">:</span>protocol}<span class="s2">&#34; %{NUMBER:response_code:int} %{NOTSPACE:response_flags} &#34;</span>%{NOTSPACE<span class="p">:</span>istio_policy_status}<span class="s2">&#34; &#34;</span>%{NOTSPACE<span class="p">:</span>upstream_transport_failure_reason}<span class="s2">&#34; %{NUMBER:bytes_received:int} %{NUMBER:bytes_sent:int} %{NUMBER:duration:int} %{NUMBER:upstream_service_time:int} &#34;</span>%{NOTSPACE<span class="p">:</span>x_forwarded_for}<span class="s2">&#34; &#34;</span>%{NOTSPACE<span class="p">:</span>user_agent}<span class="s2">&#34; &#34;</span>%{NOTSPACE<span class="p">:</span>request_id}<span class="s2">&#34; &#34;</span>%{NOTSPACE<span class="p">:</span>authority}<span class="s2">&#34; &#34;</span>%{NOTSPACE<span class="p">:</span>upstream_host}<span class="s2">&#34; %{NOTSPACE:upstream_cluster} %{NOTSPACE:upstream_local_address} %{NOTSPACE:downstream_local_address} %{NOTSPACE:downstream_remote_address} %{NOTSPACE:requested_server_name} %{NOTSPACE:route_name}&#34;</span><span class="w"> </span>}<span class="w">
-</span><span class="w">            </span>remove_field<span class="w"> </span>=&gt;<span class="w"> </span><span class="p">[</span><span class="s2">&#34;message&#34;</span><span class="p">]</span><span class="w">
-</span><span class="w">      </span>}<span class="w">
-</span><span class="w">      </span>date<span class="w"> </span>{<span class="w">
-</span><span class="w">            </span>match<span class="w"> </span>=&gt;<span class="w"> </span><span class="p">[</span><span class="s2">&#34;timestamp&#34;</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;yyyy-MM-ddTHH:mm:ss.SSSZ&#34;</span><span class="p">]</span><span class="w">
-</span><span class="w">            </span>timezone<span class="w"> </span>=&gt;<span class="w"> </span><span class="s2">&#34;Asia/Shanghai&#34;</span><span class="w">
-</span><span class="w">      </span>}<span class="w">
-</span><span class="w">      </span>ruby<span class="w"> </span>{<span class="w">
-</span><span class="w">          </span>code<span class="w"> </span>=&gt;<span class="w"> </span><span class="s2">&#34;event.set(&#39;[@metadata][index_day]&#39;,(event.get(&#39;@timestamp&#39;).time.localtime + 8*60*60 ).strftime(&#39;%Y.%m.%d&#39;))&#34;</span><span class="w">
-</span><span class="w">      </span>}<span class="w">
-</span><span class="w">    </span>}<span class="w">
-</span><span class="w">    </span>output<span class="w"> </span>{<span class="w">
-</span><span class="w">        </span>if<span class="w"> </span><span class="s2">&#34;_grokparsefailure&#34;</span><span class="w"> </span>not<span class="w"> </span>in<span class="w"> </span><span class="p">[</span>tags<span class="p">]</span><span class="w"> </span>{<span class="w">
-</span><span class="w">            </span>elasticsearch<span class="w"> </span>{<span class="w">
-</span><span class="w">                </span>user<span class="w"> </span>=&gt;<span class="w"> </span><span class="s2">&#34;elastic&#34;</span><span class="w">
-</span><span class="w">                </span>password<span class="w"> </span>=&gt;<span class="w"> </span><span class="s2">&#34;elastic&#34;</span><span class="w">
-</span><span class="w">                </span>hosts<span class="w"> </span>=&gt;<span class="w"> </span><span class="p">[</span><span class="s2">&#34;elasticsearch.com:9200&#34;</span><span class="p">]</span><span class="w">
-</span><span class="w">                </span>index<span class="w"> </span>=&gt;<span class="w"> </span><span class="s2">&#34;istio-%{[@metadata][index_day]}&#34;</span><span class="w">
-</span><span class="w">            </span>}<span class="w">
-</span><span class="w">        </span>}<span class="w">
-</span><span class="w">    </span>}<span class="w">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1</span><span class="w">
+</span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">ConfigMap</span><span class="w">
+</span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">logstash-conf</span><span class="w">
+</span><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">logging</span><span class="w">
+</span><span class="w"></span><span class="nt">data</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">logstash.conf</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
+</span><span class="sd">    input {
+</span><span class="sd">        http {
+</span><span class="sd">            host =&gt; &#34;0.0.0.0&#34; # default: 0.0.0.0
+</span><span class="sd">            port =&gt; 8080 # default: 8080
+</span><span class="sd">            user =&gt; &#34;logstash&#34;
+</span><span class="sd">            password =&gt; &#34;aoDJ0JVgkfNPjarn&#34;
+</span><span class="sd">            response_headers =&gt; {
+</span><span class="sd">                &#34;Content-Type&#34; =&gt; &#34;text/plain&#34;
+</span><span class="sd">                &#34;Access-Control-Allow-Origin&#34; =&gt; &#34;*&#34;
+</span><span class="sd">                &#34;Access-Control-Allow-Methods&#34; =&gt; &#34;GET, POST, DELETE, PUT&#34;
+</span><span class="sd">                &#34;Access-Control-Allow-Headers&#34; =&gt; &#34;authorization, content-type&#34;
+</span><span class="sd">                &#34;Access-Control-Allow-Credentials&#34; =&gt; true
+</span><span class="sd">            }
+</span><span class="sd">        }
+</span><span class="sd">        kafka  {
+</span><span class="sd">            topics =&gt; &#34;istio&#34;
+</span><span class="sd">            bootstrap_servers =&gt; &#34;kafka-cluster:9092&#34;
+</span><span class="sd">            auto_offset_reset =&gt; &#34;earliest&#34;
+</span><span class="sd">            group_id =&gt; &#34;istio_kafka_gr&#34;
+</span><span class="sd">            consumer_threads =&gt; 3
+</span><span class="sd">            codec =&gt; &#34;json&#34;
+</span><span class="sd">        }
+</span><span class="sd">    }
+</span><span class="sd">    filter {
+</span><span class="sd">      grok {
+</span><span class="sd">            match =&gt; { &#34;message&#34; =&gt; &#34;(?m)\[%{TIMESTAMP_ISO8601:timestamp}\] &#34;%{NOTSPACE:method} %{NOTSPACE:path} %{NOTSPACE:protocol}&#34; %{NUMBER:response_code:int} %{NOTSPACE:response_flags} &#34;%{NOTSPACE:istio_policy_status}&#34; &#34;%{NOTSPACE:upstream_transport_failure_reason}&#34; %{NUMBER:bytes_received:int} %{NUMBER:bytes_sent:int} %{NUMBER:duration:int} %{NUMBER:upstream_service_time:int} &#34;%{NOTSPACE:x_forwarded_for}&#34; &#34;%{NOTSPACE:user_agent}&#34; &#34;%{NOTSPACE:request_id}&#34; &#34;%{NOTSPACE:authority}&#34; &#34;%{NOTSPACE:upstream_host}&#34; %{NOTSPACE:upstream_cluster} %{NOTSPACE:upstream_local_address} %{NOTSPACE:downstream_local_address} %{NOTSPACE:downstream_remote_address} %{NOTSPACE:requested_server_name} %{NOTSPACE:route_name}&#34; }
+</span><span class="sd">            remove_field =&gt; [&#34;message&#34;]
+</span><span class="sd">      }
+</span><span class="sd">      date {
+</span><span class="sd">            match =&gt; [&#34;timestamp&#34;, &#34;yyyy-MM-ddTHH:mm:ss.SSSZ&#34;]
+</span><span class="sd">            timezone =&gt; &#34;Asia/Shanghai&#34;
+</span><span class="sd">      }
+</span><span class="sd">      ruby {
+</span><span class="sd">          code =&gt; &#34;event.set(&#39;[@metadata][index_day]&#39;,(event.get(&#39;@timestamp&#39;).time.localtime + 8*60*60 ).strftime(&#39;%Y.%m.%d&#39;))&#34;
+</span><span class="sd">      }
+</span><span class="sd">    }
+</span><span class="sd">    output {
+</span><span class="sd">        if &#34;_grokparsefailure&#34; not in [tags] {
+</span><span class="sd">            elasticsearch {
+</span><span class="sd">                user =&gt; &#34;elastic&#34;
+</span><span class="sd">                password =&gt; &#34;elastic&#34;
+</span><span class="sd">                hosts =&gt; [&#34;elasticsearch.com:9200&#34;]
+</span><span class="sd">                index =&gt; &#34;istio-%{[@metadata][index_day]}&#34;
+</span><span class="sd">            }
+</span><span class="sd">        }
+</span><span class="sd">    }</span><span class="w">    
 </span></code></pre></td></tr></table>
 </div>
 </div><p>Logstash 配置由3部分组成：</p>
@@ -805,57 +805,57 @@ metadata:
 </span><span class="lnt">51
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>apps/v1beta2<span class="w">
-</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>Deployment<span class="w">
-</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>logstash<span class="w">
-</span><span class="w">  </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>logging<span class="w">
-</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">2</span><span class="w">
-</span><span class="w">  </span><span class="k">selector</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">matchLabels</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">app</span><span class="p">:</span><span class="w"> </span>logstash<span class="w">
-</span><span class="w">  </span><span class="k">template</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">labels</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="k">app</span><span class="p">:</span><span class="w"> </span>logstash<span class="w">
-</span><span class="w">      </span><span class="k">annotations</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="k">sidecar.istio.io/inject</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;false&#34;</span><span class="w">
-</span><span class="w">    </span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">volumes</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>config<span class="w">
-</span><span class="w">        </span><span class="k">configMap</span><span class="p">:</span><span class="w">
-</span><span class="w">          </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>logstash-conf<span class="w">
-</span><span class="w">      </span><span class="k">hostname</span><span class="p">:</span><span class="w"> </span>logstash<span class="w">
-</span><span class="w">      </span><span class="k">containers</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>logstash<span class="w">
-</span><span class="w">          </span><span class="k">image</span><span class="p">:</span><span class="w"> </span>logstash<span class="p">:</span><span class="m">7.2.0</span><span class="w">
-</span><span class="w">          </span><span class="k">args</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">apps/v1beta2</span><span class="w">
+</span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Deployment</span><span class="w">
+</span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">logstash</span><span class="w">
+</span><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">logging</span><span class="w">
+</span><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">2</span><span class="w">
+</span><span class="w">  </span><span class="nt">selector</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">logstash</span><span class="w">
+</span><span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">labels</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">logstash</span><span class="w">
+</span><span class="w">      </span><span class="nt">annotations</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">sidecar.istio.io/inject</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;false&#34;</span><span class="w">
+</span><span class="w">    </span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">config</span><span class="w">
+</span><span class="w">        </span><span class="nt">configMap</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">logstash-conf</span><span class="w">
+</span><span class="w">      </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="l">logstash</span><span class="w">
+</span><span class="w">      </span><span class="nt">containers</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">logstash</span><span class="w">
+</span><span class="w">          </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">logstash:7.2.0</span><span class="w">
+</span><span class="w">          </span><span class="nt">args</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
 </span><span class="w">            </span><span class="s2">&#34;-f&#34;</span><span class="p">,</span><span class="s2">&#34;/usr/share/logstash/pipeline/logstash.conf&#34;</span><span class="p">,</span><span class="w">
 </span><span class="w">          </span><span class="p">]</span><span class="w">
-</span><span class="w">          </span><span class="k">imagePullPolicy</span><span class="p">:</span><span class="w"> </span>IfNotPresent<span class="w">
-</span><span class="w">          </span><span class="k">volumeMounts</span><span class="p">:</span><span class="w">
-</span><span class="w">          </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>config<span class="w">
-</span><span class="w">            </span><span class="k">mountPath</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;/usr/share/logstash/pipeline/logstash.conf&#34;</span><span class="w">
-</span><span class="w">            </span><span class="k">readOnly</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="w">            </span><span class="k">subPath</span><span class="p">:</span><span class="w"> </span>logstash.conf<span class="w">
-</span><span class="w">          </span><span class="k">resources</span><span class="p">:</span><span class="w">
-</span><span class="w">            </span><span class="k">requests</span><span class="p">:</span><span class="w">
-</span><span class="w">              </span><span class="k">cpu</span><span class="p">:</span><span class="w"> </span><span class="m">0.5</span><span class="w">
-</span><span class="w">              </span><span class="k">memory</span><span class="p">:</span><span class="w"> </span>1024Mi<span class="w">
-</span><span class="w">            </span><span class="k">limits</span><span class="p">:</span><span class="w">
-</span><span class="w">              </span><span class="k">cpu</span><span class="p">:</span><span class="w"> </span><span class="m">1.5</span><span class="w">
-</span><span class="w">              </span><span class="k">memory</span><span class="p">:</span><span class="w"> </span>3072Mi<span class="w">
-</span><span class="w">          </span><span class="k">readinessProbe</span><span class="p">:</span><span class="w">
-</span><span class="w">            </span><span class="k">tcpSocket</span><span class="p">:</span><span class="w">
-</span><span class="w">              </span><span class="k">port</span><span class="p">:</span><span class="w"> </span><span class="m">8080</span><span class="w">
-</span><span class="w">            </span><span class="k">initialDelaySeconds</span><span class="p">:</span><span class="w"> </span><span class="m">5</span><span class="w">
-</span><span class="w">            </span><span class="k">periodSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">10</span><span class="w">
-</span><span class="w">          </span><span class="k">livenessProbe</span><span class="p">:</span><span class="w">
-</span><span class="w">            </span><span class="k">tcpSocket</span><span class="p">:</span><span class="w">
-</span><span class="w">              </span><span class="k">port</span><span class="p">:</span><span class="w"> </span><span class="m">8080</span><span class="w">
-</span><span class="w">            </span><span class="k">initialDelaySeconds</span><span class="p">:</span><span class="w"> </span><span class="m">15</span><span class="w">
-</span><span class="w">            </span><span class="k">periodSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">20</span><span class="w">
+</span><span class="w">          </span><span class="nt">imagePullPolicy</span><span class="p">:</span><span class="w"> </span><span class="l">IfNotPresent</span><span class="w">
+</span><span class="w">          </span><span class="nt">volumeMounts</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">config</span><span class="w">
+</span><span class="w">            </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;/usr/share/logstash/pipeline/logstash.conf&#34;</span><span class="w">
+</span><span class="w">            </span><span class="nt">readOnly</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">            </span><span class="nt">subPath</span><span class="p">:</span><span class="w"> </span><span class="l">logstash.conf</span><span class="w">
+</span><span class="w">          </span><span class="nt">resources</span><span class="p">:</span><span class="w">
+</span><span class="w">            </span><span class="nt">requests</span><span class="p">:</span><span class="w">
+</span><span class="w">              </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="m">0.5</span><span class="w">
+</span><span class="w">              </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l">1024Mi</span><span class="w">
+</span><span class="w">            </span><span class="nt">limits</span><span class="p">:</span><span class="w">
+</span><span class="w">              </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="m">1.5</span><span class="w">
+</span><span class="w">              </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l">3072Mi</span><span class="w">
+</span><span class="w">          </span><span class="nt">readinessProbe</span><span class="p">:</span><span class="w">
+</span><span class="w">            </span><span class="nt">tcpSocket</span><span class="p">:</span><span class="w">
+</span><span class="w">              </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">8080</span><span class="w">
+</span><span class="w">            </span><span class="nt">initialDelaySeconds</span><span class="p">:</span><span class="w"> </span><span class="m">5</span><span class="w">
+</span><span class="w">            </span><span class="nt">periodSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">10</span><span class="w">
+</span><span class="w">          </span><span class="nt">livenessProbe</span><span class="p">:</span><span class="w">
+</span><span class="w">            </span><span class="nt">tcpSocket</span><span class="p">:</span><span class="w">
+</span><span class="w">              </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">8080</span><span class="w">
+</span><span class="w">            </span><span class="nt">initialDelaySeconds</span><span class="p">:</span><span class="w"> </span><span class="m">15</span><span class="w">
+</span><span class="w">            </span><span class="nt">periodSeconds</span><span class="p">:</span><span class="w"> </span><span class="m">20</span><span class="w">
 </span></code></pre></td></tr></table>
 </div>
 </div><ul>
@@ -886,23 +886,23 @@ metadata:
 </span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>autoscaling/v2beta1<span class="w">
-</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>HorizontalPodAutoscaler<span class="w">
-</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>logstash<span class="w">
-</span><span class="w">  </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>logging<span class="w">
-</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">scaleTargetRef</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>apps/v1beta2<span class="w">
-</span><span class="w">    </span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>Deployment<span class="w">
-</span><span class="w">    </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>logstash<span class="w">
-</span><span class="w">  </span><span class="k">minReplicas</span><span class="p">:</span><span class="w"> </span><span class="m">2</span><span class="w">
-</span><span class="w">  </span><span class="k">maxReplicas</span><span class="p">:</span><span class="w"> </span><span class="m">10</span><span class="w">
-</span><span class="w">  </span><span class="k">metrics</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="k">type</span><span class="p">:</span><span class="w"> </span>Resource<span class="w">
-</span><span class="w">    </span><span class="k">resource</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>cpu<span class="w">
-</span><span class="w">      </span><span class="k">targetAverageUtilization</span><span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">autoscaling/v2beta1</span><span class="w">
+</span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">HorizontalPodAutoscaler</span><span class="w">
+</span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">logstash</span><span class="w">
+</span><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">logging</span><span class="w">
+</span><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">scaleTargetRef</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">apps/v1beta2</span><span class="w">
+</span><span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Deployment</span><span class="w">
+</span><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">logstash</span><span class="w">
+</span><span class="w">  </span><span class="nt">minReplicas</span><span class="p">:</span><span class="w"> </span><span class="m">2</span><span class="w">
+</span><span class="w">  </span><span class="nt">maxReplicas</span><span class="p">:</span><span class="w"> </span><span class="m">10</span><span class="w">
+</span><span class="w">  </span><span class="nt">metrics</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l">Resource</span><span class="w">
+</span><span class="w">    </span><span class="nt">resource</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">cpu</span><span class="w">
+</span><span class="w">      </span><span class="nt">targetAverageUtilization</span><span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
 </span></code></pre></td></tr></table>
 </div>
 </div><ul>
@@ -964,41 +964,41 @@ metadata:
 </span><span class="lnt">35
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>v1<span class="w">
-</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>ConfigMap<span class="w">
-</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>filebeat-conf<span class="w">
-</span><span class="w">  </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>logging<span class="w">
-</span><span class="w"></span><span class="k">data</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">filebeat.yml</span><span class="p">:</span><span class="w"> </span><span class="sd">|
-</span><span class="sd">    filebeat:</span><span class="w">
-</span><span class="w">      </span><span class="k">inputs</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="sd">-
-</span><span class="sd">          paths:</span><span class="w">
-</span><span class="w">            </span>- /var/log<span class="w">
-</span><span class="w">            </span>- /var/lib/docker/containers<span class="w">
-</span><span class="w">          </span><span class="k">ignore_older</span><span class="p">:</span><span class="w"> </span>1h<span class="w">
-</span><span class="w">          </span><span class="k">force_close_files</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="c">#强制filebeat在文件名改变时，关闭文件，会有丢失日志的风险</span><span class="w">
-</span><span class="w">          </span><span class="k">close_older</span><span class="p">:</span><span class="w"> </span>1m<span class="w">
-</span><span class="w">          </span><span class="k">fields_under_root</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="w">    </span><span class="k">output</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="k">kafka</span><span class="p">:</span><span class="w">
-</span><span class="w">          </span><span class="k">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="w">          </span><span class="k">hosts</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&#34;kafka-cluster:9092&#34;</span><span class="p">]</span><span class="w">
-</span><span class="w">          </span><span class="k">topic</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;istio&#34;</span><span class="w">
-</span><span class="w">          </span><span class="k">version</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;2.0.0&#34;</span><span class="w">
-</span><span class="w">          </span><span class="k">partition.round_robin</span><span class="p">:</span><span class="w">
-</span><span class="w">            </span><span class="k">reachable_only</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
-</span><span class="w">          </span><span class="k">worker</span><span class="p">:</span><span class="w"> </span><span class="m">2</span><span class="w">
-</span><span class="w">          </span><span class="k">max_retries</span><span class="p">:</span><span class="w"> </span><span class="m">3</span><span class="w">
-</span><span class="w">          </span><span class="k">bulk_max_size</span><span class="p">:</span><span class="w"> </span><span class="m">2048</span><span class="w">
-</span><span class="w">          </span><span class="k">timeout</span><span class="p">:</span><span class="w"> </span>30s<span class="w">
-</span><span class="w">          </span><span class="k">broker_timeout</span><span class="p">:</span><span class="w"> </span>10s<span class="w">
-</span><span class="w">          </span><span class="k">channel_buffer_size</span><span class="p">:</span><span class="w"> </span><span class="m">256</span><span class="w">
-</span><span class="w">          </span><span class="k">keep_alive</span><span class="p">:</span><span class="w"> </span><span class="m">60</span><span class="w">
-</span><span class="w">          </span><span class="k">compression</span><span class="p">:</span><span class="w"> </span>gzip<span class="w">
-</span><span class="w">          </span><span class="k">max_message_bytes</span><span class="p">:</span><span class="w"> </span><span class="m">1000000</span><span class="w">
-</span><span class="w">          </span><span class="k">required_acks</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1</span><span class="w">
+</span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">ConfigMap</span><span class="w">
+</span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">filebeat-conf</span><span class="w">
+</span><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">logging</span><span class="w">
+</span><span class="w"></span><span class="nt">data</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">filebeat.yml</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
+</span><span class="sd">    filebeat:
+</span><span class="sd">      inputs:
+</span><span class="sd">        -
+</span><span class="sd">          paths:
+</span><span class="sd">            - /var/log
+</span><span class="sd">            - /var/lib/docker/containers
+</span><span class="sd">          ignore_older: 1h
+</span><span class="sd">          force_close_files: true #强制filebeat在文件名改变时，关闭文件，会有丢失日志的风险
+</span><span class="sd">          close_older: 1m
+</span><span class="sd">          fields_under_root: true
+</span><span class="sd">    output:
+</span><span class="sd">        kafka:
+</span><span class="sd">          enabled: true
+</span><span class="sd">          hosts: [&#34;kafka-cluster:9092&#34;]
+</span><span class="sd">          topic: &#34;istio&#34;
+</span><span class="sd">          version: &#34;2.0.0&#34;
+</span><span class="sd">          partition.round_robin:
+</span><span class="sd">            reachable_only: false
+</span><span class="sd">          worker: 2
+</span><span class="sd">          max_retries: 3
+</span><span class="sd">          bulk_max_size: 2048
+</span><span class="sd">          timeout: 30s
+</span><span class="sd">          broker_timeout: 10s
+</span><span class="sd">          channel_buffer_size: 256
+</span><span class="sd">          keep_alive: 60
+</span><span class="sd">          compression: gzip
+</span><span class="sd">          max_message_bytes: 1000000
+</span><span class="sd">          required_acks: 1</span><span class="w">    
 </span></code></pre></td></tr></table>
 </div>
 </div><ul>
@@ -1062,54 +1062,54 @@ metadata:
 </span><span class="lnt">48
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>apps/v1<span class="w">
-</span><span class="w">  </span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>DaemonSet<span class="w">
-</span><span class="w">  </span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>filebeat<span class="w">
-</span><span class="w">    </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>logging<span class="w">
-</span><span class="w">    </span><span class="k">labels</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">app</span><span class="p">:</span><span class="w"> </span>filebeat<span class="w">
-</span><span class="w">  </span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">selector</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">matchLabels</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="k">app</span><span class="p">:</span><span class="w"> </span>filebeat<span class="w">
-</span><span class="w">    </span><span class="k">template</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="k">labels</span><span class="p">:</span><span class="w">
-</span><span class="w">          </span><span class="k">app</span><span class="p">:</span><span class="w"> </span>filebeat<span class="w">
-</span><span class="w">        </span><span class="k">annotations</span><span class="p">:</span><span class="w">
-</span><span class="w">          </span><span class="k">sidecar.istio.io/inject</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;false&#34;</span><span class="w">
-</span><span class="w">      </span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="k">containers</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>filebeat<span class="w">
-</span><span class="w">          </span><span class="k">image</span><span class="p">:</span><span class="w"> </span>elastic/filebeat<span class="p">:</span><span class="m">7.2.0</span><span class="w">
-</span><span class="w">          </span><span class="k">imagePullPolicy</span><span class="p">:</span><span class="w"> </span>IfNotPresent<span class="w">
-</span><span class="w">          </span><span class="k">volumeMounts</span><span class="p">:</span><span class="w">
-</span><span class="w">          </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>config<span class="w">
-</span><span class="w">            </span><span class="k">mountPath</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;/usr/share/filebeat/filebeat.yml&#34;</span><span class="w">
-</span><span class="w">            </span><span class="k">readOnly</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="w">            </span><span class="k">subPath</span><span class="p">:</span><span class="w"> </span>filebeat.yml<span class="w">
-</span><span class="w">            </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>varlog<span class="w">
-</span><span class="w">              </span><span class="k">mountPath</span><span class="p">:</span><span class="w"> </span>/var/log<span class="w">
-</span><span class="w">            </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>varlibdockercontainers<span class="w">
-</span><span class="w">              </span><span class="k">mountPath</span><span class="p">:</span><span class="w"> </span>/var/lib/docker/containers<span class="w">
-</span><span class="w">          </span><span class="k">resources</span><span class="p">:</span><span class="w">
-</span><span class="w">            </span><span class="k">requests</span><span class="p">:</span><span class="w">
-</span><span class="w">              </span><span class="k">cpu</span><span class="p">:</span><span class="w"> </span><span class="m">0.1</span><span class="w">
-</span><span class="w">              </span><span class="k">memory</span><span class="p">:</span><span class="w"> </span>200Mi<span class="w">
-</span><span class="w">            </span><span class="k">limits</span><span class="p">:</span><span class="w">
-</span><span class="w">              </span><span class="k">cpu</span><span class="p">:</span><span class="w"> </span><span class="m">0.3</span><span class="w">
-</span><span class="w">              </span><span class="k">memory</span><span class="p">:</span><span class="w"> </span>600Mi<span class="w">
-</span><span class="w">        </span><span class="k">volumes</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>varlog<span class="w">
-</span><span class="w">          </span><span class="k">hostPath</span><span class="p">:</span><span class="w">
-</span><span class="w">            </span><span class="k">path</span><span class="p">:</span><span class="w"> </span>/var/log<span class="w">
-</span><span class="w">        </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>varlibdockercontainers<span class="w">
-</span><span class="w">          </span><span class="k">hostPath</span><span class="p">:</span><span class="w">
-</span><span class="w">            </span><span class="k">path</span><span class="p">:</span><span class="w"> </span>/var/lib/docker/containers<span class="w">
-</span><span class="w">        </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>config<span class="w">
-</span><span class="w">          </span><span class="k">configMap</span><span class="p">:</span><span class="w">
-</span><span class="w">            </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>filebeat-conf<span class="w">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">apps/v1</span><span class="w">
+</span><span class="w">  </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">DaemonSet</span><span class="w">
+</span><span class="w">  </span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">filebeat</span><span class="w">
+</span><span class="w">    </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">logging</span><span class="w">
+</span><span class="w">    </span><span class="nt">labels</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">filebeat</span><span class="w">
+</span><span class="w">  </span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">selector</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">matchLabels</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">filebeat</span><span class="w">
+</span><span class="w">    </span><span class="nt">template</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">labels</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">filebeat</span><span class="w">
+</span><span class="w">        </span><span class="nt">annotations</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">sidecar.istio.io/inject</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;false&#34;</span><span class="w">
+</span><span class="w">      </span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">containers</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">filebeat</span><span class="w">
+</span><span class="w">          </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">elastic/filebeat:7.2.0</span><span class="w">
+</span><span class="w">          </span><span class="nt">imagePullPolicy</span><span class="p">:</span><span class="w"> </span><span class="l">IfNotPresent</span><span class="w">
+</span><span class="w">          </span><span class="nt">volumeMounts</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">config</span><span class="w">
+</span><span class="w">            </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;/usr/share/filebeat/filebeat.yml&#34;</span><span class="w">
+</span><span class="w">            </span><span class="nt">readOnly</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">            </span><span class="nt">subPath</span><span class="p">:</span><span class="w"> </span><span class="l">filebeat.yml</span><span class="w">
+</span><span class="w">            </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">varlog</span><span class="w">
+</span><span class="w">              </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l">/var/log</span><span class="w">
+</span><span class="w">            </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">varlibdockercontainers</span><span class="w">
+</span><span class="w">              </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l">/var/lib/docker/containers</span><span class="w">
+</span><span class="w">          </span><span class="nt">resources</span><span class="p">:</span><span class="w">
+</span><span class="w">            </span><span class="nt">requests</span><span class="p">:</span><span class="w">
+</span><span class="w">              </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="m">0.1</span><span class="w">
+</span><span class="w">              </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l">200Mi</span><span class="w">
+</span><span class="w">            </span><span class="nt">limits</span><span class="p">:</span><span class="w">
+</span><span class="w">              </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="m">0.3</span><span class="w">
+</span><span class="w">              </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l">600Mi</span><span class="w">
+</span><span class="w">        </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">varlog</span><span class="w">
+</span><span class="w">          </span><span class="nt">hostPath</span><span class="p">:</span><span class="w">
+</span><span class="w">            </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l">/var/log</span><span class="w">
+</span><span class="w">        </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">varlibdockercontainers</span><span class="w">
+</span><span class="w">          </span><span class="nt">hostPath</span><span class="p">:</span><span class="w">
+</span><span class="w">            </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l">/var/lib/docker/containers</span><span class="w">
+</span><span class="w">        </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">config</span><span class="w">
+</span><span class="w">          </span><span class="nt">configMap</span><span class="p">:</span><span class="w">
+</span><span class="w">            </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">filebeat-conf</span><span class="w">
 </span></code></pre></td></tr></table>
 </div>
 </div><ul>
@@ -1153,14 +1153,14 @@ metadata:
         </section>
     </div>
 
-    <div class="post-nav"><a href="/defer/" class="prev" rel="prev" title="细谈 Golang 中那些设计优美的细节-defer"><i class="fas fa-angle-left fa-fw"></i>细谈 Golang 中那些设计优美的细节-defer</a>
+    <div class="post-nav"><a href="/about/" class="prev" rel="prev" title="关于我"><i class="fas fa-angle-left fa-fw"></i>关于我</a>
             <a href="/markdownemoji/" class="next" rel="next" title="markdown中插入表情的方法">markdown中插入表情的方法<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div id="comments"><div id="valine" class="comment"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
             </noscript></div></article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.83.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
                 </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/russellgao" target="_blank">高维宗(russellgao)</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
                     <span class="icp"><a href="http://beian.miit.gov.cn/" target="_blank">沪ICP备2020034038号</a></span></div>
         </div>

@@ -1,10 +1,13 @@
 +++
 title = "关于我"
-description = "Hugo, the world's fastest framework for building websites"
+description = "about-me"
 date = "2020-11-08"
 aliases = ["about-me"]
 author = "russellgao"
 draft = false
+featuredImage = "https://gitee.com/russellgao/blogs-image/raw/master/images/about/climb.jpeg"
+
+
 +++
 
 ## 简介
