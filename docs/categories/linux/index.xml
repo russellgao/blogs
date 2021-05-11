@@ -1,14 +1,14 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>linux - Category - 大大很二</title>
+        <title>linux - 分类 - 大大很二</title>
         <link>https://russellgao.cn/categories/linux/</link>
-        <description>linux - Category - 大大很二</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
+        <description>linux - 分类 - 大大很二</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
             <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Wed, 14 Apr 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/categories/linux/" rel="self" type="application/rss+xml" /><item>
     <title>yum 踩坑记录</title>
     <link>https://russellgao.cn/yum-error/</link>
     <pubDate>Wed, 14 Apr 2021 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
+    <author>作者</author>
     <guid>https://russellgao.cn/yum-error/</guid>
     <description><![CDATA[导读  yum 在使用过程中会遇到一些奇奇怪怪的问题，这里主要记录遇到的问题已经如何修复。这篇文档会持续更新。
  踩坑1 在执行 yum 命令时报如下错误，不管执行任何命令都一样，如 yum list , yum search ,yum install]]></description>
@@ -16,7 +16,7 @@
     <title>Alpine 容器内安装命令时遇到坑</title>
     <link>https://russellgao.cn/linux-alpine-apk/</link>
     <pubDate>Fri, 19 Feb 2021 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
+    <author>作者</author>
     <guid>https://russellgao.cn/linux-alpine-apk/</guid>
     <description><![CDATA[导读  记录在 Alpine 容器内安装命令时遇到的一些问题，本篇文章会持续更新。
 问题背景是在docker 容器内执行 docker 命令，执行时发现缺少某些依赖包，在安装依赖包时遇到一些难以解决的问题。
@@ -25,7 +25,7 @@
     <title>深入浅出的聊聊 cpu 负载与使用率</title>
     <link>https://russellgao.cn/cpu/</link>
     <pubDate>Tue, 15 Dec 2020 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
+    <author>作者</author>
     <guid>https://russellgao.cn/cpu/</guid>
     <description><![CDATA[导读  在定位性能问题时，一个绕不开的话题就是 CPU ，会觉得 CPU 不够用了，或者是瓶颈了，那么怎么来确定是 CPU 的问题呢？衡量 CPU 的指标有两个，CPU 负载(load average) 和 使用率，这两者有什么关系和区别呢？ 这篇文章带大家深层次的了解一下 CPU 。]]></description>
 </item></channel>

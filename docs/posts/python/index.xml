@@ -1,14 +1,14 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>All Posts - 大大很二</title>
+        <title>所有文章 - 大大很二</title>
         <link>https://russellgao.cn/posts/python/</link>
-        <description>All Posts | 大大很二</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
+        <description>所有文章 | 大大很二</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
             <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><atom:link href="https://russellgao.cn/posts/python/" rel="self" type="application/rss+xml" /><item>
     <title>python-gitlab 库详解</title>
     <link>https://russellgao.cn/python-gitlab/</link>
     <pubDate>Mon, 12 Apr 2021 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
+    <author>作者</author>
     <guid>https://russellgao.cn/python-gitlab/</guid>
     <description><![CDATA[导读  本文主要讲解如何用 python-gitlab 操作 gitlab。官方文档参考: https://python-gitlab.readthedocs.io/en/stable/index.html 。
 本文实验的 python 环境: 2.]]></description>
@@ -16,14 +16,14 @@
     <title>如何利用python优化解析xml文件</title>
     <link>https://russellgao.cn/python-maven-enforcer-plugins/</link>
     <pubDate>Tue, 02 Mar 2021 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
+    <author>作者</author>
     <guid>https://russellgao.cn/python-maven-enforcer-plugins/</guid>
     <description><![CDATA[导读  本篇文章意在演示如何利用 python 解析 xml 文件。这篇文章的引出背景是，在程序开发过程中，一贯坚持的做法是「约定优于配置」， 但怎么取检测有没有按照约定去做的，以 maven 为例，maven 提供了 maven-enforcer-plugin 插件，可以用这个插件定制一系列 规则。所以我们需要做的就是用 python 在 pom 文件中插入 maven-enforcer-plugin 的配置 。]]></description>
 </item><item>
     <title>Python 中的装饰器</title>
     <link>https://russellgao.cn/python-decorator/</link>
     <pubDate>Sat, 30 Jan 2021 10:32:00 &#43;0000</pubDate>
-    <author>Author</author>
+    <author>作者</author>
     <guid>https://russellgao.cn/python-decorator/</guid>
     <description><![CDATA[导读  这篇文章主要介绍了 python 当中的装饰器。
  什么是装饰器 装饰器可以理解为函数的函数，想想这么一种场景，要计算每个函数的执行时间，一种解决方法是在每个函数中做个计时，就可以拿到执行时间， 但是这样会有大量的冗余代码，显然是不可取的，这时候装饰器就派上用场了。
@@ -32,7 +32,7 @@
     <title>Python 中的迭代器与生成器</title>
     <link>https://russellgao.cn/python-iter/</link>
     <pubDate>Mon, 07 Dec 2020 18:32:00 &#43;0000</pubDate>
-    <author>Author</author>
+    <author>作者</author>
     <guid>https://russellgao.cn/python-iter/</guid>
     <description><![CDATA[导读  这篇文章主要介绍了 python 当中的迭代器与生成器，在涉及到大数据量的场景应该考虑使用迭代器与生成器。
  可迭代对象 如果一个对象实现了 __iter__ 方法，那么我们就称它是一个可迭代对象。如果没有实现 __iter__ 而实现了 __getitem__ 方法，并且其参数是从0开始索引的，这种对象也是可迭代的，比如说序列。]]></description>
@@ -40,7 +40,7 @@
     <title>python中的多线程与多进程（二）</title>
     <link>https://russellgao.cn/concurrent/</link>
     <pubDate>Wed, 18 Nov 2020 22:32:00 &#43;0000</pubDate>
-    <author>Author</author>
+    <author>作者</author>
     <guid>https://russellgao.cn/concurrent/</guid>
     <description><![CDATA[导读  在上一篇&ldquo;python中的多线程与多进程(一)中介绍了进程、线程的概念、基本用法和在 python 中使用遇到的一些坑， 这在一篇中会介绍一些高级的用法，当然更多的是遇到的坑，换言之这是一片避坑指南。
  concurrent.futures 我们都知道在 python 中，多线程的标准库是使用 threading , 如 ：]]></description>
@@ -48,7 +48,7 @@
     <title>python中的多线程与多进程（一）</title>
     <link>https://russellgao.cn/multithread/</link>
     <pubDate>Mon, 16 Nov 2020 22:32:00 &#43;0000</pubDate>
-    <author>Author</author>
+    <author>作者</author>
     <guid>https://russellgao.cn/multithread/</guid>
     <description><![CDATA[导读 在编码的过程，多线程、多进程、并发、并行这些概念肯定不止一次的出现在我们面前。概念理解是一回事，但是能真正用好又是另一回事。不同的编程语言，并发编程难易程度相差还是很大的，正好这几天梳理了他们之间的关系与区别，分享给大家。（基于自己的理解谈谈，如果不对欢迎指出）
  灵魂拷问：什么是线程？什么是进程？
@@ -58,7 +58,7 @@
     <title>如何利用 python 操纵 oracle</title>
     <link>https://russellgao.cn/oracle/</link>
     <pubDate>Thu, 09 Jul 2020 18:32:00 &#43;0000</pubDate>
-    <author>Author</author>
+    <author>作者</author>
     <guid>https://russellgao.cn/oracle/</guid>
     <description><![CDATA[安装库 1 2  pip3 install sqlalchemy pip3 install cx_Oracle   安装客户端 oracle 客户端下载页面: https://www.]]></description>
 </item></channel>

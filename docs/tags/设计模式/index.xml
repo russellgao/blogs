@@ -1,14 +1,14 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>设计模式 - Tag - 大大很二</title>
+        <title>设计模式 - 标签 - 大大很二</title>
         <link>https://russellgao.cn/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</link>
-        <description>设计模式 - Tag - 大大很二</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
+        <description>设计模式 - 标签 - 大大很二</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
             <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Tue, 19 Jan 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="self" type="application/rss+xml" /><item>
     <title>设计模式六大原则</title>
     <link>https://russellgao.cn/design-principle/</link>
     <pubDate>Tue, 19 Jan 2021 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
+    <author>作者</author>
     <guid>https://russellgao.cn/design-principle/</guid>
     <description><![CDATA[导读  重温设计模式的原则
  六大原则 单一职责原则（Single Responsibility Principle）  There should never be more than one reason for a class to change.]]></description>

@@ -1,14 +1,14 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>云原生 - Tag - 大大很二</title>
+        <title>云原生 - 标签 - 大大很二</title>
         <link>https://russellgao.cn/tags/%E4%BA%91%E5%8E%9F%E7%94%9F/</link>
-        <description>云原生 - Tag - 大大很二</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
+        <description>云原生 - 标签 - 大大很二</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
             <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Sun, 29 Nov 2020 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/tags/%E4%BA%91%E5%8E%9F%E7%94%9F/" rel="self" type="application/rss+xml" /><item>
     <title>harbor gc 时遇到的坑</title>
     <link>https://russellgao.cn/harbor-gc/</link>
     <pubDate>Sun, 29 Nov 2020 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
+    <author>作者</author>
     <guid>https://russellgao.cn/harbor-gc/</guid>
     <description><![CDATA[导读  Harbor 是为企业用户设计的容器镜像仓库开源项目，包括了权限管理(RBAC)、LDAP、审计、安全漏洞扫描、镜像验真、管理界面、自我注册、HA 等企业必需的功能，同时针对中国用户的特点，设计镜像复制和中文支持等功能。
 在使用的过程会有 GC 的需求，可以想象下这几种场景:

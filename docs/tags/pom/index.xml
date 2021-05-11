@@ -1,14 +1,14 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>pom - Tag - 大大很二</title>
+        <title>pom - 标签 - 大大很二</title>
         <link>https://russellgao.cn/tags/pom/</link>
-        <description>pom - Tag - 大大很二</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
+        <description>pom - 标签 - 大大很二</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
             <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Tue, 02 Mar 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/tags/pom/" rel="self" type="application/rss+xml" /><item>
     <title>如何利用python优化解析xml文件</title>
     <link>https://russellgao.cn/python-maven-enforcer-plugins/</link>
     <pubDate>Tue, 02 Mar 2021 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
+    <author>作者</author>
     <guid>https://russellgao.cn/python-maven-enforcer-plugins/</guid>
     <description><![CDATA[导读  本篇文章意在演示如何利用 python 解析 xml 文件。这篇文章的引出背景是，在程序开发过程中，一贯坚持的做法是「约定优于配置」， 但怎么取检测有没有按照约定去做的，以 maven 为例，maven 提供了 maven-enforcer-plugin 插件，可以用这个插件定制一系列 规则。所以我们需要做的就是用 python 在 pom 文件中插入 maven-enforcer-plugin 的配置 。]]></description>
 </item></channel>

@@ -1,14 +1,14 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>调度器 - Tag - 大大很二</title>
+        <title>调度器 - 标签 - 大大很二</title>
         <link>https://russellgao.cn/tags/%E8%B0%83%E5%BA%A6%E5%99%A8/</link>
-        <description>调度器 - Tag - 大大很二</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
+        <description>调度器 - 标签 - 大大很二</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
             <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Fri, 27 Nov 2020 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/tags/%E8%B0%83%E5%BA%A6%E5%99%A8/" rel="self" type="application/rss+xml" /><item>
     <title>细谈 Golang 中那些设计优美的细节-GMP</title>
     <link>https://russellgao.cn/golang-gmp/</link>
     <pubDate>Fri, 27 Nov 2020 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
+    <author>作者</author>
     <guid>https://russellgao.cn/golang-gmp/</guid>
     <description><![CDATA[导读  这是 Golang 系列第二篇，这篇主要谈谈 Golang 的调度模型-GMP，我们知道 Golang 在并发方面有绝对优势，现在就让我们来揭开 它神秘的面纱。]]></description>
 </item></channel>

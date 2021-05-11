@@ -1,14 +1,14 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>All Posts - 大大很二</title>
+        <title>所有文章 - 大大很二</title>
         <link>https://russellgao.cn/posts/</link>
-        <description>All Posts | 大大很二</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
+        <description>所有文章 | 大大很二</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
             <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Sat, 08 May 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/posts/" rel="self" type="application/rss+xml" /><item>
     <title>CUE是何方神圣?</title>
     <link>https://russellgao.cn/cue-intro/</link>
     <pubDate>Sat, 08 May 2021 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
+    <author>作者</author>
     <guid>https://russellgao.cn/cue-intro/</guid>
     <description><![CDATA[导读  本片文章主要介绍 CUE 的基本概念，CUE 是什么以及可以做些什么，通过一些 demo 演示了基本的用法，适合小白入门阅读。
  什么是CUE C(Configure：配置) , U(Unify：统一) , E(Execute：执行) 。]]></description>
@@ -16,7 +16,7 @@
     <title>yum 踩坑记录</title>
     <link>https://russellgao.cn/yum-error/</link>
     <pubDate>Wed, 14 Apr 2021 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
+    <author>作者</author>
     <guid>https://russellgao.cn/yum-error/</guid>
     <description><![CDATA[导读  yum 在使用过程中会遇到一些奇奇怪怪的问题，这里主要记录遇到的问题已经如何修复。这篇文档会持续更新。
  踩坑1 在执行 yum 命令时报如下错误，不管执行任何命令都一样，如 yum list , yum search ,yum install]]></description>
@@ -24,7 +24,7 @@
     <title>Apollo(阿波罗)docker部署记录</title>
     <link>https://russellgao.cn/apollo-deploy-docker/</link>
     <pubDate>Sun, 11 Apr 2021 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
+    <author>作者</author>
     <guid>https://russellgao.cn/apollo-deploy-docker/</guid>
     <description><![CDATA[导读  本文记录根据 Apollo 官方文档部署 Apollo 的过程，值得参考的地方是其中踩的坑。
 假设你对 Apollo 有一定的了解，所以对 Apollo 本身不会做太多的介绍，文档可参考 : https://ctripcorp.]]></description>
@@ -32,7 +32,7 @@
     <title>Alpine 容器内安装命令时遇到坑</title>
     <link>https://russellgao.cn/linux-alpine-apk/</link>
     <pubDate>Fri, 19 Feb 2021 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
+    <author>作者</author>
     <guid>https://russellgao.cn/linux-alpine-apk/</guid>
     <description><![CDATA[导读  记录在 Alpine 容器内安装命令时遇到的一些问题，本篇文章会持续更新。
 问题背景是在docker 容器内执行 docker 命令，执行时发现缺少某些依赖包，在安装依赖包时遇到一些难以解决的问题。
@@ -41,7 +41,7 @@
     <title>设计模式六大原则</title>
     <link>https://russellgao.cn/design-principle/</link>
     <pubDate>Tue, 19 Jan 2021 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
+    <author>作者</author>
     <guid>https://russellgao.cn/design-principle/</guid>
     <description><![CDATA[导读  重温设计模式的原则
  六大原则 单一职责原则（Single Responsibility Principle）  There should never be more than one reason for a class to change.]]></description>
@@ -49,7 +49,7 @@
     <title>消息队列原理之kafka</title>
     <link>https://russellgao.cn/mq-kafka/</link>
     <pubDate>Thu, 17 Dec 2020 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
+    <author>作者</author>
     <guid>https://russellgao.cn/mq-kafka/</guid>
     <description><![CDATA[导读  本文消息队列系列第二篇，上一篇讲述的是 Rabbitmq ，这篇主要介绍 Kafka 的原理与使用。
 Kafka 是一个快速、可扩展的、高吞吐的、可容错的分布式“发布-订阅”消息系统， 使用 Scala 与 Java 语言编写，能够将消息从一个端点传递到另一个端点。 较之传统的消息中间件（例如 ActiveMQ、RabbitMQ），Kafka 具有高吞吐量、内置分区、支持消息副本和高容错的特性，非常适合大规模消息处理应用程序。]]></description>
@@ -57,7 +57,7 @@ Kafka 是一个快速、可扩展的、高吞吐的、可容错的分布式“�
     <title>消息队列原理之rabbitmq</title>
     <link>https://russellgao.cn/mq-rabbitmq/</link>
     <pubDate>Wed, 16 Dec 2020 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
+    <author>作者</author>
     <guid>https://russellgao.cn/mq-rabbitmq/</guid>
     <description><![CDATA[导读  谈起消息队列，我们的脑海可能会不由自主的冒出这么几个关键词，解耦、异步化、消峰、广播等，消息队列的种类也很多，如 rabbitmq、rocketmq、activemq、kafka等还有各个云厂商提供的消息队列。 它们都有各种的特点和使用场景，所以这个系列的文章主要谈各个消息的原理，目前规划了两篇文章，rabbitmq 和 kafka ，其他的暂时还没有用到，还没有深究。
 这篇主要介绍 rabbitmq 的原理和基于 golang 如何使用。]]></description>
@@ -65,14 +65,14 @@ Kafka 是一个快速、可扩展的、高吞吐的、可容错的分布式“�
     <title>深入浅出的聊聊 cpu 负载与使用率</title>
     <link>https://russellgao.cn/cpu/</link>
     <pubDate>Tue, 15 Dec 2020 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
+    <author>作者</author>
     <guid>https://russellgao.cn/cpu/</guid>
     <description><![CDATA[导读  在定位性能问题时，一个绕不开的话题就是 CPU ，会觉得 CPU 不够用了，或者是瓶颈了，那么怎么来确定是 CPU 的问题呢？衡量 CPU 的指标有两个，CPU 负载(load average) 和 使用率，这两者有什么关系和区别呢？ 这篇文章带大家深层次的了解一下 CPU 。]]></description>
 </item><item>
     <title>git 常用命令</title>
     <link>https://russellgao.cn/git-command/</link>
     <pubDate>Mon, 14 Dec 2020 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
+    <author>作者</author>
     <guid>https://russellgao.cn/git-command/</guid>
     <description><![CDATA[导读  这篇文章主要记录了 git 的一些常用命令，后续会持续补充更新。
  常用命令 检出代码 1  git clone url -b git_branch   查看分支 1  git branch -a   创建分支 1  git branch xxx   删除本地分支 1  git branch -d xxxxx   检出分支 1  git checkout git_branch   拉取代码 1  git pull   把修改文件提交到缓冲区 1  git add &lt;filename&gt;   本地提交 1  git commit -m &#34;代码提交信息&#34;   推送代码 1 2  git push origin local_branch:remote_branch 例 : git push origin release/release:release/release   合并代码 1  git merge origin/remote   cherry pick 1  git cherry-pick commit_id   跟踪 1 2  git branch --set-upstream-to=remote_branch local_branch 例 git branch --set-upstream-to=origin/release/release release/release   丢弃本地修改 1 2  git checkout -- file 例 git checkout -- test.]]></description>
@@ -80,7 +80,7 @@ Kafka 是一个快速、可扩展的、高吞吐的、可容错的分布式“�
     <title>docker 原理之本地存储</title>
     <link>https://russellgao.cn/docker-local-storage/</link>
     <pubDate>Wed, 09 Dec 2020 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
+    <author>作者</author>
     <guid>https://russellgao.cn/docker-local-storage/</guid>
     <description><![CDATA[导读  在前面的文章docker 原理之存储驱动中简单的介绍了 Docker 的存储驱动，这篇文章接着讲存储，目前的 docker 版本中默认的是 overlay2 ，所以这篇文章就以 overlay2 为例带大家看看，在我们执行 docker build ，docker pull，docker run 等命令时本地存储有何变化。]]></description>
 </item></channel>

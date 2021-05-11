@@ -1,14 +1,14 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>other - Category - 大大很二</title>
+        <title>other - 分类 - 大大很二</title>
         <link>https://russellgao.cn/categories/other/</link>
-        <description>other - Category - 大大很二</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
+        <description>other - 分类 - 大大很二</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
             <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Sun, 11 Apr 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/categories/other/" rel="self" type="application/rss+xml" /><item>
     <title>Apollo(阿波罗)docker部署记录</title>
     <link>https://russellgao.cn/apollo-deploy-docker/</link>
     <pubDate>Sun, 11 Apr 2021 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
+    <author>作者</author>
     <guid>https://russellgao.cn/apollo-deploy-docker/</guid>
     <description><![CDATA[导读  本文记录根据 Apollo 官方文档部署 Apollo 的过程，值得参考的地方是其中踩的坑。
 假设你对 Apollo 有一定的了解，所以对 Apollo 本身不会做太多的介绍，文档可参考 : https://ctripcorp.]]></description>
@@ -16,7 +16,7 @@
     <title>设计模式六大原则</title>
     <link>https://russellgao.cn/design-principle/</link>
     <pubDate>Tue, 19 Jan 2021 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
+    <author>作者</author>
     <guid>https://russellgao.cn/design-principle/</guid>
     <description><![CDATA[导读  重温设计模式的原则
  六大原则 单一职责原则（Single Responsibility Principle）  There should never be more than one reason for a class to change.]]></description>
@@ -24,7 +24,7 @@
     <title>OSCHINA 搬迁申明</title>
     <link>https://russellgao.cn/oschina-blog/</link>
     <pubDate>Mon, 30 Nov 2020 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
+    <author>作者</author>
     <guid>https://russellgao.cn/oschina-blog/</guid>
     <description><![CDATA[导读  我的博客即将同步至 OSCHINA 社区，这是我的 OSCHINA ID：russellgao，邀请大家一同入驻：https://www.oschina.net/sharing-plan/apply
  ]]></description>
@@ -32,7 +32,7 @@
     <title>harbor gc 时遇到的坑</title>
     <link>https://russellgao.cn/harbor-gc/</link>
     <pubDate>Sun, 29 Nov 2020 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
+    <author>作者</author>
     <guid>https://russellgao.cn/harbor-gc/</guid>
     <description><![CDATA[导读  Harbor 是为企业用户设计的容器镜像仓库开源项目，包括了权限管理(RBAC)、LDAP、审计、安全漏洞扫描、镜像验真、管理界面、自我注册、HA 等企业必需的功能，同时针对中国用户的特点，设计镜像复制和中文支持等功能。
 在使用的过程会有 GC 的需求，可以想象下这几种场景:
@@ -41,7 +41,7 @@
     <title>markdown中插入表情的方法</title>
     <link>https://russellgao.cn/markdownemoji/</link>
     <pubDate>Thu, 19 Nov 2020 00:00:00 &#43;0000</pubDate>
-    <author>Author</author>
+    <author>作者</author>
     <guid>https://russellgao.cn/markdownemoji/</guid>
     <description><![CDATA[导读  markdown 中也是可以插入表情，但并不是所有的markdown 解析器都支持，我本地用的 Goland、MacDown 不支持，但是 hugo 是支持的， 写作的过程可以适当加入一些表情，可以表达当时写作的一个心情。]]></description>
 </item></channel>
