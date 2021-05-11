@@ -2,6 +2,7 @@
 .publish.sh
 main.go
 resources
+themes
 config-bak.toml
 /config-bak.toml
 /config.toml
