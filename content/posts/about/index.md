@@ -5,8 +5,8 @@ date = "2020-11-08"
 aliases = ["about-me"]
 author = "russellgao"
 draft = false
+hiddenFromHomePage = true
 featuredImage = "https://gitee.com/russellgao/blogs-image/raw/master/images/about/climb.jpeg"
-
 
 +++
 

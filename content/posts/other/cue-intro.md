@@ -7,10 +7,10 @@ author = "russellgao"
 draft = false
 tags = [
     "golang",
-    "CUE" 
+    "cue" 
 ]
 categories = [
-    "CUE"
+    "cue"
 ]
 +++
 
