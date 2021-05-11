@@ -11,7 +11,7 @@ tags = [
 ,]
 
 categories = [
-    "istio",
+    "servicemesh",
     "kubernetes",
 ]
 
