@@ -1,0 +1,35 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>opensrouce - 分类 - 大大很二</title>
+        <link>https://russellgao.cn/categories/opensrouce/</link>
+        <description>opensrouce - 分类 - 大大很二</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Sun, 08 Nov 2020 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/categories/opensrouce/" rel="self" type="application/rss+xml" /><item>
+    <title>自己开源的项目 - toolkit</title>
+    <link>https://russellgao.cn/tookit/</link>
+    <pubDate>Sun, 08 Nov 2020 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://russellgao.cn/tookit/</guid>
+    <description><![CDATA[toolkit 作用 用于提供工作效率的工具箱，里面有各种工具，就比如真实工具箱中里面有扳手，各种大小的起子，钳子等 某些场景下确实可以达到事半功倍的效果
+安装 源码安装 有 go 语言环境的可以直接用源码进行编译运行
+1 2 3  git clone https://github.]]></description>
+</item><item>
+    <title>How to run jenkins on kubernetes</title>
+    <link>https://russellgao.cn/k8s_jenkins/</link>
+    <pubDate>Sat, 08 Feb 2020 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://russellgao.cn/k8s_jenkins/</guid>
+    <description><![CDATA[作用 如何在Kubernetes环境中运行jenkins
+项目地址 https://github.com/russellgao/k8s_jenkins
+参考  https://mp.weixin.qq.com/s/7YFlmcUH5iOB2XOBIZ2_rA  ]]></description>
+</item><item>
+    <title>ELK stack on kubernetes</title>
+    <link>https://russellgao.cn/k8s_elk/</link>
+    <pubDate>Sat, 04 Jan 2020 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://russellgao.cn/k8s_elk/</guid>
+    <description><![CDATA[作用 如何在Kubernetes环境中运行ELK Stack
+项目地址 https://github.com/russellgao/k8s_elk
+用法  manifests Can run in production environment experimental In the experimental stage  使用之前需要修改各个yaml文件的Storage，Service相关的参数，根据实际情况选择合适的介质，修改完之后执行kubectl -f manifests 即可。]]></description>
+</item></channel>
+</rss>

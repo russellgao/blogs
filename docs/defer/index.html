@@ -18,7 +18,7 @@
 <meta name="twitter:title" content="细谈 Golang 中那些设计优美的细节-defer"/>
 <meta name="twitter:description" content="Hugo, the world&#39;s fastest framework for building websites"/>
 <meta name="application-name" content="russellgao">
-<meta name="apple-mobile-web-app-title" content="russellgao"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://gitee.com/russellgao/blogs-image/raw/master/images/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://russellgao.cn/defer/" /><link rel="next" href="https://russellgao.cn/about/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+<meta name="apple-mobile-web-app-title" content="russellgao"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://gitee.com/russellgao/blogs-image/raw/master/images/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://russellgao.cn/defer/" /><link rel="prev" href="https://russellgao.cn/tookit/" /><link rel="next" href="https://russellgao.cn/about/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -51,7 +51,7 @@
         title="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png" /><span id="id-1" class="typeit"></span></a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/"> 首页 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+            <div class="menu-inner"><a class="menu-item" href="/"> 首页 </a><a class="menu-item" href="/categories/golang/"> Golang </a><a class="menu-item" href="/categories/kubernetes/"> Kubernetes </a><a class="menu-item" href="/categories/servicemesh/"> ServiceMesh </a><a class="menu-item" href="/categories/python/"> Python </a><a class="menu-item" href="/categories/argorithm/"> 算法 </a><a class="menu-item" href="/categories/opensrouce/"> 开源项目 </a><a class="menu-item" href="/categories/ai/"> 人工智能 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
                         <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
                             <i class="fas fa-search fa-fw"></i>
@@ -101,7 +101,7 @@
                     <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
                         取消
                     </a>
-                </div><a class="menu-item" href="/" title="">首页</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                </div><a class="menu-item" href="/" title="">首页</a><a class="menu-item" href="/categories/golang/" title="">Golang</a><a class="menu-item" href="/categories/kubernetes/" title="">Kubernetes</a><a class="menu-item" href="/categories/servicemesh/" title="">ServiceMesh</a><a class="menu-item" href="/categories/python/" title="">Python</a><a class="menu-item" href="/categories/argorithm/" title="">算法</a><a class="menu-item" href="/categories/opensrouce/" title="">开源项目</a><a class="menu-item" href="/categories/ai/" title="">人工智能</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
                 <i class="fas fa-adjust fa-fw"></i>
             </a></div>
     </div>
@@ -404,7 +404,7 @@ return
         </section>
     </div>
 
-    <div class="post-nav">
+    <div class="post-nav"><a href="/tookit/" class="prev" rel="prev" title="自己开源的项目 - toolkit"><i class="fas fa-angle-left fa-fw"></i>自己开源的项目 - toolkit</a>
             <a href="/about/" class="next" rel="next" title="关于我">关于我<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div id="comments"><div id="valine" class="comment"></div><noscript>

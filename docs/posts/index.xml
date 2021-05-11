@@ -12,6 +12,14 @@
     <guid>https://russellgao.cn/cue-kubernetes/</guid>
     <description><![CDATA[导读  本文是基于上一篇 CUE是何方神圣 基本介绍后，结合 kubernetes ，看看 kubernetes 是如何使用 CUE 的，内容主要来自 官方教程 。]]></description>
 </item><item>
+    <title>TensorFlow 是什么</title>
+    <link>https://russellgao.cn/tensorflow-intro/</link>
+    <pubDate>Mon, 10 May 2021 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://russellgao.cn/tensorflow-intro/</guid>
+    <description><![CDATA[导读  test
+ ]]></description>
+</item><item>
     <title>CUE是何方神圣?</title>
     <link>https://russellgao.cn/cue-intro/</link>
     <pubDate>Sat, 08 May 2021 00:00:00 &#43;0000</pubDate>
@@ -75,13 +83,5 @@ Kafka 是一个快速、可扩展的、高吞吐的、可容错的分布式“�
     <author>作者</author>
     <guid>https://russellgao.cn/cpu/</guid>
     <description><![CDATA[导读  在定位性能问题时，一个绕不开的话题就是 CPU ，会觉得 CPU 不够用了，或者是瓶颈了，那么怎么来确定是 CPU 的问题呢？衡量 CPU 的指标有两个，CPU 负载(load average) 和 使用率，这两者有什么关系和区别呢？ 这篇文章带大家深层次的了解一下 CPU 。]]></description>
-</item><item>
-    <title>git 常用命令</title>
-    <link>https://russellgao.cn/git-command/</link>
-    <pubDate>Mon, 14 Dec 2020 00:00:00 &#43;0000</pubDate>
-    <author>作者</author>
-    <guid>https://russellgao.cn/git-command/</guid>
-    <description><![CDATA[导读  这篇文章主要记录了 git 的一些常用命令，后续会持续补充更新。
- 常用命令 检出代码 1  git clone url -b git_branch   查看分支 1  git branch -a   创建分支 1  git branch xxx   删除本地分支 1  git branch -d xxxxx   检出分支 1  git checkout git_branch   拉取代码 1  git pull   把修改文件提交到缓冲区 1  git add &lt;filename&gt;   本地提交 1  git commit -m &#34;代码提交信息&#34;   推送代码 1 2  git push origin local_branch:remote_branch 例 : git push origin release/release:release/release   合并代码 1  git merge origin/remote   cherry pick 1  git cherry-pick commit_id   跟踪 1 2  git branch --set-upstream-to=remote_branch local_branch 例 git branch --set-upstream-to=origin/release/release release/release   丢弃本地修改 1 2  git checkout -- file 例 git checkout -- test.]]></description>
 </item></channel>
 </rss>

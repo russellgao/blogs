@@ -18,7 +18,7 @@
 <meta name="twitter:title" content="CUE 是如何在 Kubernetes 中使用的"/>
 <meta name="twitter:description" content="导读  本文是基于上一篇 CUE是何方神圣 基本介绍后，结合 kubernetes ，看看 kubernetes 是如何使用 CUE 的，内容主要来自 官方教程 。"/>
 <meta name="application-name" content="russellgao">
-<meta name="apple-mobile-web-app-title" content="russellgao"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://gitee.com/russellgao/blogs-image/raw/master/images/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://russellgao.cn/cue-kubernetes/" /><link rel="prev" href="https://russellgao.cn/cue-intro/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+<meta name="apple-mobile-web-app-title" content="russellgao"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://gitee.com/russellgao/blogs-image/raw/master/images/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://russellgao.cn/cue-kubernetes/" /><link rel="prev" href="https://russellgao.cn/tensorflow-intro/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/russellgao.cn\/cue-kubernetes\/"
-        },"genre": "posts","keywords": "kubernetes, cue","wordcount":  15 ,
+        },"genre": "posts","keywords": "kubernetes, cue","wordcount":  33 ,
         "url": "https:\/\/russellgao.cn\/cue-kubernetes\/","datePublished": "2021-05-10T00:00:00+00:00","dateModified": "2021-05-11T14:18:56+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -51,7 +51,7 @@
         title="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png" /><span id="id-1" class="typeit"></span></a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/"> 首页 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+            <div class="menu-inner"><a class="menu-item" href="/"> 首页 </a><a class="menu-item" href="/categories/golang/"> Golang </a><a class="menu-item" href="/categories/kubernetes/"> Kubernetes </a><a class="menu-item" href="/categories/servicemesh/"> ServiceMesh </a><a class="menu-item" href="/categories/python/"> Python </a><a class="menu-item" href="/categories/argorithm/"> 算法 </a><a class="menu-item" href="/categories/opensrouce/"> 开源项目 </a><a class="menu-item" href="/categories/ai/"> 人工智能 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
                         <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
                             <i class="fas fa-search fa-fw"></i>
@@ -101,7 +101,7 @@
                     <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
                         取消
                     </a>
-                </div><a class="menu-item" href="/" title="">首页</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                </div><a class="menu-item" href="/" title="">首页</a><a class="menu-item" href="/categories/golang/" title="">Golang</a><a class="menu-item" href="/categories/kubernetes/" title="">Kubernetes</a><a class="menu-item" href="/categories/servicemesh/" title="">ServiceMesh</a><a class="menu-item" href="/categories/python/" title="">Python</a><a class="menu-item" href="/categories/argorithm/" title="">算法</a><a class="menu-item" href="/categories/opensrouce/" title="">开源项目</a><a class="menu-item" href="/categories/ai/" title="">人工智能</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
                 <i class="fas fa-adjust fa-fw"></i>
             </a></div>
     </div>
@@ -118,7 +118,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">CUE 是如何在 Kubernetes 中使用的</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/cue/"><i class="far fa-folder fa-fw"></i>cue</a>&nbsp;<a href="/categories/kubernetes/"><i class="far fa-folder fa-fw"></i>kubernetes</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-05-10">2021-05-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 15 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-05-10">2021-05-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 33 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;<span id="/cue-kubernetes/" class="leancloud_visitors" data-flag-title="CUE 是如何在 Kubernetes 中使用的">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
@@ -130,13 +130,31 @@
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ol>
     <li><a href="#导读">导读</a></li>
+    <li><a href="#数据准备">数据准备</a></li>
+    <li><a href="#参考">参考</a></li>
   </ol>
 </nav></div>
             </div><div class="content" id="content"><h2 id="导读">导读</h2>
 <blockquote>
 <p>本文是基于上一篇 <a href="https://russellgao.cn/cue-intro/" target="_blank" rel="noopener noreffer">CUE是何方神圣</a> 基本介绍后，结合 kubernetes ，看看 kubernetes 是如何使用 CUE 的，内容主要来自 <a href="https://github.com/cuelang/cue/tree/master/doc/tutorial/kubernetes" target="_blank" rel="noopener noreffer">官方教程</a> 。</p>
 <p>希望学完本篇内容之后可以对 CUE 有一个感性的认知。</p>
+<p>我们将会从如下几个方面介绍 ：</p>
+<ul>
+<li>将给定的YAML文件转换为CUE</li>
+<li>将常见的模式提升到父目录</li>
+<li>使用工具重写CUE文件，删除不必要的字段</li>
+<li>对不同的子目录重复步骤2的内容</li>
+<li>定义命令，对配置进行操作</li>
+<li>直接从Kubernetes Go源代码中提取CUE模板</li>
+<li>手动调整配置</li>
+</ul>
 </blockquote>
+<h2 id="数据准备">数据准备</h2>
+<p>本文需要用到的 demo 文件参见官方仓库 <a href="https://github.com/cuelang/cue/tree/master/doc/tutorial/kubernetes/original">https://github.com/cuelang/cue/tree/master/doc/tutorial/kubernetes/original</a> 。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://github.com/cuelang/cue/tree/master/doc/tutorial/kubernetes">https://github.com/cuelang/cue/tree/master/doc/tutorial/kubernetes</a></li>
+</ul>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
@@ -162,7 +180,7 @@
         </section>
     </div>
 
-    <div class="post-nav"><a href="/cue-intro/" class="prev" rel="prev" title="CUE是何方神圣?"><i class="fas fa-angle-left fa-fw"></i>CUE是何方神圣?</a></div>
+    <div class="post-nav"><a href="/tensorflow-intro/" class="prev" rel="prev" title="TensorFlow 是什么"><i class="fas fa-angle-left fa-fw"></i>TensorFlow 是什么</a></div>
 </div>
 <div id="comments"><div id="valine" class="comment"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
