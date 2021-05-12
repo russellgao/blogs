@@ -15,5 +15,5 @@ categories = [
 +++
 
 ## 导读
-> test
+> ${placeholder}
 
