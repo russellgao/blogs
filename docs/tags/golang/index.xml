@@ -4,15 +4,7 @@
         <link>https://russellgao.cn/tags/golang/</link>
         <description>golang - 标签 - 大大很二</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
-            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Mon, 10 May 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/tags/golang/" rel="self" type="application/rss+xml" /><item>
-    <title>TensorFlow 是什么</title>
-    <link>https://russellgao.cn/tensorflow-intro/</link>
-    <pubDate>Mon, 10 May 2021 00:00:00 &#43;0000</pubDate>
-    <author>作者</author>
-    <guid>https://russellgao.cn/tensorflow-intro/</guid>
-    <description><![CDATA[导读  ${placeholder}
- ]]></description>
-</item><item>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Sat, 08 May 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/tags/golang/" rel="self" type="application/rss+xml" /><item>
     <title>CUE是何方神圣?</title>
     <link>https://russellgao.cn/cue-intro/</link>
     <pubDate>Sat, 08 May 2021 00:00:00 &#43;0000</pubDate>
@@ -34,6 +26,14 @@
     <author>作者</author>
     <guid>https://russellgao.cn/oracle-golang/</guid>
     <description><![CDATA[导读 这篇文章主要介绍如何利用 golang 操作 oracle 数据库，包括基本的增删改查，本地 oracle 环境搭建，以及如何在 docker 中运行。 oracle client 镜像构建并不容易，花了很长时间去踩坑，文中提供了已经构建好的基础镜像，可以直接使用，这里贡献给大家。]]></description>
+</item><item>
+    <title>TensorFlow 是什么</title>
+    <link>https://russellgao.cn/tensorflow-intro/</link>
+    <pubDate>Tue, 10 Nov 2020 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://russellgao.cn/tensorflow-intro/</guid>
+    <description><![CDATA[导读  ${placeholder}
+ ]]></description>
 </item><item>
     <title>细谈 Golang 中那些设计优美的细节-defer</title>
     <link>https://russellgao.cn/defer/</link>

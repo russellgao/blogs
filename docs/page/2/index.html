@@ -114,13 +114,6 @@
         alt="https://www.gravatar.com/avatar/ca935f89022e585ea1380ef7ef122bf6?s=240&amp;d=mp"
         title="https://www.gravatar.com/avatar/ca935f89022e585ea1380ef7ef122bf6?s=240&amp;d=mp" /></a></div><h1 class="home-title">好记性不如烂笔头</h1><h2 class="home-subtitle"><div id="id-3" class="typeit"></div></h2><div class="links"><a href="https://github.com/russellgao/blogs" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github-alt fa-fw"></i></a><a href="mailto:1060745366@qq.com" title="Email" rel=" me"><i class="far fa-envelope fa-fw"></i></a><a href="/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw"></i></a></div></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/harbor-gc/">harbor gc 时遇到的坑</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2020-11-29">2020-11-29</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/other/"><i class="far fa-folder fa-fw"></i>other</a></span></div><div class="content">导读  Harbor 是为企业用户设计的容器镜像仓库开源项目，包括了权限管理(RBAC)、LDAP、审计、安全漏洞扫描、镜像验真、管理界面、自我注册、HA 等企业必需的功能，同时针对中国用户的特点，设计镜像复制和中文支持等功能。
-在使用的过程会有 GC 的需求，可以想象下这几种场景:
- 在 CI 的过程，同一个版本（SNAPSHOT/latest）编译很多次，只有最后一次产生的才有 tag ，那么之前的产生 blob 去哪了，或者还有用吗 ？ 镜像的生命周期已经结束，需要从仓库中删除，应该怎么操作？要知道在 Harbor 界面上删除只是标记删除，并不会释放存储空间。  Harbor / Docker 官方已经提供比较完善的 GC 方案，可以解决 80% 的问题，但是 GC 的过程中还可能出现一些奇怪的现象，本文主要记录在 Harbor GC 过程中踩过的坑。</div><div class="post-footer">
-        <a href="/harbor-gc/">阅读全文</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E4%BA%91%E5%8E%9F%E7%94%9F/">云原生</a>,&nbsp;<a href="/tags/harbor/">harbor</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/golang-gmp/">细谈 Golang 中那些设计优美的细节-GMP</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2020-11-27">2020-11-27</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/golang/"><i class="far fa-folder fa-fw"></i>golang</a></span></div><div class="content">导读  这是 Golang 系列第二篇，这篇主要谈谈 Golang 的调度模型-GMP，我们知道 Golang 在并发方面有绝对优势，现在就让我们来揭开 它神秘的面纱。</div><div class="post-footer">
         <a href="/golang-gmp/">阅读全文</a><div class="post-tags">
@@ -181,6 +174,12 @@ nginx.conf 中主要配置全局配置，配置好之后一般很少改动。</d
  ELK 指的是由 Elasticsearch + Logstash + Kibana 组成的日志采集、存储、展示为一体的日志解决方案，简称 &ldquo;ELK Stack&rdquo;。ELK Stack 还包含 Beats（如Filebeat、Metricbeat、Heartbeat等）、Kafka等成员，是目前主流的一种日志解决方案。</div><div class="post-footer">
         <a href="/elk/">阅读全文</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/kubernetes/">kubernetes</a>,&nbsp;<a href="/tags/istio/">istio</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/tensorflow-intro/">TensorFlow 是什么</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2020-11-10">2020-11-10</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/ai/"><i class="far fa-folder fa-fw"></i>ai</a></span></div><div class="content">导读  ${placeholder}
+ </div><div class="post-footer">
+        <a href="/tensorflow-intro/">阅读全文</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/golang/">golang</a>,&nbsp;<a href="/tags/toolkit/">toolkit</a></div></div>
 </article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/defer/">细谈 Golang 中那些设计优美的细节-defer</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2020-11-08">2020-11-08</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/golang/"><i class="far fa-folder fa-fw"></i>golang</a></span></div><div class="content">背景 在学习和使用 Go 的过程中发现，Go 在语言层面的设计有很多有趣的地方，所以准备用一个系列来细数这些有趣的地方。写这个系列一是为了加深自己的理解，二是愿意分享，分享 Go 中有趣的设计细节。每篇都会通过一个例子讲述一个细节，感兴趣的话可以关注一下哟！
