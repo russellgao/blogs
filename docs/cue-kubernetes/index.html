@@ -10,7 +10,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://russellgao.cn/cue-kubernetes/" /><meta property="og:image" content="https://russellgao.cn/images/profile.jpg"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-05-10T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2021-05-11T14:18:56&#43;08:00" /><meta property="og:site_name" content="大大很二" />
+<meta property="article:modified_time" content="2021-05-12T17:53:57&#43;08:00" /><meta property="og:site_name" content="大大很二" />
 
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://russellgao.cn/images/profile.jpg"/>
@@ -27,8 +27,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/russellgao.cn\/cue-kubernetes\/"
-        },"genre": "posts","keywords": "kubernetes, cue","wordcount":  33 ,
-        "url": "https:\/\/russellgao.cn\/cue-kubernetes\/","datePublished": "2021-05-10T00:00:00+00:00","dateModified": "2021-05-11T14:18:56+08:00","publisher": {
+        },"genre": "posts","keywords": "kubernetes, cue","wordcount":  738 ,
+        "url": "https:\/\/russellgao.cn\/cue-kubernetes\/","datePublished": "2021-05-10T00:00:00+00:00","dateModified": "2021-05-12T17:53:57+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -118,8 +118,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">CUE 是如何在 Kubernetes 中使用的</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/cue/"><i class="far fa-folder fa-fw"></i>cue</a>&nbsp;<a href="/categories/kubernetes/"><i class="far fa-folder fa-fw"></i>kubernetes</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-05-10">2021-05-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 33 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;<span id="/cue-kubernetes/" class="leancloud_visitors" data-flag-title="CUE 是如何在 Kubernetes 中使用的">
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-05-10">2021-05-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 738 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;<span id="/cue-kubernetes/" class="leancloud_visitors" data-flag-title="CUE 是如何在 Kubernetes 中使用的">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="true">
@@ -131,6 +131,13 @@
   <ol>
     <li><a href="#导读">导读</a></li>
     <li><a href="#数据准备">数据准备</a></li>
+    <li><a href="#导入现有配置">导入现有配置</a></li>
+    <li><a href="#quick-n-dirty-conversion">Quick &lsquo;n Dirty Conversion</a>
+      <ol>
+        <li><a href="#创建顶层模板">创建顶层模板</a></li>
+      </ol>
+    </li>
+    <li><a href="#未完待续">未完待续</a></li>
     <li><a href="#参考">参考</a></li>
   </ol>
 </nav></div>
@@ -151,6 +158,460 @@
 </blockquote>
 <h2 id="数据准备">数据准备</h2>
 <p>本文需要用到的 demo 文件参见官方仓库 <a href="https://github.com/cuelang/cue/tree/master/doc/tutorial/kubernetes/original">https://github.com/cuelang/cue/tree/master/doc/tutorial/kubernetes/original</a> 。</p>
+<blockquote>
+<p>由于 github 访问比较慢，可以从 <a href="https://gitee.com/russellgao/cue-tutorial/tree/master" target="_blank" rel="noopener noreffer">此处下载</a></p>
+</blockquote>
+<p>这个数据集是基于一个真实的案例，使用不同的服务名称。真实设置中的所有不一致之处都被复制到文件中，以获得对转换到CUE的实际行为的真实印象。</p>
+<p>给出的YAML文件在以下目录中排序</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">$ tree ./original <span class="p">|</span> head
+.
+└── services
+    ├── frontend
+    │   ├── bartender
+    │   │   └── kube.yaml
+    │   ├── breaddispatcher
+    │   │   └── kube.yaml
+    │   ├── host
+    │   │   └── kube.yaml
+    │   ├── maitred
+...
+</code></pre></td></tr></table>
+</div>
+</div><p>每个子目录包含相关的微服务，这些微服务通常具有类似的特征和配置。这些配置包括大量的Kubernetes对象，包括 <code>services</code>、<code>deployments</code>、<code>config maps</code>、<code>a daemon set</code>、<code>a stateful set</code>、 <code>a cron job</code>。</p>
+<h2 id="导入现有配置">导入现有配置</h2>
+<p>首先把这个复制到临时目录 <code>tmp</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">$ cp -a original tmp
+$ <span class="nb">cd</span> tmp
+</code></pre></td></tr></table>
+</div>
+</div><p>我们初始化一个模块，这样我们就可以把子目录中的所有配置文件作为一个包的一部分。稍后我们通过给所有的包起相同的名字来实现这一点。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">cue mod init
+</code></pre></td></tr></table>
+</div>
+</div><p>我们初始化一个Go模块，以便以后可以解决k8s.io/api/apps/v1 Go包的依赖性。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">go mod init russellgao.com
+</code></pre></td></tr></table>
+</div>
+</div><p>创建一个模块也允许我们的包导入外部包。</p>
+<p>让我们尝试使用cue import命令将给定的YAML文件转换为CUE。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">$ <span class="nb">cd</span> services
+$ cue import ./...
+must specify package name with the -p flag
+</code></pre></td></tr></table>
+</div>
+</div><p>由于我们有多个包和文件，我们需要指定它们应该属于哪个包。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">$ cue import ./... -p kube
+path, list, or files flag needed to handle multiple objects in file <span class="s2">&#34;./frontend/bartender/kube.yaml&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>许多文件包含一个以上的Kubernetes对象。此外，我们正在创建一个包含所有文件的所有对象的单一配置。我们需要组织所有的Kubernetes对象，使每个对象在单个配置中可以单独识别。我们通过为每种类型定义一个不同的结构，将每个对象放在这个以其名称为关键的结构中。这允许不同类型的对象共享相同的名称，就像Kubernetes允许的那样。为了达到这个目的，我们告诉cue把每个对象放在配置树中，路径是 &ldquo;种类 &ldquo;为第一元素，&ldquo;名称 &ldquo;为第二元素。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">$ cue import ./... -p kube -l <span class="s1">&#39;strings.ToCamel(kind)&#39;</span> -l metadata.name -f
+</code></pre></td></tr></table>
+</div>
+</div><p>添加的-l标志根据每个对象的值，使用通常的CUE语法为字段标签定义了每个对象的标签。在这种情况下，我们使用每个对象的kind字段的camelcase变体，并使用元数据部分的name字段作为每个对象的名称。我们还添加了-f标志，以覆盖之前成功的几个文件。</p>
+<p>看看发生了什么</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">$ tree . <span class="p">|</span> head
+.
+└── services
+    ├── frontend
+    │   ├── bartender
+    │   │   ├── kube.cue
+    │   │   └── kube.yaml
+    │   ├── breaddispatcher
+    │   │   ├── kube.cue
+    │   │   └── kube.yaml
+...
+</code></pre></td></tr></table>
+</div>
+</div><p>每个YAML文件都被转换为相应的CUE文件。YAML文件的注释被保留下来。</p>
+<p>不过，结果并不完全令人满意。看看 <code>mon/prometheus/configmap.cue</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">$ cat mon/prometheus/configmap.cue
+package kube
+
+apiVersion: <span class="s2">&#34;v1&#34;</span>
+kind:       <span class="s2">&#34;ConfigMap&#34;</span>
+metadata: name: <span class="s2">&#34;prometheus&#34;</span>
+data: <span class="o">{</span>
+    <span class="s2">&#34;alert.rules&#34;</span>: <span class="s2">&#34;&#34;&#34;
+</span><span class="s2">        groups:
+</span><span class="s2">        - name: rules.yaml
+</span><span class="s2">...
+</span><span class="s2">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>配置文件仍然包含YAML嵌入其中一个字段的字符串值。原来的YAML文件可能看起来都是结构化的数据，但其中大部分是一个字符串，包含了希望是有效的YAML。</p>
+<p><code>-R</code> 选项试图检测嵌入在配置文件中的结构化YAML或JSON字符串，然后递归地转换这些字符串。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">$ cue import ./... -p kube -l <span class="s1">&#39;strings.ToCamel(kind)&#39;</span> -l metadata.name -f -R
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">$ cat mon/prometheus/configmap.cue
+package kube
+
+import <span class="s2">&#34;encoding/yaml&#34;</span>
+
+configMap: prometheus: <span class="o">{</span>
+    apiVersion: <span class="s2">&#34;v1&#34;</span>
+    kind:       <span class="s2">&#34;ConfigMap&#34;</span>
+    metadata: name: <span class="s2">&#34;prometheus&#34;</span>
+    data: <span class="o">{</span>
+        <span class="s2">&#34;alert.rules&#34;</span>: yaml.Marshal<span class="o">(</span>_cue_alert_rules<span class="o">)</span>
+        _cue_alert_rules: <span class="o">{</span>
+            groups: <span class="o">[{</span>
+...
+</code></pre></td></tr></table>
+</div>
+</div><p>这看起来好多了! 由此产生的配置文件取代了原来嵌入的字符串，调用yaml.Marshal将结构化的CUE源转换为具有同等YAML文件的字符串。以下划线(_)开头的字段在发送配置文件时不包括在内（当用双引号括起来时则包括在内）。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">$ cue <span class="nb">eval</span> ./mon/prometheus -e configMap.prometheus
+apiVersion: <span class="s2">&#34;v1&#34;</span>
+kind: <span class="s2">&#34;ConfigMap&#34;</span>
+metadata: <span class="o">{</span>
+    name: <span class="s2">&#34;prometheus&#34;</span>
+<span class="o">}</span>
+data: <span class="o">{</span>
+    <span class="s2">&#34;alert.rules&#34;</span>: <span class="s2">&#34;&#34;&#34;
+</span><span class="s2">    groups:
+</span><span class="s2">    - name: rules.yaml
+</span><span class="s2">...
+</span></code></pre></td></tr></table>
+</div>
+</div><p>-e 表示只计算 configMap.prometheus</p>
+<h2 id="quick-n-dirty-conversion">Quick &lsquo;n Dirty Conversion</h2>
+<p>在本教程中，我们展示了如何快速消除一组配置中的模板。人工定制通常会得到更好的结果，但需要相当多的思考，而采取快速和肮脏的方法可以让你基本达到目的。这种快速转换的结果也为更深思熟虑的手工优化打下了良好的基础。</p>
+<h3 id="创建顶层模板">创建顶层模板</h3>
+<p>现在我们已经导入了YAML文件，可以开始简化过程了。</p>
+<p>在我们开始重组之前，让我们保存一个完整的评估，以便我们可以验证简化后的结果是相同的。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">cue <span class="nb">eval</span> -c ./... &gt; snapshot
+</code></pre></td></tr></table>
+</div>
+</div><p>-c选项告诉cue，只允许具体的值，也就是有效的JSON。我们专注于各种kube.cue文件中定义的对象。快速检查发现，许多部署和服务共享共同的结构。</p>
+<p>我们将包含这两者的文件之一复制到目录树的根部，作为创建我们模板的基础。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">$ cp frontend/breaddispatcher/kube.cue .
+</code></pre></td></tr></table>
+</div>
+</div><p>按以下方式修改该文件。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="err">$</span> <span class="nx">cat</span> <span class="o">&lt;&lt;</span><span class="nx">EOF</span> <span class="p">&gt;</span> <span class="nx">kube</span><span class="p">.</span><span class="nx">cue</span>
+<span class="kn">package</span> <span class="nx">kube</span>
+
+<span class="nx">service</span><span class="p">:</span> <span class="p">[</span><span class="nx">ID</span><span class="p">=</span><span class="nx">_</span><span class="p">]:</span> <span class="p">{</span>
+    <span class="nx">apiVersion</span><span class="p">:</span> <span class="s">&#34;v1&#34;</span>
+    <span class="nx">kind</span><span class="p">:</span>       <span class="s">&#34;Service&#34;</span>
+    <span class="nx">metadata</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nx">name</span><span class="p">:</span> <span class="nx">ID</span>
+        <span class="nx">labels</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nx">app</span><span class="p">:</span>       <span class="nx">ID</span>    <span class="c1">// by convention
+</span><span class="c1"></span>            <span class="nx">domain</span><span class="p">:</span>    <span class="s">&#34;prod&#34;</span>  <span class="c1">// always the same in the given files
+</span><span class="c1"></span>            <span class="nx">component</span><span class="p">:</span> <span class="kt">string</span>  <span class="c1">// varies per directory
+</span><span class="c1"></span>        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="nx">spec</span><span class="p">:</span> <span class="p">{</span>
+        <span class="c1">// Any port has the following properties.
+</span><span class="c1"></span>        <span class="nx">ports</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span><span class="p">{</span>
+            <span class="nx">port</span><span class="p">:</span>       <span class="kt">int</span>
+            <span class="nx">protocol</span><span class="p">:</span>   <span class="o">*</span><span class="s">&#34;TCP&#34;</span> <span class="p">|</span> <span class="s">&#34;UDP&#34;</span>      <span class="c1">// from the Kubernetes definition
+</span><span class="c1"></span>            <span class="nx">name</span><span class="p">:</span>       <span class="kt">string</span> <span class="p">|</span> <span class="o">*</span><span class="s">&#34;client&#34;</span>
+        <span class="p">}]</span>
+        <span class="nx">selector</span><span class="p">:</span> <span class="nx">metadata</span><span class="p">.</span><span class="nx">labels</span> <span class="c1">// we want those to be the same
+</span><span class="c1"></span>    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">deployment</span><span class="p">:</span> <span class="p">[</span><span class="nx">ID</span><span class="p">=</span><span class="nx">_</span><span class="p">]:</span> <span class="p">{</span>
+    <span class="nx">apiVersion</span><span class="p">:</span> <span class="s">&#34;apps/v1&#34;</span>
+    <span class="nx">kind</span><span class="p">:</span>       <span class="s">&#34;Deployment&#34;</span>
+    <span class="nx">metadata</span><span class="p">:</span> <span class="nx">name</span><span class="p">:</span> <span class="nx">ID</span>
+    <span class="nx">spec</span><span class="p">:</span> <span class="p">{</span>
+        <span class="c1">// 1 is the default, but we allow any number
+</span><span class="c1"></span>        <span class="nx">replicas</span><span class="p">:</span> <span class="o">*</span><span class="mi">1</span> <span class="p">|</span> <span class="kt">int</span>
+        <span class="nx">template</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nx">metadata</span><span class="p">:</span> <span class="nx">labels</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nx">app</span><span class="p">:</span>       <span class="nx">ID</span>
+                <span class="nx">domain</span><span class="p">:</span>    <span class="s">&#34;prod&#34;</span>
+                <span class="nx">component</span><span class="p">:</span> <span class="kt">string</span>
+            <span class="p">}</span>
+            <span class="c1">// we always have one namesake container
+</span><span class="c1"></span>            <span class="nx">spec</span><span class="p">:</span> <span class="nx">containers</span><span class="p">:</span> <span class="p">[{</span> <span class="nx">name</span><span class="p">:</span> <span class="nx">ID</span> <span class="p">}]</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="nx">EOF</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>通过用 <code>[ID=_]</code> 替换服务和部署名称，我们把定义变成了一个匹配任何字段的模板。CUE将字段名与ID绑定作为结果。在导入过程中，我们使用metadata.name作为对象名称的关键，所以我们现在可以将这个字段设置为ID。</p>
+<p>模板被应用于（与）它们所定义的结构中的所有条目统一，所以我们需要剥离面包分配器定义中的特定字段，概括它们，或者删除它们。</p>
+<p>Kubernetes元数据中定义的一个标签似乎总是被设置为父目录名称。我们通过定义组件：字符串来强制执行，这意味着名称为组件的字段必须被设置为某个字符串值，然后在后面定义。任何未指定的字段在转换为例如JSON时都会导致错误。因此，只有当这个标签被定义后，部署或服务才会有效。</p>
+<p>让我们比较一下合并我们的新模板和原始快照的结果。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">$ cue <span class="nb">eval</span> ./... -c &gt; snapshot2
+--- ./mon/alertmanager
+service.alertmanager.metadata.labels.component: incomplete value <span class="o">(</span>string<span class="o">)</span>:
+    ./kube.cue:11:24
+service.alertmanager.spec.selector.component: incomplete value <span class="o">(</span>string<span class="o">)</span>:
+    ./kube.cue:11:24
+deployment.alertmanager.spec.template.metadata.labels.component: incomplete value <span class="o">(</span>string<span class="o">)</span>:
+    ./kube.cue:36:28
+service.<span class="s2">&#34;node-exporter&#34;</span>.metadata.labels.component: incomplete value <span class="o">(</span>string<span class="o">)</span>:
+    ./kube.cue:11:24
+...
+</code></pre></td></tr></table>
+</div>
+</div><p>警报管理器没有指定 <code>component</code> 的标签。这展示了如何用约束条件来捕捉你的配置中的不一致之处。</p>
+<p>由于很少有对象不指定这个标签，我们将修改配置，使之包括所有地方。我们通过在每个目录中设置一个新定义的顶层字段来做这件事，并修改我们的主模板文件来使用它。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># set the component label to our new top-level field</span>
+$ sed -i.bak <span class="s1">&#39;s/component:.*string/component: #Component/&#39;</span> kube.cue <span class="o">&amp;&amp;</span> rm kube.cue.bak
+
+<span class="c1"># add the new top-level field to our previous template definitions</span>
+$ cat <span class="s">&lt;&lt;EOF &gt;&gt; kube.cue
+</span><span class="s">
+</span><span class="s">#Component: string
+</span><span class="s">EOF</span>
+
+<span class="c1"># add a file with the component label to each directory</span>
+$ ls -d */ <span class="p">|</span> sed <span class="s1">&#39;s/.$//&#39;</span> <span class="p">|</span> xargs -I DIR sh -c <span class="s1">&#39;cd DIR; echo &#34;package kube
+</span><span class="s1">
+</span><span class="s1">#Component: \&#34;DIR\&#34;
+</span><span class="s1">&#34; &gt; kube.cue; cd ..&#39;</span>
+
+<span class="c1"># format the files</span>
+$ cue fmt kube.cue */kube.cue
+</code></pre></td></tr></table>
+</div>
+</div><p>让我们再试一次，看看它是否被修复。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">$ cue <span class="nb">eval</span> -c ./... &gt; snapshot2
+$ diff snapshot snapshot2
+...
+</code></pre></td></tr></table>
+</div>
+</div><p>除了有更一致的标签和一些重新排序外，没有任何变化。我们很高兴，并把这个结果作为新的基线保存起来。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">$ cp snapshot2 snapshot
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="未完待续">未完待续</h2>
+<blockquote>
+<p>后面还有一部分内容没有增加出来，请期待 。</p>
+</blockquote>
 <h2 id="参考">参考</h2>
 <ul>
 <li><a href="https://github.com/cuelang/cue/tree/master/doc/tutorial/kubernetes">https://github.com/cuelang/cue/tree/master/doc/tutorial/kubernetes</a></li>
@@ -159,7 +620,7 @@
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2021-05-11</span>
+                <span>更新于 2021-05-12</span>
             </div>
             <div class="post-info-license"></div>
         </div>
