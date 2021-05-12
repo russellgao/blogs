@@ -1,7 +1,6 @@
 +++
 title = "TensorFlow 是什么"
-date = "2021-05-10"
-aliases = ["about-me"]
+date = "2020-11-10"
 author = "russellgao"
 draft = false
 tags = [
