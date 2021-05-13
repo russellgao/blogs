@@ -4,7 +4,17 @@
         <link>https://russellgao.cn/tags/golang/</link>
         <description>golang - 标签 - 大大很二</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
-            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Sat, 08 May 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/tags/golang/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Wed, 12 May 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/tags/golang/" rel="self" type="application/rss+xml" /><item>
+    <title>CUE Use Cases</title>
+    <link>https://russellgao.cn/cue-usecase/</link>
+    <pubDate>Wed, 12 May 2021 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://russellgao.cn/cue-usecase/</guid>
+    <description><![CDATA[导读  CUE可用于与数据相关的广泛的连续应用中。本节讨论了CUE如何在各种应用领域提供优势。
+本文主要内容来自于官方文档。
+ 配置  管理基于文本的文件，以定义一个系统的期望状态。
+ 可以说，验证应该是任何配置语言的首要任务。然而，大多数配置语言的重点是去除模板。CUE的不同之处在于，它采取了验证优先的立场。但CUE的约束条件也能有效地减少模板，尽管它采取的方法与传统的数据模板语言有很大的不同。]]></description>
+</item><item>
     <title>CUE是何方神圣?</title>
     <link>https://russellgao.cn/cue-intro/</link>
     <pubDate>Sat, 08 May 2021 00:00:00 &#43;0000</pubDate>
