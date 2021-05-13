@@ -13,7 +13,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://russellgao.cn/cue-usecase/" /><meta property="og:image" content="https://russellgao.cn/images/profile.jpg"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-05-12T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2021-05-12T00:00:00&#43;00:00" /><meta property="og:site_name" content="大大很二" />
+<meta property="article:modified_time" content="2021-05-13T17:34:13&#43;08:00" /><meta property="og:site_name" content="大大很二" />
 
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://russellgao.cn/images/profile.jpg"/>
@@ -33,8 +33,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/russellgao.cn\/cue-usecase\/"
-        },"genre": "posts","keywords": "golang, cue","wordcount":  685 ,
-        "url": "https:\/\/russellgao.cn\/cue-usecase\/","datePublished": "2021-05-12T00:00:00+00:00","dateModified": "2021-05-12T00:00:00+00:00","publisher": {
+        },"genre": "posts","keywords": "golang, cue","wordcount":  738 ,
+        "url": "https:\/\/russellgao.cn\/cue-usecase\/","datePublished": "2021-05-12T00:00:00+00:00","dateModified": "2021-05-13T17:34:13+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -124,7 +124,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">CUE Use Cases</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/cue/"><i class="far fa-folder fa-fw"></i>cue</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-05-12">2021-05-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 685 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-05-12">2021-05-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 738 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;<span id="/cue-usecase/" class="leancloud_visitors" data-flag-title="CUE Use Cases">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
@@ -183,6 +183,17 @@
         <li><a href="#比较-2">比较</a>
           <ol>
             <li><a href="#json-schema--openapi">JSON Schema / OpenAPI</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#代码生成和提取">代码生成和提取</a>
+      <ol>
+        <li><a href="#cue解决的核心问题-3">CUE解决的核心问题</a>
+          <ol>
+            <li><a href="#从现有资源中提取数据定义">从现有资源中提取数据定义</a></li>
+            <li><a href="#加强现有标准">加强现有标准</a></li>
+            <li><a href="#将cue转换为其他标准">将CUE转换为其他标准</a></li>
           </ol>
         </li>
       </ol>
@@ -634,6 +645,51 @@ Info: {
 </div>
 </div><p>随着更多的约束条件和逻辑组合器的使用，这种差异变得更加极端。</p>
 <p>OpenAPI和CUE都有各自的作用。OpenAPI的JSON格式使其成为良好的交换标准。另一方面，CUE可以作为一个引擎来生成和解释OpenAPI约束。请注意，CUE通常更有表现力，许多CUE约束不能在OpenAPI中编码。</p>
+<h2 id="代码生成和提取">代码生成和提取</h2>
+<p>将CUE的约束条件与其他语言的定义进行转换。</p>
+<p>在这一节中，我们强调CUE在代码生成管道中的作用，即使用CUE作为多源提取和生成的中间语言。</p>
+<h3 id="cue解决的核心问题-3">CUE解决的核心问题</h3>
+<h4 id="从现有资源中提取数据定义">从现有资源中提取数据定义</h4>
+<p>当人们发现需要定义可互换的数据模式时，通常已经有一些代码库需要处理了。</p>
+<p>CUE目前可以从以下方面提取定义 ：</p>
+<ul>
+<li><a href="https://cuelang.org/docs/integrations/go/#extract-cue-from-go" target="_blank" rel="noopener noreffer">Go</a></li>
+<li>Protobuf</li>
+</ul>
+<p>此外，CUE可以结合和减少来自不同来源的约束，并报告是否有任何不一致的地方。</p>
+<h4 id="加强现有标准">加强现有标准</h4>
+<p>CUE还允许用CUE的表达方式来注释现有的资源。这使得人们可以继续使用现有的资源，或者更顺利地过渡到以CUE为中心的方法。例如，一个项目可能相当依赖protobuf的定义，作为模式定义的至少一个方面的真理来源。在这种特殊情况下，CUE允许用CUE表达式来注释Protobuf字段的声明，并使用字段选项。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-protobuf" data-lang="protobuf"><span class="kd">message</span> <span class="nc">Server</span> <span class="p">{</span><span class="err">
+</span><span class="err"></span>  <span class="kt">int32</span> <span class="n">port</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">[(</span><span class="n">cue.val</span><span class="p">)</span> <span class="o">=</span> <span class="s">&#34;&gt;5000 &amp; &lt;10_000&#34;</span><span class="p">];</span><span class="err">
+</span><span class="err"></span><span class="p">}</span><span class="err">
+</span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Sum</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">A</span> <span class="kt">int</span> <span class="s">`cue:&#34;c-b&#34; json:&#34;a,omitempty&#34;`</span>
+    <span class="nx">B</span> <span class="kt">int</span> <span class="s">`cue:&#34;c-a&#34; json:&#34;b,omitempty&#34;`</span>
+    <span class="nx">C</span> <span class="kt">int</span> <span class="s">`cue:&#34;a+b&#34; json:&#34;c,omitempty&#34;`</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>在这两种情况下，约束条件都将包括提取到CUE。在Go的情况下，字段标签中指定的约束条件也可以直接用于验证Go结构。</p>
+<h4 id="将cue转换为其他标准">将CUE转换为其他标准</h4>
+<p>目前，CUE支持将CUE转换为OpenAPI和Go，尽管它当然不限于这些情况。</p>
 <h2 id="参考">参考</h2>
 <ul>
 <li><a href="https://cuelang.org/docs/usecases/">https://cuelang.org/docs/usecases/</a></li>
@@ -643,7 +699,7 @@ Info: {
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2021-05-12</span>
+                <span>更新于 2021-05-13</span>
             </div>
             <div class="post-info-license"></div>
         </div>

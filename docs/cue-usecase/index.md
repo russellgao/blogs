@@ -350,6 +350,45 @@ Openapi
 
 OpenAPI和CUE都有各自的作用。OpenAPI的JSON格式使其成为良好的交换标准。另一方面，CUE可以作为一个引擎来生成和解释OpenAPI约束。请注意，CUE通常更有表现力，许多CUE约束不能在OpenAPI中编码。
 
+
+## 代码生成和提取
+将CUE的约束条件与其他语言的定义进行转换。
+
+在这一节中，我们强调CUE在代码生成管道中的作用，即使用CUE作为多源提取和生成的中间语言。
+
+### CUE解决的核心问题 
+#### 从现有资源中提取数据定义 
+当人们发现需要定义可互换的数据模式时，通常已经有一些代码库需要处理了。
+
+CUE目前可以从以下方面提取定义 ：
+- [Go](https://cuelang.org/docs/integrations/go/#extract-cue-from-go)
+- Protobuf
+
+此外，CUE可以结合和减少来自不同来源的约束，并报告是否有任何不一致的地方。
+
+#### 加强现有标准 
+CUE还允许用CUE的表达方式来注释现有的资源。这使得人们可以继续使用现有的资源，或者更顺利地过渡到以CUE为中心的方法。例如，一个项目可能相当依赖protobuf的定义，作为模式定义的至少一个方面的真理来源。在这种特殊情况下，CUE允许用CUE表达式来注释Protobuf字段的声明，并使用字段选项。
+
+```protobuf
+message Server {
+  int32 port = 1 [(cue.val) = ">5000 & <10_000"];
+}
+```
+
+```go
+type Sum struct {
+    A int `cue:"c-b" json:"a,omitempty"`
+    B int `cue:"c-a" json:"b,omitempty"`
+    C int `cue:"a+b" json:"c,omitempty"`
+}
+```
+
+在这两种情况下，约束条件都将包括提取到CUE。在Go的情况下，字段标签中指定的约束条件也可以直接用于验证Go结构。
+
+#### 将CUE转换为其他标准 
+目前，CUE支持将CUE转换为OpenAPI和Go，尽管它当然不限于这些情况。
+
+
 ## 参考
 - https://cuelang.org/docs/usecases/
 - https://github.com/cuelang/cue
