@@ -4,7 +4,17 @@
         <link>https://russellgao.cn/posts/</link>
         <description>所有文章 | 大大很二</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
-            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Wed, 12 May 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Mon, 17 May 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>初识 ETCD </title>
+    <link>https://russellgao.cn/etcd-intro/</link>
+    <pubDate>Mon, 17 May 2021 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://russellgao.cn/etcd-intro/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://gitee.com/russellgao/blogs-image/raw/master/images/etcd/etcd-horizontal-color.svg" referrerpolicy="no-referrer">
+            </div>导读  本文简单介绍了 Etcd ，主要是学习 etcd 时记录的操作过程，适合小白入门时阅读。
+ 介绍 etcd是使用Go语言开发的一个开源的、高可用的分布式key-value存储系统，可以用于配置共享和服务的注册和发现。etcd具有以下特点：]]></description>
+</item><item>
     <title>CUE Use Cases</title>
     <link>https://russellgao.cn/cue-usecase/</link>
     <pubDate>Wed, 12 May 2021 00:00:00 &#43;0000</pubDate>
@@ -78,12 +88,5 @@ Kafka 是一个快速、可扩展的、高吞吐的、可容错的分布式“�
     <guid>https://russellgao.cn/mq-rabbitmq/</guid>
     <description><![CDATA[导读  谈起消息队列，我们的脑海可能会不由自主的冒出这么几个关键词，解耦、异步化、消峰、广播等，消息队列的种类也很多，如 rabbitmq、rocketmq、activemq、kafka等还有各个云厂商提供的消息队列。 它们都有各种的特点和使用场景，所以这个系列的文章主要谈各个消息的原理，目前规划了两篇文章，rabbitmq 和 kafka ，其他的暂时还没有用到，还没有深究。
 这篇主要介绍 rabbitmq 的原理和基于 golang 如何使用。]]></description>
-</item><item>
-    <title>深入浅出的聊聊 cpu 负载与使用率</title>
-    <link>https://russellgao.cn/cpu/</link>
-    <pubDate>Tue, 15 Dec 2020 00:00:00 &#43;0000</pubDate>
-    <author>作者</author>
-    <guid>https://russellgao.cn/cpu/</guid>
-    <description><![CDATA[导读  在定位性能问题时，一个绕不开的话题就是 CPU ，会觉得 CPU 不够用了，或者是瓶颈了，那么怎么来确定是 CPU 的问题呢？衡量 CPU 的指标有两个，CPU 负载(load average) 和 使用率，这两者有什么关系和区别呢？ 这篇文章带大家深层次的了解一下 CPU 。]]></description>
 </item></channel>
 </rss>

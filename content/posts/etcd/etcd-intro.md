@@ -1,0 +1,45 @@
++++
+title = "初识 ETCD "
+date = "2021-05-17"
+author = "russellgao"
+draft = false
+tags = [
+    "golang",
+    "etcd"
+,]
+
+categories = [
+    "etcd"
+]
+
+featuredImage = "https://gitee.com/russellgao/blogs-image/raw/master/images/etcd/etcd-horizontal-color.svg"
+
++++
+
+## 导读
+> 本文简单介绍了 Etcd ，主要是学习 etcd 时记录的操作过程，适合小白入门时阅读。
+>
+
+## 介绍
+etcd是使用Go语言开发的一个开源的、高可用的分布式key-value存储系统，可以用于配置共享和服务的注册和发现。etcd具有以下特点：
+
+- 简单：定义明确、面向用户的API（gRPC）
+- 安全：实现了带有可选的客户端证书身份验证的自动化TLS
+- 快速：每秒10000次写入的基准速度
+- 可靠：使用Raft算法实现了强一致、高可用的服务存储目录
+
+## etcd 常用的场景
+### 配置中心
+将一些配置信息放到 etcd 上进行集中管理。
+
+这类场景的使用方式通常是这样：应用在启动的时候主动从 etcd 获取一次配置信息，同时，在 etcd 节点上注册一个 Watcher 并等待，以后每次配置有更新的时候，etcd 都会实时通知订阅者，以此达到获取最新配置信息的目的。
+
+### 服务发现
+
+### 分布式锁
+
+
+## 参考
+- https://github.com/etcd-io/etcd/
+- https://etcd.io/docs/v3.4/
+

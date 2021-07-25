@@ -1,0 +1,18 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>etcd - 标签 - 大大很二</title>
+        <link>https://russellgao.cn/tags/etcd/</link>
+        <description>etcd - 标签 - 大大很二</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Mon, 17 May 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/tags/etcd/" rel="self" type="application/rss+xml" /><item>
+    <title>初识 ETCD </title>
+    <link>https://russellgao.cn/etcd-intro/</link>
+    <pubDate>Mon, 17 May 2021 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://russellgao.cn/etcd-intro/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://gitee.com/russellgao/blogs-image/raw/master/images/etcd/etcd-horizontal-color.svg" referrerpolicy="no-referrer">
+            </div>导读  本文简单介绍了 Etcd ，主要是学习 etcd 时记录的操作过程，适合小白入门时阅读。
+ 介绍 etcd是使用Go语言开发的一个开源的、高可用的分布式key-value存储系统，可以用于配置共享和服务的注册和发现。etcd具有以下特点：]]></description>
+</item></channel>
+</rss>
