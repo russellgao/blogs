@@ -2,13 +2,13 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://russellgao.cn/categories/</loc><lastmod>2021-05-17T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://russellgao.cn/tags/etcd/</loc><lastmod>2021-05-17T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://russellgao.cn/categories/etcd/</loc><lastmod>2021-05-17T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://russellgao.cn/tags/golang/</loc><lastmod>2021-05-17T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://russellgao.cn/posts/</loc><lastmod>2021-07-25T16:15:00&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://russellgao.cn/tags/</loc><lastmod>2021-05-17T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://russellgao.cn/etcd-intro/</loc><lastmod>2021-05-17T00:00:00&#43;00:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://russellgao.cn/categories/</loc><lastmod>2021-07-25T16:17:53&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
+            <loc>https://russellgao.cn/tags/etcd/</loc><lastmod>2021-07-25T16:17:53&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
+            <loc>https://russellgao.cn/categories/etcd/</loc><lastmod>2021-07-25T16:17:53&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
+            <loc>https://russellgao.cn/tags/golang/</loc><lastmod>2021-07-25T16:17:53&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
+            <loc>https://russellgao.cn/posts/</loc><lastmod>2021-08-07T10:10:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://russellgao.cn/tags/</loc><lastmod>2021-07-25T16:17:53&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
+            <loc>https://russellgao.cn/etcd-intro/</loc><lastmod>2021-07-25T16:17:53&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
             <loc>https://russellgao.cn/tags/cue/</loc><lastmod>2021-05-13T17:34:13&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://russellgao.cn/categories/cue/</loc><lastmod>2021-05-13T17:34:13&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://russellgao.cn/cue-usecase/</loc><lastmod>2021-05-13T17:34:13&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
@@ -109,7 +109,7 @@
             <loc>https://russellgao.cn/tags/toolkit/</loc><lastmod>2021-05-12T18:27:00&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://russellgao.cn/tags/defer/</loc><lastmod>2021-05-10T13:54:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://russellgao.cn/categories/opensrouce/</loc><lastmod>2021-05-11T17:34:11&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://russellgao.cn/about/</loc><lastmod>2021-07-25T16:15:00&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://russellgao.cn/about/</loc><lastmod>2021-08-07T10:10:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://russellgao.cn/defer/</loc><lastmod>2021-05-10T13:54:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://russellgao.cn/tookit/</loc><lastmod>2021-05-11T17:34:11&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://russellgao.cn/oracle/</loc><lastmod>2021-05-10T13:54:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
