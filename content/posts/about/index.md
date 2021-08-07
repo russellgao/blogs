@@ -45,8 +45,8 @@ hiddenFromHomePage = true
 https://job.toutiao.com/s/e7hs3hQ
 
 ### 校招
-投递链接: https://jobs.toutiao.com/s/e7hTH6Q
-内推码: H7HKQNW
+- 投递链接: https://jobs.toutiao.com/s/e7hTH6Q
+- 内推码: H7HKQNW
 
 ## 随笔记录
 - https://github.com/russellgao/blog
