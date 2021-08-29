@@ -7,6 +7,21 @@
             <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster>
             <atom:link href="https://russellgao.cn/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>yamllint 用法</title>
+    <link>https://russellgao.cn/yamllint/</link>
+    <pubDate>Sat, 28 Aug 2021 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://russellgao.cn/yamllint/</guid>
+    <description><![CDATA[导读  yaml 文件现在是比较流行的一种配置文件，在使用的时候发现配置很容易出错，导致无法使用，这篇文章主要推荐一种检查 yaml 基本语法的工具&ndash;yamllint 。 文章中内容主要参考官方文档。
+ 简介  作用: yaml 语法检查工具，可以帮助使用者快速发现 yaml 的文件错误。 开发语言: python  安装 Fedora / CentOS sudo dnf install yamllint]]></description>
+</item><item>
+    <title>初始 salt</title>
+    <link>https://russellgao.cn/salt-intro/</link>
+    <pubDate>Sat, 28 Aug 2021 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://russellgao.cn/salt-intro/</guid>
+    <description><![CDATA[导读 参考  https://github.com/saltstack/salt https://docs.saltproject.io/en/latest/contents.html http://docs.saltstack.cn/  ]]></description>
+</item><item>
     <title>初识 ETCD </title>
     <link>https://russellgao.cn/etcd-intro/</link>
     <pubDate>Mon, 17 May 2021 00:00:00 &#43;0000</pubDate>
@@ -72,22 +87,5 @@
     <author>作者</author>
     <guid>https://russellgao.cn/python-maven-enforcer-plugins/</guid>
     <description><![CDATA[导读  本篇文章意在演示如何利用 python 解析 xml 文件。这篇文章的引出背景是，在程序开发过程中，一贯坚持的做法是「约定优于配置」， 但怎么取检测有没有按照约定去做的，以 maven 为例，maven 提供了 maven-enforcer-plugin 插件，可以用这个插件定制一系列 规则。所以我们需要做的就是用 python 在 pom 文件中插入 maven-enforcer-plugin 的配置 。]]></description>
-</item><item>
-    <title>Alpine 容器内安装命令时遇到坑</title>
-    <link>https://russellgao.cn/linux-alpine-apk/</link>
-    <pubDate>Fri, 19 Feb 2021 00:00:00 &#43;0000</pubDate>
-    <author>作者</author>
-    <guid>https://russellgao.cn/linux-alpine-apk/</guid>
-    <description><![CDATA[导读  记录在 Alpine 容器内安装命令时遇到的一些问题，本篇文章会持续更新。
-问题背景是在docker 容器内执行 docker 命令，执行时发现缺少某些依赖包，在安装依赖包时遇到一些难以解决的问题。
- 在容器内执行 docker 命令 在 docker 容器执行 docker 命令，如启动新的容器，需要把主机的 docker sock 套接字映射到容器内 。 具体方法为:]]></description>
-</item><item>
-    <title>交叉打印</title>
-    <link>https://russellgao.cn/go-goroutine-print/</link>
-    <pubDate>Thu, 18 Feb 2021 00:00:00 &#43;0000</pubDate>
-    <author>作者</author>
-    <guid>https://russellgao.cn/go-goroutine-print/</guid>
-    <description><![CDATA[交叉打印 数字和字母交叉打印，打印两个字母，接着打印一个数字，再接着打印两个字母，一直从 a 打印到 z，以字母结束。输出示例：
-1  a b 1 c d 2 .]]></description>
 </item></channel>
 </rss>

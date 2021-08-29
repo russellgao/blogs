@@ -4,7 +4,22 @@
         <link>https://russellgao.cn/posts/</link>
         <description>所有文章 | 大大很二</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
-            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Mon, 17 May 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Sat, 28 Aug 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>yamllint 用法</title>
+    <link>https://russellgao.cn/yamllint/</link>
+    <pubDate>Sat, 28 Aug 2021 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://russellgao.cn/yamllint/</guid>
+    <description><![CDATA[导读  yaml 文件现在是比较流行的一种配置文件，在使用的时候发现配置很容易出错，导致无法使用，这篇文章主要推荐一种检查 yaml 基本语法的工具&ndash;yamllint 。 文章中内容主要参考官方文档。
+ 简介  作用: yaml 语法检查工具，可以帮助使用者快速发现 yaml 的文件错误。 开发语言: python  安装 Fedora / CentOS sudo dnf install yamllint]]></description>
+</item><item>
+    <title>初始 salt</title>
+    <link>https://russellgao.cn/salt-intro/</link>
+    <pubDate>Sat, 28 Aug 2021 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://russellgao.cn/salt-intro/</guid>
+    <description><![CDATA[导读 参考  https://github.com/saltstack/salt https://docs.saltproject.io/en/latest/contents.html http://docs.saltstack.cn/  ]]></description>
+</item><item>
     <title>初识 ETCD </title>
     <link>https://russellgao.cn/etcd-intro/</link>
     <pubDate>Mon, 17 May 2021 00:00:00 &#43;0000</pubDate>
@@ -72,21 +87,5 @@
     <guid>https://russellgao.cn/design-principle/</guid>
     <description><![CDATA[导读  重温设计模式的原则
  六大原则 单一职责原则（Single Responsibility Principle）  There should never be more than one reason for a class to change.]]></description>
-</item><item>
-    <title>消息队列原理之kafka</title>
-    <link>https://russellgao.cn/mq-kafka/</link>
-    <pubDate>Thu, 17 Dec 2020 00:00:00 &#43;0000</pubDate>
-    <author>作者</author>
-    <guid>https://russellgao.cn/mq-kafka/</guid>
-    <description><![CDATA[导读  本文消息队列系列第二篇，上一篇讲述的是 Rabbitmq ，这篇主要介绍 Kafka 的原理与使用。
-Kafka 是一个快速、可扩展的、高吞吐的、可容错的分布式“发布-订阅”消息系统， 使用 Scala 与 Java 语言编写，能够将消息从一个端点传递到另一个端点。 较之传统的消息中间件（例如 ActiveMQ、RabbitMQ），Kafka 具有高吞吐量、内置分区、支持消息副本和高容错的特性，非常适合大规模消息处理应用程序。]]></description>
-</item><item>
-    <title>消息队列原理之rabbitmq</title>
-    <link>https://russellgao.cn/mq-rabbitmq/</link>
-    <pubDate>Wed, 16 Dec 2020 00:00:00 &#43;0000</pubDate>
-    <author>作者</author>
-    <guid>https://russellgao.cn/mq-rabbitmq/</guid>
-    <description><![CDATA[导读  谈起消息队列，我们的脑海可能会不由自主的冒出这么几个关键词，解耦、异步化、消峰、广播等，消息队列的种类也很多，如 rabbitmq、rocketmq、activemq、kafka等还有各个云厂商提供的消息队列。 它们都有各种的特点和使用场景，所以这个系列的文章主要谈各个消息的原理，目前规划了两篇文章，rabbitmq 和 kafka ，其他的暂时还没有用到，还没有深究。
-这篇主要介绍 rabbitmq 的原理和基于 golang 如何使用。]]></description>
 </item></channel>
 </rss>

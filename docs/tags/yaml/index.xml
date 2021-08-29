@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>yaml - 标签 - 大大很二</title>
+        <link>https://russellgao.cn/tags/yaml/</link>
+        <description>yaml - 标签 - 大大很二</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Sat, 28 Aug 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/tags/yaml/" rel="self" type="application/rss+xml" /><item>
+    <title>yamllint 用法</title>
+    <link>https://russellgao.cn/yamllint/</link>
+    <pubDate>Sat, 28 Aug 2021 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://russellgao.cn/yamllint/</guid>
+    <description><![CDATA[导读  yaml 文件现在是比较流行的一种配置文件，在使用的时候发现配置很容易出错，导致无法使用，这篇文章主要推荐一种检查 yaml 基本语法的工具&ndash;yamllint 。 文章中内容主要参考官方文档。
+ 简介  作用: yaml 语法检查工具，可以帮助使用者快速发现 yaml 的文件错误。 开发语言: python  安装 Fedora / CentOS sudo dnf install yamllint]]></description>
+</item></channel>
+</rss>

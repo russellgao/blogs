@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>yamllint 用法 - 大大很二</title><meta name="Description" content="yamllint 用法"><meta property="og:title" content="yamllint 用法" />
+<meta property="og:description" content="yamllint 用法" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://russellgao.cn/yamllint/" /><meta property="og:image" content="https://russellgao.cn/images/profile.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-08-28T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2021-08-29T15:40:06&#43;08:00" /><meta property="og:site_name" content="大大很二" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://russellgao.cn/images/profile.jpg"/>
+
+<meta name="twitter:title" content="yamllint 用法"/>
+<meta name="twitter:description" content="yamllint 用法"/>
+<meta name="application-name" content="russellgao">
+<meta name="apple-mobile-web-app-title" content="russellgao"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="https://gitee.com/russellgao/blogs-image/raw/master/images/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://russellgao.cn/yamllint/" /><link rel="prev" href="https://russellgao.cn/salt-intro/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "yamllint 用法",
+        "inLanguage": "zh-cn",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/russellgao.cn\/yamllint\/"
+        },"genre": "posts","keywords": "yaml, lint","wordcount":  418 ,
+        "url": "https:\/\/russellgao.cn\/yamllint\/","datePublished": "2021-08-28T00:00:00+00:00","dateModified": "2021-08-29T15:40:06+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "russellgao"
+            },"description": "yamllint 用法"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="大大很二"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png"
+        data-srcset="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png, https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png 1.5x, https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png"
+        title="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/"> 首页 </a><a class="menu-item" href="/categories/golang/"> Golang </a><a class="menu-item" href="/categories/kubernetes/"> Kubernetes </a><a class="menu-item" href="/categories/servicemesh/"> ServiceMesh </a><a class="menu-item" href="/categories/python/"> Python </a><a class="menu-item" href="/categories/argorithm/"> 算法 </a><a class="menu-item" href="/categories/opensrouce/"> 开源项目 </a><a class="menu-item" href="/categories/ai/"> 人工智能 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="大大很二"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png"
+        data-srcset="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png, https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png 1.5x, https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png"
+        title="https://gitee.com/russellgao/blogs-image/raw/master/images/russellgao.png" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/" title="">首页</a><a class="menu-item" href="/categories/golang/" title="">Golang</a><a class="menu-item" href="/categories/kubernetes/" title="">Kubernetes</a><a class="menu-item" href="/categories/servicemesh/" title="">ServiceMesh</a><a class="menu-item" href="/categories/python/" title="">Python</a><a class="menu-item" href="/categories/argorithm/" title="">算法</a><a class="menu-item" href="/categories/opensrouce/" title="">开源项目</a><a class="menu-item" href="/categories/ai/" title="">人工智能</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">yamllint 用法</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/russellgao" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>russellgao</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/yaml/"><i class="far fa-folder fa-fw"></i>yaml</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-08-28">2021-08-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 418 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;<span id="/yamllint/" class="leancloud_visitors" data-flag-title="yamllint 用法">
+                        <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="true">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ol>
+    <li><a href="#导读">导读</a></li>
+    <li><a href="#简介">简介</a></li>
+    <li><a href="#安装">安装</a>
+      <ol>
+        <li><a href="#fedora--centos">Fedora / CentOS</a></li>
+        <li><a href="#debian-8--ubuntu-1604">Debian 8+ / Ubuntu 16.04+</a></li>
+        <li><a href="#mac-os-1011">Mac OS 10.11+</a></li>
+        <li><a href="#freebsd">FreeBSD</a></li>
+        <li><a href="#pip-安装">pip 安装</a></li>
+      </ol>
+    </li>
+    <li><a href="#基本用法">基本用法</a></li>
+    <li><a href="#配置">配置</a>
+      <ol>
+        <li><a href="#扩展默认配置">扩展默认配置</a></li>
+        <li><a href="#yaml-files-extensions">YAML files extensions</a></li>
+        <li><a href="#忽略部分文件">忽略部分文件</a></li>
+      </ol>
+    </li>
+    <li><a href="#最佳实践">最佳实践</a></li>
+    <li><a href="#参考">参考</a></li>
+  </ol>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="导读">导读</h2>
+<blockquote>
+<p>yaml 文件现在是比较流行的一种配置文件，在使用的时候发现配置很容易出错，导致无法使用，这篇文章主要推荐一种检查 yaml 基本语法的工具&ndash;yamllint 。
+文章中内容主要参考官方文档。</p>
+</blockquote>
+<h2 id="简介">简介</h2>
+<ul>
+<li>作用: yaml 语法检查工具，可以帮助使用者快速发现 yaml 的文件错误。</li>
+<li>开发语言: python</li>
+</ul>
+<h2 id="安装">安装</h2>
+<h3 id="fedora--centos">Fedora / CentOS</h3>
+<p>sudo dnf install yamllint</p>
+<h3 id="debian-8--ubuntu-1604">Debian 8+ / Ubuntu 16.04+</h3>
+<p>sudo apt-get install yamllint</p>
+<h3 id="mac-os-1011">Mac OS 10.11+</h3>
+<p>brew install yamllint</p>
+<h3 id="freebsd">FreeBSD</h3>
+<p>pkg install py36-yamllint</p>
+<h3 id="pip-安装">pip 安装</h3>
+<p>pip install &ndash;user yamllint</p>
+<h2 id="基本用法">基本用法</h2>
+<p>第一次使用可以通过 <code>-h</code> 查看基本的帮助</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">yamllint -h
+usage: yamllint <span class="o">[</span>-h<span class="o">]</span> <span class="o">[</span>-<span class="o">]</span> <span class="o">[</span>-c CONFIG_FILE <span class="p">|</span> -d CONFIG_DATA<span class="o">]</span>
+                <span class="o">[</span>-f <span class="o">{</span>parsable,standard,colored,github,auto<span class="o">}]</span> <span class="o">[</span>-s<span class="o">]</span>
+                <span class="o">[</span>--no-warnings<span class="o">]</span> <span class="o">[</span>-v<span class="o">]</span>
+                <span class="o">[</span>FILE_OR_DIR <span class="o">[</span>FILE_OR_DIR ...<span class="o">]]</span>
+
+A linter <span class="k">for</span> YAML files. yamllint does not only check <span class="k">for</span> syntax validity, but
+<span class="k">for</span> weirdnesses like key repetition and cosmetic problems such as lines
+length, trailing spaces, indentation, etc.
+
+positional arguments:
+  FILE_OR_DIR           files to check
+
+optional arguments:
+  -h, --help            show this <span class="nb">help</span> message and <span class="nb">exit</span>
+  -                     <span class="nb">read</span> from standard input
+  -c CONFIG_FILE, --config-file CONFIG_FILE
+                        path to a custom configuration
+  -d CONFIG_DATA, --config-data CONFIG_DATA
+                        custom configuration <span class="o">(</span>as YAML <span class="nb">source</span><span class="o">)</span>
+  -f <span class="o">{</span>parsable,standard,colored,github,auto<span class="o">}</span>, --format <span class="o">{</span>parsable,standard,colored,github,auto<span class="o">}</span>
+                        format <span class="k">for</span> parsing output
+  -s, --strict          <span class="k">return</span> non-zero <span class="nb">exit</span> code on warnings as well as
+                        errors
+  --no-warnings         output only error level problems
+  -v, --version         show program<span class="err">&#39;</span>s version number and <span class="nb">exit</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 检查单个文件</span>
+yamllint file.yml other-file.yaml
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 检查当前文件夹下所有的文件</span>
+yamllint .
+</code></pre></td></tr></table>
+</div>
+</div><p>从输入流中检查</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">echo</span> -e <span class="s1">&#39;this: is\nvalid: YAML&#39;</span> <span class="p">|</span> yamllint -
+</code></pre></td></tr></table>
+</div>
+</div><p>输出类似这样 <img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/russellgao/blogs-image/raw/master/images/yaml/yamllint1.png"
+        data-srcset="https://gitee.com/russellgao/blogs-image/raw/master/images/yaml/yamllint1.png, https://gitee.com/russellgao/blogs-image/raw/master/images/yaml/yamllint1.png 1.5x, https://gitee.com/russellgao/blogs-image/raw/master/images/yaml/yamllint1.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/russellgao/blogs-image/raw/master/images/yaml/yamllint1.png"
+        title="https://gitee.com/russellgao/blogs-image/raw/master/images/yaml/yamllint1.png" /></p>
+<p>在终端中默认是带颜色的，可以通过 <code>-f</code> 参数控制是否带颜色， <code>-f standard</code> 表示标准输出不带颜色， <code>-f colored</code> 带颜色</p>
+<p>yamllint 默认检查的比较多，可以通过 -c 指定 配置文件，配置yamllint 的检查规则，-c 的默认文件为： <code>./.yamllint</code> ，所以默认可以在项目的根路径下增加 <code>.yamllint</code>。</p>
+<h2 id="配置">配置</h2>
+<p>如果没有指定 <code>-c</code> ，则会按照如下规则进行查找配置文件</p>
+<ul>
+<li>在当前文件夹下找 <code>.yamllint</code>, <code>.yamllint.yaml</code> ,<code>.yamllint.yml</code></li>
+<li>通过环境变量 <code>$YAMLLINT_CONFIG_FILE</code> 查找</li>
+<li>$XDG_CONFIG_HOME/yamllint/config</li>
+<li>~/.config/yamllint/config</li>
+</ul>
+<p>默认的配置如下:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nn">---</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="nt">yaml-files</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="s1">&#39;*.yaml&#39;</span><span class="w">
+</span><span class="w">  </span>- <span class="s1">&#39;*.yml&#39;</span><span class="w">
+</span><span class="w">  </span>- <span class="s1">&#39;.yamllint&#39;</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="nt">rules</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">braces</span><span class="p">:</span><span class="w"> </span><span class="l">enable</span><span class="w">
+</span><span class="w">  </span><span class="nt">brackets</span><span class="p">:</span><span class="w"> </span><span class="l">enable</span><span class="w">
+</span><span class="w">  </span><span class="nt">colons</span><span class="p">:</span><span class="w"> </span><span class="l">enable</span><span class="w">
+</span><span class="w">  </span><span class="nt">commas</span><span class="p">:</span><span class="w"> </span><span class="l">enable</span><span class="w">
+</span><span class="w">  </span><span class="nt">comments</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">level</span><span class="p">:</span><span class="w"> </span><span class="l">warning</span><span class="w">
+</span><span class="w">  </span><span class="nt">comments-indentation</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">level</span><span class="p">:</span><span class="w"> </span><span class="l">warning</span><span class="w">
+</span><span class="w">  </span><span class="nt">document-end</span><span class="p">:</span><span class="w"> </span><span class="l">disable</span><span class="w">
+</span><span class="w">  </span><span class="nt">document-start</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">level</span><span class="p">:</span><span class="w"> </span><span class="l">warning</span><span class="w">
+</span><span class="w">  </span><span class="nt">empty-lines</span><span class="p">:</span><span class="w"> </span><span class="l">enable</span><span class="w">
+</span><span class="w">  </span><span class="nt">empty-values</span><span class="p">:</span><span class="w"> </span><span class="l">disable</span><span class="w">
+</span><span class="w">  </span><span class="nt">hyphens</span><span class="p">:</span><span class="w"> </span><span class="l">enable</span><span class="w">
+</span><span class="w">  </span><span class="nt">indentation</span><span class="p">:</span><span class="w"> </span><span class="l">enable</span><span class="w">
+</span><span class="w">  </span><span class="nt">key-duplicates</span><span class="p">:</span><span class="w"> </span><span class="l">enable</span><span class="w">
+</span><span class="w">  </span><span class="nt">key-ordering</span><span class="p">:</span><span class="w"> </span><span class="l">disable</span><span class="w">
+</span><span class="w">  </span><span class="nt">line-length</span><span class="p">:</span><span class="w"> </span><span class="l">enable</span><span class="w">
+</span><span class="w">  </span><span class="nt">new-line-at-end-of-file</span><span class="p">:</span><span class="w"> </span><span class="l">enable</span><span class="w">
+</span><span class="w">  </span><span class="nt">new-lines</span><span class="p">:</span><span class="w"> </span><span class="l">enable</span><span class="w">
+</span><span class="w">  </span><span class="nt">octal-values</span><span class="p">:</span><span class="w"> </span><span class="l">disable</span><span class="w">
+</span><span class="w">  </span><span class="nt">quoted-strings</span><span class="p">:</span><span class="w"> </span><span class="l">disable</span><span class="w">
+</span><span class="w">  </span><span class="nt">trailing-spaces</span><span class="p">:</span><span class="w"> </span><span class="l">enable</span><span class="w">
+</span><span class="w">  </span><span class="nt">truthy</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">level</span><span class="p">:</span><span class="w"> </span><span class="l">warning</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>除了这个默认的配置还有一个预定于的 <code>relaxed</code> 配置，看名字应该可以看出这是一个宽松的配置，<code>-d relaxed</code> 进行使用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nn">---</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="nt">extends</span><span class="p">:</span><span class="w"> </span><span class="l">default</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="nt">rules</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">braces</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">level</span><span class="p">:</span><span class="w"> </span><span class="l">warning</span><span class="w">
+</span><span class="w">    </span><span class="nt">max-spaces-inside</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">  </span><span class="nt">brackets</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">level</span><span class="p">:</span><span class="w"> </span><span class="l">warning</span><span class="w">
+</span><span class="w">    </span><span class="nt">max-spaces-inside</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">  </span><span class="nt">colons</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">level</span><span class="p">:</span><span class="w"> </span><span class="l">warning</span><span class="w">
+</span><span class="w">  </span><span class="nt">commas</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">level</span><span class="p">:</span><span class="w"> </span><span class="l">warning</span><span class="w">
+</span><span class="w">  </span><span class="nt">comments</span><span class="p">:</span><span class="w"> </span><span class="l">disable</span><span class="w">
+</span><span class="w">  </span><span class="nt">comments-indentation</span><span class="p">:</span><span class="w"> </span><span class="l">disable</span><span class="w">
+</span><span class="w">  </span><span class="nt">document-start</span><span class="p">:</span><span class="w"> </span><span class="l">disable</span><span class="w">
+</span><span class="w">  </span><span class="nt">empty-lines</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">level</span><span class="p">:</span><span class="w"> </span><span class="l">warning</span><span class="w">
+</span><span class="w">  </span><span class="nt">hyphens</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">level</span><span class="p">:</span><span class="w"> </span><span class="l">warning</span><span class="w">
+</span><span class="w">  </span><span class="nt">indentation</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">level</span><span class="p">:</span><span class="w"> </span><span class="l">warning</span><span class="w">
+</span><span class="w">    </span><span class="nt">indent-sequences</span><span class="p">:</span><span class="w"> </span><span class="l">consistent</span><span class="w">
+</span><span class="w">  </span><span class="nt">line-length</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">level</span><span class="p">:</span><span class="w"> </span><span class="l">warning</span><span class="w">
+</span><span class="w">    </span><span class="nt">allow-non-breakable-inline-mappings</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">  </span><span class="nt">truthy</span><span class="p">:</span><span class="w"> </span><span class="l">disable</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>如:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">yamllint -d relaxed  file1.yaml file2.yaml 
+</code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/russellgao/blogs-image/raw/master/images/yaml/yamllint2.png"
+        data-srcset="https://gitee.com/russellgao/blogs-image/raw/master/images/yaml/yamllint2.png, https://gitee.com/russellgao/blogs-image/raw/master/images/yaml/yamllint2.png 1.5x, https://gitee.com/russellgao/blogs-image/raw/master/images/yaml/yamllint2.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/russellgao/blogs-image/raw/master/images/yaml/yamllint2.png"
+        title="https://gitee.com/russellgao/blogs-image/raw/master/images/yaml/yamllint2.png" /></p>
+<h3 id="扩展默认配置">扩展默认配置</h3>
+<p>如果想写一个定制化的配置，可以扩展默认配置，如：只想 disable <code>comments-indentation</code> ，则配置可以这样写：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">extends</span><span class="p">:</span><span class="w"> </span><span class="l">default</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="nt">rules</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">comments-indentation</span><span class="p">:</span><span class="w"> </span><span class="l">disable </span><span class="w"> </span><span class="c"># don&#39;t bother me with this rule</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><h3 id="yaml-files-extensions">YAML files extensions</h3>
+<p>可以配置 yamllint 检查哪些文件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">yaml-files</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="s1">&#39;*.yaml&#39;</span><span class="w">
+</span><span class="w">  </span>- <span class="s1">&#39;*.yml&#39;</span><span class="w">
+</span><span class="w">  </span>- <span class="s1">&#39;.yamllint&#39;</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><h3 id="忽略部分文件">忽略部分文件</h3>
+<p>可以通过 <code>ignore</code> 字段进行忽略不想检查的文件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="c"># For all rules</span><span class="w">
+</span><span class="w"></span><span class="nt">ignore</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
+</span><span class="sd">  *.dont-lint-me.yaml
+</span><span class="sd">  /bin/
+</span><span class="sd">  !/bin/*.lint-me-anyway.yaml</span><span class="w">  
+</span><span class="w">
+</span><span class="w"></span><span class="nt">extends</span><span class="p">:</span><span class="w"> </span><span class="l">default</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="nt">rules</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">key-duplicates</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">ignore</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
+</span><span class="sd">      generated
+</span><span class="sd">      *.template.yaml</span><span class="w">      
+</span><span class="w">  </span><span class="nt">trailing-spaces</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">ignore</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
+</span><span class="sd">      *.ignore-trailing-spaces.yaml
+</span><span class="sd">      ascii-art/*</span><span class="w">      
+</span></code></pre></td></tr></table>
+</div>
+</div><h2 id="最佳实践">最佳实践</h2>
+<p>yamllint 可以集成在 VCS 的 hook 中，如 项目使用 gitlab 做代码管理，可以使用在 git hook 中增加 yamllint 流程，在代码提交时强制检查，不符合规范不能提交，
+或者 CI 流程中增加 yamllint 检查，趁早发现一些问题，避免引发线上问题。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://yamllint.readthedocs.io/en/stable/">https://yamllint.readthedocs.io/en/stable/</a></li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-08-29</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/yamllint/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://russellgao.cn/yamllint/" data-title="yamllint 用法" data-hashtags="yaml,lint"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://russellgao.cn/yamllint/" data-hashtag="yaml"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://russellgao.cn/yamllint/" data-title="yamllint 用法" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://russellgao.cn/yamllint/" data-title="yamllint 用法"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://russellgao.cn/yamllint/" data-title="yamllint 用法"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Myspace" data-sharer="myspace" data-url="https://russellgao.cn/yamllint/" data-title="yamllint 用法" data-description="yamllint 用法"><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://russellgao.cn/yamllint/" data-title="yamllint 用法" data-description="yamllint 用法"><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="https://russellgao.cn/yamllint/" data-title="yamllint 用法"><i class="fab fa-evernote fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/yaml/">yaml</a>,&nbsp;<a href="/tags/lint/">lint</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/salt-intro/" class="prev" rel="prev" title="初始 salt"><i class="fas fa-angle-left fa-fw"></i>初始 salt</a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.83.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/russellgao" target="_blank">高维宗(russellgao)</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href="http://beian.miit.gov.cn/" target="_blank">沪ICP备2020034038号</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="/lib/lightgallery/lightgallery.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><script type="text/javascript" src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.fill%2CArray.prototype.find%2CArray.from%2CIntersectionObserver%2CMath.sign%2CObject.assign%2CPromise%2CObject.entries%2CElement.prototype.closest%2CrequestAnimationFrame%2CCustomEvent%2Chtml5shiv%2CObject.values%2Cfetch%2CElement.prototype.after"></script><script type="text/javascript" src="/lib/object-fit-images/ofi.min.js"></script><script type="text/javascript" src="/lib/valine/Valine.min.js"></script><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/twemoji/twemoji.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lightgallery.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lg-thumbnail.min.js"></script><script type="text/javascript" src="/lib/lightgallery/lg-zoom.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":15},"comment":{"valine":{"appId":"UPHfC2syBI9Pu5vyncYfvYX5-9Nh9j0Va","appKey":"MBiG6UopXrWQR41mzt7jtq8o","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://uphfc2sy.lc-cn-e1-shared.com","visitor":true}},"data":{"id-1":"大大很二","id-2":"大大很二"},"lightGallery":{"actualSize":false,"exThumbImage":"data-thumbnail","hideBarsDelay":2000,"selector":".lightgallery","speed":400,"thumbContHeight":80,"thumbWidth":80,"thumbnail":true},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"},"twemoji":true,"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

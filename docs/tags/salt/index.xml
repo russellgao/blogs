@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>salt - 标签 - 大大很二</title>
+        <link>https://russellgao.cn/tags/salt/</link>
+        <description>salt - 标签 - 大大很二</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><managingEditor>1060745366@qq.com (高维宗(russellgao))</managingEditor>
+            <webMaster>1060745366@qq.com (高维宗(russellgao))</webMaster><lastBuildDate>Sat, 28 Aug 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://russellgao.cn/tags/salt/" rel="self" type="application/rss+xml" /><item>
+    <title>初始 salt</title>
+    <link>https://russellgao.cn/salt-intro/</link>
+    <pubDate>Sat, 28 Aug 2021 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://russellgao.cn/salt-intro/</guid>
+    <description><![CDATA[导读 参考  https://github.com/saltstack/salt https://docs.saltproject.io/en/latest/contents.html http://docs.saltstack.cn/  ]]></description>
+</item></channel>
+</rss>
